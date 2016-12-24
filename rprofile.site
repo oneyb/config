@@ -1,0 +1,149 @@
+## Emacs please make this -*- R -*-
+## empty Rprofile.site for R on Debian
+##
+## Copyright (C) 2008 Dirk Eddelbuettel and GPL'ed
+##
+## see help(Startup) for documentation on ~/.Rprofile and Rprofile.site
+
+# ## Example of .Rprofile
+# options(width=65, digits=5)
+# options(show.signif.stars=FALSE)
+# setHook(packageEvent("grDevices", "onLoad"),
+#         function(...) grDevices::ps.options(horizontal=FALSE))
+# set.seed(1234)
+## .First <- function() cat("\n   Welcome to R!\n\n")
+## .Last <- function()  cat("\n   Goodbye!\n\n")
+
+# ## Example of Rprofile.site
+# local({
+#  # add MASS to the default packages, set a CRAN mirror
+#  old <- getOption("defaultPackages"); r <- getOption("repos")
+#  r["CRAN"] <- "http://my.local.cran"
+#  options(defaultPackages = c(old, "MASS"), repos = r)
+#})
+## Think about: http://cran.r-project.org/bin/linux/ubuntu/
+## .Library.site <- c("/local/home/hes134/lib/R/", "~/Documents/R/libs"); .libPaths(path.expand(.Library.site))
+## .Library.site <- c(.Library.site, "~/documents/r/libs")
+.libPaths(path.expand("~/documents/r/libs"))
+## .libPaths("~/R/x86_64-pc-linux-gnu-library/3.2")
+r.pkg.cache.dir <- "~/documents/r/cache"
+options(browser="exo-open")
+local({
+  # add MASS to the default packages, set a CRAN mirror
+  old <- c(getOption("defaultPackages"))
+  r <- getOption("repos")
+  r["CRAN"] <- "http://stat.ethz.ch/CRAN"
+  options(defaultPackages = c(old, "MASS"), repos = r)
+})
+
+## homeLiterature <- "/D/Literature/Statistics/R_stuff/"
+## helpDataTable <- function() browseURL(file.path(homeLiterature, "data+table+cheat+sheet.pdf"))
+
+## custom functions
+exit <- function() q("no")
+exitNsave <- function() q("yes")
+
+out.format <- c(dates="y-m-d", times="h:m:s")
+
+#options("width"=120)                # wide display with multiple monitors
+options("digits.secs"=3)            # show sub-second time stamps
+options("max.print"=6000)
+options(warn=1
+       ## ,error = utils::recover
+        )
+options("INSTALL_opts"=c("--html", "--with-keep.source"))
+options(stringsAsFactors = FALSE)
+## options("configure.args" = c(ncdf4=""))
+## Scientific notation
+## options(scipen=-2)
+
+## customize the plot defaults
+setHook(packageEvent("grDevices", "onLoad"),
+        function(...) grDevices::X11.options(width=7, height=7,
+                                             ## xpos=0, pointsize=12,
+                                             type="cairo"))  # Cairo device
+                                             ## type="nbcairo"))    # other Cairo dev
+                                             ## type="xlib"))  # old default
+
+## ## from the AER book by Zeileis and Kleiber
+## options(prompt="R> ", digits=4, show.signif.stars=FALSE)
+## Sys.getenv()
+if(Sys.getenv("TERM")!="dumb" && interactive())
+  {
+    ## cat("Not in Emacs?\n")
+    updatePrompt <- function(...)
+      {options(prompt=format(Sys.time(),"%H:%M> ")); return(TRUE)}
+    invisible(addTaskCallback(updatePrompt));
+    ## if(getwd()==path.expand("~/Uranos/Documents/PhD/scripts/R"))
+    ##   source(path.expand("~/Documents/PhD/scripts/R/tools/fp.conf.R"))
+  }
+if(interactive())
+  cat("\t\t 2 + 2 = 5 \n\n")
+
+## h <- taskCallbackManager()
+## h$add(function(expr, value, ok, visible) {
+##   options("prompt"=format(Sys.time(), "%H:%M:%S> "));
+##   return(TRUE) },
+##       name = "simpleHandler")
+
+## emacsclient -e '(getenv "DISPLAY")'
+DISPLAY.Check <- function()
+{
+  DISPLAY <- gsub('\\"',"", system('emacsclient -e "(getenv \\"DISPLAY\\")"', intern=T))
+  if(Sys.getenv("DISPLAY") != DISPLAY)
+    Sys.setenv("DISPLAY" = DISPLAY)
+}
+
+## ## Installing 'h5r' R-package at work:
+## R CMD INSTALL --configure-args="--with-hdf5=/local/home/libs/" h5r*.gz
+## ## ncdf4 on pilatus
+## install.packages("ncdf4", INSTALL_opts=c("--html", "--latex"), dependencies="Depends", configure.args="--with-nc-config=/apps/pilatus/netcdf/4.3.0/gnu_434/bin/nc-config")
+
+## Devtools
+## * `devtools.name`: your name, used to sign emails
+## * `devtools.desc.author`: your R author string, in the form of `"Hadley Wickham <h.wickham@@gmail.com> [aut, cre]"`. Used when creating default `DESCRIPTION` files.
+## * `devtools.desc.license`: a default license used when creating new packages
+devtools.name <- "Brian Oney"
+devtools.desc.author <- "Brian Oney <brian.oney@empa.ch> [aut, cre]"
+devtools.desc.license <- "GPL-3"
+
+update <- function() update.packages(destdir=r.pkg.cache.dir, ask=FALSE)
+installer <- function(...) install.packages(..., destdir=r.pkg.cache.dir,
+                                            INSTALL_opts = "--byte-compile")
+
+## installer(c(
+##     "foreach"
+##    ,"digest"
+##    ,"RPostgreSQL"
+##    ,"png"
+##    ,"jpeg"
+##    ,"zoo"
+##    ,"xts"
+##    ,"Rcpp"
+##    ,"BH"
+##    ,"magittr"
+##    ,"dplyr"
+##    ,"reshape2"
+##    ,"plyr"
+##    ,"ggplot2"
+##    ,"RColorBrewer"
+##    ,"maps"
+##    ,"mapdata"
+##    ,"ggvis"
+##    ,"tidyr"
+##    ,"xtable"
+##    ,"sp"
+##    ,"maptools"
+##    ,"rgeos"
+##    ,"raster"
+##    ,"RJSONIO"
+##    ,"rjson"
+##    ,"ggmap"
+##    ,"cowplot"
+##    ,"maps"
+##    ,"mapdata"
+##    ,"ggvis"
+##    ,"tidyr"
+##    ,"rworldmap"
+##    ,"chron"
+## ), dep=T)

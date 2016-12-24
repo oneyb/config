@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-dir=$dir
+dir=~/documents/config
 
 if [[ $1 == "out" ]];then
     cp -r ~/.{spacemacs,bashrc,xbindkeysrc} $dir
