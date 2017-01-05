@@ -1,11 +1,6 @@
 # emacs please make this -*- sh -*-
-# "~/bin/.monitorControl.sh"
 "xset dpms force off"
  Mod4 + d
- # Mod4 + release + d
-# "emacsclient -s org -c --eval '(org-agenda "/home/onb134/Documents/org-emacs/Misc.org" "n")'  --eval '(delete-other-windows)' --eval '(set-frame-height (selected-frame) 84)' --eval '(set-frame-width (selected-frame) 120)'"
-"emacsclient -s org -c --eval '(delete-other-windows)' --eval '(set-frame-height (selected-frame) 84)' --eval '(set-frame-width (selected-frame) 120)'"
-Mod4 + E
 "emacsclient -c --eval '(switch-to-buffer "*spacemacs*")' --eval '(spacemacs/toggle-maximize-buffer)'"
 Control + Mod1 + E
 "~/bin/tb"
@@ -24,20 +19,12 @@ Control + Shift + Mod1 + M
 Mod4 + h
 "xfce4-terminal --title Terminator --geometry 84x44+0+0 --working-directory ~/"
 Control + Mod1 + t
-"xfce4-terminal --title Ipazia --geometry 96x64-0+0"
-Control + Mod1 + Shift + i
-# "copyq show"
 "~/bin/anamnesis --browse"
 Mod4 + c
 "~/bin/anamnesis --restart"
 Control + Mod1 + c
-# "clipman"
-# Control + Mod1 + t
-# Control + Mod1 + c
 "~/bin/ko"
 Mod4 + k
-#"xmessage -timeout 12 "`eval dict $(copyq clipboard)`""
-# "xmessage -timeout 36 "`eval dict $(anamnesis -l 1 | sed -r -e '1,2 d' -e 's/^\([0-9]+.{9}(.*).{2}/\1/')`""
 "~/bin/drop"
 Mod4 + g
 # Mod4 + d
@@ -46,25 +33,20 @@ Mod4 + g
 Mod4 + o
 # "eval xdg-open $(copyq selection)"
 # Mod4 + o
-# "sh -c '~/bin/aenea.sh windows7'"
+"sh -c '~/bin/aenea.sh windows7'"
+F5
 "sh -c '~/bin/aenea.sh x'"
 F6
-# "VirtualBox --startvm w7_clone 2>&1 ~/.vm.log"
-# F7
-# "sh -c '~/bin/aenea.sh x'"
-# F6
-# "~/bin/.sync_phone.sh"
-# "anamnesis --restart"
-# "~/bin/.aenea_server.sh ~/aenea3/server/linux_x11/"
-# F8
+"VirtualBox --startvm w7_clone 2>&1 ~/.vm.log"
+F7
 "~/bin/tele"
 Mod4 + t
 "~/bin/whatsapp"
 Mod4 + w
 # "gnome-control-center sound input"
 # "pacmd set-default-source 'alsa_input.usb-Shure_Incorporated_Shure_Digital-00-Digital.analog-stereo'"
-"pavucontrol"
-F10
+# "pavucontrol"
+# F10
 "sleep .1; xdotool click 2"
 Mod4 + y
 "xfce4-screenshooter"

@@ -31,13 +31,14 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     html
      vimscript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;auto-completion
+     auto-completion
      better-defaults
      emacs-lisp
      git
@@ -86,6 +87,7 @@ values."
                                       ox-pandoc
                                       key-chord
                                       org-ref
+                                      edit-server
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -149,8 +151,8 @@ values."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+   dotspacemacs-startup-lists '((recents . 9)
+                                (projects . 3))
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
@@ -305,7 +307,7 @@ values."
    dotspacemacs-highlight-delimiters 'all
    ;; If non nil, advise quit functions to keep server open when quitting.
    ;; (default nil)
-   dotspacemacs-persistent-server nil
+   dotspacemacs-persistent-server t
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
@@ -416,13 +418,10 @@ you should place your code here."
   (setq evil-move-cursor-back nil)
   ;; (require 'goto-last-change)
   ;; (global-set-key (kbd "C-\\") 'goto-last-change)
-
   ;; kill buffers without prompt
   (setq kill-buffer-query-functions (remq 'process-kill-buffer-query-function kill-buffer-query-functions))
-
   (setq ediff-split-window-function 'split-window-vertically
         ediff-window-setup-function 'ediff-setup-windows-plain)
-
   ;; Ispell
   (eval-after-load "ispell"
     (progn
@@ -483,57 +482,59 @@ you should place your code here."
               (setq ess-eval-visibly nil)
               )
             )
-  ;; (add-hook 'org-mode-hook
-  ;;           (lambda ()
-  ;;             ;; (require 'org-ref)
-  ;;             ;; ;; (defun helm-bibtex-format-pandoc-citation (keys)
-  ;;             ;; ;;   (concat "[" (mapconcat (lambda (key) (concat "@" key)) keys "; ") "]"))
-  ;;             ;; ;; ;; inform helm-bibtex how to format the citation in org-mode
-  ;;             ;; ;; (setf (cdr (assoc 'org-mode helm-bibtex-format-citation-functions))
-  ;;             ;; ;;       'helm-bibtex-format-pandoc-citation)
-  ;;             ;; ;;(set org-pandoc-options-for-docx "--bibtex")
-  ;;             ;; (setq helm-bibtex-format-citation-functions
-  ;;             ;;       '((org-mode . (lambda (x) (insert (concat
-  ;;             ;;                                          "\\cite{"
-  ;;             ;;                                          (mapconcat 'identity x ",")
-  ;;             ;;                                          "}")) ""))))
-  ;;             ;; ))
-  ;;             ;; see org-ref for use of these variables
-  ;;             (setq reftex-default-bibliography '("~/zotero/Insects.bib"))
-  ;;             (setq org-ref-bibliography-notes "~/zotero/biblio-notes.org")
-  ;;             (setq org-ref-default-bibliography '("~/action/bugs/Literature-notes.org"))
-  ;;             (setq org-ref-pdf-directory "~/zotero/")
-  ;;             (setq bibtex-completion-bibliography "~/zotero/Insects.bib")
-  ;;             (setq helm-bibtex-library-path "~/action/bugs/Literature/")
-  ;;             ;; (setq helm-bibtex-pdf-open-function 'org-open-file)
-  ;;             (setq helm-bibtex-notes-path "~/zotero")
-  ;;             (require 'org-ref)
-  ;;             (require 'org-ref-latex)
-  ;;             (require 'org-ref-pdf)
-  ;;             (require 'org-ref-url-utils)
-  ;;             (setq org-latex-pdf-process
-  ;;                   '("pdflatex -interaction nonstopmode -output-directory %o %f"
-  ;;                     "bibtex %b"
-  ;;                     "pdflatex -interaction nonstopmode -output-directory %o %f"
-  ;;                     "pdflatex -interaction nonstopmode -output-directory %o %f"))
-  ;;             (org-babel-do-load-languages
-  ;;              'org-babel-load-languages
-  ;;              '((emacs-lisp . nil)
-  ;;                (R . t)
-  ;;                (python . t)
-  ;;                ))
-  ;;             (setq org-confirm-babel-evaluate nil)
-  ;;             ;; (defun my-org-confirm-babel-evaluate (lang body)
-  ;;             ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
-  ;;             ;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
-  ;;             )
-  ;;           (setq org-startup-with-inline-images nil)
-  ;;           )
+  (add-hook 'org-mode-hook
+            (lambda ()
+              ;; (require 'org-ref)
+              ;; ;; (defun helm-bibtex-format-pandoc-citation (keys)
+              ;; ;;   (concat "[" (mapconcat (lambda (key) (concat "@" key)) keys "; ") "]"))
+              ;; ;; ;; inform helm-bibtex how to format the citation in org-mode
+              ;; ;; (setf (cdr (assoc 'org-mode helm-bibtex-format-citation-functions))
+              ;; ;;       'helm-bibtex-format-pandoc-citation)
+              ;; ;;(set org-pandoc-options-for-docx "--bibtex")
+              ;; (setq helm-bibtex-format-citation-functions
+              ;;       '((org-mode . (lambda (x) (insert (concat
+              ;;                                          "\\cite{"
+              ;;                                          (mapconcat 'identity x ",")
+              ;;                                          "}")) ""))))
+              ;; ))
+              ;; see org-ref for use of these variables
+              (setq reftex-default-bibliography '("~/zotero/Insects.bib"))
+              (setq org-ref-bibliography-notes "~/zotero/biblio-notes.org")
+              (setq org-ref-default-bibliography '("~/action/bugs/Literature-notes.org"))
+              (setq org-ref-pdf-directory "~/zotero/")
+              (setq bibtex-completion-bibliography "~/zotero/Insects.bib")
+              (setq helm-bibtex-library-path "~/action/bugs/literature/")
+              ;; (setq helm-bibtex-pdf-open-function 'org-open-file)
+              (setq bibtex-completion-notes-path "~/zotero")
+              (require 'org-ref)
+              (require 'org-ref-latex)
+              (require 'org-ref-pdf)
+              (require 'org-ref-url-utils)
+              (setq org-latex-pdf-process
+                    '("pdflatex -interaction nonstopmode -output-directory %o %f"
+                      "bibtex %b"
+                      "pdflatex -interaction nonstopmode -output-directory %o %f"
+                      "pdflatex -interaction nonstopmode -output-directory %o %f"))
+              (org-babel-do-load-languages
+               'org-babel-load-languages
+               '((emacs-lisp . nil)
+                 (R . t)
+                 (python . t)
+                 ))
+              (setq org-confirm-babel-evaluate nil)
+              ;; (defun my-org-confirm-babel-evaluate (lang body)
+              ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
+              ;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+              (setq org-startup-with-inline-images nil)
+              )
+            )
+  (require 'edit-server)
+  (edit-server-start)
   (add-hook 'markdown-mode-hook
             '(lambda () (define-key markdown-mode-map "\C-c[" 'helm-bibtex)))
   ;; (setq bibtex-completion-bibliography '("~/zotero/Insects.bib"))
-  (setq bibtex-completion-bibliography '("~/Documents/pubmaterials/anthropogenicSignal/CarboCountCH.bib"))
-  (setq reftex-default-bibliography '("~/Documents/pubmaterials/anthropogenicSignal/CarboCountCH.bib"))
+  (setq bibtex-completion-bibliography '("~/documents/pubmaterials/anthropogenicSignal/CarboCountCH.bib"))
+  (setq reftex-default-bibliography '("~/documents/pubmaterials/anthropogenicSignal/CarboCountCH.bib"))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -544,9 +545,10 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol t)
  '(org-agenda-files
    (quote
-    ("~/action/bugs/business_plan/QuNaV-Machbarkeit/Insektenzucht-Studie-technische-Machbarkeit.org" "~/action/bugs/insectaries/chli/ideas.org" "~/action/bugs/business_plan/QuNaV.org")))
+    ("~/action/bugs/business_plan/qunav.org" "~/action/bugs/insectaries/chli/ideas.org")))
  '(package-selected-packages
    (quote
     (zotxt request-deferred deferred yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox spinner pandoc-mode ox-pandoc ht orgit org-ref ivy helm-bibtex biblio parsebib biblio-core org-projectile pcache org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc markdown-mode magit-gitflow macrostep lua-mode lorem-ipsum live-py-mode linum-relative link-hint key-chord insert-shebang info+ indent-guide ido-vertical-mode hydra hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight ess-smart-equals ess-R-object-popup ess-R-data-view ctable ess julia-mode elisp-slime-nav dumb-jump diminish define-word cython-mode column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed auctex-latexmk auctex anaconda-mode pythonic f dash s aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))

@@ -1,210 +1,3 @@
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
-# ETH mount
-# mount -t cifs //nas-nethz-users.ethz.ch/share-o-$/oneyb /media/external/
-export HOST=`uname -n`
-export TERM=xterm-256color
-export EDITOR='vi'
-# Interesting:
-# http://ciaran.compsoc.com/commands.html
-
-# Arch wiki-search
-alias aw='wiki-search'
-alias awh='wiki-search-html'
-
-
-### ----- App related stuff ----- ###
-alias ask='ps aux | grep -i'
-alias agi='sudo apt-get install'
-alias agr='sudo apt-get remove'
-alias agu='sudo apt-get update && sudo apt-get dist-upgrade'
-alias agar='sudo apt-get autoremove'
-function o()
-{
-    if [[ $# -eq 1 ]] ; then
-	      if [[ -e $1 ]] ; then
-	          nohup xdg-open "$1" > /dev/null 2>&1 &
-	      else
-	          for o in `ls $*`; do
-		            nohup xdg-open "$o" > /dev/null 2>&1 &
-	          done
-	      fi
-    else
-	      for o in $*; do
-	          nohup xdg-open "$o" > /dev/null 2>&1 &
-	      done
-    fi
-}
-function cbc()
-{
-    echo $* | cb
-}
-function Rinstall()
-{
-    Rscript -e "install.packages(\"$1\", INSTALL_opts=c(\"--html\", \"--latex\"), destdir=Rpkg.cache.dir)"
-}
-
-
-function backport_debian()
-{
-    # apt-get update
-    mkdir -p $1-`date +%F`
-    cd $1-`date +%F`
-    sudo apt-get build-dep $1
-    sudo apt-get -b source $1
-    ls -l
-    sudo dpkg -i *.deb
-}
-
-# tex to docx
-# htlatex test.tex "xhtml,ooffice" "ooffice/! -cmozhtf" "-cooxtpipes -coo"
-#   pandoc sig-alternate.tex                \
-#     --from=latex                       \
-#     --to=docx                          \
-#     --biblatex                         \
-#     --bibliography sigproc.bib         \
-#     --output=sig-alternate.docx        \
-#     --reference-docx=my-reference.docx
-
-# Keyboard shortcuts
-# https://github.com/kermit666/dotfiles/tree/master/autokey
-
-# R stuff
-export R_PROFILE=~/documents/r/rprofile.site
-#export R_VERS=`R --version | grep -oE "[0-9]\.[0-9]+\.[0-9]{1}" -`
-# alias R-man='o /usr/local/lib/R/doc/manual/refman.pdf'
-# alias R-lang='o /usr/local/lib/R/doc/manual/R-lang.pdf'
-# alias R-data='o /usr/local/lib/R/doc/manual/R-data.pdf'
-# alias R-admin='o /usr/local/lib/R/doc/manual/R-admin.pdf'
-# alias R-exts='o /usr/local/lib/R/doc/manual/R-exts.pdf'
-# alias R-ints='o /usr/local/lib/R/doc/manual/R-ints.pdf'
-# alias R-book='o ~/Literature/Statistics/R_stuff/Books/Crawley_2007_The_R_Book.pdf'
-# alias GGplot='o ~/Literature/Statistics/R_stuff/Wickham_2008_ggplot2/Wickham_2009_ggplot2._Elegant_Graphics_for_Data_Analysis.PDF'
-
-# nook stuff - be sure to have the adbWireless on nook running
-alias Nook='adb connect 192.168.0.102'
-alias Nook='adb connect 192.168.0.102'
-
-### ----- File management ----- ###
-alias du='du -hs'
-alias rm='trash-put'
-alias rmold='rm *~ .*~'
-alias rmlatex='\rm *aux *log *out *synctex.gz *fdb_latexmk *fls *bbl'
-
-
-
-function play-song()
-{
-    grep -iE "${1}[^/]*$" /d/music/playlists/all_music.m3u > /tmp/currentplaylist.m3u
-    # find /d/music/$2 -type f -iname "*$1*" > /tmp/currentplaylist.m3u
-    mplayer -playlist /tmp/currentplaylist.m3u
-}
-
-function song-find()
-{
-    grep -iE "${1}[^/]*$" /d/music/playlists/all_music.m3u
-    # echo `find /D/Music/$2 -type f -iname "*$1*"`
-}
-
-### ----- Emacs stuff ----- ###
-function E()
-{
-    if [[ $# -eq 0 ]]; then
-	      sh -c "emacsclient -c" &
-    else
-	      sh -c "emacsclient -c $* " &
-    fi
-    #emacs -rv -fh --geometry 84x24+0+0 $1 &
-}
-function e()
-{
-    if [[ $# -eq 0 ]]; then
-	      emacsclient -nw
-    else
-	      emacsclient -nw "$*"
-    fi
-}
-# if [[ -n `which pandoc` ]]; then
-#     eval "$(pandoc --bash-completion)"
-# fi
-
-# R easy for the command line
-function Rex()
-{
-    Rscript -e "$*"
-}
-
-function spellcheck()
-{
-    reps=`grep -En '(\<.*\>[[:blank:]]+)\1' $1`
-    splitis=`grep -En 'to\ [A-Za-z]+ly' $1`
-    if [[ -z $reps ]]; then echo "No repeated words in $1";
-    else
-	      echo "Repeated words:"
-	      echo "$reps"
-    fi
-    if [[ -z $splitis ]]; then echo "No split infinitives in $1";
-    else
-	      echo "Split infinitives:"
-	      echo "$splitis"
-    fi
-}
-
-function Telephone()
-{
-    grep -il $1 ~/documents/crap/contacts/phone-numbers/* | while read file;
-    do cat ${file} | sed -r '/VCARD/d' \
-	          | sed -r 's/^.*:|=|2\.1//g' | sed -r 's/;/\ /g'
-    done
-}
-
-function convert-mts()
-{
-    mkdir -p mp4
-    ls *MTS | while read mp; do
-	      # echo converting ./$mp to mp4/${mp/.MTS}.mp4
- 	      avconv -y -threads 2 -i ./$mp -c:a copy -c:v copy mp4/${mp/.MTS}.mp4
-    done
-}
-
-
-function convert-flac()
-{
-    cd ~/Music
-    ls | while read dir; do
-	      echo Converting flacs in $dir
-	      flac2all_v3.38.py mp3 ./$dir/ -o ./$dir/mp3Copies
-    done
-    find -type d -empty -delete
-}
-
-function reduce-pix()
-{
-    if [[ $# -eq 0 ]]; then
-	      q=96
-    else
-	      q=$1
-    fi
-    mkdir tmp && mv *JPG tmp/ && cd tmp/
-    ls *JPG | while read pic; do
-	      convert -quality $q $pic ../$pic;
-    done
-    if [[ $? -eq 0 ]]; then cd .. && rm -rf tmp/; fi
-}
-
-function youtube()
-{
-    youtube-dl -t --extract-audio --audio-format "best" -k $1
-    rename 's/-[[:alnum:]_-]+\.mp/.mp/' *mp{3,4}
-}
-
-# get xbindkeys started
-if [ "$PWD" == ~ ]; then pkill xbindkeys; xbindkeys; fi
-
-
-
-# if [ -d ~/Downloads ]; then rmdir ~/Downloads; fi
-
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -308,30 +101,266 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+# ETH mount
+# mount -t cifs //nas-nethz-users.ethz.ch/share-o-$/oneyb /media/external/
+export HOST=`uname -n`
+export TERM=xterm-256color
+export EDITOR='vi'
+# Interesting:
+# http://ciaran.compsoc.com/commands.html
 
-# bash -c 'E' &
-# setxkbmap us
+# Arch wiki-search
+alias aw='wiki-search'
+alias awh='wiki-search-html'
 
-# # Eshell stuff
-# cat ~/.bashrc | sed -r "s/^ +//;/^alias/ !d;s/^alias ([^=]+)='(.*)'$/alias \1 '\2'/g" >~/.emacs.d/eshell/alias
-# echo "alias o 'xdg-open'" >~/.emacs.d/eshell/alias
 
-# export HH_CONFIG=hicolor         # get more colors
-# shopt -s histappend              # append new history items to .bash_history
-# export HISTCONTROL=ignorespace   # leading space hides commands from history
-# export HISTFILESIZE=10000        # increase history file size (default is 500)
-# export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
-# export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
-# if this is interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
-# if  [[ $- =~ .*i.* ]] && [[ $EMACS != "t" ]]; then bind '"\C-r": "^ hh \C-j"'; fi
-# if  [[ $- =~ .*i.* ]] && [[ $VI != "t" ]]; then bind '"\C-r": "0hh \C-j"'; fi
+### ----- App related stuff ----- ###
+alias ask='ps aux | grep -i'
+alias agi='sudo apt-get install'
+alias agr='sudo apt-get remove'
+alias agu='sudo apt-get update && sudo apt-get dist-upgrade'
+alias agar='sudo apt-get autoremove'
+function o()
+{
+    if [[ $# -eq 1 ]] ; then
+	      if [[ -e $1 ]] ; then
+	          nohup xdg-open "$1" > /dev/null 2>&1 &
+	      else
+	          for o in `ls $*`; do
+		            nohup xdg-open "$o" > /dev/null 2>&1 &
+	          done
+	      fi
+    else
+	      for o in $*; do
+	          nohup xdg-open "$o" > /dev/null 2>&1 &
+	      done
+    fi
+}
+function cbc()
+{
+    echo $* | cb
+}
+function Rinstall()
+{
+    Rscript -e "install.packages(\"$1\", INSTALL_opts=c(\"--html\", \"--latex\"), destdir=Rpkg.cache.dir)"
+}
+
+
+function backport_debian()
+{
+    # apt-get update
+    mkdir -p $1-`date +%F`
+    cd $1-`date +%F`
+    sudo apt-get build-dep $1
+    sudo apt-get -b source $1
+    ls -l
+    sudo dpkg -i *.deb
+}
+
+# tex to docx
+# htlatex test.tex "xhtml,ooffice" "ooffice/! -cmozhtf" "-cooxtpipes -coo"
+#   pandoc sig-alternate.tex                \
+#     --from=latex                       \
+#     --to=docx                          \
+#     --biblatex                         \
+#     --bibliography sigproc.bib         \
+#     --output=sig-alternate.docx        \
+#     --reference-docx=my-reference.docx
+
+# Keyboard shortcuts
+# https://github.com/kermit666/dotfiles/tree/master/autokey
+
+# R stuff
+export R_PROFILE=~/documents/r/rprofile.site
+#export R_VERS=`R --version | grep -oE "[0-9]\.[0-9]+\.[0-9]{1}" -`
+# alias R-man='o /usr/local/lib/R/doc/manual/refman.pdf'
+# alias R-lang='o /usr/local/lib/R/doc/manual/R-lang.pdf'
+# alias R-data='o /usr/local/lib/R/doc/manual/R-data.pdf'
+# alias R-admin='o /usr/local/lib/R/doc/manual/R-admin.pdf'
+# alias R-exts='o /usr/local/lib/R/doc/manual/R-exts.pdf'
+# alias R-ints='o /usr/local/lib/R/doc/manual/R-ints.pdf'
+# alias R-book='o ~/Literature/Statistics/R_stuff/Books/Crawley_2007_The_R_Book.pdf'
+# alias GGplot='o ~/Literature/Statistics/R_stuff/Wickham_2008_ggplot2/Wickham_2009_ggplot2._Elegant_Graphics_for_Data_Analysis.PDF'
+
+
+# # # # # # # # # # # # # # # # # # # # # # #
+# CSCS stuff
+# File Server, Front-end
+alias ela='ssh -YC oneyb@ela.cscs.ch'
+# Cray XE6
+alias rosa='ssh -YC oneyb@rosa.cscs.ch'
+# Cray XE5
+alias albis='ssh -YC oneyb@albis.cscs.ch'
+# Cray XE5
+alias lema='ssh -YC oneyb@lema.cscs.ch'
+# pre and post processing cluster
+alias ela-mount='sshfs oneyb@ela.cscs.ch:/ $HOME/cscs_mount'
+# SB Cluster
+alias pilatus='ssh -YC oneyb@pilatus.cscs.ch'
+# # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+### ----- Random Documentation stuff ----- ###
+function bulgarian ()
+{
+    name=/d/literature/languages/bulgarian/intensive-bulgarian-1/`printf %.2d $1`.-track-$1.flac
+    mplayer $name
+}
+function spanish ()
+{
+    name=/d/literature/languages/spanish/caminos-plus-2-cd-zum-arbeitsbuch/`printf %.2d $1`-track-$1.mp3
+    mplayer $name
+}
+alias schwiizertuetsch='o /d/literature/languages/german/misc/schwyzertüütsch-praktische-sprachlehre-des-schweizerdeutschen.pdf'
+
+# # Image processing tricks
+# montage *.png -title "\n Lägern-Hochwacht\n" -crop +0+96 -mode concatenate -tile x4 Lae-3d-TS.png
+# mencoder mf://*10-50_main_CO2_*.png -mf w=800:h=600:fps=3:type=png -ovc copy -oac copy -o CO2_D2_A_E_10-50.avi
+
+### ----- Presentation stuff ----- ###
+## Impressive presentation
+alias impress='impressive --nologo -c memory -L time=BL --fontsize 16'
+
+# nook stuff - be sure to have the adbWireless on nook running
+alias Nook='adb connect 192.168.0.102'
+alias Nook='adb connect 192.168.0.102'
+
+### ----- File management ----- ###
+alias du='du -hs'
+alias rm='trash-put'
+alias rmold='rm *~ .*~'
+alias rmlatex='\rm *aux *log *out *synctex.gz *fdb_latexmk *fls *bbl'
+
+function red()
+{
+	if [[ -n "`pgrep -f emacs`" ]]; then
+	    killall -w 'emacs --daemon'
+	    emacs --daemon
+	else
+	    emacs --daemon
+	fi
+}
+
+
+function play-song()
+{
+    grep -iE "${1}[^/]*$" /d/music/playlists/all_music.m3u > /tmp/currentplaylist.m3u
+    # find /d/music/$2 -type f -iname "*$1*" > /tmp/currentplaylist.m3u
+    mplayer -playlist /tmp/currentplaylist.m3u
+}
+
+function song-find()
+{
+    grep -iE "${1}[^/]*$" /d/music/playlists/all_music.m3u
+    # echo `find /D/Music/$2 -type f -iname "*$1*"`
+}
+
+### ----- Emacs stuff ----- ###
+function E()
+{
+    if [[ $# -eq 0 ]]; then
+	      sh -c "emacsclient -c" &
+    else
+	      sh -c "emacsclient -c $* " &
+    fi
+    #emacs -rv -fh --geometry 84x24+0+0 $1 &
+}
+function e()
+{
+    if [[ $# -eq 0 ]]; then
+	      emacsclient -nw
+    else
+	      emacsclient -nw "$*"
+    fi
+}
+# if [[ -n `which pandoc` ]]; then
+#     eval "$(pandoc --bash-completion)"
+# fi
+
+# R easy for the command line
+function Rex()
+{
+    Rscript -e "$*"
+}
+
+function spellcheck()
+{
+    reps=`grep -En '(\<.*\>[[:blank:]]+)\1' $1`
+    splitis=`grep -En 'to\ [A-Za-z]+ly' $1`
+    if [[ -z $reps ]]; then echo "No repeated words in $1";
+    else
+	      echo "Repeated words:"
+	      echo "$reps"
+    fi
+    if [[ -z $splitis ]]; then echo "No split infinitives in $1";
+    else
+	      echo "Split infinitives:"
+	      echo "$splitis"
+    fi
+}
+
+function Telephone()
+{
+    grep -il $1 ~/documents/crap/contacts/phone-numbers/* | while read file;
+    do cat ${file} | sed -r '/VCARD/d' \
+	          | sed -r 's/^.*:|=|2\.1//g' | sed -r 's/;/\ /g'
+    done
+}
+
+function convert-mts()
+{
+    mkdir -p mp4
+    ls *MTS | while read mp; do
+	      # echo converting ./$mp to mp4/${mp/.MTS}.mp4
+ 	      avconv -y -threads 2 -i ./$mp -c:a copy -c:v copy mp4/${mp/.MTS}.mp4
+    done
+}
+
+function convert-flac()
+{
+    cd ~/music
+    ls | while read dir; do
+	      echo Converting flacs in $dir
+	      flac2all_v3.38.py mp3 ./$dir/ -o ./$dir/mp3-copies
+    done
+    find -type d -empty -delete
+}
+
+function reduce-pix()
+{
+    if [[ $# -eq 0 ]]; then
+	      q=96
+    else
+	      q=$1
+    fi
+    mkdir tmp && mv *JPG tmp/ && cd tmp/
+    ls *JPG | while read pic; do
+	      convert -quality $q $pic ../$pic;
+    done
+    if [[ $? -eq 0 ]]; then cd .. && rm -rf tmp/; fi
+}
+
+function youtube()
+{
+    youtube-dl -t --extract-audio --audio-format "best" -k $1
+    rename 's/-[[:alnum:]_-]+\.mp/.mp/' *mp{3,4}
+}
+
+# if [ -d ~/Downloads ]; then rmdir ~/Downloads; fi
+
+# get xbindkeys started
+if [ "$PWD" == ~ ]; then pkill xbindkeys; xbindkeys; fi
+
 if  [[ $- =~ .*i.* ]]; then  sh -c "~/bin/xb &"  ; fi
 
 if [[ -n `pgrep -f 'emacs --smid'` ]]; then
     pkill -f 'emacs --smid'
 fi
 
+# # keyboard stuff
 # setxkbmap -option "compose:caps"
 # setxkbmap -option "caps:swapescape"
-setxkbmap -option "caps:escape"
+# setxkbmap -option "caps:escape"
 set -o vi
+

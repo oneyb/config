@@ -1,23 +1,26 @@
 #!/usr/bin/env bash
-dir=~/documents/config
+dir=$HOME/documents/config
+
+stuff="
+     $HOME/.xbindkeysrc
+     $HOME/.spacemacs
+     $HOME/.bashrc
+     $HOME/.config/awesome/themes/zenburn/theme.lua
+     $HOME/.config/awesome/rc.lua
+     $HOME/documents/r/rprofile.site
+     $HOME/bin/.configure_linux.sh
+     $HOME/bin/.copy-config.sh
+"
+
 
 if [[ $1 == "out" ]];then
-    cp -r ~/.{spacemacs,bashrc,xbindkeysrc} $dir
-    # # awesome stuff
-    # cp -r ~/.config/awesom...  $dir
-    cp -r ~/documents/r/rprofile.site $dir
-    # # installation stuff
-    # cp -r ~/bin/.config...  $dir
+    cp $stuff $dir/
+    echo commit like this:
+    echo '    git commit --git-dir $HOME/documents/config -m "saving things" && git push origin master'
 fi
 
 if [[ $1 == "in" ]];then
-    cp -r $dir/.{spacemacs,bashrc,xbindkeysrc} ~
-    # # awesome stuff
-    # cp -r ~/.config/awesom...  $dir
-    cp -r $dir/rprofile.site ~/documents/r/
-    # # installation stuff
-    # cp -r ~/bin/.config...  $dir
+    for s in $stuff; do
+        cp $dir/`basename $s` `dirname $s`
+    done
 fi
-
-echo commit like this
-echo 'git commit -m "saving things" && git push origin master'

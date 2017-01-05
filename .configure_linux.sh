@@ -17,16 +17,17 @@ sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       
       pavucontrol pcmanfm pdftk proj-bin proj-data pulseaudio                   \
       pulseaudio-module-x11 pulseaudio-utils pyflakes python python-cups        \
       python-cupshelpers python-flake8 python-libxml2 python-matplotlib         \
-    python-numpy python-openpyxl python-openssl python-pandas python-jsonrpclib \
-      python-pyparsing python-scipy python-setuptools python-simplejson         \
-      python-unittest2 python3 qpdf qpdfview r-base r-cran-xml2 \
-      r-cran-ncdf4 recordmydesktop ristretto   \
-      rsync scrot seahorse simple-scan smplayer subversion suckless-tools       \
-      synaptic tor tor-arm tor-geoipdb torsocks transmission-gtk trash-cli      \
-      udevil unattended-upgrades unoconv vim-gtk wget epiphany-browser          \
-      bleachbit wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool   \
-      xfburn xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere  \
-      xul-ext-noscript libssl-dev libgdal-dev python-gdal libmariadb-client-lgpl-dev exfat-utils
+      python-numpy python-openpyxl python-openssl python-pandas                 \
+      python-jsonrpclib python-pyparsing python-scipy python-setuptools         \
+      python-simplejson python-unittest2 python3 qpdf qpdfview r-base           \
+      r-cran-xml2 r-cran-ncdf4 recordmydesktop ristretto rsync scrot seahorse   \
+      simple-scan smplayer subversion suckless-tools synaptic tor tor-arm       \
+      tor-geoipdb torsocks transmission-gtk trash-cli udevil                    \
+      unattended-upgrades unoconv vim-gtk wget epiphany-browser bleachbit       \
+      wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool xfburn      \
+      xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere         \
+      xul-ext-noscript libssl-dev libgdal-dev python-gdal                       \
+      libmariadb-client-lgpl-dev exfat-utils python-pdfminer pdfminer-data
 
 
 # Playonlinux!!
