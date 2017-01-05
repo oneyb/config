@@ -16,7 +16,7 @@ stuff="
 if [[ $1 == "out" ]];then
     cp $stuff $dir/
     echo commit like this:
-    echo '    git commit --git-dir $HOME/documents/config -m "saving things" && git push origin master'
+    echo "  cd $dir;  git commit . -m 'saving things' && git push origin master; cd -"
 fi
 
 if [[ $1 == "in" ]];then
