@@ -27,8 +27,12 @@ sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       
       wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool xfburn      \
       xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere         \
       xul-ext-noscript libssl-dev libgdal-dev python-gdal                       \
-      libmariadb-client-lgpl-dev exfat-utils python-pdfminer pdfminer-data
+      libmariadb-client-lgpl-dev exfat-utils python-pdfminer pdfminer-data      \
+      libxft-dev libfreetype6-dev python-pip python-pip3
 
+# python packages
+sudo pip install pandas ggplot
+sudo chmod 755 -R /usr/local/lib
 
 # Playonlinux!!
 wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -

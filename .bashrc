@@ -364,4 +364,3 @@ fi
 # setxkbmap -option "caps:escape"
 set -o vi
 
-echo Welcome home!

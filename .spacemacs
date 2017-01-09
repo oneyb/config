@@ -92,7 +92,9 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(
+                                    ;; ipython
+                                    )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -393,6 +395,7 @@ you should place your code here."
   (key-chord-define-global "wq" 'vim-wq)
   (key-chord-define-global "jk" 'my-escape-and-save)
   (key-chord-define-global "BB" 'my-escape-and-bury)
+  (key-chord-define-global "ii" 'complete-symbol)
   ;; ;; (flymake-mode)
   (setq text-mode-hook (quote (text-mode-hook-identify toggle-truncate-lines)))
   ;; (add-hook csv-mode 'toggle-truncate-lines)
@@ -460,6 +463,15 @@ you should place your code here."
                 )
               )
             )
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (spacemacs/set-leader-keys-for-major-mode 'python-mode
+                "," 'python-shell-send-defun-switch
+                "." 'python-shell-send-buffer-switch
+                "TAB" 'python-start-or-switch-repl
+                )
+              )
+            )
   (add-hook 'ess-mode-hook
             (lambda ()
               (spacemacs/set-leader-keys-for-major-mode 'ess-mode
@@ -490,7 +502,7 @@ you should place your code here."
               ;; ;; ;; inform helm-bibtex how to format the citation in org-mode
               ;; ;; (setf (cdr (assoc 'org-mode helm-bibtex-format-citation-functions))
               ;; ;;       'helm-bibtex-format-pandoc-citation)
-              ;; ;;(set org-pandoc-options-for-docx "--bibtex")
+              ;; ;;(
               ;; (setq helm-bibtex-format-citation-functions
               ;;       '((org-mode . (lambda (x) (insert (concat
               ;;                                          "\\cite{"
