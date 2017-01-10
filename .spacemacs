@@ -87,7 +87,6 @@ values."
                                       ox-pandoc
                                       key-chord
                                       org-ref
-                                      edit-server
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -328,10 +327,10 @@ values."
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
-It is called immediately after `dotspacemacs/init', before layer configuration
-executes.
- This function is mostly useful for variables that need to be set
-before packages are loaded. If you are unsure, you should try in setting them in
+It is called immediately after `dotspacemacs/init', before layer
+configuration executes.  This function is mostly useful for
+variables that need to be set before packages are loaded. If you
+are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (setq ess-eval-visibly nil)
   (setq ess-ask-for-ess-directory nil)
@@ -339,15 +338,13 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
-  (add-to-list 'auto-mode-alist '("\\.pdf\\'" . doc-view-mode-maybe))
-  (add-to-list 'auto-mode-alist '("\\.docx\\'" . doc-view-mode-maybe))
-  ;; (setq transient-mark-mode t)
+This function is called at the very end of Spacemacs
+initialization after layers configuration.  This is the place
+where most of your configurations should be done. Unless it is
+explicitly specified that a variable should be set before a
+package is loaded, you should place your code here."
   ;;(xclip-mode 1)
+  ;; (fset 'evil-visual-update-x-selection 'ignore)
   (setq x-select-enable-primary t)
   (setq x-select-enable-clipboard nil)
   (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
@@ -355,18 +352,15 @@ you should place your code here."
   (setq history-length 666)
   (setq-default history-delete-duplicates t)
   (setq-default kill-do-not-save-duplicates t)
-  ;; (fset 'evil-visual-update-x-selection 'ignore)
   (setq visible-bell t)
-  ;; (defalias 'list-buffers 'ibuffer)
-  (defalias 'ttl 'toggle-truncate-lines)
-  (defalias 'ke 'kill-emacs)
-  (defalias 'es 'eshell)
-  (defalias 'at 'ansi-term)
-  (defalias 'ss 'shell)
-  (defalias 'sd 'desktop-save-in-desktop-dir)
-  (defalias 'ed 'ediff-files)
+  (defalias 'ttl         'toggle-truncate-lines)
+  (defalias 'ke          'kill-emacs)
+  (defalias 'es          'eshell)
+  (defalias 'at          'ansi-term)
+  (defalias 'ss          'shell)
+  (defalias 'sd          'desktop-save-in-desktop-dir)
+  (defalias 'ed          'ediff-files)
   (defalias 'yes-or-no-p 'y-or-n-p)
-  (key-chord-mode 1)
   (defun my-escape-and-save ()
     "My escape and save"
     (interactive)
@@ -388,6 +382,7 @@ you should place your code here."
     )
   (setq sentence-end-double-space t)
   (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
+  (key-chord-mode 1)
   ;; (key-chord-define evil-insert-state-map "jk" 'evil-escape)
   ;; (key-chord-define evil-normal-state-map "lk" 'kill-this-buffer)
   ;; (key-chord-define evil-insert-state-map "df" 'evil-escape)
@@ -396,11 +391,7 @@ you should place your code here."
   (key-chord-define-global "jk" 'my-escape-and-save)
   (key-chord-define-global "BB" 'my-escape-and-bury)
   (key-chord-define-global "ii" 'complete-symbol)
-  ;; ;; (flymake-mode)
   (setq text-mode-hook (quote (text-mode-hook-identify toggle-truncate-lines)))
-  ;; (add-hook csv-mode 'toggle-truncate-lines)
-  ;; It's best to set window specifications from X: emacs -fh -geometry 80X24-0+0
-  ;; (set-frame-position (selected-frame) 683 1)
   (setq-default fill-column 78)
   ;; ;; Visual stuff
   ;; (set-frame-width (selected-frame) 112)
@@ -408,20 +399,13 @@ you should place your code here."
   ;; (setq frame-title-format '("%b | " mode-name))
   (setq frame-title-format '("%b"))
   (setq-default spacemacs-show-trailing-whitespace nil)
-  ;; (setq suggest-key-bindings nil)
-  ;; (setq frame-title-format (list "%b - " (getenv "USERNAME") "@" (getenv "USERDOMAIN")))
-  ;; (setq frame-title-format '((:eval (list "%f - " major-mode))))
   (setq doc-view-continuous t)
   (setq font-use-system-font t)
-  ;; (setq inhibit-startup-screen t)
   (setq display-time-day-and-date t display-time-24hr-format t)
   (display-time-mode 1)
   (setq truncate-lines t)
   (setq-default cursor-type '(bar . 3))
   (setq evil-move-cursor-back nil)
-  ;; (require 'goto-last-change)
-  ;; (global-set-key (kbd "C-\\") 'goto-last-change)
-  ;; kill buffers without prompt
   (setq kill-buffer-query-functions (remq 'process-kill-buffer-query-function kill-buffer-query-functions))
   (setq ediff-split-window-function 'split-window-vertically
         ediff-window-setup-function 'ediff-setup-windows-plain)
@@ -444,19 +428,13 @@ you should place your code here."
   (add-to-list 'ispell-skip-region-alist '("\\$" . "\\$"))
   (setq latex-run-command "pdflatex")
   (setq tex-process-asynchronous t)
-  (defun my-desktop ()
-    "Load the desktop and enable autosaving"
-    (interactive)
-    (let ((desktop-load-locked-desktop "ask"))
-      (desktop-read)
-      (desktop-save-mode 1))
-    )
   (set-face-attribute 'default nil :height 94)
   (add-hook 'LaTeX-mode-hook (lambda () (require 'org-ref)))
   (add-hook 'sh-mode-hook
             (lambda ()
               (spacemacs/set-leader-keys-for-major-mode 'sh-mode
                 "," 'sh-send-line-or-region-and-step
+                "i" 'complete-symbol
                 ;; "," 'sh-execute-region
                 ;; "." 'sh-exec
                 ;; "hh" 'sh-heredoc
@@ -466,9 +444,11 @@ you should place your code here."
   (add-hook 'python-mode-hook
             (lambda ()
               (spacemacs/set-leader-keys-for-major-mode 'python-mode
-                "," 'python-shell-send-defun-switch
-                "." 'python-shell-send-buffer-switch
+                ","   'python-shell-send-defun-switch
+                "."   'python-shell-send-buffer-switch
+                "i"   'complete-symbol
                 "TAB" 'python-start-or-switch-repl
+
                 )
               )
             )
@@ -485,10 +465,10 @@ you should place your code here."
                 ;; "cN" 'ess-noweb-previous-chunk
                 ;; "cn" 'ess-noweb-next-chunk
                 ;; REPL
-                "," 'ess-eval-function-or-paragraph-and-step
-                "i" 'complete-symbol
-                "." 'ess-eval-region-or-line-and-step
-                "hh" 'ess-display-help-on-object
+                ","   'ess-eval-function-or-paragraph-and-step
+                "i"   'complete-symbol
+                "."   'ess-eval-region-or-line-and-step
+                "hh"  'ess-display-help-on-object
                 "TAB" 'ess-switch-to-inferior-or-script-buffer
                 )
               (setq ess-eval-visibly nil)
@@ -510,14 +490,13 @@ you should place your code here."
               ;;                                          "}")) ""))))
               ;; ))
               ;; see org-ref for use of these variables
-              (setq reftex-default-bibliography '("~/zotero/Insects.bib"))
-              (setq org-ref-bibliography-notes "~/zotero/biblio-notes.org")
-              (setq org-ref-default-bibliography '("~/action/bugs/Literature-notes.org"))
-              (setq org-ref-pdf-directory "~/zotero/")
+              (setq reftex-default-bibliography    "~/zotero/Insects.bib")
+              (setq org-ref-bibliography-notes     "~/zotero/biblio-notes.org")
+              (setq org-ref-default-bibliography   "~/action/bugs/Literature-notes.org")
+              (setq org-ref-pdf-directory          "~/zotero/")
               (setq bibtex-completion-bibliography "~/zotero/Insects.bib")
-              (setq helm-bibtex-library-path "~/action/bugs/literature/")
-              ;; (setq helm-bibtex-pdf-open-function 'org-open-file)
-              (setq bibtex-completion-notes-path "~/zotero")
+              (setq helm-bibtex-library-path       "~/action/bugs/literature/")
+              (setq bibtex-completion-notes-path   "~/zotero")
               (require 'org-ref)
               (require 'org-ref-latex)
               (require 'org-ref-pdf)
@@ -530,45 +509,53 @@ you should place your code here."
               (org-babel-do-load-languages
                'org-babel-load-languages
                '((emacs-lisp . nil)
-                 (R . t)
-                 (python . t)
+                 (R            . t)
+                 (python       . t)
                  ))
               (setq org-confirm-babel-evaluate nil)
               ;; (defun my-org-confirm-babel-evaluate (lang body)
               ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
               ;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
               (setq org-startup-with-inline-images nil)
+              (setq org-file-apps
+                    (append '(
+                              ("\\.png\\'"   . system)
+                              ("\\.pdf\\'"   . system)
+                              ("\\.docx?\\'" . system)
+                              ("\\.html\\'"  . system)
+                              )
+                            org-file-apps )
+                    )
               )
             )
-  (require 'edit-server)
-  (edit-server-start)
+  (add-to-list 'auto-mode-alist '("\\.eml\\'" . org-mode))
   (add-hook 'markdown-mode-hook
-            '(lambda () (define-key markdown-mode-map "\C-c[" 'helm-bibtex)))
-  ;; (setq bibtex-completion-bibliography '("~/zotero/Insects.bib"))
-  (setq bibtex-completion-bibliography '("~/documents/pubmaterials/anthropogenicSignal/CarboCountCH.bib"))
-  (setq reftex-default-bibliography '("~/documents/pubmaterials/anthropogenicSignal/CarboCountCH.bib"))
+            '(lambda () (define-key markdown-mode-map "\c-c[" 'helm-bibtex)))
+  ;; (setq bibtex-completion-bibliography '("~/zotero/insects.bib"))
+  (setq bibtex-completion-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
+  (setq reftex-default-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
   )
 
-;; Do not write anything past this comment. This is where Emacs will
+;; do not write anything past this comment. this is where emacs will
 ;; auto-generate custom variable definitions.
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-want-Y-yank-to-eol t)
+ ;; custom-set-variables was added by custom.
+ ;; if you edit it by hand, you could mess it up, so be careful.
+ ;; your init file should contain only one such instance.
+ ;; if there is more than one, they won't work right.
+ '(evil-want-y-yank-to-eol t)
  '(org-agenda-files
    (quote
     ("~/action/bugs/business_plan/qunav.org" "~/action/bugs/insectaries/chli/ideas.org")))
  '(package-selected-packages
    (quote
-    (zotxt request-deferred deferred yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox spinner pandoc-mode ox-pandoc ht orgit org-ref ivy helm-bibtex biblio parsebib biblio-core org-projectile pcache org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc markdown-mode magit-gitflow macrostep lua-mode lorem-ipsum live-py-mode linum-relative link-hint key-chord insert-shebang info+ indent-guide ido-vertical-mode hydra hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight ess-smart-equals ess-R-object-popup ess-R-data-view ctable ess julia-mode elisp-slime-nav dumb-jump diminish define-word cython-mode column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed auctex-latexmk auctex anaconda-mode pythonic f dash s aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
+    (zotxt request-deferred deferred yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox spinner pandoc-mode ox-pandoc ht orgit org-ref ivy helm-bibtex biblio parsebib biblio-core org-projectile pcache org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc markdown-mode magit-gitflow macrostep lua-mode lorem-ipsum live-py-mode linum-relative link-hint key-chord insert-shebang info+ indent-guide ido-vertical-mode hydra hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight ess-smart-equals ess-r-object-popup ess-r-data-view ctable ess julia-mode elisp-slime-nav dumb-jump diminish define-word cython-mode column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed auctex-latexmk auctex anaconda-mode pythonic f dash s aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
 
 
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by custom.
+ ;; if you edit it by hand, you could mess it up, so be careful.
+ ;; your init file should contain only one such instance.
+ ;; if there is more than one, they won't work right.
  )
