@@ -65,7 +65,7 @@ sudo mandb
 pkgs="
  https://github.com/jgm/pandoc/releases/download/1.18/pandoc-1.18-1-amd64.deb
  https://github.com/Aluxian/Whatsie/releases/download/v2.1.0/whatsie-2.1.0-linux-amd64.deb
- https://github.com/Aluxian/Facebook-Messenger-Desktop/releases/download/v1.4.3/Messenger_linux64.deb
+ https://github.com/Aluxian/Messenger-for-Desktop/releases/download/v2.0.4/messengerfordesktop-2.0.4-linux-amd64.deb
 "
 for p in $pkgs; do
     wget $p
@@ -92,9 +92,9 @@ mv AdbeRdr9*.deb ~/bin/src/
 
 # archwiki
 wget https://www.archlinux.org/packages/community/any/arch-wiki-docs/download/ -O arch-wiki-docs.tar.xz
-tar xJf arch-wiki-docs.tar.xz -C /
+sudo tar xJf arch-wiki-docs.tar.xz -C /
 wget https://www.archlinux.org/packages/community/any/arch-wiki-lite/download/ -O arch-wiki-lite.tar.xz
-tar xJf arch-wiki-lite.tar.xz -C /
+sudo tar xJf arch-wiki-lite.tar.xz -C /
 mv arch-wiki* ~/bin/src/
 sudo rm /.BUILDINFO /.MTREE /.PKGINFO
 
