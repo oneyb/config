@@ -52,20 +52,16 @@ values."
      lua
      (markdown
       :eval-after-load
-      (auto-fill-mode 1)
+      ;; (auto-fill-mode 1)
       (spacemacs/toggle-auto-completion)
       )
      pandoc
      ;; org
-     (org
-      :eval-after-load
-      (auto-fill-mode 1)
-      (spacemacs/toggle-auto-completion)
-      )
+     org
      (latex
       :variables latex-enable-auto-fill t
       :eval-after-load
-      (auto-fill-mode 1)
+      ;; (auto-fill-mode 1)
       (spacemacs/toggle-auto-completion)
       )
      ;; tbemail
@@ -505,7 +501,12 @@ package is loaded, you should place your code here."
               (setq bibtex-completion-bibliography "~/zotero/Insects.bib")
               (setq helm-bibtex-library-path       "~/action/bugs/literature/")
               (setq bibtex-completion-notes-path   "~/zotero")
-              (require 'org-ref)
+              (spacemacs/set-leader-keys-for-major-mode 'ess-mode
+                "ir"   'org-ref-helm-insert-cite-link
+                )
+
+
+       (require 'org-ref)
               (require 'org-ref-latex)
               (require 'org-ref-pdf)
               (require 'org-ref-url-utils)
@@ -534,8 +535,11 @@ package is loaded, you should place your code here."
                               )
                             org-file-apps )
                     )
+              (auto-fill-mode 1)
+              (spacemacs/toggle-auto-completion)
               )
             )
+
   (add-to-list 'auto-mode-alist '("\\.eml\\'" . org-mode))
   (add-hook 'markdown-mode-hook
             '(lambda () (define-key markdown-mode-map "\c-c[" 'helm-bibtex)))
@@ -548,22 +552,23 @@ package is loaded, you should place your code here."
 ;; auto-generate custom variable definitions.
 
 (custom-set-variables
- ;; custom-set-variables was added by custom.
- ;; if you edit it by hand, you could mess it up, so be careful.
- ;; your init file should contain only one such instance.
- ;; if there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol t)
  '(evil-want-y-yank-to-eol t)
  '(org-agenda-files
    (quote
-    ("~/action/bugs/business_plan/qunav.org" "~/action/bugs/insectaries/chli/ideas.org")))
+    ("~/Breeding/blw-projekt/technische-machbarkeit/insektenzucht-studie-technische-machbarkeit.org" "~/action/bugs/business_plan/qunav.org" "~/action/bugs/insectaries/chli/ideas.org")))
  '(package-selected-packages
    (quote
     (zotxt request-deferred deferred yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox spinner pandoc-mode ox-pandoc ht orgit org-ref ivy helm-bibtex biblio parsebib biblio-core org-projectile pcache org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc markdown-mode magit-gitflow macrostep lua-mode lorem-ipsum live-py-mode linum-relative link-hint key-chord insert-shebang info+ indent-guide ido-vertical-mode hydra hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight ess-smart-equals ess-r-object-popup ess-r-data-view ctable ess julia-mode elisp-slime-nav dumb-jump diminish define-word cython-mode column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed auctex-latexmk auctex anaconda-mode pythonic f dash s aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
 
 
 (custom-set-faces
- ;; custom-set-faces was added by custom.
- ;; if you edit it by hand, you could mess it up, so be careful.
- ;; your init file should contain only one such instance.
- ;; if there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )

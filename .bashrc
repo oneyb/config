@@ -364,3 +364,4 @@ fi
 # setxkbmap -option "caps:escape"
 set -o vi
 
+xkbset exp 1 =sticky -twokey -latchlock
