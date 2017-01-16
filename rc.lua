@@ -62,6 +62,12 @@ filewidget:buttons(awful.util.table.join(
 		      awful.button({ }, 1, function () awful.util.spawn("pcmanfm") end)
 ))
 
+ffwidget = widget({ type = "imagebox" })
+ffwidget.image = image(awful.util.getdir("config") .. "/icons/firefox.png")
+ffwidget:buttons(awful.util.table.join(
+                    awful.button({ }, 1, function () awful.util.spawn("firefox") end)
+))
+
 webwidget = widget({ type = "imagebox" })
 webwidget.image = image(awful.util.getdir("config") .. "/icons/web-browser.png")
 webwidget:buttons(awful.util.table.join(
@@ -348,6 +354,7 @@ for s = 1, screen.count() do
       emacswidget,
       mailwidget,
       webwidget,
+      ffwidget,
       cwebwidget,
       fbmesswidget,
       whatsappwidget,

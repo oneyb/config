@@ -128,7 +128,7 @@ values."
    ;; when the current branch is not `develop'. Note that checking for
    ;; new versions works via git commands, thus it calls GitHub services
    ;; whenever you start Emacs. (default nil)
-   dotspacemacs-check-for-update nil
+   dotspacemacs-check-for-update t
    ;; If non-nil, a form that evaluates to a package directory. For example, to
    ;; use different package directories for different Emacs versions, set this
    ;; to `emacs-version'.
@@ -347,7 +347,7 @@ initialization after layers configuration.  This is the place
 where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a
 package is loaded, you should place your code here."
-  ;;(xclip-mode 1)
+  ;; (xclip-mode 1)
   ;; (fset 'evil-visual-update-x-selection 'ignore)
   (setq x-select-enable-primary t)
   (setq x-select-enable-clipboard nil)
@@ -501,7 +501,7 @@ package is loaded, you should place your code here."
               (setq bibtex-completion-bibliography "~/zotero/Insects.bib")
               (setq helm-bibtex-library-path       "~/action/bugs/literature/")
               (setq bibtex-completion-notes-path   "~/zotero")
-              (spacemacs/set-leader-keys-for-major-mode 'ess-mode
+              (spacemacs/set-leader-keys-for-major-mode 'org-mode
                 "ir"   'org-ref-helm-insert-cite-link
                 )
 
@@ -517,7 +517,8 @@ package is loaded, you should place your code here."
                       "pdflatex -interaction nonstopmode -output-directory %o %f"))
               (org-babel-do-load-languages
                'org-babel-load-languages
-               '((emacs-lisp . nil)
+               '(
+                 (emacs-lisp   . nil)
                  (R            . t)
                  (python       . t)
                  ))
