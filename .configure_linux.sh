@@ -62,12 +62,12 @@ sudo mkdir -p /usr/local/share/man/man1
 sudo cp rclone.1 /usr/local/share/man/man1/
 sudo mandb
 
-pkgs="
- https://github.com/jgm/pandoc/releases/download/1.18/pandoc-1.18-1-amd64.deb
+pkgs=(
+ https://github.com/jgm/pandoc/releases/download/1.19.1/pandoc-1.19.1-1-amd64.deb
  https://github.com/Aluxian/Whatsie/releases/download/v2.1.0/whatsie-2.1.0-linux-amd64.deb
  https://github.com/Aluxian/Messenger-for-Desktop/releases/download/v2.0.4/messengerfordesktop-2.0.4-linux-amd64.deb
-"
-for p in $pkgs; do
+)
+for p in ${pkgs[0]}; do
     wget $p
     sudo dpkg -i `basename $p`
     if [ $# -eq 0 ]; then

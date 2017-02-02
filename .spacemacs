@@ -78,6 +78,7 @@ values."
      ;; ranger
      ;; vinegar
      csv
+     ipython-notebook
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -394,7 +395,7 @@ package is loaded, you should place your code here."
   (key-chord-define-global "wq" 'vim-wq)
   (key-chord-define-global "jk" 'my-escape-and-save)
   (key-chord-define-global "BB" 'my-escape-and-bury)
-  (key-chord-define-global "ii" 'complete-symbol)
+  (key-chord-define-global "ii" 'completion-at-point)
   (setq text-mode-hook (quote (text-mode-hook-identify toggle-truncate-lines)))
   (setq-default fill-column 78)
   ;; ;; Visual stuff
@@ -501,12 +502,13 @@ package is loaded, you should place your code here."
               (setq bibtex-completion-bibliography "~/zotero/Insects.bib")
               (setq helm-bibtex-library-path       "~/action/bugs/literature/")
               (setq bibtex-completion-notes-path   "~/zotero")
+              ;; (spacemacs/set-leader-keys-for-minor-mode 'org-mode
+              ;;   "ir"   'org-ref-helm-insert-cite-link
+              ;;   )
               (spacemacs/set-leader-keys-for-major-mode 'org-mode
                 "ir"   'org-ref-helm-insert-cite-link
                 )
-
-
-       (require 'org-ref)
+              (require 'org-ref)
               (require 'org-ref-latex)
               (require 'org-ref-pdf)
               (require 'org-ref-url-utils)
@@ -518,24 +520,24 @@ package is loaded, you should place your code here."
               (org-babel-do-load-languages
                'org-babel-load-languages
                '(
-                 (emacs-lisp   . nil)
-                 (R            . t)
-                 (python       . t)
+                 (emacs-lisp . nil)
+                 (R          . t)
+                 (python     . t)
                  ))
               (setq org-confirm-babel-evaluate nil)
               ;; (defun my-org-confirm-babel-evaluate (lang body)
               ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
               ;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
               (setq org-startup-with-inline-images nil)
-              (setq org-file-apps
-                    (append '(
-                              ("\\.png\\'"   . system)
-                              ("\\.pdf\\'"   . system)
-                              ("\\.docx?\\'" . system)
-                              ("\\.html\\'"  . system)
-                              )
-                            org-file-apps )
-                    )
+              ;; (setq org-file-apps
+              ;;       (append '(
+              ;;                 ("\\.png\\'"   . system)
+              ;;                 ("\\.pdf\\'"   . system)
+              ;;                 ("\\.docx?\\'" . system)
+              ;;                 ("\\.html\\'"  . system)
+              ;;                 )
+              ;;               org-file-apps )
+              ;;       )
               (auto-fill-mode 1)
               (spacemacs/toggle-auto-completion)
               )

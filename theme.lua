@@ -8,7 +8,7 @@
 
 -- {{{ Main
 theme = {}
-theme.wallpaper_cmd = { "awsetbg /home/oney/pictures/wallpapers/gsl3.jpg" }
+theme.wallpaper_cmd = { "awsetbg /home/oney/pictures/backgrounds/gsl3.jpg" }
 -- }}}
 
 -- {{{ Styles
