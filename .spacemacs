@@ -79,6 +79,8 @@ values."
      ;; vinegar
      csv
      ipython-notebook
+     ;; (ipython-notebook :variables ein:use-auto-complete t)
+     ipython
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these

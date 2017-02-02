@@ -144,18 +144,25 @@ function Rinstall()
 {
     Rscript -e "install.packages(\"$1\", INSTALL_opts=c(\"--html\", \"--latex\"), destdir=Rpkg.cache.dir)"
 }
-
 function turn-on-bw2-virtualenv ()
 {
     dir=/d/documents/eaternity/bw2
     if [  -z "$_OLD_VIRTUAL_PATH" ]; then
         echo activating
         source $dir/bin/activate
+        PROMPT_COMMAND='echo -ne "\033]0;Brightway2\007"'
     else
         echo deactivating
         deactivate
+        PROMPT_COMMAND='echo -ne "\033]0;Terminal\007"'
     fi
+    echo Restart emacs daemon?
     xdotool type red
+    # # Or
+	  # if [[ -n "`pgrep -f emacs`" ]]; then
+	  #     killall -w 'emacs'
+	  # fi
+	  # emacs --daemon
 }
 
 function backport_debian()
@@ -384,3 +391,7 @@ fi
 set -o vi
 
 xkbset exp 1 =sticky -twokey -latchlock
+
+
+# added by Miniconda3 4.2.12 installer
+export PATH="/d/documents/eaternity/bw2-py/bin:$PATH"
