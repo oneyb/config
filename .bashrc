@@ -145,6 +145,18 @@ function Rinstall()
     Rscript -e "install.packages(\"$1\", INSTALL_opts=c(\"--html\", \"--latex\"), destdir=Rpkg.cache.dir)"
 }
 
+function turn-on-bw2-virtualenv ()
+{
+    dir=/d/documents/eaternity/bw2
+    if [  -z "$_OLD_VIRTUAL_PATH" ]; then
+        echo activating
+        source $dir/bin/activate
+    else
+        echo deactivating
+        deactivate
+    fi
+    xdotool type red
+}
 
 function backport_debian()
 {
@@ -234,12 +246,10 @@ alias rmlatex='\rm *aux *log *out *synctex.gz *fdb_latexmk *fls *bbl'
 
 function red()
 {
-	if [[ -n "`pgrep -f emacs`" ]]; then
-	    killall -w 'emacs --daemon'
-	    emacs --daemon
-	else
-	    emacs --daemon
-	fi
+	  if [[ -n "`pgrep -f emacs`" ]]; then
+	      killall -w 'emacs'
+	  fi
+	  emacs --daemon
 }
 
 function wget-R()
