@@ -144,20 +144,31 @@ function Rinstall()
 {
     Rscript -e "install.packages(\"$1\", INSTALL_opts=c(\"--html\", \"--latex\"), destdir=Rpkg.cache.dir)"
 }
+
+function get-bash-functions-for-bw2 ()
+{
+    source /d/documents/eaternity/eaternity/install-brightway-functions.bash
+}
+
 function turn-on-bw2-virtualenv ()
 {
     dir=/d/documents/eaternity/bw2
-    if [  -z "$_OLD_VIRTUAL_PATH" ]; then
+    # if [ -z "$_OLD_VIRTUAL_PATH" ]; then
+    if [ -n "which conda" ]; then
         echo activating
+        # added by Miniconda3 4.2.12 installer
+        export PATH="/d/documents/eaternity/bw2-py/bin:$PATH"
         source $dir/bin/activate
         PROMPT_COMMAND='echo -ne "\033]0;Brightway2\007"'
     else
         echo deactivating
+        # added by Miniconda3 4.2.12 installer
         deactivate
         PROMPT_COMMAND='echo -ne "\033]0;Terminal\007"'
+        export PATH=$(echo $PATH | sed -r 's/^[^:]+://g')
     fi
-    echo Restart emacs daemon?
-    xdotool type red
+    # echo Restart emacs daemon?
+    # xdotool type red
     # # Or
 	  # if [[ -n "`pgrep -f emacs`" ]]; then
 	  #     killall -w 'emacs'
@@ -191,16 +202,6 @@ function backport_debian()
 
 # R stuff
 export R_PROFILE=~/documents/r/rprofile.site
-#export R_VERS=`R --version | grep -oE "[0-9]\.[0-9]+\.[0-9]{1}" -`
-# alias R-man='o /usr/local/lib/R/doc/manual/refman.pdf'
-# alias R-lang='o /usr/local/lib/R/doc/manual/R-lang.pdf'
-# alias R-data='o /usr/local/lib/R/doc/manual/R-data.pdf'
-# alias R-admin='o /usr/local/lib/R/doc/manual/R-admin.pdf'
-# alias R-exts='o /usr/local/lib/R/doc/manual/R-exts.pdf'
-# alias R-ints='o /usr/local/lib/R/doc/manual/R-ints.pdf'
-# alias R-book='o ~/Literature/Statistics/R_stuff/Books/Crawley_2007_The_R_Book.pdf'
-# alias GGplot='o ~/Literature/Statistics/R_stuff/Wickham_2008_ggplot2/Wickham_2009_ggplot2._Elegant_Graphics_for_Data_Analysis.PDF'
-
 
 # # # # # # # # # # # # # # # # # # # # # # #
 # CSCS stuff
@@ -217,7 +218,6 @@ alias ela-mount='sshfs oneyb@ela.cscs.ch:/ $HOME/cscs_mount'
 # SB Cluster
 alias pilatus='ssh -YC oneyb@pilatus.cscs.ch'
 # # # # # # # # # # # # # # # # # # # # # # #
-
 
 
 ### ----- Random Documentation stuff ----- ###
@@ -392,6 +392,4 @@ set -o vi
 
 xkbset exp 1 =sticky -twokey -latchlock
 
-
-# added by Miniconda3 4.2.12 installer
-export PATH="/d/documents/eaternity/bw2-py/bin:$PATH"
+eval "$(pandoc --bash-completion)"
