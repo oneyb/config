@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 dir=$HOME/documents/config
 
 stuff="
@@ -12,7 +13,6 @@ stuff="
      $HOME/bin/.copy-config.sh
 "
 
-
 if [[ $1 == "out" ]];then
     cp $stuff $dir/
     echo commit like this:
@@ -20,7 +20,9 @@ if [[ $1 == "out" ]];then
 fi
 
 if [[ $1 == "in" ]];then
+    cd $dir;  git pull
     for s in $stuff; do
-        cp $dir/`basename $s` `dirname $s`
+        cp $(basename $s) $(dirname $s)
     done
+    cd -
 fi

@@ -384,12 +384,15 @@ if [[ -n `pgrep -f 'emacs --smid'` ]]; then
     pkill -f 'emacs --smid'
 fi
 
-# # keyboard stuff
-# setxkbmap -option "compose:caps"
-# setxkbmap -option "caps:swapescape"
-# setxkbmap -option "caps:escape"
+if [ $USER = "pi" ]; then
+	# # keyboard stuff
+	# setxkbmap -option "compose:caps"
+	setxkbmap -option "caps:swapescape,compose:ralt"
+	# setxkbmap -option "caps:swapescape"
+	# setxkbmap -option "caps:escape"
+	xkbset exp 1 =sticky -twokey -latchlock
+else
+	eval "$(pandoc --bash-completion)"
+fi
+
 set -o vi
-
-xkbset exp 1 =sticky -twokey -latchlock
-
-eval "$(pandoc --bash-completion)"
