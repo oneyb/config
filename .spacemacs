@@ -31,9 +31,6 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     javascript
-     html
-     vimscript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -75,11 +72,14 @@ values."
      (ess :variables
           ess-enable-smart-equals t)
      python
-     ;; ranger
+     ranger
      ;; vinegar
      csv
-     ipython-notebook
+     ;; ipython-notebook
      ;; (ipython-notebook :variables ein:use-auto-complete t)
+     javascript
+     html
+     ;; vimscript
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -414,6 +414,7 @@ package is loaded, you should place your code here."
   (setq truncate-lines t)
   (setq-default cursor-type '(bar . 3))
   (setq evil-move-cursor-back nil)
+  (setq evil-want-Y-yank-to-eol t)
   (setq kill-buffer-query-functions (remq 'process-kill-buffer-query-function kill-buffer-query-functions))
   (setq ediff-split-window-function 'split-window-vertically
         ediff-window-setup-function 'ediff-setup-windows-plain)
@@ -497,7 +498,6 @@ package is loaded, you should place your code here."
               ;;                                          (mapconcat 'identity x ",")
               ;;                                          "}")) ""))))
               ;; ))
-              ;; see org-ref for use of these variables
               (setq reftex-default-bibliography    "~/zotero/Insects.bib")
               (setq org-ref-bibliography-notes     "~/zotero/biblio-notes.org")
               (setq org-ref-default-bibliography   "~/action/bugs/Literature-notes.org")
@@ -520,6 +520,7 @@ package is loaded, you should place your code here."
                       "bibtex %b"
                       "pdflatex -interaction nonstopmode -output-directory %o %f"
                       "pdflatex -interaction nonstopmode -output-directory %o %f"))
+              (setq org-table-use-standard-references t)
               (org-babel-do-load-languages
                'org-babel-load-languages
                '(
@@ -562,8 +563,6 @@ package is loaded, you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(evil-want-Y-yank-to-eol t)
- '(evil-want-y-yank-to-eol t)
  '(org-agenda-files
    (quote
     ("~/Breeding/blw-projekt/technische-machbarkeit/insektenzucht-studie-technische-machbarkeit.org" "~/action/bugs/business_plan/qunav.org" "~/action/bugs/insectaries/chli/ideas.org")))
