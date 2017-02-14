@@ -75,7 +75,7 @@ values."
      ranger
      ;; vinegar
      csv
-     ;; ipython-notebook
+     ipython-notebook
      ;; (ipython-notebook :variables ein:use-auto-complete t)
      javascript
      html
@@ -459,6 +459,7 @@ package is loaded, you should place your code here."
                 "TAB" 'python-start-or-switch-repl
 
                 )
+              (setq python-shell-interpreter "/usr/bin/ipython3")
               )
             )
   (add-hook 'ess-mode-hook
@@ -526,6 +527,7 @@ package is loaded, you should place your code here."
                '(
                  (emacs-lisp . nil)
                  (R          . t)
+                 (sh         . t)
                  (python     . t)
                  ))
               (setq org-confirm-babel-evaluate nil)
