@@ -453,7 +453,7 @@ package is loaded, you should place your code here."
   (add-hook 'python-mode-hook
             (lambda ()
               (spacemacs/set-leader-keys-for-major-mode 'python-mode
-                ","   'python-shell-send-defun-switch
+                ","   'python-shell-send-defun
                 "."   'python-shell-send-buffer-switch
                 "i"   'complete-symbol
                 "TAB" 'python-start-or-switch-repl
