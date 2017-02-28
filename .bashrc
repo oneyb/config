@@ -116,10 +116,16 @@ alias awh='wiki-search-html'
 
 ### ----- App related stuff ----- ###
 alias ask='ps aux | grep -i'
-alias agi='sudo apt-get install'
-alias agr='sudo apt-get remove'
-alias agu='sudo apt-get update && sudo apt-get dist-upgrade'
-alias agar='sudo apt-get autoremove'
+alias agi='sudo aptitude install'
+alias agr='sudo aptitude remove'
+alias agu='sudo aptitude update && sudo aptitude safe-upgrade'
+alias ags='sudo aptitude search'
+alias agar='sudo aptitude autoremove'
+# alias agi='sudo apt-get install'
+# alias agr='sudo apt-get remove'
+# alias agu='sudo apt-get update && sudo apt-get dist-upgrade'
+# alias ags='apt-cache search'
+# alias agar='sudo apt-get autoremove'
 function o()
 {
     if [[ $# -eq 1 ]] ; then
@@ -268,7 +274,7 @@ function wget-R()
     wget -R $1 -m -p -E -k -K -np -e robots=off $2
 }
 
-function play-song()
+function song-play()
 {
     grep -iE "${1}[^/]*$" /d/music/playlists/all_music.m3u > /tmp/currentplaylist.m3u
     # find /d/music/$2 -type f -iname "*$1*" > /tmp/currentplaylist.m3u
