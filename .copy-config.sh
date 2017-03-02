@@ -6,6 +6,7 @@ stuff="
      $HOME/.xbindkeysrc
      $HOME/.spacemacs
      $HOME/.bashrc
+     $HOME/.vimrc
      $HOME/.config/awesome/themes/zenburn/theme.lua
      $HOME/.config/awesome/rc.lua
      $HOME/documents/r/rprofile.site
