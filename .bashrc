@@ -126,6 +126,7 @@ alias agar='sudo aptitude autoremove'
 # alias agu='sudo apt-get update && sudo apt-get dist-upgrade'
 # alias ags='apt-cache search'
 # alias agar='sudo apt-get autoremove'
+
 function o()
 {
     if [[ $# -eq 1 ]] ; then
@@ -146,14 +147,10 @@ function cbc()
 {
     echo $* | cb
 }
-function Rinstall()
-{
-    Rscript -e "install.packages(\"$1\", INSTALL_opts=c(\"--html\", \"--latex\"), destdir=Rpkg.cache.dir)"
-}
 
 function get-bash-functions-for-bw2 ()
 {
-    source /d/documents/eaternity/eaternity/install-brightway-functions.bash
+    source /d/documents/eaternity/eaternity/eaternity-brightway-functions.bash
 }
 
 function turn-on-bw2-virtualenv ()
