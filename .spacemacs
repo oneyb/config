@@ -450,16 +450,38 @@ package is loaded, you should place your code here."
                 )
               )
             )
+  (add-hook 'ein:notebook-mode
+            ;; ein:console-open
+            ;; To use this function, `ein:console-security-dir' and
+            ;; `ein:console-args' must be set properly.
+            (lambda ()
+              ;; (spacemacs/set-leader-keys-for-major-mode 'ein:notebook-mode
+              ;;   ","   'python-shell-send-defun
+              ;;   "."   'python-shell-send-buffer-switch
+              ;;   "i"   'complete-symbol
+              ;;   "TAB" 'python-start-or-switch-repl
+              ;;   )
+              (setq ein:console-args '("" "localhost:8888"))
+              (setq ein:console-security-dir "/d/documents/eaternity/eaternity")
+              (setq ein:use-auto-complete t)
+              ;; (setq ein: "/d/documents/eaternity/eaternity")
+              ;; (setq ein:console-args "-m ipykernel")
+              ;; (setq ein:console-security-dir "/d/documents/eaternity/eaternity")
+              (setq python-shell-interpreter "/d/documents/eaternity/bw2-py/envs/bw2/bin/ipython")
+              )
+            )
   (add-hook 'python-mode-hook
             (lambda ()
               (spacemacs/set-leader-keys-for-major-mode 'python-mode
                 ","   'python-shell-send-defun
-                "."   'python-shell-send-buffer-switch
+                "."   'python-shell-send-defun-switch
+                "m"   'python-shell-send-region
+                "n"   'python-shell-send-region-switch
+                "r"   'python-shell-send-buffer-switch
                 "i"   'complete-symbol
                 "TAB" 'python-start-or-switch-repl
-
                 )
-              (setq python-shell-interpreter "/usr/bin/ipython3")
+              ;; (setq python-shell-interpreter "/usr/bin/ipython3")
               )
             )
   (add-hook 'ess-mode-hook
