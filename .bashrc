@@ -101,13 +101,11 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
-# ETH mount
-# mount -t cifs //nas-nethz-users.ethz.ch/share-o-$/oneyb /media/external/
+
 export HOST=`uname -n`
 export TERM=xterm-256color
 export EDITOR='vi'
-# Interesting:
-# http://ciaran.compsoc.com/commands.html
+export BROWSER="firefox"
 
 # Arch wiki-search
 alias aw='wiki-search'
@@ -399,3 +397,4 @@ else
 fi
 
 set -o vi
+bind -m vi-insert "\C-l":clear-screen

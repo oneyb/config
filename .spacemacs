@@ -53,7 +53,6 @@ values."
       (spacemacs/toggle-auto-completion)
       )
      pandoc
-     ;; org
      org
      (latex
       :variables latex-enable-auto-fill t
@@ -61,9 +60,6 @@ values."
       ;; (auto-fill-mode 1)
       (spacemacs/toggle-auto-completion)
       )
-     ;; tbemail
-     ;; org-ref
-     ;; ox-pandoc
      shell-scripts
      ;; (spell-checking
      ;;  :variables spell-checking-enable-auto-dictionary t)
@@ -79,7 +75,8 @@ values."
      ;; (ipython-notebook :variables ein:use-auto-complete t)
      javascript
      html
-     ;; vimscript
+     vimscript
+     ibuffer
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -229,7 +226,7 @@ values."
    ;; Size (in MB) above which spacemacs will prompt to open the large file
    ;; literally to avoid performance issues. Opening a file literally means that
    ;; no major mode or minor modes are active. (default is 1)
-   dotspacemacs-large-file-size 1
+   dotspacemacs-large-file-size 12
    ;; Location where to auto-save files. Possible values are `original' to
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
@@ -450,38 +447,48 @@ package is loaded, you should place your code here."
                 )
               )
             )
-  (add-hook 'ein:notebook-mode
-            ;; ein:console-open
-            ;; To use this function, `ein:console-security-dir' and
-            ;; `ein:console-args' must be set properly.
-            (lambda ()
-              ;; (spacemacs/set-leader-keys-for-major-mode 'ein:notebook-mode
-              ;;   ","   'python-shell-send-defun
-              ;;   "."   'python-shell-send-buffer-switch
-              ;;   "i"   'complete-symbol
-              ;;   "TAB" 'python-start-or-switch-repl
-              ;;   )
-              (setq ein:console-args '("" "localhost:8888"))
-              (setq ein:console-security-dir "/d/documents/eaternity/eaternity")
-              (setq ein:use-auto-complete t)
-              ;; (setq ein: "/d/documents/eaternity/eaternity")
-              ;; (setq ein:console-args "-m ipykernel")
-              ;; (setq ein:console-security-dir "/d/documents/eaternity/eaternity")
-              (setq python-shell-interpreter "/d/documents/eaternity/bw2-py/envs/bw2/bin/ipython")
-              )
-            )
+  ;; (add-hook 'ein:notebook-mode
+  ;;           ;; ein:console-open
+  ;;           ;; To use this function, `ein:console-security-dir' and
+  ;;           ;; `ein:console-args' must be set properly.
+  ;;           (lambda ()
+  ;;             ;; (spacemacs/set-leader-keys-for-major-mode 'ein:notebook-mode
+  ;;             ;;   ","   'python-shell-send-defun
+  ;;             ;;   "."   'python-shell-send-buffer-switch
+  ;;             ;;   "i"   'complete-symbol
+  ;;             ;;   "TAB" 'python-start-or-switch-repl
+  ;;             ;;   )
+  ;;             ;; (setq ein:console-args '("--profile" "bw2"))
+  ;;             (setq ein:console-args
+  ;;                   '(
+  ;;                     (8888 . '("--profile" "default"))
+  ;;                     ;; (8889 . '("--ssh" "HOSTNAME"))
+  ;;                     (default . '("--profile" "default"))
+  ;;                     )
+  ;;                   )
+  ;;             ;; (setq ein:console-args '("--profile" "/home/oney/.ipython/profile_bw2/ipython_kernel_config.py"))
+  ;;             ;; (setq ein:console-security-dir "/d/documents/eaternity/eaternity")
+  ;;             (setq ein:use-auto-complete t)
+  ;;             ;; (setq ein: "/d/documents/eaternity/eaternity")
+  ;;             ;; (setq ein:console-executable "/d/documents/eaternity/bw2-py/envs/bw2/bin/jupyter-console")
+  ;;             (setq python-shell-interpreter "/d/documents/eaternity/bw2-py/envs/bw2/bin/ipython"
+  ;;                   python-shell-interpreter-args "--simple-prompt -i")
+  ;;             )
+  ;;           )
   (add-hook 'python-mode-hook
             (lambda ()
               (spacemacs/set-leader-keys-for-major-mode 'python-mode
-                ","   'python-shell-send-defun
-                "."   'python-shell-send-defun-switch
-                "m"   'python-shell-send-region
-                "n"   'python-shell-send-region-switch
+                ;; "."   'python-shell-send-defun
+                ;; "."   'python-shell-send-defun-switch
+                ","   'python-shell-send-region
+                "."   'python-shell-send-region-switch
                 "r"   'python-shell-send-buffer-switch
                 "i"   'complete-symbol
                 "TAB" 'python-start-or-switch-repl
                 )
               ;; (setq python-shell-interpreter "/usr/bin/ipython3")
+              ;; (setq python-shell-interpreter "ipython"
+              ;;       python-shell-interpreter-args "--simple-prompt -i")
               )
             )
   (add-hook 'ess-mode-hook
@@ -523,7 +530,7 @@ package is loaded, you should place your code here."
               ;; ))
               (setq reftex-default-bibliography    "~/zotero/Insects.bib")
               (setq org-ref-bibliography-notes     "~/zotero/biblio-notes.org")
-              (setq org-ref-default-bibliography   "~/action/bugs/Literature-notes.org")
+              (setq org-ref-default-bibliography   "~/zotero/Insects.bib")
               (setq org-ref-pdf-directory          "~/zotero/")
               (setq bibtex-completion-bibliography "~/zotero/Insects.bib")
               (setq helm-bibtex-library-path       "~/action/bugs/literature/")
