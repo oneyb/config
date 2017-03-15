@@ -77,7 +77,8 @@ values."
      html
      vimscript
      ibuffer
-     )
+     themes-megapack
+    )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
@@ -163,10 +164,12 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(tsdh-dark
+   dotspacemacs-themes '(
+                         soft-morning
                          spacemacs-dark
+                         gruvbox
+                         tsdh-dark
                          spacemacs-light
-                         zenburn
                          solarized-light
                          solarized-dark
                          leuven
@@ -447,34 +450,56 @@ package is loaded, you should place your code here."
                 )
               )
             )
-  ;; (add-hook 'ein:notebook-mode
-  ;;           ;; ein:console-open
-  ;;           ;; To use this function, `ein:console-security-dir' and
-  ;;           ;; `ein:console-args' must be set properly.
-  ;;           (lambda ()
-  ;;             ;; (spacemacs/set-leader-keys-for-major-mode 'ein:notebook-mode
-  ;;             ;;   ","   'python-shell-send-defun
-  ;;             ;;   "."   'python-shell-send-buffer-switch
-  ;;             ;;   "i"   'complete-symbol
-  ;;             ;;   "TAB" 'python-start-or-switch-repl
-  ;;             ;;   )
-  ;;             ;; (setq ein:console-args '("--profile" "bw2"))
-  ;;             (setq ein:console-args
-  ;;                   '(
-  ;;                     (8888 . '("--profile" "default"))
-  ;;                     ;; (8889 . '("--ssh" "HOSTNAME"))
-  ;;                     (default . '("--profile" "default"))
-  ;;                     )
-  ;;                   )
-  ;;             ;; (setq ein:console-args '("--profile" "/home/oney/.ipython/profile_bw2/ipython_kernel_config.py"))
-  ;;             ;; (setq ein:console-security-dir "/d/documents/eaternity/eaternity")
-  ;;             (setq ein:use-auto-complete t)
-  ;;             ;; (setq ein: "/d/documents/eaternity/eaternity")
-  ;;             ;; (setq ein:console-executable "/d/documents/eaternity/bw2-py/envs/bw2/bin/jupyter-console")
-  ;;             (setq python-shell-interpreter "/d/documents/eaternity/bw2-py/envs/bw2/bin/ipython"
-  ;;                   python-shell-interpreter-args "--simple-prompt -i")
-  ;;             )
-  ;;           )
+  (add-hook 'ein:notebook-multilang-mode-hook
+            ;; ein:console-open
+            ;; To use this function, `ein:console-security-dir' and
+            ;; `ein:console-args' must be set properly.
+            (lambda ()
+              (setq ein:console-executable "/d/documents/eaternity/bw2-py/envs/bw2/bin/jupyter-console")
+              (setq ein:console-args '("--profile" "bw2"))
+              ;; (setq ein:console-args
+              ;;       '(
+              ;;         (8888 . '("--profile" "bw2"))
+              ;;         ;; (8889 . '("--ssh" "HOSTNAME"))
+              ;;         (default . '("--profile" "bw2"))))
+              (spacemacs/set-leader-keys-for-major-mode 'ein:notebook-multilang-mode
+                ","   'ein:worksheet-execute-cell-and-goto-next
+                "TAB"   'ein:console-open
+                )
+              (defun my-escape-and-kill-ein ()
+                "My escape and save"
+                (interactive)
+                (evil-escape)
+                (ein:notebook-close)
+                )
+              (defun my-escape-and-save-ein ()
+                "My escape and save"
+                (interactive)
+                (evil-escape)
+                (ein:notebook-save-notebook-command)
+                )
+              (key-chord-define-local "kj" 'my-escape-and-save-ein)
+              (key-chord-define-local "lk" 'my-escape-and-kill-ein)
+              (spacemacs/toggle-auto-completion-on)
+              (setq ein:use-auto-complete t
+                    ein:enable-keepalive t
+                    ;; ein:jupyter-default-notebook-directory "/home/oney/documents/eaternity/eaternity"
+                    ;; ein:jupyter-default-server-command "/home/oney/documents/eaternity/eaternity"
+                    ;; ein:jupyter-server-args nil
+                    ein:notebook-autosave-frequency 60
+                    ein:notebook-checkpoint-frequency 60
+                    ;; ein:notebook-modes
+                    ;; (quote
+                    ;;  (ein:notebook-multilang-mode ein:notebook-python-mode))
+                    ;; ein:org-execute-timeout 120
+                    ;; ein:slice-image t
+                    ein:use-auto-complete-superpack t
+                    ;; ein:worksheet-enable-undo 'yes
+                    )
+              (setq python-shell-interpreter "/d/documents/eaternity/bw2-py/envs/bw2/bin/ipython"
+                    python-shell-interpreter-args "--simple-prompt -i")
+              )
+            )
   (add-hook 'python-mode-hook
             (lambda ()
               (spacemacs/set-leader-keys-for-major-mode 'python-mode
@@ -585,26 +610,3 @@ package is loaded, you should place your code here."
   (setq bibtex-completion-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
   (setq reftex-default-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
   )
-
-;; do not write anything past this comment. this is where emacs will
-;; auto-generate custom variable definitions.
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files
-   (quote
-    ("~/Breeding/blw-projekt/technische-machbarkeit/insektenzucht-studie-technische-machbarkeit.org" "~/action/bugs/business_plan/qunav.org" "~/action/bugs/insectaries/chli/ideas.org")))
- '(package-selected-packages
-   (quote
-    (zotxt request-deferred deferred yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox spinner pandoc-mode ox-pandoc ht orgit org-ref ivy helm-bibtex biblio parsebib biblio-core org-projectile pcache org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc markdown-mode magit-gitflow macrostep lua-mode lorem-ipsum live-py-mode linum-relative link-hint key-chord insert-shebang info+ indent-guide ido-vertical-mode hydra hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight ess-smart-equals ess-r-object-popup ess-r-data-view ctable ess julia-mode elisp-slime-nav dumb-jump diminish define-word cython-mode column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed auctex-latexmk auctex anaconda-mode pythonic f dash s aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
-
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
