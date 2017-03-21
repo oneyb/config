@@ -464,7 +464,9 @@ package is loaded, you should place your code here."
               ;;         (default . '("--profile" "bw2"))))
               (spacemacs/set-leader-keys-for-major-mode 'ein:notebook-multilang-mode
                 ","   'ein:worksheet-execute-cell-and-goto-next
-                "TAB"   'ein:console-open
+                "."   'ein:worksheet-execute-cell
+                "RET"   'ein:worksheet-execute-cell-and-insert-below
+                "TAB" 'ein:console-open
                 )
               (defun my-escape-and-kill-ein ()
                 "My escape and save"
@@ -581,7 +583,7 @@ package is loaded, you should place your code here."
                '(
                  (emacs-lisp . nil)
                  (R          . t)
-                 (sh         . t)
+                 (shell      . t)
                  (python     . t)
                  ))
               (setq org-confirm-babel-evaluate nil)
@@ -598,7 +600,7 @@ package is loaded, you should place your code here."
               ;;                 )
               ;;               org-file-apps )
               ;;       )
-              (auto-fill-mode 1)
+              ;; (auto-fill-mode 1)
               (spacemacs/toggle-auto-completion)
               )
             )

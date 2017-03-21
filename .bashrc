@@ -355,6 +355,20 @@ function convert-flac()
     find -type d -empty -delete
 }
 
+function pdf-shrink ()
+{
+    if [ $# -eq 0 ]; then
+        echo usage $0 input_pdf [output_pdf]
+    elif [ $# -eq 1 ]; then
+        opdf=${1/.pdf/-compress.pdf}
+    else
+        opdf=$2
+    fi
+    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default \
+       -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages \
+       -dCompressFonts=true -r150 -sOutputFile=$opdf $1
+}
+
 function reduce-pix()
 {
     if [[ $# -eq 0 ]]; then
