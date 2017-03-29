@@ -472,7 +472,7 @@ package is loaded, you should place your code here."
                 "My escape and save"
                 (interactive)
                 (evil-escape)
-                (ein:notebook-close)
+                (ein:notebook-close %notebook%)
                 )
               (defun my-escape-and-save-ein ()
                 "My escape and save"
@@ -585,6 +585,7 @@ package is loaded, you should place your code here."
                  (R          . t)
                  (shell      . t)
                  (python     . t)
+                 (ditaa      . t)
                  ))
               (setq org-confirm-babel-evaluate nil)
               ;; (defun my-org-confirm-babel-evaluate (lang body)
