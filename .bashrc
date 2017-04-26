@@ -79,6 +79,7 @@ fi
 
 # some more ls aliases
 alias ll='ls -alFh'
+alias lt='ls -alFht'
 alias la='ls -A'
 alias l='ls -lh'
 
@@ -119,7 +120,7 @@ alias agr='sudo aptitude remove'
 alias agu='sudo aptitude update && sudo aptitude safe-upgrade'
 alias agdu='sudo apt-get update && sudo apt-get dist-upgrade'
 alias ags='sudo aptitude search'
-alias agar='sudo aptitude autoremove'
+alias agar='sudo apt-get autoremove'
 # alias agi='sudo apt-get install'
 # alias agr='sudo apt-get remove'
 # alias agu='sudo apt-get update && sudo apt-get dist-upgrade'
@@ -265,6 +266,19 @@ function song-play()
     mplayer -playlist /tmp/currentplaylist.m3u
 }
 
+function play()
+{
+    mplayer -playlist /d/music/playlists/$1
+}
+
+_play()
+{
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "$(find /d/music/playlists/ -type f -name '*m3u' | sed -r 's:/d/music/playlists/::')" -- $cur) )
+    # COMPREPLY=( $(compgen -W "$(ls /d/music/playlists/)" -- $cur) )
+}
+complete -F _play play
+
 function song-find()
 {
     grep -iE "${1}[^/]*$" /d/music/playlists/all_music.m3u
@@ -364,8 +378,9 @@ function reduce-pix()
     else
 	      q=$1
     fi
-    mkdir tmp && mv *JPG tmp/ && cd tmp/
-    ls *JPG | while read pic; do
+    rmspace
+    mkdir tmp && mv *jpg tmp/ && cd tmp/
+    ls *jpg | while read pic; do
 	      convert -quality $q $pic ../$pic;
     done
     if [[ $? -eq 0 ]]; then cd .. && rm -rf tmp/; fi
@@ -373,8 +388,8 @@ function reduce-pix()
 
 function youtube()
 {
-    youtube-dl -t --extract-audio --audio-format "best" -k $1
-    rename 's/-[[:alnum:]_-]+\.mp/.mp/' *mp{3,4}
+    youtube-dl --extract-audio --audio-format "best" -k $1
+    rename 's/-[[:alnum:]_-]+\.\([:alnum:]+$\)/$1/' *mp{3,4} *mkv *m4a
 }
 
 # if [ -d ~/Downloads ]; then rmdir ~/Downloads; fi

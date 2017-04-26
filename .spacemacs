@@ -36,6 +36,7 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     helm
      ;; auto-completion
      (auto-completion :variables
                       auto-completion-return-key-behavior 'complete
@@ -293,8 +294,18 @@ values."
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
    dotspacemacs-smooth-scrolling t
-   ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
-   ;; derivatives. If set to `relative', also turns on relative line numbers.
+   ;; Control line numbers activation.
+   ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode' and
+   ;; `text-mode' derivatives. If set to `relative', line numbers are relative.
+   ;; This variable can also be set to a property list for finer control:
+   ;; '(:relative nil
+   ;;   :disabled-for-modes dired-mode
+   ;;                       doc-view-mode
+   ;;                       markdown-mode
+   ;;                       org-mode
+   ;;                       pdf-view-mode
+   ;;                       text-mode
+   ;;   :size-limit-kb 1000)
    ;; (default nil)
    dotspacemacs-line-numbers nil
    ;; Code folding method. Possible values are `evil' and `origami'.
@@ -333,10 +344,10 @@ values."
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
-It is called immediately after `dotspacemacs/init', before layer
-configuration executes.  This function is mostly useful for
-variables that need to be set before packages are loaded. If you
-are unsure, you should try in setting them in
+It is called immediately after `dotspacemacs/init', before layer configuration
+executes.
+ This function is mostly useful for variables that need to be set
+before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   ;; set this before evil loads
   (setq evil-toggle-key (kbd "C-e"))
@@ -465,14 +476,14 @@ package is loaded, you should place your code here."
               (spacemacs/set-leader-keys-for-major-mode 'ein:notebook-multilang-mode
                 ","   'ein:worksheet-execute-cell-and-goto-next
                 "."   'ein:worksheet-execute-cell
-                "RET"   'ein:worksheet-execute-cell-and-insert-below
+                "RET" 'ein:worksheet-execute-cell-and-insert-below
                 "TAB" 'ein:console-open
                 )
               (defun my-escape-and-kill-ein ()
                 "My escape and save"
                 (interactive)
                 (evil-escape)
-                (ein:notebook-close %notebook%)
+                (ein:notebook-close 1)
                 )
               (defun my-escape-and-save-ein ()
                 "My escape and save"
@@ -484,19 +495,19 @@ package is loaded, you should place your code here."
               (key-chord-define-local "lk" 'my-escape-and-kill-ein)
               (spacemacs/toggle-auto-completion-on)
               (setq ein:use-auto-complete t
+                    ein:use-auto-complete-superpack t
                     ein:enable-keepalive t
                     ;; ein:jupyter-default-notebook-directory "/home/oney/documents/eaternity/eaternity"
-                    ;; ein:jupyter-default-server-command "/home/oney/documents/eaternity/eaternity"
+                    ;; ein:jupyter-default-server-command "/home/oney/documents/eaternity/bw2-py/bin/jupyter"
                     ;; ein:jupyter-server-args nil
                     ein:notebook-autosave-frequency 60
                     ein:notebook-checkpoint-frequency 60
-                    ;; ein:notebook-modes
-                    ;; (quote
-                    ;;  (ein:notebook-multilang-mode ein:notebook-python-mode))
+                    ein:notebook-modes
+                    (quote
+                     (ein:notebook-multilang-mode ein:notebook-python-mode))
                     ;; ein:org-execute-timeout 120
                     ;; ein:slice-image t
-                    ein:use-auto-complete-superpack t
-                    ;; ein:worksheet-enable-undo 'yes
+                    ein:worksheet-enable-undo 'yes
                     )
               (setq python-shell-interpreter "/d/documents/eaternity/bw2-py/envs/bw2/bin/ipython"
                     python-shell-interpreter-args "--simple-prompt -i")
@@ -613,3 +624,6 @@ package is loaded, you should place your code here."
   (setq bibtex-completion-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
   (setq reftex-default-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
   )
+
+;; Do not write anything past this comment. This is where Emacs will
+;; auto-generate custom variable definitions.

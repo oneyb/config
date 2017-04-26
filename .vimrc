@@ -11,5 +11,6 @@ call plug#begin()
   Plug 'ivanov/vim-ipython'
   Plug 'jnurmine/Zenburn'
   Plug 'scrooloose/nerdtree'
+  Plug 'jceb/vim-orgmode'
 call plug#end()
 

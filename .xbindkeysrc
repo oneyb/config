@@ -33,13 +33,13 @@ Mod4 + g
 Mod4 + o
 # "eval xdg-open $(copyq selection)"
 # Mod4 + o
-"sh -c '~/bin/aenea.sh windows7'"
-F6
+# "sh -c '~/bin/aenea.sh windows7'"
+# F6
 # F6
 # "VirtualBox --startvm w7_clone 2>&1 ~/.vm.log"
-"sh -c '~/bin/aenea.sh x'"
-F7
-"~/bin/tele"
+# "sh -c '~/bin/aenea.sh x'"
+# F7
+# "~/bin/tele"
 Mod4 + t
 "~/bin/whatsapp"
 Mod4 + w
