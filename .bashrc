@@ -241,6 +241,7 @@ alias du='du -hs'
 alias rm='trash-put'
 alias rmold='rm *~ .*~'
 alias rmlatex='\rm *aux *log *out *synctex.gz *fdb_latexmk *fls *bbl'
+alias sti='xkbset exp 1 sticky -twokey -latchlock'
 
 function red()
 {
@@ -406,12 +407,13 @@ fi
 if [ $USER = "pi" ]; then
 	# # keyboard stuff
 	# setxkbmap -option "compose:caps"
-	setxkbmap -option "caps:swapescape,compose:ralt"
+	# setxkbmap -option "caps:escape,compose:ralt"
+	setxkbmap -option "caps:escape,compose:102"
 	# setxkbmap -option "caps:swapescape"
 	# setxkbmap -option "caps:escape"
 	xkbset exp 1 =sticky -twokey -latchlock
-else
-	eval "$(pandoc --bash-completion)"
+# else
+# 	eval "$(pandoc --bash-completion)"
 fi
 
 set -o vi

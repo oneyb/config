@@ -108,8 +108,9 @@ devtools.desc.author <- "Brian Oney <brian.oney@empa.ch> [aut, cre]"
 devtools.desc.license <- "GPL-3"
 
 update <- function() update.packages(destdir=r.pkg.cache.dir, ask=FALSE)
-installer <- function(...) install.packages(..., destdir=r.pkg.cache.dir,
-                                            INSTALL_opts = "--byte-compile")
+installer <- function(...)
+  install.packages(..., destdir=r.pkg.cache.dir,
+                   INSTALL_opts = "--byte-compile", dep=TRUE)
 
 ## installer(c(
 ##     "foreach"
@@ -147,3 +148,5 @@ installer <- function(...) install.packages(..., destdir=r.pkg.cache.dir,
 ##    ,"rworldmap"
 ##    ,"chron"
 ## ), dep=T)
+
+## options(error = recover)

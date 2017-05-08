@@ -543,6 +543,7 @@ package is loaded, you should place your code here."
                 ;; "cn" 'ess-noweb-next-chunk
                 ;; REPL
                 ","   'ess-eval-function-or-paragraph-and-step
+                "`"   'ess-show-traceback
                 "i"   'complete-symbol
                 "."   'ess-eval-region-or-line-and-step
                 "hh"  'ess-display-help-on-object
