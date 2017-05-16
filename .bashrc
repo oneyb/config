@@ -192,7 +192,7 @@ function backport_debian()
 # https://github.com/kermit666/dotfiles/tree/master/autokey
 
 # R stuff
-export R_PROFILE=~/documents/r/rprofile.site
+export R_PROFILE=~/r/rprofile.site
 
 # # # # # # # # # # # # # # # # # # # # # # #
 # CSCS stuff
@@ -390,7 +390,7 @@ function reduce-pix()
 function youtube()
 {
     youtube-dl --extract-audio --audio-format "best" -k $1
-    rename 's/-[[:alnum:]_-]+\.\([:alnum:]+$\)/$1/' *mp{3,4} *mkv *m4a
+    rename 's/-[[:alnum:]_-]+\.([[:alnum:]]+$)/$1/' *mp{3,4} *mkv *m4a
 }
 
 # if [ -d ~/Downloads ]; then rmdir ~/Downloads; fi

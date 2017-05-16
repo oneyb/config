@@ -9,7 +9,7 @@ stuff="
      $HOME/.vimrc
      $HOME/.config/awesome/themes/zenburn/theme.lua
      $HOME/.config/awesome/rc.lua
-     $HOME/documents/r/rprofile.site
+     $HOME/r/rprofile.site
      $HOME/bin/.configure_linux.sh
      $HOME/bin/.copy-config.sh
 "

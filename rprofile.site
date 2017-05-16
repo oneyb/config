@@ -22,11 +22,11 @@
 #  options(defaultPackages = c(old, "MASS"), repos = r)
 #})
 ## Think about: http://cran.r-project.org/bin/linux/ubuntu/
-## .Library.site <- c("/local/home/hes134/lib/R/", "~/Documents/R/libs"); .libPaths(path.expand(.Library.site))
-## .Library.site <- c(.Library.site, "~/documents/r/libs")
-.libPaths(path.expand("~/documents/r/libs"))
+
+## .Library.site <- c(.Library.site, "~/r/libs")
+.libPaths(path.expand("~/r/libs"))
 ## .libPaths("~/R/x86_64-pc-linux-gnu-library/3.2")
-r.pkg.cache.dir <- "~/documents/r/cache"
+r.pkg.cache.dir <- "~/r/cache"
 options(browser="exo-open")
 local({
   # add MASS to the default packages, set a CRAN mirror
