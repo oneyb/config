@@ -1,0 +1,14 @@
+* A repository for my no longer embarassing config files
+
+** Info
+   - OS: gnu/linux (debian)
+   - Emacs: 24.5.1
+   - Editing style: vim+emacs=spacemacs(awesomeness)
+   - WM: awesome
+   - Reference manager: zotero
+   - Number cruncher: python, R, paper
+   - Note taker: org-mode, paper
+   - Text compiler: org-mode, latex, libreoffice
+   - Website builder: flask
+   - Preferred user interface: emacs, command-line
+   - repository: github!
