@@ -53,3 +53,5 @@ Mod4 + y
 Print
 # "xfce4-appfinder"
 # Mod1 + space
+'$HOME/bin/sync_org-agenda.sh'
+Mod4 + e

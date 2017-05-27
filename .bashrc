@@ -127,6 +127,14 @@ alias agar='sudo apt-get autoremove'
 # alias ags='apt-cache search'
 # alias agar='sudo apt-get autoremove'
 
+# # cool redirection example
+# cat > something.sh << end_input
+# #!/bin/bash
+# echo $HOST
+# echo 'Hello World!'
+# end_input
+
+# Functions
 function o()
 {
     if [[ $# -eq 1 ]] ; then
@@ -191,8 +199,9 @@ function backport_debian()
 # Keyboard shortcuts
 # https://github.com/kermit666/dotfiles/tree/master/autokey
 
-# R stuff
-export R_PROFILE=~/r/rprofile.site
+# R & Python stuff
+export R_PROFILE=$HOME/r/rprofile.site
+export WORKON_HOME=$HOME/.virtualenvs
 
 # # # # # # # # # # # # # # # # # # # # # # #
 # CSCS stuff
@@ -314,6 +323,17 @@ function Rex()
     Rscript -e "$*"
 }
 
+function ebook-convert-to-pdf()
+{
+    ebook-convert $1 $2                             \
+        --margin-top=72                             \
+        --margin-left=72                            \
+        --margin-right=72                           \
+        --margin-bottom=72                          \
+        --pdf-page-numbers
+}
+
+
 function spellcheck()
 {
     reps=`grep -En '(\<.*\>[[:blank:]]+)\1' $1`
@@ -371,6 +391,7 @@ function pdf-shrink ()
        -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages \
        -dCompressFonts=true -r150 -sOutputFile=$opdf $1
 }
+
 
 function reduce-pix()
 {

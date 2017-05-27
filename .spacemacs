@@ -78,7 +78,7 @@ values."
      html
      vimscript
      ibuffer
-     themes-megapack
+     ;; themes-megapack
     )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -166,15 +166,10 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         spacemacs-light
                          leuven
-                         soft-morning
+                         default
+                         spacemacs-light
                          spacemacs-dark
-                         gruvbox
-                         tsdh-dark
-                         solarized-light
-                         solarized-dark
-                         monokai
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -338,7 +333,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup 'changed
+   dotspacemacs-whitespace-cleanup nil
    )
   )
 
@@ -423,8 +418,8 @@ package is loaded, you should place your code here."
   (setq display-time-day-and-date t display-time-24hr-format t)
   (display-time-mode 1)
   (setq truncate-lines t)
-  (setq-default cursor-type '(bar . 3))
-  (setq evil-move-cursor-back nil)
+  ;; (setq-default cursor-type '(bar . 3))
+  ;; (setq evil-move-cursor-back nil)
   (setq evil-want-Y-yank-to-eol t)
   (setq kill-buffer-query-functions (remq 'process-kill-buffer-query-function kill-buffer-query-functions))
   (setq ediff-split-window-function 'split-window-vertically
@@ -520,8 +515,8 @@ package is loaded, you should place your code here."
                 ;; "."   'python-shell-send-defun-switch
                 ","   'python-shell-send-region
                 "."   'python-shell-send-region-switch
-                "r"   'python-shell-send-buffer-switch
-                "i"   'complete-symbol
+                ;; "r"   'python-shell-send-buffer-switch
+                "k"   'anaconda-mode-complete
                 "TAB" 'python-start-or-switch-repl
                 )
               ;; (setq python-shell-interpreter "/usr/bin/ipython3")
@@ -615,7 +610,15 @@ package is loaded, you should place your code here."
               ;;       )
               ;; (auto-fill-mode 1)
               (spacemacs/toggle-auto-completion)
-              )
+              (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
+              ;; ics export
+              (setq
+               ;; org-icalendar-include-todo t
+               ;; org-icalendar-use-deadline '(event-if-not-todo todo-due)
+               org-icalendar-use-deadline '(event-if-not-todo)
+               org-icalendar-use-scheduled '(event-if-todo)
+               )
+             )
             )
 
   (add-to-list 'auto-mode-alist '("\\.eml\\'" . org-mode))
@@ -628,3 +631,16 @@ package is loaded, you should place your code here."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol t)
+ '(org-agenda-files (quote ("~/org/todo.org"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

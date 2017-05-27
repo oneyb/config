@@ -78,12 +78,12 @@ for p in ${pkgs[0]}; do
     mv `basename $p` /home/oney/bin/src/
 done
 
-wget https://updates.tdesktop.com/tlinux/tsetup.0.10.19.tar.xz
-mv tsetup.0.10.19.tar.xz /home/oney/bin/src/
-cd  /home/oney/bin/src/
-tar xJf tsetup.0.10.19.tar.xz
-mv Telegram/* ~/bin/src/
-rmdir Telegram
+# wget https://updates.tdesktop.com/tlinux/tsetup.0.10.19.tar.xz
+# mv tsetup.0.10.19.tar.xz /home/oney/bin/src/
+# cd  /home/oney/bin/src/
+# tar xJf tsetup.0.10.19.tar.xz
+# mv Telegram/* ~/bin/src/
+# rmdir Telegram
 
 wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
 sudo dpkg --add-architecture i386
@@ -122,10 +122,9 @@ fi
 # Create the soft links
 if [ -d /usr/local/src/texlive/ ];
 then
-    pwd=$PWD
     cd /usr/local/bin/
     sudo ln -sf /usr/local/src/texlive/bin/x86_64-linux/* .
-    cd $pwd
+    cd -
 fi
 
 # May change this
