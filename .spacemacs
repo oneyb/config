@@ -78,6 +78,7 @@ values."
      html
      vimscript
      ibuffer
+     pdf-tools
      ;; themes-megapack
     )
    ;; List of additional packages that will be installed without being
@@ -91,6 +92,7 @@ values."
                                       ox-pandoc
                                       key-chord
                                       org-ref
+                                      ;; let-alist
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -562,18 +564,21 @@ package is loaded, you should place your code here."
               ;;                                          (mapconcat 'identity x ",")
               ;;                                          "}")) ""))))
               ;; ))
-              (setq reftex-default-bibliography    "~/zotero/Insects.bib")
-              (setq org-ref-bibliography-notes     "~/zotero/biblio-notes.org")
-              (setq org-ref-default-bibliography   "~/zotero/Insects.bib")
-              (setq org-ref-pdf-directory          "~/zotero/")
-              (setq bibtex-completion-bibliography "~/zotero/Insects.bib")
-              (setq helm-bibtex-library-path       "~/action/bugs/literature/")
-              (setq bibtex-completion-notes-path   "~/zotero")
+              (setq reftex-default-bibliography    "~/zotero/Insects.bib"
+                    org-ref-bibliography-notes     "~/zotero/biblio-notes.org"
+                    org-ref-default-bibliography   "~/zotero/Insects.bib"
+                    org-ref-pdf-directory          "~/zotero/"
+                    bibtex-completion-bibliography "~/zotero/Insects.bib"
+                    helm-bibtex-library-path       "~/action/bugs/literature/"
+                    bibtex-completion-notes-path   "~/zotero"
+              ) 
               ;; (spacemacs/set-leader-keys-for-minor-mode 'org-mode
               ;;   "ir"   'org-ref-helm-insert-cite-link
               ;;   )
               (spacemacs/set-leader-keys-for-major-mode 'org-mode
-                "ir"   'org-ref-helm-insert-cite-link
+                "ir"  'org-ref-helm-insert-cite-link
+                "p"   'org-priority
+                "z"   'org-pomodoro
                 )
               (require 'org-ref)
               (require 'org-ref-latex)
@@ -610,7 +615,9 @@ package is loaded, you should place your code here."
               ;;       )
               ;; (auto-fill-mode 1)
               (spacemacs/toggle-auto-completion)
-              (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
+              ;; (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
+              ;; (setq org-time-stamp-custom-formats '("<%y-%m-%d>" . "<%y-%m-%d %H:%M>"))
+
               ;; ics export
               (setq
                ;; org-icalendar-include-todo t
@@ -618,7 +625,7 @@ package is loaded, you should place your code here."
                org-icalendar-use-deadline '(event-if-not-todo)
                org-icalendar-use-scheduled '(event-if-todo)
                )
-             )
+              )
             )
 
   (add-to-list 'auto-mode-alist '("\\.eml\\'" . org-mode))
@@ -637,7 +644,9 @@ package is loaded, you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol t)
- '(org-agenda-files (quote ("~/org/todo.org"))))
+ '(org-agenda-files
+   (quote
+    ("~/org/ensectable.org" "~/org/notes.org" "~/org/personal.org" "~/org/sibs.org"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

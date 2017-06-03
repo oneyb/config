@@ -21,10 +21,8 @@ Mod4 + h
 Control + Mod1 + t
 "~/bin/anamnesis --browse"
 Mod4 + c
-"~/bin/anamnesis --restart"
-Control + Mod1 + c
-"~/bin/ko"
-Mod4 + k
+# "~/bin/anamnesis --restart"
+# Control + Mod1 + c
 "~/bin/drop"
 Mod4 + g
 # Mod4 + d
@@ -40,7 +38,9 @@ Mod4 + o
 # "sh -c '~/bin/aenea.sh x'"
 # F7
 # "~/bin/tele"
-Mod4 + t
+# Mod4 + t
+"~/bin/toggle-sticky-keys.sh"
+Mod4 + k
 "~/bin/whatsapp"
 Mod4 + w
 # "gnome-control-center sound input"

@@ -323,13 +323,23 @@ function Rex()
     Rscript -e "$*"
 }
 
+function install_manual_deb ()
+{
+    wget $1
+    sudo dpkg -i `basename $1`
+    if [ $# -eq 0 ]; then
+        sudo apt-get install -f
+    fi
+    mv `basename $1` $HOME/bin/src/
+}
+
 function ebook-convert-to-pdf()
 {
     ebook-convert $1 $2                             \
-        --margin-top=72                             \
-        --margin-left=72                            \
-        --margin-right=72                           \
-        --margin-bottom=72                          \
+        --margin-top=69                             \
+        --margin-left=69                            \
+        --margin-right=69                           \
+        --margin-bottom=69                          \
         --pdf-page-numbers
 }
 

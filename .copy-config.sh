@@ -10,7 +10,7 @@ stuff="
      $HOME/.config/awesome/themes/zenburn/theme.lua
      $HOME/.config/awesome/rc.lua
      $HOME/r/rprofile.site
-     $HOME/bin/.configure_linux.sh
+     $HOME/bin/.setup_linux.sh
      $HOME/bin/.copy-config.sh
 "
 

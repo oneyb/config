@@ -86,16 +86,22 @@ cwebwidget:buttons(awful.util.table.join(
 -- 		      awful.button({ }, 1, function () awful.util.spawn(os.getenv("HOME") .. "/bin/tele") end)
 -- ))
 
-signalwidget = widget({ type = "imagebox" })
-signalwidget.image = image(awful.util.getdir("config") .. "/icons/signal.png")
-signalwidget:buttons(awful.util.table.join(
-                       awful.button({ }, 1, function () awful.util.spawn(os.getenv("HOME") .. "/bin/signal") end)
-))
+-- signalwidget = widget({ type = "imagebox" })
+-- signalwidget.image = image(awful.util.getdir("config") .. "/icons/signal.png")
+-- signalwidget:buttons(awful.util.table.join(
+--                        awful.button({ }, 1, function () awful.util.spawn(os.getenv("HOME") .. "/bin/signal") end)
+-- ))
 
 whatsappwidget = widget({ type = "imagebox" })
 whatsappwidget.image = image(awful.util.getdir("config") .. "/icons/face-monkey.png")
 whatsappwidget:buttons(awful.util.table.join(
                          awful.button({ }, 1, function () awful.util.spawn(os.getenv("HOME") .. "/bin/whatsapp") end)
+))
+
+orgsyncwidget = widget({ type = "imagebox" })
+orgsyncwidget.image = image(awful.util.getdir("config") .. "/icons/orgzly.png")
+orgsyncwidget:buttons(awful.util.table.join(
+                         awful.button({ }, 1, function () awful.util.spawn(os.getenv("HOME") .. "/bin/sync_org.sh") end)
 ))
 
 fbmesswidget = widget({ type = "imagebox" })
@@ -111,11 +117,11 @@ emacswidget:buttons(awful.util.table.join(
                       awful.button({ }, 1, function () awful.util.spawn("emacsclient -c") end)
 ))
 
-vbwidget = widget({ type = "imagebox" })
-vbwidget.image = image(awful.util.getdir("config") .. "/icons/virtualbox.png")
-vbwidget:buttons(awful.util.table.join(
-                   awful.button({ }, 1, function () awful.util.spawn("VirtualBox") end)
-))
+-- vbwidget = widget({ type = "imagebox" })
+-- vbwidget.image = image(awful.util.getdir("config") .. "/icons/virtualbox.png")
+-- vbwidget:buttons(awful.util.table.join(
+--                    awful.button({ }, 1, function () awful.util.spawn("VirtualBox") end)
+-- ))
 
 zoterowidget = widget({ type = "imagebox" })
 zoterowidget.image = image(awful.util.getdir("config") .. "/icons/zotero.png")
@@ -354,7 +360,7 @@ for s = 1, screen.count() do
     -- htopwidget,
     phonewidget,
     syncwidget,
-    vbwidget,
+    -- vbwidget,
     zoterowidget,
     filewidget,
     emacswidget,
@@ -364,7 +370,8 @@ for s = 1, screen.count() do
     cwebwidget,
     fbmesswidget,
     whatsappwidget,
-    signalwidget,
+    orgsyncwidget,
+    -- signalwidget,
     -- telegramwidget,
     s == 1 and mysystray or nil,
     mytasklist[s],
