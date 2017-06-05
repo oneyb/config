@@ -80,7 +80,7 @@ values."
      ibuffer
      pdf-tools
      ;; themes-megapack
-    )
+     )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
@@ -571,7 +571,7 @@ package is loaded, you should place your code here."
                     bibtex-completion-bibliography "~/zotero/Insects.bib"
                     helm-bibtex-library-path       "~/action/bugs/literature/"
                     bibtex-completion-notes-path   "~/zotero"
-              ) 
+                    ) 
               ;; (spacemacs/set-leader-keys-for-minor-mode 'org-mode
               ;;   "ir"   'org-ref-helm-insert-cite-link
               ;;   )
@@ -616,6 +616,8 @@ package is loaded, you should place your code here."
               ;; (auto-fill-mode 1)
               (spacemacs/toggle-auto-completion)
               ;; (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
+              (setq org-agenda-start-day "+0d")
+              (setq org-agenda-include-diary t)
               ;; (setq org-time-stamp-custom-formats '("<%y-%m-%d>" . "<%y-%m-%d %H:%M>"))
 
               ;; ics export

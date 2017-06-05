@@ -1,8 +1,10 @@
 # emacs please make this -*- sh -*-
-"xset dpms force off"
- Mod4 + d
+"emacsclient -c --eval '(org-agenda-list)' --eval '(delete-other-windows)'"
+Mod4 + a
 "emacsclient -c --eval '(switch-to-buffer "*spacemacs*")' --eval '(spacemacs/toggle-maximize-buffer)'"
 Control + Mod1 + E
+"xset dpms force off"
+ Mod4 + d
 "~/bin/tb"
 Mod4 + m
 "chromium"
@@ -25,20 +27,11 @@ Mod4 + c
 # Control + Mod1 + c
 "~/bin/drop"
 Mod4 + g
-# Mod4 + d
-# "~/bin/gdrive"
-"~/bin/open-clipboard-item.sh 1"
-Mod4 + o
-# "eval xdg-open $(copyq selection)"
-# Mod4 + o
 # "sh -c '~/bin/aenea.sh windows7'"
-# F6
 # F6
 # "VirtualBox --startvm w7_clone 2>&1 ~/.vm.log"
 # "sh -c '~/bin/aenea.sh x'"
 # F7
-# "~/bin/tele"
-# Mod4 + t
 "~/bin/toggle-sticky-keys.sh"
 Mod4 + k
 "~/bin/whatsapp"
@@ -53,5 +46,5 @@ Mod4 + y
 Print
 # "xfce4-appfinder"
 # Mod1 + space
-'$HOME/bin/sync_org-agenda.sh'
-Mod4 + e
+'$HOME/bin/sync_org.sh'
+Mod4 + u
