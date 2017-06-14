@@ -86,11 +86,11 @@ cwebwidget:buttons(awful.util.table.join(
 -- 		      awful.button({ }, 1, function () awful.util.spawn(os.getenv("HOME") .. "/bin/tele") end)
 -- ))
 
--- signalwidget = widget({ type = "imagebox" })
--- signalwidget.image = image(awful.util.getdir("config") .. "/icons/signal.png")
--- signalwidget:buttons(awful.util.table.join(
---                        awful.button({ }, 1, function () awful.util.spawn(os.getenv("HOME") .. "/bin/signal") end)
--- ))
+signalwidget = widget({ type = "imagebox" })
+signalwidget.image = image(awful.util.getdir("config") .. "/icons/signal.png")
+signalwidget:buttons(awful.util.table.join(
+                       awful.button({ }, 1, function () awful.util.spawn(os.getenv("HOME") .. "/bin/signal") end)
+))
 
 whatsappwidget = widget({ type = "imagebox" })
 whatsappwidget.image = image(awful.util.getdir("config") .. "/icons/face-monkey.png")
@@ -364,14 +364,14 @@ for s = 1, screen.count() do
     zoterowidget,
     filewidget,
     emacswidget,
+    orgsyncwidget,
     mailwidget,
     webwidget,
     ffwidget,
     cwebwidget,
     fbmesswidget,
     whatsappwidget,
-    orgsyncwidget,
-    -- signalwidget,
+    signalwidget,
     -- telegramwidget,
     s == 1 and mysystray or nil,
     mytasklist[s],

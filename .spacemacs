@@ -45,6 +45,7 @@ values."
                       auto-completion-complete-with-key-sequence-delay 0.1
                       auto-completion-private-snippets-directory nil)
      better-defaults
+     spacemacs-evil
      emacs-lisp
      git
      lua
@@ -65,7 +66,7 @@ values."
      ;; (spell-checking
      ;;  :variables spell-checking-enable-auto-dictionary t)
      syntax-checking
-     ;; version-control
+     version-control
      (ess :variables
           ess-enable-smart-equals t)
      python
@@ -91,6 +92,7 @@ values."
                                       zotxt
                                       ox-pandoc
                                       key-chord
+                                      ;; vdiff
                                       org-ref
                                       ;; let-alist
                                       )
@@ -424,7 +426,7 @@ package is loaded, you should place your code here."
   ;; (setq evil-move-cursor-back nil)
   (setq evil-want-Y-yank-to-eol t)
   (setq kill-buffer-query-functions (remq 'process-kill-buffer-query-function kill-buffer-query-functions))
-  (setq ediff-split-window-function 'split-window-vertically
+  (setq ediff-split-window-function 'split-window-horizontally
         ediff-window-setup-function 'ediff-setup-windows-plain)
   ;; Ispell
   (eval-after-load "ispell"
@@ -458,6 +460,7 @@ package is loaded, you should place your code here."
                 )
               )
             )
+  
   (add-hook 'ein:notebook-multilang-mode-hook
             ;; ein:console-open
             ;; To use this function, `ein:console-security-dir' and
@@ -580,6 +583,10 @@ package is loaded, you should place your code here."
                 "p"   'org-priority
                 "z"   'org-pomodoro
                 )
+              (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
+                "p"   'org-priority
+                "z"   'org-pomodoro
+                )
               (require 'org-ref)
               (require 'org-ref-latex)
               (require 'org-ref-pdf)
@@ -616,17 +623,21 @@ package is loaded, you should place your code here."
               ;; (auto-fill-mode 1)
               (spacemacs/toggle-auto-completion)
               ;; (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
-              (setq org-agenda-start-day "+0d")
+              ;; (setq org-agenda-start-day "+0d")
+              (setq org-agenda-span-to-ndays "10d")
               (setq org-agenda-include-diary t)
               ;; (setq org-time-stamp-custom-formats '("<%y-%m-%d>" . "<%y-%m-%d %H:%M>"))
 
               ;; ics export
               (setq
-               ;; org-icalendar-include-todo t
-               ;; org-icalendar-use-deadline '(event-if-not-todo todo-due)
+              ;;  ;; org-icalendar-include-todo t
+              ;;  ;; org-icalendar-use-deadline '(event-if-not-todo todo-due)
                org-icalendar-use-deadline '(event-if-not-todo)
-               org-icalendar-use-scheduled '(event-if-todo)
+               org-icalendar-use-scheduled '(event-if-not-todo)
                )
+              org-agenda-sorting-strategy
+              (setq org-todo-keywords
+                    '((sequence "TODO" "NEXT" "OPEN" "|" "DONE")))
               )
             )
 
