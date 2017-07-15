@@ -66,7 +66,7 @@ values."
      ;; (spell-checking
      ;;  :variables spell-checking-enable-auto-dictionary t)
      syntax-checking
-     version-control
+     ;; version-control
      (ess :variables
           ess-enable-smart-equals t)
      python
@@ -445,7 +445,7 @@ package is loaded, you should place your code here."
   (add-to-list 'ispell-skip-region-alist '("\\\\cite.*{" . "}"))
   (add-to-list 'ispell-skip-region-alist '("\\\\chem{" . "}"))
   (add-to-list 'ispell-skip-region-alist '("\\$" . "\\$"))
-  (setq latex-run-command "pdflatex")
+  (setq latex-run-command "pdftex")
   (setq tex-process-asynchronous t)
   (set-face-attribute 'default nil :height 94)
   (add-hook 'LaTeX-mode-hook (lambda () (require 'org-ref)))
@@ -635,12 +635,13 @@ package is loaded, you should place your code here."
                org-icalendar-use-deadline '(event-if-not-todo)
                org-icalendar-use-scheduled '(event-if-not-todo)
                )
-              org-agenda-sorting-strategy
+              ;; org-agenda-sorting-strategy
               (setq org-todo-keywords
                     '((sequence "TODO" "NEXT" "OPEN" "|" "DONE")))
               )
             )
-
+  ;; XMODIFIERS=@im=none
+  (setenv "XMODIFIERS" "@im=none") 
   (add-to-list 'auto-mode-alist '("\\.eml\\'" . org-mode))
   (add-hook 'markdown-mode-hook
             '(lambda () (define-key markdown-mode-map "\c-c[" 'helm-bibtex)))

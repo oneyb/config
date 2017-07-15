@@ -15,11 +15,11 @@ Control + Mod1 + W
 Mod4 + n
 "pcmanfm"
 Mod4 + f
-"xfce4-terminal --geometry 79x39-0-0 --title Mplayer --working-directory ~/Music/Playlists/"
+"x-terminal-emulator --geometry 79x39-0-0 --title Mplayer --working-directory ~/Music/Playlists/"
 Control + Shift + Mod1 + M
-"xfce4-terminal --command htop --title htop --geometry 120x32+66+66"
+"x-terminal-emulator --execute htop --title htop --geometry 120x32+66+66"
 Mod4 + h
-"xfce4-terminal --title Terminator --geometry 84x44+0+0 --working-directory ~/"
+"x-terminal-emulator --title Terminator --geometry 84x44+0+0 --working-directory ~/"
 Control + Mod1 + t
 "~/bin/anamnesis --browse"
 Mod4 + c
@@ -42,9 +42,9 @@ Mod4 + w
 # F10
 "sleep .1; xdotool click 2"
 Mod4 + y
-"xfce4-screenshooter"
+"scrot"
 Print
-# "xfce4-appfinder"
+# "gnome-appfinder"
 # Mod1 + space
 '$HOME/bin/sync_org.sh'
 Mod4 + u

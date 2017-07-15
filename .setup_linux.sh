@@ -37,14 +37,14 @@ sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
 sudo chmod 755 -R /usr/local/lib
 
 # Playonlinux!!
-wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
-sudo wget http://deb.playonlinux.com/playonlinux_wheezy.list -O /etc/apt/sources.list.d/playonlinux.list
-sudo apt-get update
-sudo apt-get install playonlinux
+# wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
+# sudo wget http://deb.playonlinux.com/playonlinux_wheezy.list -O /etc/apt/sources.list.d/playonlinux.list
+# sudo apt-get update
+# sudo apt-get install playonlinux
 
 ## Set default programs
 sudo update-alternatives --config x-www-browser
-sudo update-alternatives --config gnome-www-browser
+# sudo update-alternatives --config gnome-www-browser
 sudo update-alternatives --config editor
 # setxkbmap -option "compose:caps"
 
@@ -64,9 +64,9 @@ sudo mkdir -p /usr/local/share/man/man1
 sudo cp rclone.1 /usr/local/share/man/man1/
 sudo mandb
 
+# https://github.com/Aluxian/Whatsie/releases/download/v2.1.0/whatsie-2.1.0-linux-amd64.deb
 pkgs=(
     https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb
-    https://github.com/Aluxian/Whatsie/releases/download/v2.1.0/whatsie-2.1.0-linux-amd64.deb
     https://github.com/Aluxian/Messenger-for-Desktop/releases/download/v2.0.4/messengerfordesktop-2.0.4-linux-amd64.deb
 )
 
@@ -80,8 +80,8 @@ function install_manual_deb ()
         mv `basename $1` $HOME/bin/src/
 }
 
-for p in ${pkgs[0]}; do
-    manual_install $p
+for p in ${pkgs[@]}; do
+    install_manual_deb $p
 done
 
 # # Don't telegram anymore
@@ -123,18 +123,22 @@ sudo rm /.BUILDINFO /.MTREE /.PKGINFO
 echo "much easier to install pdf-tools layer and then:"
 emacsclient -e "(pdf-tools-install)"
 
+# Nice grub screen hiding
+wget https://raw.githubusercontent.com/hobarrera/grub-holdshift/master/31_hold_shift -O /etc/grub.d/31_hold_shift
+sudo bash -c 'echo -e "GRUB_TIMEOUT=\"0\"\nGRUB_HIDDEN_TIMEOUT=\"0\"\nGRUB_FORCE_HIDDEN_MENU=\"true\"" >> /etc/default/grub'
+grub-mkconfig -o /boot/grub/grub.cfg
 
-# skype
-wget https://www.skype.com/de/download-skype/skype-for-linux/downloading/?type=debian32 -O skype-`date +%F`.deb
-dpkg -i skype-`date +%F`.deb
-agi -f
-mv skype-`date +%F`.deb ~/bin/src/
+# # skype
+# wget https://www.skype.com/de/download-skype/skype-for-linux/downloading/?type=debian32 -O skype-`date +%F`.deb
+# dpkg -i skype-`date +%F`.deb
+# agi -f/etc/defaults/grub
+# mv skype-`date +%F`.deb ~/bin/src/
 
 
 # For LaTeX
-if [ -d /media/oney/Vault/texlive/ ];
+if [ -d /media/oney/stuff/texlive/ ];
 then
-    sudo cp -r /media/oney/Vault/texlive/ /usr/local/src/
+    sudo cp -r /media/oney/stuff/texlive/ /usr/local/src/
 else
     wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
     tar xzf install-tl-unx.tar.gz
@@ -146,10 +150,9 @@ fi
 # Create the soft links
 if [ -d /usr/local/src/texlive/ ];
 then
-    pwd=$PWD
     cd /usr/local/bin/
     sudo ln -sf /usr/local/src/texlive/bin/x86_64-linux/* .
-    cd $pwd
+    cd -
 fi
 
 # May change this
