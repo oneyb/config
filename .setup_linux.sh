@@ -146,14 +146,9 @@ else
     TEXLIVE_INSTALL_PREFIX=$HOME/texlive/
     ./install-tl -portable
 fi
+echo -e "if [ -d /usr/local/src/texlive/ ]; then\n\tPATH=\"/usr/local/src/texlive/bin/$(uname -m)-$(uname -s | sed "s/.*/\L&/"):\$PATH\"\nfi"
 
-# Create the soft links
-if [ -d /usr/local/src/texlive/ ];
-then
-    cd /usr/local/bin/
-    sudo ln -sf /usr/local/src/texlive/bin/x86_64-linux/* .
-    cd -
-fi
 
 # May change this
 echo "Wanna? sudo localectl set-x11-keymap us pc105 qwerty 'compose:102'"
+echo "Wanna? sudo localectl set-x11-keymap us pc105 qwerty 'compose:prsc,caps:escape'"

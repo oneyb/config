@@ -445,7 +445,7 @@ package is loaded, you should place your code here."
   (add-to-list 'ispell-skip-region-alist '("\\\\cite.*{" . "}"))
   (add-to-list 'ispell-skip-region-alist '("\\\\chem{" . "}"))
   (add-to-list 'ispell-skip-region-alist '("\\$" . "\\$"))
-  (setq latex-run-command "pdftex")
+  (setq latex-run-command "pdflatex")
   (setq tex-process-asynchronous t)
   (set-face-attribute 'default nil :height 94)
   (add-hook 'LaTeX-mode-hook (lambda () (require 'org-ref)))
