@@ -64,10 +64,8 @@ sudo mkdir -p /usr/local/share/man/man1
 sudo cp rclone.1 /usr/local/share/man/man1/
 sudo mandb
 
-# https://github.com/Aluxian/Whatsie/releases/download/v2.1.0/whatsie-2.1.0-linux-amd64.deb
 pkgs=(
     https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb
-    https://github.com/Aluxian/Messenger-for-Desktop/releases/download/v2.0.4/messengerfordesktop-2.0.4-linux-amd64.deb
 )
 
 function install_manual_deb ()
@@ -83,6 +81,15 @@ function install_manual_deb ()
 for p in ${pkgs[@]}; do
     install_manual_deb $p
 done
+
+# Messenger services with Franz
+wget https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz
+sudo mkdir /opt/franz
+sudo tar xzf Franz-linux*.tgz -C /opt/franz
+sudo ln -s /opt/franz/Franz /usr/bin/franz
+sudo wget https://cdn-images-1.medium.com/max/360/1*v86tTomtFZIdqzMNpvwIZw.png -O /usr/share/icons/franz.png
+sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Franz\nComment=A free messaging app for WhatsApp, Facebook Messenger, Telegram, Slack and more.\nExec=franz -- %u\nStartupWMClass=Franz\nIcon=franz\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/franz.desktop"
+mv Franz-linux*.tgz $HOME/bin/src/
 
 # # Don't telegram anymore
 # wget https://updates.tdesktop.com/tlinux/tsetup.0.10.19.tar.xz
