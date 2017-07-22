@@ -352,6 +352,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq evil-toggle-key (kbd "C-e"))
   (setq ess-eval-visibly nil)
   (setq ess-ask-for-ess-directory nil)
+  (setq org-todo-keywords
+        '((sequence "OPEN" "NEXT" "DEFER" "WAIT" "|" "DONE"))
+        )
   )
 
 (defun dotspacemacs/user-config ()
@@ -636,12 +639,13 @@ package is loaded, you should place your code here."
                org-icalendar-use-scheduled '(event-if-not-todo)
                )
               ;; org-agenda-sorting-strategy
-              (setq org-todo-keywords
-                    '((sequence "TODO" "NEXT" "OPEN" "|" "DONE")))
+              ;; (setq org-todo-keywords
+              ;;       '((sequence "TODO" "NEXT" "OPEN" "|" "DONE"))
+              ;;       )
               )
             )
   ;; XMODIFIERS=@im=none
-  (setenv "XMODIFIERS" "@im=none") 
+  ;; (setenv "XMODIFIERS" "@im=none") 
   (add-to-list 'auto-mode-alist '("\\.eml\\'" . org-mode))
   (add-hook 'markdown-mode-hook
             '(lambda () (define-key markdown-mode-map "\c-c[" 'helm-bibtex)))

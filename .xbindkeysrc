@@ -1,7 +1,7 @@
 # emacs please make this -*- sh -*-
 "emacsclient -c --eval '(org-agenda-list)' --eval '(delete-other-windows)'"
 Mod4 + a
-"emacsclient -c --eval '(switch-to-buffer "*spacemacs*")' --eval '(spacemacs/toggle-maximize-buffer)'"
+"emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")' --eval '(spacemacs/toggle-maximize-buffer)'"
 Control + Mod1 + E
 "xset dpms force off"
  Mod4 + d
@@ -15,11 +15,11 @@ Control + Mod1 + W
 Mod4 + n
 "pcmanfm"
 Mod4 + f
-"x-terminal-emulator --geometry 79x39-0-0 --title Mplayer --working-directory ~/Music/Playlists/"
+"xfce4-terminal --geometry 79x39-0-0 --title Mplayer --working-directory ~/Music/Playlists/"
 Control + Shift + Mod1 + M
-"x-terminal-emulator --execute htop --title htop --geometry 120x32+66+66"
+"xfce4-terminal --command htop --title htop --geometry 120x32+66+66"
 Mod4 + h
-"x-terminal-emulator --title Terminator --geometry 84x44+0+0 --working-directory ~/"
+"xfce4-terminal --title Terminator --geometry 84x44+0+0 --working-directory ~/"
 Control + Mod1 + t
 "~/bin/anamnesis --browse"
 Mod4 + c
@@ -34,8 +34,8 @@ Mod4 + g
 # F7
 "~/bin/toggle-sticky-keys.sh"
 Mod4 + k
-"~/bin/whatsapp"
-Mod4 + w
+# "~/bin/whatsapp"
+# Mod4 + w
 # "gnome-control-center sound input"
 # "pacmd set-default-source 'alsa_input.usb-Shure_Incorporated_Shure_Digital-00-Digital.analog-stereo'"
 # "pavucontrol"

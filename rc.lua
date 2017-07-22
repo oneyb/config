@@ -50,7 +50,7 @@ batterywidget:buttons(awful.util.table.join(
 -- )
 -- batterywidgettimer:start()
 
-gears.timer.start_new ( 60,
+gears.timer.start_new ( 69,
                         function()
                           fh = io.popen("acpi | sed -r 's/^.+ ([0-9]+%).*$/\\1/'", "r")
                           batterywidget.text = "Bat:" .. fh:read() .. " "
@@ -184,11 +184,11 @@ phonewidget:buttons(awful.util.table.join(
                       awful.button({ }, 1, function () awful.spawn("xfce4-terminal --command " .. os.getenv("HOME") .. "/bin/.sync_phone.sh") end)
 ))
 
-local htopwidget = wibox.widget.imagebox()
-htopwidget.image = awful.util.get_configuration_dir() .. "/icons/htop.png"
-htopwidget:buttons(awful.util.table.join(
-                     awful.button({ }, 1, function () awful.spawn("xfce4-terminal --command htop --title htop --geometry 120x32+66+66") end)
-))
+-- local htopwidget = wibox.widget.imagebox()
+-- htopwidget.image = awful.util.get_configuration_dir() .. "/icons/htop.png"
+-- htopwidget:buttons(awful.util.table.join(
+--                      awful.button({ }, 1, function () awful.spawn("xfce4-terminal --command htop --title htop --geometry 120x32+66+66") end)
+-- ))
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -354,6 +354,13 @@ local tasklist_buttons = awful.util.table.join(
     function (c)
       c.maximized_horizontal = not c.maximized_horizontal
       c.maximized_vertical   = not c.maximized_vertical
+      if not c:isvisible() and c.first_tag then
+        c.first_tag:view_only()
+        client.focus = c
+        c:raise()
+      end
+      -- This will also un-minimize
+      -- the client, if needed
   end)
   -- awful.button({ }, 3, client_menu_toggle_fn()),
   -- awful.button({ }, 4, function ()
@@ -419,20 +426,20 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.fixed.horizontal,
         -- mykeyboardlayout,
         wibox.widget.systray(),
-        htopwidget,
-        phonewidget,
-        syncwidget,
+        -- htopwidget,
         -- vbwidget,
-        zoterowidget,
-        filewidget,
-        emacswidget,
-        orgsyncwidget,
+        franzwidget,
+        signalwidget,
         mailwidget,
         webwidget,
         ffwidget,
         cwebwidget,
-        franzwidget,
-        signalwidget,
+        zoterowidget,
+        filewidget,
+        emacswidget,
+        orgsyncwidget,
+        phonewidget,
+        syncwidget,
         batterywidget,
         volumewidget,
         mytextclock,
@@ -464,12 +471,12 @@ globalkeys = awful.util.table.join(
     end,
     {description = "focus next by index", group = "client"}
   ),
-  awful.key({ modkey,           }, "k",
-    function ()
-      awful.client.focus.byidx(-1)
-    end,
-    {description = "focus previous by index", group = "client"}
-  ),
+  -- awful.key({ modkey,           }, "k",
+  --   function ()
+  --     awful.client.focus.byidx(-1)
+  --   end,
+  --   {description = "focus previous by index", group = "client"}
+  -- ),
   awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
     {description = "show main menu", group = "awesome"}),
 
@@ -498,8 +505,8 @@ globalkeys = awful.util.table.join(
     {description = "open a terminal", group = "launcher"}),
   awful.key({ modkey, "Control" }, "r", awesome.restart,
     {description = "reload awesome", group = "awesome"}),
-  awful.key({ modkey, "Shift"   }, "q", awesome.quit,
-    {description = "quit awesome", group = "awesome"}),
+  -- awful.key({ modkey, "Shift"   }, "q", awesome.quit,
+  --   {description = "quit awesome", group = "awesome"}),
 
   awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
     {description = "increase master width factor", group = "layout"}),
@@ -565,14 +572,15 @@ clientkeys = awful.util.table.join(
     {description = "move to screen", group = "client"}),
   awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
     {description = "toggle keep on top", group = "client"}),
-  awful.key({ modkey,           }, "n",
+  awful.key({ modkey,           }, "s",
     function (c)
       -- The client currently has the input focus, so it cannot be
       -- minimized, since minimized clients can't have the focus.
       c.minimized = true
     end ,
     {description = "minimize", group = "client"}),
-  awful.key({ modkey,           }, "m",
+  awful.key({ "Mod1",           }, "F4",      function (c) c:kill()                         end),
+  awful.key({ modkey,           }, "b",
     function (c)
       c.maximized = not c.maximized
       c:raise()
@@ -674,6 +682,7 @@ awful.rules.rules = {
 
       name = {
         "Event Tester",  -- xev.
+        "htop",  -- xev.
       },
       role = {
         "AlarmWindow",  -- Thunderbird's calendar.
