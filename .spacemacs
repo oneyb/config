@@ -512,8 +512,9 @@ package is loaded, you should place your code here."
                     ;; ein:slice-image t
                     ein:worksheet-enable-undo 'yes
                     )
-              (setq python-shell-interpreter "/d/documents/eaternity/bw2-py/envs/bw2/bin/ipython"
-                    python-shell-interpreter-args "--simple-prompt -i")
+              ;; (setq python-shell-interpreter "/d/documents/eaternity/bw2-py/envs/bw2/bin/ipython"
+                    ;; python-shell-interpreter-args "--simple-prompt -i")
+              (setq python-shell-interpreter "ipython")
               )
             )
   (add-hook 'python-mode-hook

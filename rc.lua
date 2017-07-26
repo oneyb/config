@@ -379,7 +379,10 @@ local function set_wallpaper(s)
     if type(wallpaper) == "function" then
       wallpaper = wallpaper(s)
     end
-    gears.wallpaper.maximized(wallpaper, s, true)
+    -- gears.wallpaper.maximized(wallpaper, s, false)
+    -- gears.wallpaper.tiled(wallpaper, s)
+    gears.wallpaper.fit(wallpaper, s)
+    -- gears.wallpaper.centered(wallpaper, s, false)
   end
 end
 
@@ -465,6 +468,7 @@ globalkeys = awful.util.table.join(
   awful.key({ }, "XF86AudioRaiseVolume", function () vicious.contrib.pulse.add(5,sink) end),
   awful.key({ }, "XF86AudioLowerVolume", function () vicious.contrib.pulse.add(-5,sink) end),
   awful.key({ }, "XF86AudioMute", function() vicious.contrib.pulse.toggle(sink) end),
+  awful.key({ }, "Print", function () awful.spawn("scrot -e 'mv $f ~/screenshots/ 2>/dev/null'", false) end),
   awful.key({ "Mod1",     }, "Tab",
     function ()
       awful.client.focus.byidx( 1)
