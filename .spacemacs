@@ -353,7 +353,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq ess-eval-visibly nil)
   (setq ess-ask-for-ess-directory nil)
   (setq org-todo-keywords
-        '((sequence "OPEN" "NEXT" "DEFER" "WAIT" "|" "DONE"))
+        '((sequence "OPEN" "NEXT" "WAIT" "|" "DONE"))
         )
   )
 
