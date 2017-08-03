@@ -1,7 +1,7 @@
 # emacs please make this -*- sh -*-
-"emacsclient -c --eval '(org-agenda-list)' --eval '(delete-other-windows)'&"
+"emacsclient -c --eval '(org-agenda-list)' --eval '(delete-other-windows)'"
 Mod4 + a
-"emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")' --eval '(spacemacs/toggle-maximize-buffer)'&"
+"emacsclient -c --eval '(switch-to-buffer "*spacemacs*")'"
 Control + Mod1 + E
 "xset dpms force off"
  Mod4 + d
