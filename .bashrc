@@ -105,8 +105,9 @@ fi
 
 export HOST=`uname -n`
 export TERM=xterm-256color
-export EDITOR='vi'
-export BROWSER="firefox"
+# export EDITOR='vi'
+export ALTERNATE_EDITOR=vim EDITOR=emacsclient VISUAL=emacsclient
+export BROWSER="xdg-open"
 
 # Arch wiki-search
 alias aw='wiki-search'
@@ -128,11 +129,14 @@ alias agar='sudo apt-get autoremove'
 # alias agar='sudo apt-get autoremove'
 
 # # cool redirection example
+# # begin example
 # cat > something.sh << end_input
 # #!/bin/bash
 # echo $HOST
 # echo 'Hello World!'
 # end_input
+# # end example and run
+# bash end_input
 
 # Functions
 function o()
