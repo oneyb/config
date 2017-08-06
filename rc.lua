@@ -32,77 +32,6 @@ volumewidget:buttons(awful.util.table.join(
                        awful.button({ }, 5, function () vicious.contrib.pulse.add(-5,sink) end)
 ))
 
--- {{{ Battery state Widget
-
--- Create an ACPI widget
-local batterywidget = wibox.widget.textbox()
-batterywidget.text = " Bat:"
-batterywidget:buttons(awful.util.table.join(
-                        awful.button({ }, 1, function () awful.spawn("xfce4-power-manager-settings") end)
-))
--- batterywidgettimer = wibox.widget.timer()
--- batterywidgettimer:add_signal("timeout",
---                               function()
---                                 fh = assert(io.popen("acpi | sed -r 's/^.+ ([0-9]+%).*$/\\1/'", "r"))
---                                 batterywidget.text = " Bat: " .. fh:read("*l") .. " "
---                                 fh:close()
---                               end
--- )
--- batterywidgettimer:start()
-
-gears.timer.start_new ( 69,
-                        function()
-                          fh = io.popen("acpi | sed -r 's/^.+ ([0-9]+%).*$/\\1/'", "r")
-                          batterywidget.text = "Bat:" .. fh:read() .. " "
-                        end
-)
-
--- Create a widget and update its content using the output of a shell
--- command every 10 seconds:
--- local batterywidget = wibox.widget {
---     {
---         min_value        = 0,
---         max_value        = 100,
---         value            = 0,
---         paddings         = 1,
---         border_width     = 1,
---         forced_width     = 30,
---         border_color     = "#3F3F3F",
---         foreground_color = "#000111",
---         background_color = "#000000",
---         id               = "mypb",
---         widget           = wibox.widget.progressbar,
---     },
---     {
---         id           = "mytb",
---         text         = "100%",
---         widget       = wibox.widget.textbox,
---     },
---     buttons = awful.util.table.join(
---       awful.button({ }, 1, function () awful.spawn("xfce4-power-manager-settings") end)
---     ),
---     layout      = wibox.layout.stack,
---     set_battery = function(self, val)
---         self.mytb.text  = tonumber(val).."%"
---         self.mypb.value = tonumber(val)
---     end,
--- }
-
--- gears.timer {
---     timeout   = 10,
---     autostart = true,
---     callback  = function()
---         -- You should read it from `/sys/class/power_supply/` (on Linux)
---         -- instead of spawning a shell. This is only an example.
---         awful.spawn.easy_async(
---             {"sh", "-c", "acpi | sed -n 's/^.*, \([0-9]*\)%/\1/p'"},
---             function(out)
---                 batterywidget.text = out
---             end
---         )
---     end
--- }
--- }}}
 
 local mailwidget = wibox.widget.imagebox()
 mailwidget.image = awful.util.get_configuration_dir() .. "/icons/icedove.png"
@@ -443,7 +372,6 @@ awful.screen.connect_for_each_screen(function(s)
         orgsyncwidget,
         phonewidget,
         syncwidget,
-        batterywidget,
         volumewidget,
         mytextclock,
         s.mylayoutbox

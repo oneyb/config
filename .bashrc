@@ -107,7 +107,7 @@ export HOST=`uname -n`
 export TERM=xterm-256color
 # export EDITOR='vi'
 export ALTERNATE_EDITOR=vim EDITOR=emacsclient VISUAL=emacsclient
-export BROWSER="xdg-open"
+export BROWSER="exo-open"
 
 # Arch wiki-search
 alias aw='wiki-search'
@@ -120,7 +120,8 @@ alias agi='sudo apt-get install'
 alias agr='sudo apt-get remove'
 alias agu='sudo apt-get update && sudo apt-get upgrade'
 alias agdu='sudo apt-get update && sudo apt-get dist-upgrade'
-alias ags='sudo apt-cache search'
+alias agsaptitude='sudo aptitude search'
+alias ags='apt-cache search'
 alias agar='sudo apt-get autoremove'
 # alias agi='sudo apt-get install'
 # alias agr='sudo apt-get remove'
@@ -188,6 +189,15 @@ function backport_debian()
     sudo apt-get -b source $1
     ls -l
     sudo dpkg -i *.deb
+}
+
+function ediff() {
+    # from: https://defunitive.wordpress.com/2011/07/23/invoking-emacs-ediff-from-the-command-line/
+	  if [ $# -ne 2 ]; then
+		    echo "USAGE: ediff <FILE1> <FILE2>"
+	  else
+		    emacs --eval "(ediff-files \"$1\" \"$2\")"
+	  fi
 }
 
 # tex to docx

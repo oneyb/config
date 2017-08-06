@@ -407,7 +407,7 @@ package is loaded, you should place your code here."
   ;; (key-chord-define evil-insert-state-map "jk" 'evil-escape)
   ;; (key-chord-define evil-normal-state-map "lk" 'kill-this-buffer)
   ;; (key-chord-define evil-insert-state-map "df" 'evil-escape)
-  (key-chord-define-global "lk" 'kill-this-buffer)
+  (key-chord-define-global ";l" 'kill-this-buffer)
   (key-chord-define-global "wq" 'vim-wq)
   (key-chord-define-global "jk" 'my-escape-and-save)
   (key-chord-define-global "BB" 'my-escape-and-bury)
@@ -494,8 +494,8 @@ package is loaded, you should place your code here."
                 (evil-escape)
                 (ein:notebook-save-notebook-command)
                 )
-              (key-chord-define-local "kj" 'my-escape-and-save-ein)
-              (key-chord-define-local "lk" 'my-escape-and-kill-ein)
+              ;; (key-chord-define-local "kj" 'my-escape-and-save-ein)
+              ;; (key-chord-define-local "lk" 'my-escape-and-kill-ein)
               (spacemacs/toggle-auto-completion-on)
               (setq ein:use-auto-complete t
                     ein:use-auto-complete-superpack t
