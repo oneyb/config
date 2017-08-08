@@ -55,7 +55,10 @@ values."
       (spacemacs/toggle-auto-completion)
       )
      pandoc
-     org
+     ;; org
+     (org :variables
+          org-enable-github-support t
+          org-enable-bootstrap-support t)
      (latex
       :variables latex-enable-auto-fill t
       :eval-after-load
@@ -571,6 +574,12 @@ package is loaded, you should place your code here."
               ;;                                          (mapconcat 'identity x ",")
               ;;                                          "}")) ""))))
               ;; ))
+              (defun org-todo-list-next ()
+                "My escape and save"
+                (interactive)
+                (org-todo-list "NEXT")
+                (ace-maximize-window)
+                )
               (setq reftex-default-bibliography    "~/zotero/Insects.bib"
                     org-ref-bibliography-notes     "~/zotero/biblio-notes.org"
                     org-ref-default-bibliography   "~/zotero/Insects.bib"
@@ -586,6 +595,7 @@ package is loaded, you should place your code here."
                 "ir"  'org-ref-helm-insert-cite-link
                 "p"   'org-priority
                 "z"   'org-pomodoro
+                "an"   'org-todo-list-next
                 )
               (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
                 "p"   'org-priority
