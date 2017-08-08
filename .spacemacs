@@ -57,7 +57,7 @@ values."
      pandoc
      ;; org
      (org :variables
-          org-enable-github-support t
+          ;; org-enable-github-support t
           org-enable-bootstrap-support t)
      (latex
       :variables latex-enable-auto-fill t
@@ -516,7 +516,7 @@ package is loaded, you should place your code here."
                     ein:worksheet-enable-undo 'yes
                     )
               ;; (setq python-shell-interpreter "/d/documents/eaternity/bw2-py/envs/bw2/bin/ipython"
-                    ;; python-shell-interpreter-args "--simple-prompt -i")
+              ;; python-shell-interpreter-args "--simple-prompt -i")
               (setq python-shell-interpreter "ipython")
               )
             )
@@ -595,7 +595,7 @@ package is loaded, you should place your code here."
                 "ir"  'org-ref-helm-insert-cite-link
                 "p"   'org-priority
                 "z"   'org-pomodoro
-                "an"   'org-todo-list-next
+                ;; "an"   'org-todo-list-next
                 )
               (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
                 "p"   'org-priority
@@ -644,8 +644,8 @@ package is loaded, you should place your code here."
 
               ;; ics export
               (setq
-              ;;  ;; org-icalendar-include-todo t
-              ;;  ;; org-icalendar-use-deadline '(event-if-not-todo todo-due)
+               ;;  ;; org-icalendar-include-todo t
+               ;;  ;; org-icalendar-use-deadline '(event-if-not-todo todo-due)
                org-icalendar-use-deadline '(event-if-not-todo)
                org-icalendar-use-scheduled '(event-if-not-todo)
                )

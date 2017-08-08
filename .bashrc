@@ -268,10 +268,11 @@ alias sti='xkbset exp 1 sticky -twokey -latchlock'
 
 function red()
 {
-	  if [[ -n "`pgrep -f emacs`" ]]; then
-	      killall -w 'emacs'
-	  fi
-	  emacs --daemon
+    bash -c 'systemctl --user restart emacs' &
+    # if [[ -n "`pgrep -f emacs`" ]]; then
+	  #       killall -w 'emacs'
+	  #   fi
+	  #   emacs --daemon
 }
 
 function wget-R()
@@ -350,11 +351,11 @@ function install_manual_deb ()
 function ebook-convert-to-pdf()
 {
     ebook-convert $1 $2                             \
-        --margin-top=69                             \
-        --margin-left=69                            \
-        --margin-right=69                           \
-        --margin-bottom=69                          \
-        --pdf-page-numbers
+                  --margin-top=69                             \
+                  --margin-left=69                            \
+                  --margin-right=69                           \
+                  --margin-bottom=69                          \
+                  --pdf-page-numbers
 }
 
 
@@ -450,15 +451,15 @@ if [[ -n `pgrep -f 'emacs --smid'` ]]; then
 fi
 
 if [ $USER = "pi" ]; then
-	# # keyboard stuff
-	# setxkbmap -option "compose:caps"
-	# setxkbmap -option "caps:escape,compose:ralt"
-	setxkbmap -option "caps:escape,compose:102"
-	# setxkbmap -option "caps:swapescape"
-	# setxkbmap -option "caps:escape"
-	xkbset exp 1 =sticky -twokey -latchlock
-# else
-# 	eval "$(pandoc --bash-completion)"
+	  # # keyboard stuff
+	  # setxkbmap -option "compose:caps"
+	  # setxkbmap -option "caps:escape,compose:ralt"
+	  setxkbmap -option "caps:escape,compose:102"
+	  # setxkbmap -option "caps:swapescape"
+	  # setxkbmap -option "caps:escape"
+	  xkbset exp 1 =sticky -twokey -latchlock
+    # else
+    # 	eval "$(pandoc --bash-completion)"
 fi
 
 set -o vi
