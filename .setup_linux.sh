@@ -5,36 +5,54 @@ cd ~
 # The bare essentials
 
 sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       \
-      aspell-bg aspell-de aspell-en aspell-es audacity automake awesome         \
-      awesome-extra build-essential calendar-google-provider calibre chromium   \
-      cmake cmake-data cryptsetup-bin cups curl dash evince firefox-esr         \
-      firmware-linux-free firmware-linux-nonfree flac flashplugin-nonfree       \
-      freecad gdal-bin genisoimage geoip-database gfortran gimp git             \
-      gnome-disk-utility gocr gocr-tk googleearth-package gparted handbrake     \
-      handbrake-cli imagemagick inkscape ispell java-common lame laptop-detect  \
-      mencoder mplayer2 nco ncview netcdf-bin netcdf-doc ntfs-3g ntfs-config    \
-      openssh-client openssh-server p7zip-full pavucontrol pcmanfm pdftk        \
-      proj-bin proj-data pulseaudio pulseaudio-module-x11 pulseaudio-utils      \
-      qpdf qpdfview r-base r-cran-xml2 r-cran-ncdf4 recordmydesktop ristretto   \
-      rsync scrot seahorse simple-scan smplayer subversion suckless-tools       \
-      synaptic tor tor-arm tor-geoipdb torsocks transmission-gtk trash-cli      \
-      udevil unattended-upgrades unoconv vim-gtk wget epiphany-browser          \
-      bleachbit wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool   \
-      xfburn xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere  \
-      xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
-      exfat-utils libxft-dev libfreetype6-dev
-
+     aspell-bg aspell-de aspell-en aspell-es audacity automake awesome          \
+     awesome-extra build-essential calendar-google-provider calibre chromium    \
+     cmake cmake-data cryptsetup-bin cups curl dash evince firefox-esr          \
+     firmware-linux-free firmware-linux-nonfree flac flashplugin-nonfree        \
+     freecad gdal-bin genisoimage geoip-database gfortran gimp git              \
+     gnome-disk-utility gocr gocr-tk googleearth-package gparted handbrake      \
+     handbrake-cli imagemagick inkscape ispell java-common lame laptop-detect   \
+     mencoder mplayer2 nco ncview netcdf-bin netcdf-doc ntfs-3g ntfs-config     \
+     openssh-client openssh-server p7zip-full pavucontrol pcmanfm pdftk         \
+     proj-bin proj-data pulseaudio pulseaudio-utils qpdf qpdfview r-base        \
+     r-cran-xml2 r-cran-ncdf4 recordmydesktop ristretto rsync scrot seahorse    \
+     simple-scan smplayer subversion suckless-tools synaptic tor tor-arm        \
+     tor-geoipdb torsocks transmission-gtk trash-cli udevil bleachbit wodim     \
+     wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool xfburn xpdf xsel   \
+     xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere xul-ext-noscript   \
+     libssl-dev libgdal-dev libmariadb-client-lgpl-dev exfat-utils libxft-dev   \
+     libfreetype6-dev awesome-extra cmake curl evolution evolution-data-server  \
+     evolution-plugins evolution-plugins-experimental fbreader feh ffmpeg       \
+     freecad gdal-bin git gvfs-backends libav-tools librdf0 libreoffice         \
+     libreoffice-avmedia-backend-gstreamer libreoffice-base                     \
+     libreoffice-base-core libreoffice-base-drivers libreoffice-calc            \
+     libreoffice-core libreoffice-draw libreoffice-gtk2 libreoffice-impress     \
+     libreoffice-librelogo libreoffice-math libreoffice-nlpsolver               \
+     libreoffice-ogltrans libreoffice-pdfimport libreoffice-presenter-console   \
+     libreoffice-report-builder libreoffice-report-builder-bin                  \
+     libreoffice-script-provider-bsh libreoffice-script-provider-js             \
+     libreoffice-script-provider-python libreoffice-sdbc-hsqldb                 \
+     libreoffice-sdbc-postgresql libreoffice-wiki-publisher libreoffice-writer  \
+     libreoffice-writer2latex mencoder open-vm-tools open-vm-tools-desktop      \
+     python-debianbts python-gdal python-pycurl python-pysimplesoap             \
+     python-reportbug python3-debianbts python3-pycurl python3-pysimplesoap     \
+     python3-reportbug python3-uno transmission-gtk unoconv virtualbox          \
+     virtualbox-qt                                                              \
 
 # python packages
 sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
-      python-cupshelpers python-flake8 python-libxml2 python-matplotlib       \
-      python-numpy python-openpyxl python-openssl python-pandas               \
-      python-jsonrpclib python-pyparsing python-scipy python-setuptools       \
-      python-simplejson python-unittest2 python3 python-gdal python-pdfminer  \
-      pdfminer-data python-pip python-pip3 ipython-notebook ipython3-notebook
+     python-cupshelpers python-flake8 python-libxml2 python-matplotlib       \
+     python-numpy python-openpyxl python-openssl python-pandas               \
+     python-jsonrpclib python-pyparsing python-scipy python-setuptools       \
+     python-simplejson python-unittest2 python3 python-gdal python-pdfminer  \
+     pdfminer-data python-pip python-pip3 ipython-notebook ipython3-notebook
 
 # sudo pip install pandas ggplot
 sudo chmod 755 -R /usr/local/lib
+
+# disable annoying stuff
+sudo systemctl stop tor
+sudo systemctl disable tor
 
 # Playonlinux!!
 # wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
@@ -70,12 +88,12 @@ pkgs=(
 
 function install_manual_deb ()
 {
-        wget $1
-        sudo dpkg -i `basename $1`
-        if [ $# -eq 0 ]; then
-            sudo apt-get install -f
-        fi
-        mv `basename $1` $HOME/bin/src/
+    wget $1
+    sudo dpkg -i `basename $1`
+    if [ $# -eq 0 ]; then
+        sudo apt-get install -f
+    fi
+    mv `basename $1` $HOME/bin/src/
 }
 
 for p in ${pkgs[@]}; do
