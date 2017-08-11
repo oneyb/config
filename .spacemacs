@@ -76,7 +76,7 @@ values."
      ranger
      ;; vinegar
      csv
-     ipython-notebook
+     ;; ipython-notebook
      ;; (ipython-notebook :variables ein:use-auto-complete t)
      javascript
      html
@@ -656,7 +656,8 @@ package is loaded, you should place your code here."
               ;;       )
               (setq paperless-capture-directory "/home/oney/documents/scans"
                     paperless-root-directory    "/home/oney/documents")
-              (require 'org-paperless)
+              (require 'paperless)
+              ;; (require 'org-paperless)
             )
             )
   ;; XMODIFIERS=@im=none
