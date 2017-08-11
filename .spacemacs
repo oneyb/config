@@ -97,6 +97,7 @@ values."
                                       key-chord
                                       ;; vdiff
                                       org-ref
+                                      paperless
                                       ;; let-alist
                                       )
    ;; A list of packages that cannot be updated.
@@ -467,59 +468,59 @@ package is loaded, you should place your code here."
               )
             )
   
-  (add-hook 'ein:notebook-multilang-mode-hook
-            ;; ein:console-open
-            ;; To use this function, `ein:console-security-dir' and
-            ;; `ein:console-args' must be set properly.
-            (lambda ()
-              (setq ein:console-executable "/d/documents/eaternity/bw2-py/envs/bw2/bin/jupyter-console")
-              (setq ein:console-args '("--profile" "bw2"))
-              ;; (setq ein:console-args
-              ;;       '(
-              ;;         (8888 . '("--profile" "bw2"))
-              ;;         ;; (8889 . '("--ssh" "HOSTNAME"))
-              ;;         (default . '("--profile" "bw2"))))
-              (spacemacs/set-leader-keys-for-major-mode 'ein:notebook-multilang-mode
-                ","   'ein:worksheet-execute-cell-and-goto-next
-                "."   'ein:worksheet-execute-cell
-                "RET" 'ein:worksheet-execute-cell-and-insert-below
-                "TAB" 'ein:console-open
-                )
-              (defun my-escape-and-kill-ein ()
-                "My escape and save"
-                (interactive)
-                (evil-escape)
-                (ein:notebook-close 1)
-                )
-              (defun my-escape-and-save-ein ()
-                "My escape and save"
-                (interactive)
-                (evil-escape)
-                (ein:notebook-save-notebook-command)
-                )
-              ;; (key-chord-define-local "kj" 'my-escape-and-save-ein)
-              ;; (key-chord-define-local "lk" 'my-escape-and-kill-ein)
-              (spacemacs/toggle-auto-completion-on)
-              (setq ein:use-auto-complete t
-                    ein:use-auto-complete-superpack t
-                    ein:enable-keepalive t
-                    ;; ein:jupyter-default-notebook-directory "/home/oney/documents/eaternity/eaternity"
-                    ;; ein:jupyter-default-server-command "/home/oney/documents/eaternity/bw2-py/bin/jupyter"
-                    ;; ein:jupyter-server-args nil
-                    ein:notebook-autosave-frequency 60
-                    ein:notebook-checkpoint-frequency 60
-                    ein:notebook-modes
-                    (quote
-                     (ein:notebook-multilang-mode ein:notebook-python-mode))
-                    ;; ein:org-execute-timeout 120
-                    ;; ein:slice-image t
-                    ein:worksheet-enable-undo 'yes
-                    )
-              ;; (setq python-shell-interpreter "/d/documents/eaternity/bw2-py/envs/bw2/bin/ipython"
-              ;; python-shell-interpreter-args "--simple-prompt -i")
-              (setq python-shell-interpreter "ipython")
-              )
-            )
+  ;; (add-hook 'ein:notebook-multilang-mode-hook
+  ;;           ;; ein:console-open
+  ;;           ;; To use this function, `ein:console-security-dir' and
+  ;;           ;; `ein:console-args' must be set properly.
+  ;;           (lambda ()
+  ;;             (setq ein:console-executable "/d/documents/eaternity/bw2-py/envs/bw2/bin/jupyter-console")
+  ;;             (setq ein:console-args '("--profile" "bw2"))
+  ;;             ;; (setq ein:console-args
+  ;;             ;;       '(
+  ;;             ;;         (8888 . '("--profile" "bw2"))
+  ;;             ;;         ;; (8889 . '("--ssh" "HOSTNAME"))
+  ;;             ;;         (default . '("--profile" "bw2"))))
+  ;;             (spacemacs/set-leader-keys-for-major-mode 'ein:notebook-multilang-mode
+  ;;               ","   'ein:worksheet-execute-cell-and-goto-next
+  ;;               "."   'ein:worksheet-execute-cell
+  ;;               "RET" 'ein:worksheet-execute-cell-and-insert-below
+  ;;               "TAB" 'ein:console-open
+  ;;               )
+  ;;             (defun my-escape-and-kill-ein ()
+  ;;               "My escape and save"
+  ;;               (interactive)
+  ;;               (evil-escape)
+  ;;               (ein:notebook-close 1)
+  ;;               )
+  ;;             (defun my-escape-and-save-ein ()
+  ;;               "My escape and save"
+  ;;               (interactive)
+  ;;               (evil-escape)
+  ;;               (ein:notebook-save-notebook-command)
+  ;;               )
+  ;;             ;; (key-chord-define-local "kj" 'my-escape-and-save-ein)
+  ;;             ;; (key-chord-define-local "lk" 'my-escape-and-kill-ein)
+  ;;             (spacemacs/toggle-auto-completion-on)
+  ;;             (setq ein:use-auto-complete t
+  ;;                   ein:use-auto-complete-superpack t
+  ;;                   ein:enable-keepalive t
+  ;;                   ;; ein:jupyter-default-notebook-directory "/home/oney/documents/eaternity/eaternity"
+  ;;                   ;; ein:jupyter-default-server-command "/home/oney/documents/eaternity/bw2-py/bin/jupyter"
+  ;;                   ;; ein:jupyter-server-args nil
+  ;;                   ein:notebook-autosave-frequency 60
+  ;;                   ein:notebook-checkpoint-frequency 60
+  ;;                   ein:notebook-modes
+  ;;                   (quote
+  ;;                    (ein:notebook-multilang-mode ein:notebook-python-mode))
+  ;;                   ;; ein:org-execute-timeout 120
+  ;;                   ;; ein:slice-image t
+  ;;                   ein:worksheet-enable-undo 'yes
+  ;;                   )
+  ;;             ;; (setq python-shell-interpreter "/d/documents/eaternity/bw2-py/envs/bw2/bin/ipython"
+  ;;             ;; python-shell-interpreter-args "--simple-prompt -i")
+  ;;             (setq python-shell-interpreter "ipython")
+  ;;             )
+  ;;           )
   (add-hook 'python-mode-hook
             (lambda ()
               (spacemacs/set-leader-keys-for-major-mode 'python-mode
@@ -653,7 +654,10 @@ package is loaded, you should place your code here."
               ;; (setq org-todo-keywords
               ;;       '((sequence "TODO" "NEXT" "OPEN" "|" "DONE"))
               ;;       )
-              )
+              (setq paperless-capture-directory "/home/oney/documents/scans"
+                    paperless-root-directory    "/home/oney/documents")
+              (require 'org-paperless)
+            )
             )
   ;; XMODIFIERS=@im=none
   ;; (setenv "XMODIFIERS" "@im=none") 
@@ -675,7 +679,10 @@ package is loaded, you should place your code here."
  '(evil-want-Y-yank-to-eol t)
  '(org-agenda-files
    (quote
-    ("~/org/ensectable.org" "~/org/notes.org" "~/org/personal.org" "~/org/sibs.org"))))
+    ("~/org/ensectable.org" "~/org/notes.org" "~/org/personal.org" "~/org/sibs.org")))
+ '(package-selected-packages
+   (quote
+    (paperless zotxt yapfify ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode restart-emacs ranger rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pdf-tools pcre2el paradox pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc insert-shebang info+ indent-guide ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-object-popup ess-R-data-view emmet-mode elisp-slime-nav ein dumb-jump define-word dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-auctex company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
