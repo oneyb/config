@@ -96,10 +96,10 @@ values."
                                       zotxt
                                       ox-pandoc
                                       key-chord
-                                      org-trello
+                                      org-gcal
                                       ;; vdiff
                                       org-ref
-                                      paperless
+                                      ;; paperless
                                       ;; let-alist
                                       )
    ;; A list of packages that cannot be updated.
@@ -594,29 +594,37 @@ package is loaded, you should place your code here."
               ;; (spacemacs/set-leader-keys-for-minor-mode 'org-mode
               ;;   "ir"   'org-ref-helm-insert-cite-link
               ;;   )
-              
-              (defun org-trello-sync-buffer-IN ()
-                "Sync in"
-                (interactive)
-                (org-trello-sync-buffer t)
-                )
-              (defun org-trello-sync-card-IN ()
-                "Sync in"
-                (interactive)
-                (org-trello-sync-card t)
-                )
+              ;; (defun org-trello-sync-buffer-IN ()
+              ;;   "Sync in"
+              ;;   (interactive)
+              ;;   (org-trello-sync-buffer t)
+              ;;   )
+              ;; (defun org-trello-sync-card-IN ()
+              ;;   "Sync in"
+              ;;   (interactive)
+              ;;   (org-trello-sync-card t)
+              ;;   )
+              ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode
+              ;;   "ob"  'org-trello-sync-buffer
+              ;;   "oB"  'org-trello-sync-buffer-IN 
+              ;;   "oc"  'org-trello-sync-card
+              ;;   "oC"  'org-trello-sync-card-IN
+              ;;   "oI"  'org-trello-create-board-and-install-metadata
+              ;;   "oi"  'org-trello-install-board-metadata
+              ;;   )
               (spacemacs/set-leader-keys-for-major-mode 'org-mode
                 "ir"  'org-ref-helm-insert-cite-link
                 "p"   'org-priority
                 "z"   'org-pomodoro
-                "ob"  'org-trello-sync-buffer
-                "oB"  'org-trello-sync-buffer-IN 
-                "oc"  'org-trello-sync-card
-                "oC"  'org-trello-sync-card-IN
-                "oI"  'org-trello-create-board-and-install-metadata
-                "oi"  'org-trello-install-board-metadata
-                ;; "an"   'org-todo-list-next
+                ;; "Co"  'org-gcal-sync
                 )
+              ;; GCal!
+              ;; https://github.com/myuhe/org-gcal.el
+              ;; (require 'org-gcal)
+              ;; (setq org-gcal-client-id ".apps.googleusercontent.com"
+              ;;       org-gcal-client-secret "your-secret"
+              ;;       org-gcal-file-alist '(("brian.j.oney@gmail.com" .  "~/org/gcal.org"))
+              ;;       )
               (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
                 "p"   'org-priority
                 "z"   'org-pomodoro
@@ -673,26 +681,12 @@ package is loaded, you should place your code here."
               ;; (setq org-todo-keywords
               ;;       '((sequence "TODO" "NEXT" "OPEN" "|" "DONE"))
               ;;       )
-              (setq paperless-capture-directory "/home/oney/documents/scans"
-                    paperless-root-directory    "/home/oney/documents")
-              (require 'paperless)
-              ;; (require 'org-paperless)
-              (require 'org-trello)
-              (setq org-trello-files (file-expand-wildcards "~/org-trello/*.org"))
-              ;; (setq org-trello--card-level 2
-              ;;       org-trello--checklist-level 3
-              ;;       org-trello--item-level 4
-              ;;       org-trello--comment-level -2
-              ;;       org-trello--out-of-bounds-level 5
-              ;;       )
-              ;; (setq org-trello--card-level 1
-              ;;       org-trello--checklist-level 2
-              ;;       org-trello--item-level 3
-              ;;       org-trello--comment-level -2
-              ;;       org-trello--out-of-bounds-level 4
-              ;;       )
-              ;; XMODIFIERS=@im=none
-              ;; (setenv "XMODIFIERS" "@im=none") 
+              ;; (setq paperless-capture-directory "/home/oney/documents/scans"
+              ;;       paperless-root-directory    "/home/oney/documents")
+              ;; (require 'paperless)
+              ;; ;; (require 'org-paperless)
+              ;; (require 'org-trello)
+              ;; (setq org-trello-files (file-expand-wildcards "~/org-trello/*.org"))
               (add-to-list 'auto-mode-alist '("\\.eml\\'" . org-mode))
               (add-hook 'markdown-mode-hook
                         '(lambda () (define-key markdown-mode-map "\c-c[" 'helm-bibtex)))
@@ -715,10 +709,9 @@ package is loaded, you should place your code here."
  '(org-agenda-files
    (quote
     ("~/org/ensectable.org" "~/org/notes.org" "~/org/personal.org" "~/org/sibs.org")))
- '(org-trello-current-prefix-keybinding "C-c o" nil (org-trello))
  '(package-selected-packages
    (quote
-    (yaml-mode org-trello paperless zotxt yapfify ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode restart-emacs ranger rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pdf-tools pcre2el paradox pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc insert-shebang info+ indent-guide ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-object-popup ess-R-data-view emmet-mode elisp-slime-nav ein dumb-jump define-word dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-auctex company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (org-gcal yaml-mode zotxt yapfify ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode restart-emacs ranger rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pdf-tools pcre2el paradox pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc insert-shebang info+ indent-guide ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-object-popup ess-R-data-view emmet-mode elisp-slime-nav ein dumb-jump define-word dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-auctex company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
