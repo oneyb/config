@@ -622,14 +622,15 @@ package is loaded, you should place your code here."
                 )
               ;; GCal!
               ;; https://github.com/myuhe/org-gcal.el
-              ;; (require 'org-gcal)
-              ;; (setq org-gcal-client-id ".apps.googleusercontent.com"
-              ;;       org-gcal-client-secret "your-secret"
-              ;;       org-gcal-file-alist '(("brian.j.oney@gmail.com" .  "~/org/gcal.org"))
-              ;;       )
+              (require 'org-gcal)
+              (load "~/.org-gcal.el")
               (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
                 "p"   'org-priority
                 "z"   'org-pomodoro
+                "z"   'org-pomodoro
+                "oo"  'org-gcal-sync
+                "od"  'org-gcal-delete-at-point
+                "op"  'org-gcal-post-at-point
                 )
               (require 'org-ref)
               (require 'org-ref-latex)
