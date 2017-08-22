@@ -85,7 +85,7 @@ orgsyncwidget:buttons(awful.util.table.join(
 local emacswidget = wibox.widget.imagebox()
 emacswidget.image = awful.util.get_configuration_dir() .. "/icons/emacs22.png"
 emacswidget:buttons(awful.util.table.join(
-                      awful.button({ }, 1, function () awful.spawn("emacsclient -c --eval '(switch-to-buffer "*spacemacs*")'") end)
+                      awful.button({ }, 1, function () awful.spawn("emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")'") end)
 ))
 
 -- vbwidget = wibox.widget.imagebox()
