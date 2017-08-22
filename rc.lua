@@ -85,7 +85,7 @@ orgsyncwidget:buttons(awful.util.table.join(
 local emacswidget = wibox.widget.imagebox()
 emacswidget.image = awful.util.get_configuration_dir() .. "/icons/emacs22.png"
 emacswidget:buttons(awful.util.table.join(
-                      awful.button({ }, 1, function () awful.spawn("emacsclient -c") end)
+                      awful.button({ }, 1, function () awful.spawn("emacsclient -c --eval '(switch-to-buffer "*spacemacs*")'") end)
 ))
 
 -- vbwidget = wibox.widget.imagebox()
@@ -588,11 +588,11 @@ awful.rules.rules = {
                    border_color = beautiful.border_normal,
                    focus = awful.client.focus.filter,
                    raise = true,
-                   size_hints_honor = false,
+                   -- size_hints_honor = false,
                    keys = clientkeys,
                    buttons = clientbuttons,
                    screen = awful.screen.preferred,
-                   placement = awful.placement.no_overlap+awful.placement.no_offscreen
+                   -- placement = awful.placement.no_overlap+awful.placement.no_offscreen
     }
   },
 
