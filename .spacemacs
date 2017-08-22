@@ -669,14 +669,14 @@ package is loaded, you should place your code here."
               (spacemacs/toggle-auto-completion)
               ;; (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
               ;; (setq org-agenda-start-day "+0d")
-              (setq org-agenda-span-to-ndays "10d")
+              (setq org-agenda-span-to-ndays "21d")
               (setq org-agenda-include-diary t)
               ;; (setq org-time-stamp-custom-formats '("<%y-%m-%d>" . "<%y-%m-%d %H:%M>"))
 
               ;; ics export
               (setq
-               ;;  ;; org-icalendar-include-todo t
-               ;;  ;; org-icalendar-use-deadline '(event-if-not-todo todo-due)
+               ;; org-icalendar-include-todo t
+               ;; org-icalendar-use-deadline '(event-if-not-todo todo-due)
                org-icalendar-use-deadline '(event-if-not-todo)
                org-icalendar-use-scheduled '(event-if-not-todo)
                )

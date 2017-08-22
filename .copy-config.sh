@@ -9,6 +9,8 @@ stuff="
      $HOME/.vimrc
      $HOME/.config/awesome/rc.lua
      $HOME/r/rprofile.site
+     $HOME/.config/systemd/user/emacs.service
+     $HOME/.config/systemd/user/anamnesis.service
      $HOME/bin/.setup_linux.sh
      $HOME/bin/.copy-config.sh
 "

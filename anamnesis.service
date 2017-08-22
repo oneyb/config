@@ -1,0 +1,17 @@
+[Unit]
+
+Description=Anamnesis is a clipboard manager. It stores all clipboard history and offers an easy interface to do a full-text search on the items of its history.
+
+[Service]
+
+Type=forking
+# ExecStart=/usr/bin/emacs --daemon
+ExecStart=/home/oney/bin/anamnesis --restart
+ExecStop=/home/oney/bin/anamnesis --stop
+Restart=always
+TimeoutStartSec=0
+RestartSec=3600
+
+[Install]
+
+WantedBy=default.target
