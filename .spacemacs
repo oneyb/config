@@ -415,6 +415,7 @@ package is loaded, you should place your code here."
   ;; (key-chord-define evil-insert-state-map "jk" 'evil-escape)
   ;; (key-chord-define evil-normal-state-map "lk" 'kill-this-buffer)
   ;; (key-chord-define evil-insert-state-map "df" 'evil-escape)
+  (setq recentf-auto-cleanup "1:00pm")
   (key-chord-define-global ";l" 'kill-this-buffer)
   (key-chord-define-global "wq" 'vim-wq)
   (key-chord-define-global "jk" 'my-escape-and-save)
