@@ -95,6 +95,7 @@ values."
                                       ;; csv
                                       zotxt
                                       ox-pandoc
+                                      ox-koma-letter
                                       key-chord
                                       org-gcal
                                       ;; vdiff
@@ -642,11 +643,34 @@ package is loaded, you should place your code here."
                       "bibtex %b"
                       "pdflatex -interaction nonstopmode -output-directory %o %f"
                       "pdflatex -interaction nonstopmode -output-directory %o %f"))
+              (require 'ox-koma-letter)
+              (add-to-list 'org-latex-classes
+                           '("letter-de"
+                             "\\documentclass[DIV=14,
+                                fontsize=11pt,
+                                parskip=half,
+                                backaddress=false,
+                                fromemail=true,
+                                fromphone=true,
+                              fromalign=left]{scrlttr2}
+                             \\usepackage[ngerman]{babel}"
+                             ))
+              (add-to-list 'org-latex-classes
+                           '("letter-en"
+                             "\\documentclass[DIV=14,
+                                fontsize=11pt,
+                                parskip=half,
+                                backaddress=false,
+                                fromemail=true,
+                                fromphone=true,
+                              fromalign=left]{scrlttr2}
+                              \\usepackage[english]{babel}"
+                             ))
               (setq org-table-use-standard-references t)
               (org-babel-do-load-languages
                'org-babel-load-languages
                '(
-                 (emacs-lisp . nil)
+                 (emacs-lisp . t)
                  (R          . t)
                  (shell      . t)
                  (python     . t)
