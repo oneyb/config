@@ -167,8 +167,13 @@ values."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((recents . 9)
-                                (projects . 3))
+   dotspacemacs-startup-lists '(
+                                (recents . 9)
+                                (projects . 3)
+                                (bookmarks . 6)
+                                (agenda . 10)
+                                (todos . 9)
+                                )
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
@@ -634,6 +639,12 @@ package is loaded, you should place your code here."
                 "od"  'org-gcal-delete-at-point
                 "op"  'org-gcal-post-at-point
                 )
+              (setq org-agenda-custom-commands '(("d" "My next action" todo "NEXT")))
+                      ;; ("h" . "HOME + Name tag searches") ; describe prefix "h"
+                      ;; ("hl" tags "+HOME+Lisa")
+                      ;; ("hp" tags "+HOME+Peter")
+                      ;; ("hk" tags "+HOME+Kim")
+                      
               (require 'org-ref)
               (require 'org-ref-latex)
               (require 'org-ref-pdf)
