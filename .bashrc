@@ -191,13 +191,10 @@ function backport_debian()
     sudo dpkg -i *.deb
 }
 
-function ediff() {
-    # from: https://defunitive.wordpress.com/2011/07/23/invoking-emacs-ediff-from-the-command-line/
-	  if [ $# -ne 2 ]; then
-		    echo "USAGE: ediff <FILE1> <FILE2>"
-	  else
-		    emacs --eval "(ediff-files \"$1\" \"$2\")"
-	  fi
+
+# cool function name
+function gitty-up () {
+    git commit -a -m "$*" && git push origin master
 }
 
 # tex to docx
