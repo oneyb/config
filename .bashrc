@@ -430,6 +430,11 @@ function reduce-pix()
     if [[ $? -eq 0 ]]; then cd .. && rm -rf tmp/; fi
 }
 
+function rmspaces()
+{
+    rename -v 's/ +/-/g' $*
+}
+
 function youtube()
 {
     youtube-dl --extract-audio --audio-format "best" -k $1
