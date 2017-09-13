@@ -5,7 +5,7 @@ cd ~
 # The bare essentials
 
 sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       \
-      aspell-bg aspell-de aspell-en aspell-es audacity automake awesome         \
+      aspell-bg aspell-de aspell-en aspell-es audacity automake i3 awesome         \
       awesome-extra build-essential calendar-google-provider calibre chromium   \
       cmake cmake-data cryptsetup-bin cups curl dash evince firefox-esr         \
       firmware-linux-free firmware-linux-nonfree flac flashplugin-nonfree       \
@@ -113,6 +113,11 @@ wget https://www.archlinux.org/packages/community/any/arch-wiki-lite/download/ -
 sudo tar xJf arch-wiki-lite.tar.xz -C /
 mv arch-wiki* ~/bin/src/
 sudo rm /.BUILDINFO /.MTREE /.PKGINFO
+
+# i3-py and quickswitch
+sudo pip3 install i3-py
+sudo pip3 install git+https://github.com/OliverUv/quickswitch-for-i3.git
+git clone https://github.com/westurner/i3t.git ~/.config/i3/i3t
 
 # # PDF-tools awesomeness
 # sudo aptitude install libpng-dev libz-dev libpoppler-glib-dev  \

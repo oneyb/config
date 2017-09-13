@@ -44,7 +44,7 @@ Mod4 + k
 Mod4 + y
 "scrot"
 Print
-# "gnome-appfinder"
-# Mod1 + space
+"xfce4-appfinder"
+Mod1 + space
 '$HOME/bin/sync_org.sh'
 Mod4 + u
