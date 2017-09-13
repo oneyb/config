@@ -14,23 +14,23 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- Load Debian menu entries
 require("debian.menu")
 -- local vicious = require("vicious")
-require("vicious")
-require("vicious.contrib")
+-- require("vicious")
+-- require("vicious.contrib")
 -- vicious.suspend()
 -- vicious.widgets.org
 
 -- Register widget and attach calendar widget to the textclock
 
 -- Volume
-local sink = "alsa_output.pci-0000_00_1b.0.analog-stereo"
-local volumewidget = wibox.widget.textbox()
-vicious.register(volumewidget, vicious.contrib.pulse, "Vol: $1%", 2, sink)
-volumewidget:buttons(awful.util.table.join(
-                       awful.button({ }, 1, function () awful.spawn("pavucontrol") end),
-                       awful.button({ }, 3, function () vicious.contrib.pulse.toggle(sink) end),
-                       awful.button({ }, 4, function () vicious.contrib.pulse.add(5,sink) end),
-                       awful.button({ }, 5, function () vicious.contrib.pulse.add(-5,sink) end)
-))
+-- local sink = "alsa_output.pci-0000_00_1b.0.analog-stereo"
+-- local volumewidget = wibox.widget.textbox()
+-- vicious.register(volumewidget, vicious.contrib.pulse, "Vol: $1%", 2, sink)
+-- volumewidget:buttons(awful.util.table.join(
+--                        awful.button({ }, 1, function () awful.spawn("pavucontrol") end),
+--                        awful.button({ }, 3, function () vicious.contrib.pulse.toggle(sink) end),
+--                        awful.button({ }, 4, function () vicious.contrib.pulse.add(5,sink) end),
+--                        awful.button({ }, 5, function () vicious.contrib.pulse.add(-5,sink) end)
+-- ))
 
 
 local mailwidget = wibox.widget.imagebox()
@@ -393,8 +393,8 @@ globalkeys = awful.util.table.join(
   awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
   awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
   awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
-  awful.key({ }, "XF86AudioRaiseVolume", function () vicious.contrib.pulse.add(5,sink) end),
-  awful.key({ }, "XF86AudioLowerVolume", function () vicious.contrib.pulse.add(-5,sink) end),
+  -- awful.key({ }, "XF86AudioRaiseVolume", function () vicious.contrib.pulse.add(5,sink) end),
+  -- awful.key({ }, "XF86AudioLowerVolume", function () vicious.contrib.pulse.add(-5,sink) end),
   awful.key({ }, "XF86AudioMute", function() vicious.contrib.pulse.toggle(sink) end),
   awful.key({ }, "Print", function () awful.spawn("scrot -e 'mv $f ~/screenshots/ 2>/dev/null'", false) end),
   awful.key({ "Mod1",     }, "Tab",
