@@ -135,6 +135,8 @@ StartupNotify=false" > ~/.config/xfce4/desktop/$(basename $1).desktop
     xfce4-panel --add=launcher ~/.config/xfce4/desktop/$(basename $1).desktop
 }
 
+add_desktop_launcher $HOME/bin/tb               $HOME/.config/icons/evolution-mail.png
+
 add_desktop_launcher $HOME/bin/franz.sh         $HOME/.config/icons/franz.png
 add_desktop_launcher $HOME/bin/signal           $HOME/.config/icons/signal.png
 add_desktop_launcher pcmanfm                    $HOME/.config/icons/file-manager.png

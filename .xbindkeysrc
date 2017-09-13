@@ -42,8 +42,8 @@ Mod4 + k
 # F10
 "sleep .1; xdotool click 2"
 Mod4 + y
-"scrot"
-Print
+# "scrot"
+# Print
 "xfce4-appfinder"
 Mod1 + space
 '$HOME/bin/sync_org.sh'
