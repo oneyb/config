@@ -80,19 +80,19 @@ bindsym $mod4+r exec dmenu_run
 # bindsym $mod4+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod4+b fullscreen toggle
+bindsym F11 fullscreen toggle
 # bindsym $mod4+s move scratchpad
 # bindsym $mod1+Tab scratchpad show
 # bindsym --release button3 kill
 bindsym button3 kill
-bindsym button3 fullscreen toggle
+# bindsym button3 fullscreen toggle
 # bindsym $mod4+s minimize toggle
 
 # change container layout (stacked, tabbed, toggle split)
 # bindsym $mod4+s layout stacking
 bindsym $mod4+l layout toggle all
-layout default tabbed
-layout toggle all
+workspace_layout tabbed
+# workspace_layout toggle all
 bindsym $mod1+Escape exec quickswitch
 set $i3t_alt_tab        /home/oney/.config/i3/i3t/i3t.py n
 set $i3t_alt_shift_tab  /home/oney/.config/i3/i3t/i3t.py p

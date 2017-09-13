@@ -439,7 +439,9 @@ function youtube()
 # if [ -d ~/Downloads ]; then rmdir ~/Downloads; fi
 
 # get xbindkeys started
-if [ "$PWD" == ~ ]; then pkill xbindkeys; xbindkeys; fi
+if [ "$PWD" == ~ ]; then 
+    bash -c 'pkill xbindkeys && xbindkeys' &> /dev/null
+fi
 
 if  [[ $- =~ .*i.* ]]; then  sh -c "~/bin/xb &"  ; fi
 
