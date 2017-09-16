@@ -544,7 +544,7 @@ package is loaded, you should place your code here."
                 "TAB" 'python-start-or-switch-repl
                 )
               ;; (setq python-shell-interpreter "/usr/bin/ipython3")
-              ;; (setq python-shell-interpreter "ipython"
+              (setq python-shell-interpreter "ipython")
               ;;       python-shell-interpreter-args "--simple-prompt -i")
               )
             )
@@ -625,7 +625,9 @@ package is loaded, you should place your code here."
                 "ir"  'org-ref-helm-insert-cite-link
                 "p"   'org-priority
                 "z"   'org-pomodoro
-                ;; "Co"  'org-gcal-sync
+                ;; "oo"  'org-gcal-sync
+                "od"  'org-gcal-delete-at-point
+                "op"  'org-gcal-post-at-point
                 )
               ;; GCal!
               ;; https://github.com/myuhe/org-gcal.el
@@ -733,6 +735,8 @@ package is loaded, you should place your code here."
               ;; (setq bibtex-completion-bibliography '("~/zotero/insects.bib"))
               (setq bibtex-completion-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
               (setq reftex-default-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
+              ;; (setq org-archive-location "~/org-archive/datetree.org::datetree/* Finished Tasks")
+              (setq org-archive-location "~/org-archive/%f.org")
               )
             )
   ;; (setq request-backend 'url-retrieve )
@@ -748,10 +752,10 @@ package is loaded, you should place your code here."
  '(evil-want-Y-yank-to-eol t)
  '(org-agenda-files
    (quote
-    ("~/org/ensectable.org" "~/org/personal.org" "~/org/sibs.org")))
+    ("~/org/ensectable.org" "~/org/personal.org")))
  '(package-selected-packages
    (quote
-    (powerline ivy helm-bibtex parsebib org-category-capture markdown-mode multiple-cursors projectile flycheck magit magit-popup git-commit with-editor dash diminish packed auto-complete avy anaconda-mode auctex org-gcal yaml-mode zotxt yapfify ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode restart-emacs ranger rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pdf-tools pcre2el paradox pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc insert-shebang info+ indent-guide ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-object-popup ess-R-data-view emmet-mode elisp-slime-nav ein dumb-jump define-word dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-auctex company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (spinner ht biblio biblio-core tablist alert request-deferred deferred log4e gntp skewer-mode simple-httpd key-chord json-snatcher json-reformat js2-mode hydra parent-mode request haml-mode gitignore-mode pos-tip pkg-info epl flx smartparens iedit anzu evil goto-chg undo-tree highlight ctable ess julia-mode web-completion-data dash-functional tern company bind-map bind-key yasnippet pythonic f s helm helm-core async popup powerline ivy helm-bibtex parsebib org-category-capture markdown-mode multiple-cursors projectile flycheck magit magit-popup git-commit with-editor dash diminish packed auto-complete avy anaconda-mode auctex org-gcal yaml-mode zotxt yapfify ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode restart-emacs ranger rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pdf-tools pcre2el paradox pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc insert-shebang info+ indent-guide ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-object-popup ess-R-data-view emmet-mode elisp-slime-nav ein dumb-jump define-word dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-auctex company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
