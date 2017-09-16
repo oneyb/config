@@ -705,7 +705,8 @@ package is loaded, you should place your code here."
               (spacemacs/toggle-auto-completion)
               ;; (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
               ;; (setq org-agenda-start-day "+0d")
-              (setq org-agenda-span-to-ndays "21d")
+              ;; (setq org-agenda-span 21)
+              (setq org-agenda-span 'month)
               (setq org-agenda-include-diary t)
               ;; (setq org-time-stamp-custom-formats '("<%y-%m-%d>" . "<%y-%m-%d %H:%M>"))
 
