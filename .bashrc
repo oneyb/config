@@ -450,15 +450,17 @@ if [[ -n `pgrep -f 'emacs --smid'` ]]; then
 fi
 
 if [ $USER = "pi" ]; then
-	  # # keyboard stuff
-	  # setxkbmap -option "compose:caps"
-	  # setxkbmap -option "caps:escape,compose:ralt"
+	  # keyboard stuff
 	  setxkbmap -option "caps:escape,compose:102"
-	  # setxkbmap -option "caps:swapescape"
-	  # setxkbmap -option "caps:escape"
 	  xkbset exp 1 =sticky -twokey -latchlock
-    # else
-    # 	eval "$(pandoc --bash-completion)"
+fi
+
+
+if [ "$(ls -1 /dev/disk/by-uuid | sed '1!d')" = "23e07b94-b859-4ead-914c-a8f763120cea" ];
+then
+	  # keyboard stuff
+	  xkbset exp 1 =sticky -twokey -latchlock
+    setxkbmap -option 'compose:prsc,caps:escape'
 fi
 
 set -o vi

@@ -366,9 +366,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq evil-toggle-key (kbd "C-e"))
   (setq ess-eval-visibly nil)
   (setq ess-ask-for-ess-directory nil)
-  (setq org-todo-keywords
-        '((sequence "OPEN" "NEXT" "WAIT" "|" "DONE"))
-        )
+  (setq org-todo-keywords '((sequence "TODO" "NEXT" "WAIT" "|" "DONE")))
   )
 
 (defun dotspacemacs/user-config ()
