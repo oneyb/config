@@ -18,7 +18,8 @@ Mod4 + f
 "xfce4-terminal --geometry 79x39-0-0 --title Mplayer --working-directory ~/Music/Playlists/"
 Control + Shift + Mod1 + M
 "xfce4-terminal --command htop --title htop --geometry 120x32+66+66"
-Mod4 + t
+F9
+# Mod4 + t
 "xfce4-terminal --title Terminator --geometry 84x44+0+0 --working-directory ~/"
 Control + Mod1 + t
 "~/bin/anamnesis --browse"
