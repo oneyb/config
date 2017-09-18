@@ -734,7 +734,7 @@ package is loaded, you should place your code here."
               (setq bibtex-completion-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
               (setq reftex-default-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
               ;; (setq org-archive-location "~/org-archive/datetree.org::datetree/* Finished Tasks")
-              (setq org-archive-location "~/org-archive/%f.org")
+              (setq org-archive-location "~/org-archive/%s::")
               )
             )
   ;; (setq request-backend 'url-retrieve )
