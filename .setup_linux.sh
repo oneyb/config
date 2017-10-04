@@ -5,7 +5,7 @@ cd ~
 # The bare essentials
 
 sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       \
-      aspell-bg aspell-de aspell-en aspell-es audacity automake i3 awesome         \
+      aspell-bg aspell-de aspell-en aspell-es audacity automake awesome         \
       awesome-extra build-essential calendar-google-provider calibre chromium   \
       cmake cmake-data cryptsetup-bin cups curl dash evince firefox-esr         \
       firmware-linux-free firmware-linux-nonfree flac flashplugin-nonfree       \
@@ -88,7 +88,7 @@ sudo mkdir /opt/franz
 sudo tar xzf Franz-linux*.tgz -C /opt/franz
 sudo ln -s /opt/franz/Franz /usr/bin/franz
 sudo wget https://cdn-images-1.medium.com/max/360/1*v86tTomtFZIdqzMNpvwIZw.png -O /usr/share/icons/franz.png
-sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Franz\nComment=A free messaging app for WhatsApp, Facebook Messenger, Telegram, Slack and more.\nExec=franz -- %u\nStartupWMClass=Franz\nfranz\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/franz.desktop"
+sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Franz\nComment=A free messaging app for WhatsApp, Facebook Messenger, Telegram, Slack and more.\nExec=franz -- %u\nStartupWMClass=Franz\nIcon=franz\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/franz.desktop"
 mv Franz-linux*.tgz $HOME/bin/src/
 
 # # Don't telegram anymore
@@ -114,44 +114,6 @@ sudo tar xJf arch-wiki-lite.tar.xz -C /
 mv arch-wiki* ~/bin/src/
 sudo rm /.BUILDINFO /.MTREE /.PKGINFO
 
-# i3-py and quickswitch
-sudo pip3 install i3-py
-sudo pip3 install git+https://github.com/OliverUv/quickswitch-for-i3.git
-git clone https://github.com/westurner/i3t.git ~/.config/i3/i3t
-
-# xfce-panel pimping
-
-Terminal="false"
-function add_desktop_launcher {
-    echo "[Desktop Entry]                                
-Version=1.0                                     
-Type=Application                                
-Name=$(basename $1)
-Comment=                                        
-Exec=$1
-Icon=$2
-Path=                                           
-Terminal=$Terminal
-StartupNotify=false" > ~/.config/xfce4/desktop/$(basename $1).desktop
-    xfce4-panel --add=launcher ~/.config/xfce4/desktop/$(basename $1).desktop
-}
-
-add_desktop_launcher $HOME/bin/tb               $HOME/.config/icons/evolution-mail.png
-
-add_desktop_launcher $HOME/bin/franz.sh         $HOME/.config/icons/franz.png
-add_desktop_launcher $HOME/bin/signal           $HOME/.config/icons/signal.png
-add_desktop_launcher pcmanfm                    $HOME/.config/icons/file-manager.png
-add_desktop_launcher firefox                    $HOME/.config/icons/firefox.png
-add_desktop_launcher epiphany-browser           $HOME/.config/icons/web-browser.png
-add_desktop_launcher chromium                   $HOME/.config/icons/chromium.png
-add_desktop_launcher $HOME/bin/sync_org.sh      $HOME/.config/icons/orgzly.png
-add_desktop_launcher "emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")'" $HOME/.config/icons/emacs22.png
-# add_desktop_launcher VirtualBox                 $HOME/.config/icons/virtualbox.png
-add_desktop_launcher $HOME/bin/zotero           $HOME/.config/icons/zotero.png 
-Terminal="true"
-add_desktop_launcher $HOME/bin/.backup_file.sh  $HOME/.config/icons/text-x-script.png
-add_desktop_launcher $HOME/bin/.sync_phone.sh   $HOME/.config/icons/stock_cell-phone.png
-
 # # PDF-tools awesomeness
 # sudo aptitude install libpng-dev libz-dev libpoppler-glib-dev  \
 #      libpoppler-private-dev
@@ -171,7 +133,7 @@ emacsclient -e "(pdf-tools-install)"
 # Nice grub screen hiding
 wget https://raw.githubusercontent.com/hobarrera/grub-holdshift/master/31_hold_shift -O /etc/grub.d/31_hold_shift
 sudo bash -c 'echo -e "GRUB_TIMEOUT=\"0\"\nGRUB_HIDDEN_TIMEOUT=\"0\"\nGRUB_FORCE_HIDDEN_MENU=\"true\"" >> /etc/default/grub'
-sudo grub-mkconfig -o /boot/grub/grub.cfg
+grub-mkconfig -o /boot/grub/grub.cfg
 
 # emacs as service: from http://blog.refu.co/?p=1296
 mkdir -p ~/.config/systemd/user/
