@@ -12,3 +12,61 @@
    - Website builder: flask
    - Preferred user interface: emacs, command-line
    - repository: github!
+
+* Usage
+Should you be so inclined, or if I forget stuff, we can come here and figure out how to use this crap
+
+** anamnesis.service
+[[http://anamnesis.sourceforge.net/][Anamnesis]] is an awesome and awesomely simple clipboard manager. Ever have to copy and paste something but get sidetracked and have to go back and copy it again. Is that annoying? Well:
+
+
+*** To install anamnesis, create a symbolic link in the system's path,
+     pointing to anamnesis.py, for example:
+#+BEGIN_SRC bash
+  wget https://sourceforge.net/projects/anamnesis/files/latest/download -O ~/bin/src/anamnesis-1.0.4.tar.gz
+  tar xzvf ~/bin/src/anamnesis-1.0.4.tar.gz -C ~/bin/src/anamnesis-1.0.4/
+  ln -s ~/bin/src/anamnesis.py ~/bin/anamnesis
+#+END_SRC
+
+*** Put [[file:anamnesis.service]] in [[file:~/.config/systemd/user/]]
+#+BEGIN_SRC bash
+  mkdir -p ~/.config/systemd/user/
+  echo -e "[Unit]\n\nDescription=Anamnesis is a clipboard manager. It stores all clipboard history and offers an easy interface to do a full-text search on the items of its history.\n\n[Service]\n\nType=forking\nExecStart=$HOME/bin/anamnesis --restart\nExecStop=$HOME/bin/anamnesis --stop\nRestart=always\nTimeoutStartSec=0\nRestartSec=3600\n\n[Install]\n\nWantedBy=default.target"  > ~/.config/systemd/user/anamnesis.service
+#+END_SRC" > ~/.config/systemd/user/emacs.service
+
+*** Configure the following command to be executed on session start-up with systemd:
+#+BEGIN_SRC bash
+  systemctl --user enable anamnesis
+#+END_SRC
+*** Configure a shortcut to the graphic interface (see [[file:.xbindkeysrc]] .):
+#+BEGIN_SRC bash
+  anamnesis --browse
+#+END_SRC
+
+** .bashrc
+Put it in your home directory.
+** .copy-config.sh
+Copies all of the files in this repository into a clean version-controlled directory.
+** Run emacs daemon as a systemd service emacs.service
+*** Put [[file:emacs.service]] in [[file:~/.config/systemd/user/]]
+#+BEGIN_SRC bash
+  mkdir -p ~/.config/systemd/user/
+  echo -e  "[Unit]\n\nDescription=Emacs: the extensible, self-documenting text editor\n\n[Service]\n\nType=forking\nExecStart=/usr/bin/emacs --daemon\nExecStop=/usr/bin/emacsclient --eval \"(progn (save-buffers-kill-emacs))\"\nRestart=always\n# Remove the limit in startup timeout, since emacs\n# cloning and building all packages can take time\nTimeoutStartSec=0\n\n[Install]\n\nWantedBy=default.target" > ~/.config/systemd/user/emacs.service
+#+END_SRC
+
+*** Configure the following command to be executed on session start-up with systemd:
+#+BEGIN_SRC bash
+  systemctl --user enable emacs
+#+END_SRC
+** rc.lua
+Back when I thought the awesome window manager was indeed awesome. A bug that where a compose key could not bound left my computer hot and slow, and a bad taste in my mouth
+** rprofile.site
+To customize ~R~.
+** TODO merge .setup_linux.sh into this file
+
+** .spacemacs
+Modest setup to stand on the shoulders of the two true giants of the text editing world.
+** .vimrc
+In case my spacemacs setup plays hell.
+** .xbindkeysrc
+Great utility to run a keybinding setup no matter which computer you are using.
