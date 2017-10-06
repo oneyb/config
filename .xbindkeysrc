@@ -35,6 +35,8 @@ Mod4 + g
 # F7
 "~/bin/toggle-sticky-keys.sh"
 Mod4 + t
+# "~/bin/toggle-touchpad.sh"
+# Mod4 + Shift + t
 # "~/bin/whatsapp"
 # Mod4 + w
 # "gnome-control-center sound input"
