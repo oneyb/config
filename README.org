@@ -1,15 +1,16 @@
-* A repository for my no longer embarassing config files
-
+* My crap
+A repository for my no longer embarassing config files
 ** Info
-   - OS: gnu/linux (debian)
-   - Emacs: 24.5.1
+   - OS: gnu/linux (debian stretch)
+   - Emacs: 25.1
    - Editing style: vim+emacs=spacemacs(awesomeness)
-   - WM: awesome
+   - WM: xfwm4
    - Reference manager: zotero
-   - Number cruncher: python, R, paper
+   - Number cruncher: ~python~, ~R~, paper
    - Note taker: org-mode, paper
    - Text compiler: org-mode, latex, libreoffice
-   - Website builder: flask
+   - Website builder: flask, frappe
+   - ERP: ERPnext
    - Preferred user interface: emacs, command-line
    - repository: github!
 
@@ -17,8 +18,13 @@
 Should you be so inclined, or if I forget stuff, we can come here and figure out how to use this crap
 
 ** anamnesis.service
-[[http://anamnesis.sourceforge.net/][Anamnesis]] is an awesome and awesomely simple clipboard manager. Ever have to copy and paste something but get sidetracked and have to go back and copy it again. Is that annoying? Well:
+[[http://anamnesis.sourceforge.net/][Anamnesis]] is an awesome and awesomely simple clipboard manager. Ever have to copy and paste something but get sidetracked and have to go back and copy it again? Is that annoying? Well:
 
+*** Anamnesis dependencies
+Install anamnesis dependencies:
+#+BEGIN_SRC bash
+  sudo apt-get install python-xdg python-gtk2 sqlite3
+#+END_SRC
 
 *** To install anamnesis, create a symbolic link in the system's path,
      pointing to anamnesis.py, for example:
@@ -28,7 +34,7 @@ Should you be so inclined, or if I forget stuff, we can come here and figure out
   ln -s ~/bin/src/anamnesis.py ~/bin/anamnesis
 #+END_SRC
 
-*** Put [[file:anamnesis.service]] in [[file:~/.config/systemd/user/]]
+*** Put [[file:anamnesis.service]] in [[file:~/.config/systemd/user/]] like this:
 #+BEGIN_SRC bash
   mkdir -p ~/.config/systemd/user/
   echo -e "[Unit]\n\nDescription=Anamnesis is a clipboard manager. It stores all clipboard history and offers an easy interface to do a full-text search on the items of its history.\n\n[Service]\n\nType=forking\nExecStart=$HOME/bin/anamnesis --restart\nExecStop=$HOME/bin/anamnesis --stop\nRestart=always\nTimeoutStartSec=0\nRestartSec=3600\n\n[Install]\n\nWantedBy=default.target"  > ~/.config/systemd/user/anamnesis.service
@@ -64,6 +70,9 @@ Back when I thought the awesome window manager was indeed awesome. A bug that wh
 To customize ~R~.
 ** TODO merge .setup_linux.sh into this file
 
+   
+** i3 [[file:config]] 
+The i3 window manager ist dead simple and works nicely. 
 ** .spacemacs
 Modest setup to stand on the shoulders of the two true giants of the text editing world.
 ** .vimrc

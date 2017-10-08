@@ -626,6 +626,7 @@ package is loaded, you should place your code here."
                 ;; "oo"  'org-gcal-sync
                 "od"  'org-gcal-delete-at-point
                 "op"  'org-gcal-post-at-point
+                "TAB" 'org-babel-switch-to-session
                 )
               ;; GCal!
               ;; https://github.com/myuhe/org-gcal.el
