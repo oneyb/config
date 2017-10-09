@@ -156,6 +156,28 @@ function o()
 	      done
     fi
 }
+
+
+function clean-lit()
+{
+    ls *pdf | while read p; do 
+        pdftk $p cat output ${p/.pdf/.PDF}
+        if [ $? -eq 0 ]; then
+            rm $p
+        fi
+    done
+    ls *epub | while read e; do 
+        ebook-convert $e ${e/.epub/.EPUB}
+        if [ $? -eq 0 ]; then
+            rm $e
+        fi
+    done
+    rename -v 's/[-_]?\(.*\)[-_]?//' *
+    rename -v 's/\[[a-zA-Z-_]+\][-_]?//' *
+    rename -v 's/[\[\]]//g' *
+    rmspace
+}
+
 function cbc()
 {
     echo $* | cb
