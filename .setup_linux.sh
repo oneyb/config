@@ -53,6 +53,8 @@ sudo update-alternatives --config editor
 # sudo apt-get update
 # sudo apt-get install virtualbox-5.1
 
+mkdir -p documents
+git clone https://github.com/oneyb/config.git
 
 curl -O http://downloads.rclone.org/rclone-current-linux-amd64.zip
 unzip rclone-current-linux-amd64.zip
