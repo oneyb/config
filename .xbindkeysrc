@@ -22,6 +22,8 @@ F9
 # Mod4 + t
 "xfce4-terminal --title Terminator --geometry 84x44+0+0 --working-directory ~/"
 Control + Mod1 + t
+"dmenu_run"
+Mod4 + r
 "~/bin/anamnesis --browse"
 Mod4 + c
 # "~/bin/anamnesis --restart"
