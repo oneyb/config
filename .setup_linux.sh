@@ -193,16 +193,16 @@ TimeoutStartSec=0
 # [Install]
 # WantedBy=multi-user.target" > ~/.config/systemd/user/emacs.service
 echo "[Unit]
-Description=Timer for user services
+Description=Delay emacs startup
 
 [Timer]
-OnBootSec=16s
-Unit=emacs.service
+OnBootSec=26s
+# Unit=emacs.service
 
 [Install]
-WantedBy=multi-user.target" > ~/.config/systemd/user/emacs.timer
+WantedBy=default.target" > ~/.config/systemd/user/emacs.timer
 systemctl --user enable emacs.timer
-bash -c 'systemctl --user start emacs.timer'
+systemctl --user start emacs.timer
 
 # anamnesis
 echo -e  "[Unit]
@@ -220,18 +220,17 @@ RestartSec=10800
 # [Install]
 # WantedBy=default.target" > ~/.config/systemd/user/anamnesis.service
 echo "[Unit]
-Description=Timer for user services
+Description=Delay start of anamnesis
 
 [Timer]
 OnBootSec=19s
 OnUnitActiveSec=10h
-
-Unit=anamnesis.service
+# Unit=anamnesis.service
 
 [Install]
-WantedBy=multi-user.target" > ~/.config/systemd/user/anamnesis.timer
+WantedBy=default.target" > ~/.config/systemd/user/anamnesis.timer
+systemctl --user start anamnesis.timer
 systemctl --user enable anamnesis.timer
-bash -c 'systemctl --user start anamnesis.timer'
 # systemctl --user stop emacs
 # systemctl --user disable emacs
 
