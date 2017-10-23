@@ -103,14 +103,7 @@ values."
                                       ;; let-alist
                                       )
    ;; A list of packages that cannot be updated.
-   dotspacemacs-frozen-packages '(
-                                  zotxt
-                                  ox-pandoc
-                                  ox-koma-letter
-                                  key-chord
-                                  org-gcal
-                                  org-ref
-                                  )
+   dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '(
                                     ess-R-object-popup
@@ -142,7 +135,7 @@ values."
    ;; (default t)
    dotspacemacs-elpa-https t
    ;; Maximum allowed time in seconds to contact an ELPA repository.
-   dotspacemacs-elpa-timeout 0
+   dotspacemacs-elpa-timeout 5
    ;; If non nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. Note that checking for
    ;; new versions works via git commands, thus it calls GitHub services
@@ -714,9 +707,6 @@ package is loaded, you should place your code here."
               ;;       )
               ;; (auto-fill-mode 1)
               (spacemacs/toggle-auto-completion)
-              ;; (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
-              ;; (setq org-agenda-start-day "+0d")
-              ;; (setq org-agenda-span 21)
               (setq org-agenda-span 'month)
               (setq org-agenda-include-diary t)
               ;; (setq org-time-stamp-custom-formats '("<%y-%m-%d>" . "<%y-%m-%d %H:%M>"))
