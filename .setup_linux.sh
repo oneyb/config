@@ -177,9 +177,61 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # emacs as service: from http://blog.refu.co/?p=1296
 mkdir -p ~/.config/systemd/user/
-echo -e  "[Unit]\n\nDescription=Emacs: the extensible, self-documenting text editor\n\n[Service]\n\nType=forking\nExecStart=/usr/bin/emacs --daemon\nExecStop=/usr/bin/emacsclient --eval \"(progn (save-buffers-kill-emacs))\"\nRestart=always\n# Remove the limit in startup timeout, since emacs\n# cloning and building all packages can take time\nTimeoutStartSec=0\n\n[Install]\n\nWantedBy=default.target" > ~/.config/systemd/user/emacs.service
-systemctl --user enable emacs
-bash -c 'systemctl --user start emacs'
+# Emacs for faster startup
+echo -e  "[Unit]
+Description=Emacs: the extensible, self-documenting text editor
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/emacs --daemon
+ExecStop=/usr/bin/emacsclient --eval \"(progn (save-buffers-kill-emacs))\"
+Restart=always
+# Remove the limit in startup timeout, since emacs
+# cloning and building all packages can take time
+TimeoutStartSec=0
+
+# [Install]
+# WantedBy=multi-user.target" > ~/.config/systemd/user/emacs.service
+echo "[Unit]
+Description=Timer for user services
+
+[Timer]
+OnBootSec=16s
+Unit=emacs.service
+
+[Install]
+WantedBy=multi-user.target" > ~/.config/systemd/user/emacs.timer
+systemctl --user enable emacs.timer
+bash -c 'systemctl --user start emacs.timer'
+
+# anamnesis
+echo -e  "[Unit]
+Description=Anamnesis is a clipboard manager. It stores all clipboard history and offers an easy interface to do a full-text search on the items of its history.
+
+[Service]
+Type=forking
+ExecStart=/home/oney/bin/anamnesis --start
+ExecRestart=/home/oney/bin/anamnesis --restart --clean
+ExecStop=/home/oney/bin/anamnesis --stop
+Restart=always
+TimeoutStartSec=0
+RestartSec=10800
+
+# [Install]
+# WantedBy=default.target" > ~/.config/systemd/user/anamnesis.service
+echo "[Unit]
+Description=Timer for user services
+
+[Timer]
+OnBootSec=19s
+OnUnitActiveSec=10h
+
+Unit=anamnesis.service
+
+[Install]
+WantedBy=multi-user.target" > ~/.config/systemd/user/anamnesis.timer
+systemctl --user enable anamnesis.timer
+bash -c 'systemctl --user start anamnesis.timer'
 # systemctl --user stop emacs
 # systemctl --user disable emacs
 
