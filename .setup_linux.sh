@@ -2,27 +2,53 @@
 
 cd ~
 
-# The bare essentials
 
-sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       \
-      aspell-bg aspell-de aspell-en aspell-es audacity automake i3 awesome         \
-      awesome-extra build-essential calendar-google-provider calibre chromium   \
-      cmake cmake-data cryptsetup-bin cups curl dash evince firefox-esr         \
-      firmware-linux-free firmware-linux-nonfree flac flashplugin-nonfree       \
-      freecad gdal-bin genisoimage geoip-database gfortran gimp git             \
-      gnome-disk-utility gocr gocr-tk googleearth-package gparted handbrake     \
-      handbrake-cli imagemagick inkscape ispell java-common lame laptop-detect  \
-      mencoder mplayer2 nco ncview netcdf-bin netcdf-doc ntfs-3g ntfs-config    \
-      openssh-client openssh-server p7zip-full pavucontrol pcmanfm pdftk        \
-      proj-bin proj-data pulseaudio pulseaudio-module-x11 pulseaudio-utils      \
-      qpdf qpdfview r-base r-cran-xml2 r-cran-ncdf4 recordmydesktop ristretto   \
-      rsync scrot seahorse simple-scan smplayer subversion suckless-tools       \
-      synaptic tor tor-arm tor-geoipdb torsocks transmission-gtk trash-cli      \
-      udevil unattended-upgrades unoconv vim-gtk wget epiphany-browser          \
-      bleachbit wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool   \
-      xfburn xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere  \
-      xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
-      exfat-utils libxft-dev libfreetype6-dev
+# sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       \
+#       aspell-bg aspell-de aspell-en aspell-es audacity automake i3 awesome         \
+#       awesome-extra build-essential calendar-google-provider calibre chromium   \
+#       cmake cmake-data cryptsetup-bin cups curl dash evince firefox-esr         \
+#       firmware-linux-free firmware-linux-nonfree flac flashplugin-nonfree       \
+#       freecad gdal-bin genisoimage geoip-database gfortran gimp git             \
+#       gnome-disk-utility gocr gocr-tk googleearth-package gparted handbrake     \
+#       handbrake-cli imagemagick inkscape ispell java-common lame laptop-detect  \
+#       mencoder mplayer2 nco ncview netcdf-bin netcdf-doc ntfs-3g ntfs-config    \
+#       openssh-client openssh-server p7zip-full pavucontrol pcmanfm pdftk        \
+#       proj-bin proj-data pulseaudio pulseaudio-module-x11 pulseaudio-utils      \
+#       qpdf qpdfview r-base r-cran-xml2 r-cran-ncdf4 recordmydesktop ristretto   \
+#       rsync scrot seahorse simple-scan smplayer subversion suckless-tools       \
+#       synaptic tor tor-arm tor-geoipdb torsocks transmission-gtk trash-cli      \
+#       udevil unattended-upgrades unoconv vim-gtk wget epiphany-browser          \
+#       bleachbit wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool   \
+#       xfburn xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere  \
+#       xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
+#       exfat-utils libxft-dev libfreetype6-dev
+
+
+# # python packages
+# sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
+#       python-cupshelpers python-flake8 python-libxml2 python-matplotlib       \
+#       python-numpy python-openpyxl python-openssl python-pandas               \
+#       python-jsonrpclib python-pyparsing python-scipy python-setuptools       \
+#       python-simplejson python-unittest2 python3 python-gdal python-pdfminer  \
+#       pdfminer-data python-pip python-pip3 ipython-notebook ipython3-notebook
+
+
+# The bare essentials
+# for arch 
+
+sudo pacman -S --noconfirm android-tools aspell aspell-de aspell-en aspell-es \
+          audacity automake calibre chromium cmake cryptsetup cups curl dash  \
+          evince firefox flac freecad geoip-database gcc-fortran gimp git     \
+          gnome-disk-utility gparted handbrake handbrake-cli imagemagick      \
+          inkscape ispell lame laptop-detect mencoder mplayer ntfs-3g openssh \
+          p7zip pavucontrol pcmanfm pdftk-bin pulseaudio qpdf qpdfview r      \
+          recordmydesktop ristretto rsync scrot seahorse simple-scan smplayer \
+          subversion tor transmission-gtk trash-cli udevil unoconv gvim wget  \
+          epiphany bleachbit xbindkeys xclip xdg-user-dirs xdg-utils xdotool  \
+          xfburn xpdf xsel exfat-utils xclip python-xdg rclone nodejs         \
+          linux49-virtualbox-host-modules virtualbox-guest-iso pandoc                
+
+yaourt -S --noconfirm arch-wiki-man arch-wiki-cli pdftk-bin franz-bin dropbox
 
 
 # python packages
@@ -84,14 +110,14 @@ for p in ${pkgs[@]}; do
     install_manual_deb $p
 done
 
-# Messenger services with Franz
-wget https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz
-sudo mkdir /opt/franz
-sudo tar xzf Franz-linux*.tgz -C /opt/franz
-sudo ln -s /opt/franz/Franz /usr/bin/franz
-sudo wget https://cdn-images-1.medium.com/max/360/1*v86tTomtFZIdqzMNpvwIZw.png -O /usr/share/icons/franz.png
-sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Franz\nComment=A free messaging app for WhatsApp, Facebook Messenger, Telegram, Slack and more.\nExec=franz -- %u\nStartupWMClass=Franz\nfranz\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/franz.desktop"
-mv Franz-linux*.tgz $HOME/bin/src/
+# # Messenger services with Franz
+# wget https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz
+# sudo mkdir /opt/franz
+# sudo tar xzf Franz-linux*.tgz -C /opt/franz
+# sudo ln -s /opt/franz/Franz /usr/bin/franz
+# sudo wget https://cdn-images-1.medium.com/max/360/1*v86tTomtFZIdqzMNpvwIZw.png -O /usr/share/icons/franz.png
+# sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Franz\nComment=A free messaging app for WhatsApp, Facebook Messenger, Telegram, Slack and more.\nExec=franz -- %u\nStartupWMClass=Franz\nfranz\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/franz.desktop"
+# mv Franz-linux*.tgz $HOME/bin/src/
 
 # # Don't telegram anymore
 # wget https://updates.tdesktop.com/tlinux/tsetup.0.10.19.tar.xz
@@ -116,10 +142,10 @@ sudo tar xJf arch-wiki-lite.tar.xz -C /
 mv arch-wiki* ~/bin/src/
 sudo rm /.BUILDINFO /.MTREE /.PKGINFO
 
-# i3-py and quickswitch
-sudo pip3 install i3-py
-sudo pip3 install git+https://github.com/OliverUv/quickswitch-for-i3.git
-git clone https://github.com/westurner/i3t.git ~/.config/i3/i3t
+# # i3-py and quickswitch
+# sudo pip3 install i3-py
+# sudo pip3 install git+https://github.com/OliverUv/quickswitch-for-i3.git
+# git clone https://github.com/westurner/i3t.git ~/.config/i3/i3t
 
 # xfce-panel pimping
 
@@ -144,7 +170,7 @@ add_desktop_launcher $HOME/bin/franz.sh         $HOME/.config/icons/franz.png
 add_desktop_launcher $HOME/bin/signal           $HOME/.config/icons/signal.png
 add_desktop_launcher pcmanfm                    $HOME/.config/icons/file-manager.png
 add_desktop_launcher firefox                    $HOME/.config/icons/firefox.png
-add_desktop_launcher epiphany-browser           $HOME/.config/icons/web-browser.png
+add_desktop_launcher epiphany                   $HOME/.config/icons/web-browser.png
 add_desktop_launcher chromium                   $HOME/.config/icons/chromium.png
 add_desktop_launcher $HOME/bin/sync_org.sh      $HOME/.config/icons/orgzly.png
 add_desktop_launcher "emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")'" $HOME/.config/icons/emacs22.png
@@ -210,9 +236,9 @@ Description=Anamnesis is a clipboard manager. It stores all clipboard history an
 
 [Service]
 Type=forking
-ExecStart=/home/oney/bin/anamnesis --start
-ExecRestart=/home/oney/bin/anamnesis --restart --clean
-ExecStop=/home/oney/bin/anamnesis --stop
+ExecStart=/usr/bin/anamnesis --start
+ExecRestart=/usr/bin/anamnesis --restart --clean
+ExecStop=/usr/bin/anamnesis --stop
 Restart=always
 TimeoutStartSec=0
 RestartSec=10800
@@ -231,8 +257,23 @@ OnUnitActiveSec=10h
 WantedBy=default.target" > ~/.config/systemd/user/anamnesis.timer
 systemctl --user start anamnesis.timer
 systemctl --user enable anamnesis.timer
-# systemctl --user stop emacs
-# systemctl --user disable emacs
+
+echo -e  "[Unit]
+Description=Awesomeness with xbindkeys
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/xbindkeys
+ExecRestart=/usr/bin/killall -HUP xbindkeys
+ExecStop=/usr/bin/killall -w xbindkeys
+Restart=always
+TimeoutStartSec=0
+RestartSec=10800
+
+[Install]
+WantedBy=default.target" > ~/.config/systemd/user/xbindkeys.service
+systemctl --user start xbindkeys 
+systemctl --user enable xbindkeys
 
 # # skype
 # wget https://www.skype.com/de/download-skype/skype-for-linux/downloading/?type=debian32 -O skype-`date +%F`.deb
@@ -242,9 +283,9 @@ systemctl --user enable anamnesis.timer
 
 
 # For LaTeX
-if [ -d /media/oney/stuff/texlive/ ];
+if [ -d /run/media/oney/stuff/texlive/ ];
 then
-    sudo cp -r /media/oney/stuff/texlive/ /usr/local/src/
+    sudo cp -a /run/media/oney/stuff/texlive/ /usr/local/src/
 else
     wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
     tar xzf install-tl-unx.tar.gz
