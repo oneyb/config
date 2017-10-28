@@ -3,9 +3,9 @@ Description=Anamnesis is a clipboard manager. It stores all clipboard history an
 
 [Service]
 Type=forking
-ExecStart=/home/oney/bin/anamnesis --start
-ExecRestart=/home/oney/bin/anamnesis --restart --clean
-ExecStop=/home/oney/bin/anamnesis --stop
+ExecStart=/usr/bin/anamnesis --start
+ExecRestart=/usr/bin/anamnesis --restart --clean
+ExecStop=/usr/bin/anamnesis --stop
 Restart=always
 TimeoutStartSec=0
 RestartSec=10800
