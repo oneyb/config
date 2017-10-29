@@ -121,8 +121,7 @@ Description=Anamnesis is a clipboard manager. It stores all clipboard history an
 
 [Service]
 Type=forking
-ExecStart=/usr/bin/anamnesis --start
-ExecRestart=/usr/bin/anamnesis --restart --clean
+ExecStart=/usr/bin/anamnesis --restart --clean
 ExecStop=/usr/bin/anamnesis --stop
 Restart=always
 TimeoutStartSec=0
@@ -143,22 +142,19 @@ WantedBy=default.target" > ~/.config/systemd/user/anamnesis.timer
 systemctl --user start anamnesis.timer
 systemctl --user enable anamnesis.timer
 
-echo -e  "[Unit]
-Description=Awesomeness with xbindkeys
-
-[Service]
-ExecStart=/usr/bin/xbindkeys
-# ExecRestart=/bin/bash -c '/usr/bin/pkill xbindkeys && /usr/bin/xbindkeys'
-ExecStop=/usr/bin/pkill xbindkeys
-Restart=always
-TimeoutStartSec=10
-RestartSec=21600
-
-[Install]
-WantedBy=default.target" > ~/.config/systemd/user/xbindkeys.service
-systemctl --user daemon-reload
-systemctl --user start xbindkeys 
-systemctl --user enable xbindkeys
+echo "
+[Desktop Entry]
+Encoding=UTF-8
+Version=0.9.4
+Type=Application
+Name=xbindkeys
+Comment=Start xbindkeys service.
+Exec=xbindkeys
+OnlyShowIn=XFCE;
+StartupNotify=false
+Terminal=false
+Hidden=false
+" > ~/.config/autostart/xbindkeys.desktop
 
 # For LaTeX
 if [ -d /run/media/oney/stuff/texlive/ ];
