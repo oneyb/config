@@ -5,32 +5,28 @@ cd ~
 # The bare essentials
 
 sudo pacman -S --noconfirm android-tools aspell aspell-de aspell-en aspell-es \
-          audacity automake calibre chromium cmake cryptsetup cups curl dash  \
-          evince firefox flac freecad geoip-database gcc-fortran gimp git     \
-          gnome-disk-utility gparted handbrake handbrake-cli imagemagick      \
-          inkscape ispell lame laptop-detect mencoder mplayer ntfs-3g openssh \
-          p7zip pavucontrol pcmanfm pdftk-bin pulseaudio qpdf qpdfview r      \
-          recordmydesktop ristretto rsync scrot seahorse simple-scan smplayer \
-          subversion tor transmission-gtk trash-cli udevil unoconv gvim wget  \
-          epiphany bleachbit xbindkeys xclip xdg-user-dirs xdg-utils xdotool  \
-          xfburn xpdf xsel exfat-utils xclip python-xdg rclone nodejs         \
-          linux49-virtualbox-host-modules virtualbox-guest-iso pandoc         \
-          youtube-dl emacs gdal
+       audacity automake calibre chromium cmake cryptsetup cups curl dash     \
+       evince firefox flac freecad geoip-database gcc-fortran gimp git        \
+       gnome-disk-utility gparted handbrake handbrake-cli imagemagick         \
+       inkscape ispell lame laptop-detect mencoder mplayer ntfs-3g openssh    \
+       p7zip pavucontrol pcmanfm pdftk-bin pulseaudio qpdf qpdfview r         \
+       recordmydesktop ristretto rsync scrot seahorse simple-scan smplayer    \
+       subversion tor transmission-gtk trash-cli udevil unoconv gvim wget     \
+       epiphany bleachbit xbindkeys xclip xdg-user-dirs xdg-utils xdotool     \
+       xfburn xpdf xsel exfat-utils xclip python-xdg rclone nodejs            \
+       linux49-virtualbox-host-modules virtualbox-guest-iso pandoc            \
+       youtube-dl emacs gdal perl-image-exiftool perl-rename 
 
-yaourt -S --noconfirm arch-wiki-man pdftk-bin franz-bin dropbox zotero 
+yaourt -S --noconfirm arch-wiki-man pdftk-bin franz-bin dropbox zotero        \
+       
+
 
 # python packages 
 
 yaourt -S --noconfirm python-xdg ipython ipython2 python-pyflakes python2-pycups  \
-          flake8 python2-lxml python-lxml python2-matplotlib python2-numpy        \
-          python2-openpyxl python2-pandas python2-jsonrpclib python2-pyparsing    \
-          python2-scipy python2-simplejson python2-unittest2 python-gdal
-
-## Set default programs
-sudo update-alternatives --config x-www-browser
-# sudo update-alternatives --config gnome-www-browser
-sudo update-alternatives --config editor
-# setxkbmap -option "compose:caps"
+       flake8 python2-lxml python-lxml python2-matplotlib python2-numpy           \
+       python2-openpyxl python2-pandas python2-jsonrpclib python2-pyparsing       \
+       python2-scipy python2-simplejson python2-unittest2 python-gdal
 
 mkdir -p documents
 git clone https://github.com/oneyb/config.git documents/config
@@ -46,7 +42,6 @@ sudo rm /.BUILDINFO /.MTREE /.PKGINFO
 
 
 # xfce-panel pimping
-
 Terminal="false"
 function add_desktop_launcher {
     echo "[Desktop Entry]
@@ -76,6 +71,29 @@ add_desktop_launcher $HOME/bin/zotero           $HOME/.config/icons/zotero.png
 Terminal="true"
 add_desktop_launcher $HOME/bin/.backup_file.sh  $HOME/.config/icons/text-x-script.png
 add_desktop_launcher $HOME/bin/.sync_phone.sh   $HOME/.config/icons/stock_cell-phone.png
+
+
+Terminal="false"
+function add_autostart_launcher {
+    echo "[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=$(which $1)
+Comment=$2
+Exec=$1
+StartupNotify=false
+Terminal=$Terminal
+Hidden=false
+Type=Application
+Name=$(basename $1)
+Comment=
+Icon=$3
+" > ~/.config/autostart/$(basename $1).desktop
+}
+
+add_autostart_launcher xbindkeys "Start xbindkeys service." $HOME/.config/icons/text-x-script.png
+
 
 # PDF-tools awesomeness
 echo "much easier to install pdf-tools layer and then:"
@@ -142,19 +160,6 @@ WantedBy=default.target" > ~/.config/systemd/user/anamnesis.timer
 systemctl --user start anamnesis.timer
 systemctl --user enable anamnesis.timer
 
-echo "
-[Desktop Entry]
-Encoding=UTF-8
-Version=0.9.4
-Type=Application
-Name=xbindkeys
-Comment=Start xbindkeys service.
-Exec=xbindkeys
-OnlyShowIn=XFCE;
-StartupNotify=false
-Terminal=false
-Hidden=false
-" > ~/.config/autostart/xbindkeys.desktop
 
 # For LaTeX
 if [ -d /run/media/oney/stuff/texlive/ ];

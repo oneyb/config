@@ -94,7 +94,7 @@
 
 # unset use_color safe_term match_lhs sh
 
-# PS1=' \w \$ '
+PS1=' \w \$ '
 
 xhost +local:root > /dev/null 2>&1
 
@@ -216,9 +216,9 @@ function clean-lit()
             rm $e
         fi
     done
-    rename -v 's/[-_]?\(.*\)[-_]?//' *
-    rename -v 's/\[[a-zA-Z-_]+\][-_]?//' *
-    rename -v 's/[\[\]]//g' *
+    perl-rename -v 's/[-_]?\(.*\)[-_]?//' *
+    perl-rename -v 's/\[[a-zA-Z-_]+\][-_]?//' *
+    perl-rename -v 's/[\[\]]//g' *
     rmspace
 }
 
@@ -457,7 +457,7 @@ function reduce-pix()
 function youtube()
 {
     youtube-dl --extract-audio --audio-format "best" -k $1
-    rename 's/-[[:alnum:]_-]+\.([[:alnum:]]+$)/$1/' *mp{3,4} *mkv *m4a
+    perl-rename 's/-[[:alnum:]_-]+\.([[:alnum:]]+$)/$1/' *mp{3,4} *mkv *m4a
 }
 
 # if [ -d ~/Downloads ]; then rmdir ~/Downloads; fi

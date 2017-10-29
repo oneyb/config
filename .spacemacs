@@ -635,6 +635,7 @@ package is loaded, you should place your code here."
               ;; https://github.com/myuhe/org-gcal.el
               (require 'org-gcal)
               (load "~/.org-gcal.el")
+              (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
               (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
                 "p"   'org-priority
                 "z"   'org-pomodoro
@@ -727,6 +728,7 @@ package is loaded, you should place your code here."
               ;; (require 'paperless)
               ;; ;; (require 'org-paperless)
               ;; (require 'org-trello)
+              ;; (setq org-trello-files (file-expand-wildcards "~/org-trello/*.org"))
               ;; (setq org-trello-files (file-expand-wildcards "~/org-trello/*.org"))
               (add-to-list 'auto-mode-alist '("\\.eml\\'" . org-mode))
               (add-hook 'markdown-mode-hook

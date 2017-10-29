@@ -30,6 +30,8 @@ Mod4 + c
 # Control + Mod1 + c
 "~/bin/drop"
 Mod4 + g
+"drun"
+Mod4 + r
 # "sh -c '~/bin/aenea.sh windows7'"
 # F6
 # "VirtualBox --startvm w7_clone 2>&1 ~/.vm.log"
