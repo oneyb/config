@@ -147,16 +147,16 @@ echo -e  "[Unit]
 Description=Awesomeness with xbindkeys
 
 [Service]
-Type=forking
 ExecStart=/usr/bin/xbindkeys
-ExecRestart=/usr/bin/killall -HUP xbindkeys
-ExecStop=/usr/bin/killall -w xbindkeys
+# ExecRestart=/bin/bash -c '/usr/bin/pkill xbindkeys && /usr/bin/xbindkeys'
+ExecStop=/usr/bin/pkill xbindkeys
 Restart=always
-TimeoutStartSec=0
-RestartSec=10800
+TimeoutStartSec=10
+RestartSec=21600
 
 [Install]
 WantedBy=default.target" > ~/.config/systemd/user/xbindkeys.service
+systemctl --user daemon-reload
 systemctl --user start xbindkeys 
 systemctl --user enable xbindkeys
 

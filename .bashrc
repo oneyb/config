@@ -4,99 +4,97 @@
 
 [[ $- != *i* ]] && return
 
-colors() {
-	  local fgc bgc vals seq0
+[ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
 
-	  printf "Color escapes are %s\n" '\e[${value};...;${value}m'
-	  printf "Values 30..37 are \e[33mforeground colors\e[m\n"
-	  printf "Values 40..47 are \e[43mbackground colors\e[m\n"
-	  printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
+# colors() {
+# 	  local fgc bgc vals seq0
 
-	  # foreground colors
-	  for fgc in {30..37}; do
-		    # background colors
-		    for bgc in {40..47}; do
-			      fgc=${fgc#37} # white
-			      bgc=${bgc#40} # black
+# 	  printf "Color escapes are %s\n" '\e[${value};...;${value}m'
+# 	  printf "Values 30..37 are \e[33mforeground colors\e[m\n"
+# 	  printf "Values 40..47 are \e[43mbackground colors\e[m\n"
+# 	  printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
 
-			      vals="${fgc:+$fgc;}${bgc}"
-			      vals=${vals%%;}
+# 	  # foreground colors
+# 	  for fgc in {30..37}; do
+# 		    # background colors
+# 		    for bgc in {40..47}; do
+# 			      fgc=${fgc#37} # white
+# 			      bgc=${bgc#40} # black
 
-			      seq0="${vals:+\e[${vals}m}"
-			      printf "  %-9s" "${seq0:-(default)}"
-			      printf " ${seq0}TEXT\e[m"
-			      printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
-		    done
-		    echo; echo
-	  done
-}
+# 			      vals="${fgc:+$fgc;}${bgc}"
+# 			      vals=${vals%%;}
+
+# 			      seq0="${vals:+\e[${vals}m}"
+# 			      printf "  %-9s" "${seq0:-(default)}"
+# 			      printf " ${seq0}TEXT\e[m"
+# 			      printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
+# 		    done
+# 		    echo; echo
+# 	  done
+# }
 
 # [[ -f ~/.extend.bashrc ]] && . ~/.extend.bashrc
 
-[ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
-#
-# ~/.extend.bashrc
-#
+# # ~/.extend.bashrc
 
-# Change the window title of X terminals
-case ${TERM} in
-	  xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
-		    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
-		    ;;
-	  screen*)
-		    PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
-		    ;;
-esac
+# # Change the window title of X terminals
+# case ${TERM} in
+# 	  xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
+# 		    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
+# 		    ;;
+# 	  screen*)
+# 		    PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
+# 		    ;;
+# esac
 
-use_color=true
+# use_color=true
 
-# Set colorful PS1 only on colorful terminals.
-# dircolors --print-database uses its own built-in database
-# instead of using /etc/DIR_COLORS.  Try to use the external file
-# first to take advantage of user additions.  Use internal bash
-# globbing instead of external grep binary.
-safe_term=${TERM//[^[:alnum:]]/?}   # sanitize TERM
-match_lhs=""
-[[ -f ~/.dir_colors   ]] && match_lhs="${match_lhs}$(<~/.dir_colors)"
-[[ -f /etc/DIR_COLORS ]] && match_lhs="${match_lhs}$(</etc/DIR_COLORS)"
-[[ -z ${match_lhs}    ]] \
-	  && type -P dircolors >/dev/null \
-	  && match_lhs=$(dircolors --print-database)
-[[ $'\n'${match_lhs} == *$'\n'"TERM "${safe_term}* ]] && use_color=true
+# # Set colorful PS1 only on colorful terminals.
+# # dircolors --print-database uses its own built-in database
+# # instead of using /etc/DIR_COLORS.  Try to use the external file
+# # first to take advantage of user additions.  Use internal bash
+# # globbing instead of external grep binary.
+# safe_term=${TERM//[^[:alnum:]]/?}   # sanitize TERM
+# match_lhs=""
+# [[ -f ~/.dir_colors   ]] && match_lhs="${match_lhs}$(<~/.dir_colors)"
+# [[ -f /etc/DIR_COLORS ]] && match_lhs="${match_lhs}$(</etc/DIR_COLORS)"
+# [[ -z ${match_lhs}    ]] \
+# 	  && type -P dircolors >/dev/null \
+# 	  && match_lhs=$(dircolors --print-database)
+# [[ $'\n'${match_lhs} == *$'\n'"TERM "${safe_term}* ]] && use_color=true
 
-if ${use_color} ; then
-	  # Enable colors for ls, etc.  Prefer ~/.dir_colors #64489
-	  if type -P dircolors >/dev/null ; then
-		    if [[ -f ~/.dir_colors ]] ; then
-			      eval $(dircolors -b ~/.dir_colors)
-		    elif [[ -f /etc/DIR_COLORS ]] ; then
-			      eval $(dircolors -b /etc/DIR_COLORS)
-		    fi
-	  fi
+# if ${use_color} ; then
+# 	  # Enable colors for ls, etc.  Prefer ~/.dir_colors #64489
+# 	  if type -P dircolors >/dev/null ; then
+# 		    if [[ -f ~/.dir_colors ]] ; then
+# 			      eval $(dircolors -b ~/.dir_colors)
+# 		    elif [[ -f /etc/DIR_COLORS ]] ; then
+# 			      eval $(dircolors -b /etc/DIR_COLORS)
+# 		    fi
+# 	  fi
 
-	  if [[ ${EUID} == 0 ]] ; then
-		    PS1='\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
-	  else
-		    PS1='\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] '
-	  fi
+# 	  if [[ ${EUID} == 0 ]] ; then
+# 		    PS1='\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
+# 	  else
+# 		    PS1='\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] '
+# 	  fi
 
-	  alias ls='ls --color=auto'
-	  alias grep='grep --colour=auto'
-	  alias egrep='egrep --colour=auto'
-	  alias fgrep='fgrep --colour=auto'
-else
-	  if [[ ${EUID} == 0 ]] ; then
-		    # show root@ when we don't have colors
-		    PS1='\u@\h \W \$ '
-	  else
-		    PS1='\u@\h \w \$ '
-	  fi
-fi
+# 	  alias ls='ls --color=auto'
+# 	  alias grep='grep --colour=auto'
+# 	  alias egrep='egrep --colour=auto'
+# 	  alias fgrep='fgrep --colour=auto'
+# else
+# 	  if [[ ${EUID} == 0 ]] ; then
+# 		    # show root@ when we don't have colors
+# 		    PS1='\u@\h \W \$ '
+# 	  else
+# 		    PS1='\u@\h \w \$ '
+# 	  fi
+# fi
 
-unset use_color safe_term match_lhs sh
+# unset use_color safe_term match_lhs sh
 
-alias free='free -m'                      # show sizes in MB
-alias more=less
+# PS1=' \w \$ '
 
 xhost +local:root > /dev/null 2>&1
 
@@ -113,9 +111,8 @@ shopt -s expand_aliases
 # Enable history appending instead of overwriting.  #139609
 shopt -s histappend
 
-#
-# # ex - archive extractor
-# # usage: ex <file>
+# ex - archive extractor
+# usage: ex <file>
 ex ()
 {
     if [ -f $1 ] ; then
@@ -142,7 +139,7 @@ ex ()
 export YAOURT_COLORS="nb=1:pkg=1:ver=1;32:lver=1;45:installed=1;42:grp=1;34:od=1;41;5:votes=1;44:dsc=0:other=1;35"
 
 export HOST=`uname -n`
-export TERM=xterm-256color
+# export TERM=xterm-256color
 # export EDITOR='vi'
 export ALTERNATE_EDITOR=vim EDITOR=emacsclient VISUAL=emacsclient
 export BROWSER="exo-open"
@@ -152,19 +149,29 @@ alias aw='awman'
 alias awh='wiki-search-html'
 
 ### ----- App related stuff ----- ###
+alias pin='yaourt -S'
+alias pinda='yaourt -S --no-confirm'
+alias pout='yaourt -R'
+alias poutda='yaourt -R --no-confirm'
+alias plook='yaourt -Ss'
+alias pup='yaourt -Syy'
+
+
+alias l='ls -lh'
+alias la='ls -A'
+alias ll='ls -alFh'
+alias ls='ls --color=auto'
+alias lt='ls -alFht'
+alias rm='trash-put'
+alias rmlatex='\rm *aux *log *out *synctex.gz *fdb_latexmk *fls *bbl'
+alias rmold='rm *~ .*~'
 alias ask='ps aux | grep -i'
-alias agi='sudo apt-get install'
-alias agr='sudo apt-get remove'
-alias agu='sudo apt-get update && sudo apt-get upgrade'
-alias agdu='sudo apt-get update && sudo apt-get dist-upgrade'
-alias agsaptitude='sudo aptitude search'
-alias ags='sudo apt-cache search'
-alias agar='sudo apt-get autoremove'
-# alias agi='sudo apt-get install'
-# alias agr='sudo apt-get remove'
-# alias agu='sudo apt-get update && sudo apt-get dist-upgrade'
-# alias ags='apt-cache search'
-# alias agar='sudo apt-get autoremove'
+alias du='du -hs'
+alias rm='trash-put'
+alias rmold='rm *~ .*~'
+alias free='free -m'                      # show sizes in MB
+alias more=less
+
 
 # # cool redirection example
 # # begin example
@@ -273,23 +280,6 @@ function gitty-up () {
 export R_PROFILE=$HOME/r/rprofile.site
 export WORKON_HOME=$HOME/.virtualenvs
 
-# # # # # # # # # # # # # # # # # # # # # # #
-# CSCS stuff
-# File Server, Front-end
-alias ela='ssh -YC oneyb@ela.cscs.ch'
-# Cray XE6
-alias rosa='ssh -YC oneyb@rosa.cscs.ch'
-# Cray XE5
-alias albis='ssh -YC oneyb@albis.cscs.ch'
-# Cray XE5
-alias lema='ssh -YC oneyb@lema.cscs.ch'
-# pre and post processing cluster
-alias ela-mount='sshfs oneyb@ela.cscs.ch:/ $HOME/cscs_mount'
-# SB Cluster
-alias pilatus='ssh -YC oneyb@pilatus.cscs.ch'
-# # # # # # # # # # # # # # # # # # # # # # #
-
-
 ### ----- Random Documentation stuff ----- ###
 function bulgarian ()
 {
@@ -306,21 +296,6 @@ alias schwiizertuetsch='o /d/literature/languages/german/misc/schwyzertüütsch-
 # # Image processing tricks
 # montage *.png -title "\n Lägern-Hochwacht\n" -crop +0+96 -mode concatenate -tile x4 Lae-3d-TS.png
 # mencoder mf://*10-50_main_CO2_*.png -mf w=800:h=600:fps=3:type=png -ovc copy -oac copy -o CO2_D2_A_E_10-50.avi
-
-### ----- Presentation stuff ----- ###
-## Impressive presentation
-alias impress='impressive --nologo -c memory -L time=BL --fontsize 16'
-
-# nook stuff - be sure to have the adbWireless on nook running
-alias Nook='adb connect 192.168.0.102'
-alias Nook='adb connect 192.168.0.102'
-
-### ----- File management ----- ###
-alias du='du -hs'
-alias rm='trash-put'
-alias rmold='rm *~ .*~'
-alias rmlatex='\rm *aux *log *out *synctex.gz *fdb_latexmk *fls *bbl'
-alias sti='xkbset exp 1 sticky -twokey -latchlock'
 
 function red()
 {
@@ -392,16 +367,6 @@ function e()
 function Rex()
 {
     Rscript -e "$*"
-}
-
-function install_manual_deb ()
-{
-    wget $1
-    sudo dpkg -i `basename $1`
-    if [ $# -eq 0 ]; then
-        sudo apt-get install -f
-    fi
-    mv `basename $1` $HOME/bin/src/
 }
 
 function ebook-convert-to-pdf()
@@ -498,11 +463,11 @@ function youtube()
 # if [ -d ~/Downloads ]; then rmdir ~/Downloads; fi
 
 # get xbindkeys started
-if [ "$PWD" == ~ ]; then 
-    bash -c 'pkill xbindkeys && xbindkeys' &> /dev/null
-fi
+# if [ "$PWD" == ~ ]; then 
+#     bash -c 'pkill xbindkeys && xbindkeys' &> /dev/null
+# fi
 
-if  [[ $- =~ .*i.* ]]; then  sh -c "~/bin/xb &"  ; fi
+# if  [[ $- =~ .*i.* ]]; then  sh -c "~/bin/xb &"  ; fi
 
 if [[ -n `pgrep -f 'emacs --smid'` ]]; then
     pkill -f 'emacs --smid'
@@ -514,7 +479,7 @@ if [ $USER = "pi" ]; then
 	  xkbset exp 1 =sticky -twokey -latchlock
 fi
 
-
+# tinkbox
 if [ "$(ls -1 /dev/disk/by-uuid | sed '1!d')" = "23e07b94-b859-4ead-914c-a8f763120cea" ];
 then
 	  # keyboard stuff
