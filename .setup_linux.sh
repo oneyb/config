@@ -21,7 +21,7 @@ sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       
       bleachbit wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool   \
       xfburn xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere  \
       xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
-      exfat-utils libxft-dev libfreetype6-dev rclone
+      exfat-utils libxft-dev libfreetype6-dev rclone evolution breeze-cursor-theme 
 
 
 # python packages
@@ -33,6 +33,28 @@ sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
       pdfminer-data python-pip python-pip3 ipython-notebook ipython3-notebook
 
 
+function add_desktop {
+    echo "[Desktop Entry]                                
+Version=1.0                                     
+Type=Application                                
+Name=$(basename $1)
+Comment=                                        
+Exec=$1
+Icon=$2
+Path=                                           
+Terminal=$Terminal
+StartupNotify=false" > ~/.config/xfce4/desktop/$(basename $1).desktop
+}
+
+
+# Zotero
+wget -O Zotero_linux-x86_64.tar.bz2 'https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64&version=5.0.24'
+mv Zotero_linux-x86_64.tar.bz2 ~/bin/src/
+cd  ~/bin/src/
+tar xjf Zotero_linux-x86_64.tar.bz2
+cd  ~/bin 
+ln -sf ~/bin/src/Zotero_linux-x86_64/zotero .
+cp ~/bin/src/Zotero_linux-x86_64/zotero.desktop ~/.config/xfce4/desktop/
 
 # Playonlinux!!
 # wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
@@ -46,7 +68,7 @@ sudo update-alternatives --config x-www-browser
 sudo update-alternatives --config editor
 # setxkbmap -option "compose:caps"
 
-# sudo cat "deb http://download.virtualbox.org/virtualbox/debian jessie contrib" >> /etc/apt/sources.list
+# sudo cat "deb http://download.virtualbox.org/virtualbox/debian stretch contrib" >> /etc/apt/sources.list
 # wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 # sudo apt-get update
 # sudo apt-get install virtualbox-5.1
@@ -66,7 +88,7 @@ bash documents/config/.copy-config.sh in
 # sudo mandb
 
 pkgs=(
-    https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb
+    https://github.com/jgm/pandoc/releases/download/2.0.1/pandoc-2.0.1-1-amd64.deb
 )
 
 function install_manual_deb ()
@@ -114,6 +136,14 @@ wget https://www.archlinux.org/packages/community/any/arch-wiki-lite/download/ -
 sudo tar xJf arch-wiki-lite.tar.xz -C /
 mv arch-wiki* ~/bin/src/
 sudo rm /.BUILDINFO /.MTREE /.PKGINFO
+
+# NodeJS
+if [ -n $(grep nodesource /etc/apt/sources.list) ]; then
+    curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
+else
+    curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
+    sudo apt-get install -y nodejs
+fi
 
 # # i3-py and quickswitch
 # sudo pip3 install i3-py
@@ -267,6 +297,9 @@ else
 fi
 echo -e "if [ -d /usr/local/src/texlive/ ]; then\n\tPATH=\"/usr/local/src/texlive/bin/$(uname -m)-$(uname -s | sed "s/.*/\L&/"):\$PATH\"\nfi"
 
+# systemd-stuff
+sudo systemctl disable tor
+sudo systemctl stop tor
 
 # May change this
 echo "Wanna? sudo localectl set-x11-keymap us pc105 qwerty 'compose:102'"

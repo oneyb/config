@@ -3,7 +3,8 @@
 # for examples
 
 # If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+[[ $- != *i* ]] && return
+# [ -z "$PS1" ] && return
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
@@ -64,6 +65,8 @@ fi
 # *)
 #     ;;
 # esac
+
+PS1=' \w \$ '
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -235,23 +238,6 @@ function gitty-up () {
 # R & Python stuff
 export R_PROFILE=$HOME/r/rprofile.site
 export WORKON_HOME=$HOME/.virtualenvs
-
-# # # # # # # # # # # # # # # # # # # # # # #
-# CSCS stuff
-# File Server, Front-end
-alias ela='ssh -YC oneyb@ela.cscs.ch'
-# Cray XE6
-alias rosa='ssh -YC oneyb@rosa.cscs.ch'
-# Cray XE5
-alias albis='ssh -YC oneyb@albis.cscs.ch'
-# Cray XE5
-alias lema='ssh -YC oneyb@lema.cscs.ch'
-# pre and post processing cluster
-alias ela-mount='sshfs oneyb@ela.cscs.ch:/ $HOME/cscs_mount'
-# SB Cluster
-alias pilatus='ssh -YC oneyb@pilatus.cscs.ch'
-# # # # # # # # # # # # # # # # # # # # # # #
-
 
 ### ----- Random Documentation stuff ----- ###
 function bulgarian ()
@@ -458,6 +444,29 @@ function youtube()
     rename 's/-[[:alnum:]_-]+\.([[:alnum:]]+$)/$1/' *mp{3,4} *mkv *m4a
 }
 
+# ex - archive extractor
+# usage: ex <file>
+ex ()
+{
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xjf $1   ;;
+            *.tar.gz)    tar xzf $1   ;;
+            *.bz2)       bunzip2 $1   ;;
+            *.rar)       unrar x $1     ;;
+            *.gz)        gunzip $1    ;;
+            *.tar)       tar xf $1    ;;
+            *.tbz2)      tar xjf $1   ;;
+            *.tgz)       tar xzf $1   ;;
+            *.zip)       unzip $1     ;;
+            *.Z)         uncompress $1;;
+            *.7z)        7z x $1      ;;
+            *)           echo "'$1' cannot be extracted via ex()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
 # if [ -d ~/Downloads ]; then rmdir ~/Downloads; fi
 
 # get xbindkeys started
