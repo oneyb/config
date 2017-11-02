@@ -660,6 +660,20 @@ package is loaded, you should place your code here."
                       "pdflatex -interaction nonstopmode -output-directory %o %f"))
               (require 'ox-koma-letter)
               (add-to-list 'org-latex-classes
+                           '("a4-labels"
+                             "\\documentclass[a4paper,12pt]{article}
+                             \\usepackage[newdimens]{labels}
+                             \\LabelCols=3% Number of columns of labels per page
+                             \\LabelRows=8% Number of rows of labels per page
+                             \\LeftPageMargin=7mm% These four parameters give the
+                             \\RightPageMargin=7mm% page gutter sizes. The outer edges of
+                             \\TopPageMargin=15mm% the outer labels are the specified
+                             \\BottomPageMargin=15mm% distances from the edge of the paper.
+                             \\InterLabelColumn=2mm% Gap between columns of labels
+                             \\numberoflabels=24
+                             "
+                             ))
+              (add-to-list 'org-latex-classes
                            '("letter-de"
                              "\\documentclass[DIV=14,
                                 fontsize=11pt,

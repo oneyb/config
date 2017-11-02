@@ -4,34 +4,38 @@ cd ~
 
 
 sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       \
-      aspell-bg aspell-de aspell-en aspell-es audacity automake i3 awesome         \
+      aspell-bg aspell-de aspell-en aspell-es audacity automake awesome         \
       awesome-extra build-essential calendar-google-provider calibre chromium   \
       cmake cmake-data cryptsetup-bin cups curl dash evince firefox-esr         \
-      firmware-linux-free firmware-linux-nonfree flac       \
-      freecad gdal-bin genisoimage geoip-database gfortran gimp git             \
-      gnome-disk-utility gocr gocr-tk googleearth-package gparted handbrake     \
-      handbrake-cli imagemagick inkscape ispell java-common lame laptop-detect  \
-      mplayer2 nco ncview netcdf-bin netcdf-doc ntfs-3g ntfs-config    \
-      openssh-client openssh-server p7zip-full pavucontrol pcmanfm pdftk        \
-      proj-bin proj-data pulseaudio pulseaudio-utils      \
-      qpdf qpdfview r-base r-cran-xml2 r-cran-ncdf4 recordmydesktop ristretto   \
-      rsync scrot seahorse simple-scan smplayer subversion suckless-tools       \
-      synaptic tor tor-arm tor-geoipdb torsocks transmission-gtk trash-cli      \
+      firmware-linux-free firmware-linux-nonfree flac freecad gdal-bin          \
+      genisoimage geoip-database gfortran gimp git gnome-disk-utility gocr      \
+      gocr-tk googleearth-package gparted handbrake handbrake-cli imagemagick   \
+      inkscape ispell java-common lame laptop-detect mplayer2 nco ncview        \
+      netcdf-bin netcdf-doc ntfs-3g ntfs-config openssh-client openssh-server   \
+      p7zip-full pavucontrol pcmanfm pdftk proj-bin proj-data pulseaudio        \
+      pulseaudio-utils qpdf qpdfview r-base r-cran-xml2 r-cran-ncdf4            \
+      recordmydesktop ristretto rsync scrot seahorse simple-scan smplayer       \
+      subversion suckless-tools synaptic tor tor-arm autoconf automake g++ gcc  \
+      libpng-dev libpoppler-dev libpoppler-glib-dev libpoppler-private-dev      \
+      libz-dev make pkg-config tor-geoipdb torsocks transmission-gtk trash-cli  \
       udevil unattended-upgrades unoconv vim-gtk wget epiphany-browser          \
       bleachbit wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool   \
       xfburn xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere  \
       xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
-      exfat-utils libxft-dev libfreetype6-dev rclone evolution breeze-cursor-theme 
-
+      exfat-utils libxft-dev libfreetype6-dev rclone evolution                  \
+      breeze-cursor-theme bash-completion lshw
 
 # python packages
 sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
-      python-cupshelpers python-flake8 python-libxml2 python-matplotlib       \
+      python3-cupshelpers python-flake8 python-libxml2                        \
       python-numpy python-openpyxl python-openssl python-pandas               \
       python-jsonrpclib python-pyparsing python-scipy python-setuptools       \
       python-simplejson python-unittest2 python3 python-gdal python-pdfminer  \
-      pdfminer-data python-pip python-pip3 ipython-notebook ipython3-notebook
+      pdfminer-data python-pip python3-pip jupyter-notebook
 
+
+# Remove stuff
+sudo apt-get remove thunderbird
 
 function add_desktop {
     echo "[Desktop Entry]                                
@@ -104,6 +108,12 @@ function install_manual_deb ()
 for p in ${pkgs[@]}; do
     install_manual_deb $p
 done
+
+# anamnesis
+cd ~/bin/src/
+wget -O anamnesis.tar.gz  https://sourceforge.net/projects/anamnesis/files/latest/download
+tar xzf anamnesis.tar.gz
+ln -sf ~/bin/src/anamnesis-1.0.4/source/anamnesis.py ~/bin/anamnesis
 
 # # Messenger services with Franz
 # wget https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz
