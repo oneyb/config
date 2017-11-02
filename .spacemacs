@@ -593,6 +593,7 @@ package is loaded, you should place your code here."
                 (org-todo-list "NEXT")
                 (ace-maximize-window)
                 )
+              (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
               (setq reftex-default-bibliography    "~/zotero/Insects.bib"
                     org-ref-bibliography-notes     "~/zotero/biblio-notes.org"
                     org-ref-default-bibliography   "~/zotero/Insects.bib"
