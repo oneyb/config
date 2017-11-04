@@ -23,7 +23,7 @@ sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       
       xfburn xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere  \
       xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
       exfat-utils libxft-dev libfreetype6-dev rclone evolution                  \
-      breeze-cursor-theme bash-completion lshw
+      breeze-cursor-theme bash-completion lshw libimage-exiftool-perl
 
 # python packages
 sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
@@ -115,14 +115,15 @@ wget -O anamnesis.tar.gz  https://sourceforge.net/projects/anamnesis/files/lates
 tar xzf anamnesis.tar.gz
 ln -sf ~/bin/src/anamnesis-1.0.4/source/anamnesis.py ~/bin/anamnesis
 
-# # Messenger services with Franz
-# wget https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz
-# sudo mkdir /opt/franz
-# sudo tar xzf Franz-linux*.tgz -C /opt/franz
-# sudo ln -s /opt/franz/Franz /usr/bin/franz
-# sudo wget https://cdn-images-1.medium.com/max/360/1*v86tTomtFZIdqzMNpvwIZw.png -O /usr/share/icons/franz.png
-# sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Franz\nComment=A free messaging app for WhatsApp, Facebook Messenger, Telegram, Slack and more.\nExec=franz -- %u\nStartupWMClass=Franz\nfranz\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/franz.desktop"
-# mv Franz-linux*.tgz $HOME/bin/src/
+# Messenger services with Franz
+cd $HOME/bin/src/
+[[ ! -f Franz-linux-x64-4.0.4.tgz ]] && wget https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz
+sudo mkdir /opt/franz
+sudo tar xzf Franz-linux*.tgz -C /opt/franz
+sudo ln -s /opt/franz/Franz /usr/bin/franz
+sudo wget https://cdn-images-1.medium.com/max/360/1*v86tTomtFZIdqzMNpvwIZw.png -O /usr/share/icons/franz.png
+sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Franz\nComment=A free messaging app for WhatsApp, Facebook Messenger, Telegram, Slack and more.\nExec=franz -- %u\nStartupWMClass=Franz\nfranz\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/franz.desktop"
+cd -
 
 # # Don't telegram anymore
 # wget https://updates.tdesktop.com/tlinux/tsetup.0.10.19.tar.xz
