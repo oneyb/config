@@ -17,13 +17,14 @@ sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       
       recordmydesktop ristretto rsync scrot seahorse simple-scan smplayer       \
       subversion suckless-tools synaptic tor tor-arm autoconf automake g++ gcc  \
       libpng-dev libpoppler-dev libpoppler-glib-dev libpoppler-private-dev      \
-      libz-dev make pkg-config tor-geoipdb torsocks transmission-gtk trash-cli  \
+      libz-dev make pkg-config tor-geoipdb torshplipocks transmission-gtk trash-cli  \
       udevil unattended-upgrades unoconv vim-gtk wget epiphany-browser          \
       bleachbit wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool   \
       xfburn xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere  \
       xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
       exfat-utils libxft-dev libfreetype6-dev rclone evolution                  \
-      breeze-cursor-theme bash-completion lshw libimage-exiftool-perl
+      breeze-cursor-theme bash-completion lshw libimage-exiftool-perl           \
+      broadcom-sta-dkms picard hplip
 
 # python packages
 sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
@@ -249,12 +250,12 @@ Description=Anamnesis is a clipboard manager. It stores all clipboard history an
 
 [Service]
 Type=forking
-ExecStart=/usr/bin/anamnesis --start
-ExecRestart=/usr/bin/anamnesis --restart --clean
-ExecStop=/usr/bin/anamnesis --stop
+ExecStart=%h/bin/anamnesis --start
+ExecStop=%h/bin/anamnesis --stop --clean
 Restart=always
 TimeoutStartSec=0
 RestartSec=10800
+EnvironmentFile=%h/.profile
 
 # [Install]
 # WantedBy=default.target" > ~/.config/systemd/user/anamnesis.service
