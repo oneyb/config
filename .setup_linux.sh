@@ -24,7 +24,7 @@ sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       
       xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
       exfat-utils libxft-dev libfreetype6-dev rclone evolution                  \
       breeze-cursor-theme bash-completion lshw libimage-exiftool-perl           \
-      broadcom-sta-dkms picard hplip
+      broadcom-sta-dkms picard hplip dialog
 
 # python packages
 sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
@@ -60,6 +60,7 @@ tar xjf Zotero_linux-x86_64.tar.bz2
 cd  ~/bin 
 ln -sf ~/bin/src/Zotero_linux-x86_64/zotero .
 cp ~/bin/src/Zotero_linux-x86_64/zotero.desktop ~/.config/xfce4/desktop/
+sudo cp ~/bin/src/Zotero_linux-x86_64/zotero.desktop /usr/share/applications/
 
 # Playonlinux!!
 # wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
@@ -73,10 +74,10 @@ sudo update-alternatives --config x-www-browser
 sudo update-alternatives --config editor
 # setxkbmap -option "compose:caps"
 
-# sudo cat "deb http://download.virtualbox.org/virtualbox/debian stretch contrib" >> /etc/apt/sources.list
+# echo "deb http://download.virtualbox.org/virtualbox/debian stretch contrib" | sudo tee -a /etc/apt/sources.list
 # wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 # sudo apt-get update
-# sudo apt-get install virtualbox-5.1
+# sudo apt-get install virtualbox-5.2
 
 mkdir -p documents
 git clone https://github.com/oneyb/config.git
@@ -123,16 +124,8 @@ sudo mkdir /opt/franz
 sudo tar xzf Franz-linux*.tgz -C /opt/franz
 sudo ln -s /opt/franz/Franz /usr/bin/franz
 sudo wget https://cdn-images-1.medium.com/max/360/1*v86tTomtFZIdqzMNpvwIZw.png -O /usr/share/icons/franz.png
-sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Franz\nComment=A free messaging app for WhatsApp, Facebook Messenger, Telegram, Slack and more.\nExec=franz -- %u\nStartupWMClass=Franz\nfranz\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/franz.desktop"
+sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Franz\nComment=A free messaging app for WhatsApp, Facebook Messenger, Telegram, Slack and more.\nExec=franz -- %u\nStartupWMClass=Franz franz\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/franz.desktop"
 cd -
-
-# # Don't telegram anymore
-# wget https://updates.tdesktop.com/tlinux/tsetup.0.10.19.tar.xz
-# mv tsetup.0.10.19.tar.xz /home/oney/bin/src/
-# cd  /home/oney/bin/src/
-# tar xJf tsetup.0.10.19.tar.xz
-# mv Telegram/* ~/bin/src/
-# rmdir Telegram
 
 wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
 sudo dpkg --add-architecture i386
