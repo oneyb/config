@@ -181,7 +181,7 @@ add_desktop_launcher chromium                   $HOME/.config/icons/chromium.png
 add_desktop_launcher $HOME/bin/sync_org.sh      $HOME/.config/icons/orgzly.png
 add_desktop_launcher "emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")'" $HOME/.config/icons/emacs22.png
 # add_desktop_launcher VirtualBox                 $HOME/.config/icons/virtualbox.png
-add_desktop_launcher $HOME/bin/zotero           $HOME/.config/icons/zotero.png 
+# add_desktop_launcher $HOME/bin/zotero           $HOME/.config/icons/zotero.png 
 Terminal="true"
 add_desktop_launcher $HOME/bin/.backup_file.sh  $HOME/.config/icons/text-x-script.png
 add_desktop_launcher $HOME/bin/.sync_phone.sh   $HOME/.config/icons/stock_cell-phone.png
