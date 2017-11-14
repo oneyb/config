@@ -52,15 +52,14 @@ StartupNotify=false" > ~/.config/xfce4/desktop/$(basename $1).desktop
 }
 
 
-# Zotero
-wget -O Zotero_linux-x86_64.tar.bz2 'https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64&version=5.0.24'
-mv Zotero_linux-x86_64.tar.bz2 ~/bin/src/
+# Zotero on debian 9
+wget -O $HOME/bin/src/Zotero_linux-x86_64.tar.bz2 'https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64&version=5.0.24'
 cd  ~/bin/src/
 tar xjf Zotero_linux-x86_64.tar.bz2
-cd  ~/bin 
-ln -sf ~/bin/src/Zotero_linux-x86_64/zotero .
-cp ~/bin/src/Zotero_linux-x86_64/zotero.desktop ~/.config/xfce4/desktop/
-sudo cp ~/bin/src/Zotero_linux-x86_64/zotero.desktop /usr/share/applications/
+cd Zotero_linux-x86_64/
+./set_launcher_icon
+sed -ri "s_^Exec=.*_Exec=$PWD/zotero -url %U_" zotero.desktop
+desktop-file-install zotero.desktop --dir=~/.local/share/applications/
 
 # Playonlinux!!
 # wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
