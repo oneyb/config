@@ -17,13 +17,14 @@ sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       
       recordmydesktop ristretto rsync scrot seahorse simple-scan smplayer       \
       subversion suckless-tools synaptic tor tor-arm autoconf automake g++ gcc  \
       libpng-dev libpoppler-dev libpoppler-glib-dev libpoppler-private-dev      \
-      libz-dev make pkg-config tor-geoipdb torsocks transmission-gtk trash-cli  \
+      libz-dev make pkg-config tor-geoipdb torshplipocks transmission-gtk trash-cli  \
       udevil unattended-upgrades unoconv vim-gtk wget epiphany-browser          \
       bleachbit wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool   \
       xfburn xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere  \
       xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
       exfat-utils libxft-dev libfreetype6-dev rclone evolution                  \
-      breeze-cursor-theme bash-completion lshw libimage-exiftool-perl
+      breeze-cursor-theme bash-completion lshw libimage-exiftool-perl           \
+      broadcom-sta-dkms picard hplip dialog
 
 # python packages
 sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
@@ -51,14 +52,14 @@ StartupNotify=false" > ~/.config/xfce4/desktop/$(basename $1).desktop
 }
 
 
-# Zotero
-wget -O Zotero_linux-x86_64.tar.bz2 'https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64&version=5.0.24'
-mv Zotero_linux-x86_64.tar.bz2 ~/bin/src/
+# Zotero on debian 9
+wget -O $HOME/bin/src/Zotero_linux-x86_64.tar.bz2 'https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64&version=5.0.24'
 cd  ~/bin/src/
 tar xjf Zotero_linux-x86_64.tar.bz2
-cd  ~/bin 
-ln -sf ~/bin/src/Zotero_linux-x86_64/zotero .
-cp ~/bin/src/Zotero_linux-x86_64/zotero.desktop ~/.config/xfce4/desktop/
+cd Zotero_linux-x86_64/
+./set_launcher_icon
+sed -ri "s_^Exec=.*_Exec=$PWD/zotero -url %U_" zotero.desktop
+desktop-file-install zotero.desktop --dir=~/.local/share/applications/
 
 # Playonlinux!!
 # wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
@@ -72,10 +73,10 @@ sudo update-alternatives --config x-www-browser
 sudo update-alternatives --config editor
 # setxkbmap -option "compose:caps"
 
-# sudo cat "deb http://download.virtualbox.org/virtualbox/debian stretch contrib" >> /etc/apt/sources.list
+# echo "deb http://download.virtualbox.org/virtualbox/debian stretch contrib" | sudo tee -a /etc/apt/sources.list
 # wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 # sudo apt-get update
-# sudo apt-get install virtualbox-5.1
+# sudo apt-get install virtualbox-5.2
 
 mkdir -p documents
 git clone https://github.com/oneyb/config.git
@@ -122,16 +123,8 @@ sudo mkdir /opt/franz
 sudo tar xzf Franz-linux*.tgz -C /opt/franz
 sudo ln -s /opt/franz/Franz /usr/bin/franz
 sudo wget https://cdn-images-1.medium.com/max/360/1*v86tTomtFZIdqzMNpvwIZw.png -O /usr/share/icons/franz.png
-sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Franz\nComment=A free messaging app for WhatsApp, Facebook Messenger, Telegram, Slack and more.\nExec=franz -- %u\nStartupWMClass=Franz\nfranz\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/franz.desktop"
+sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Franz\nComment=A free messaging app for WhatsApp, Facebook Messenger, Telegram, Slack and more.\nExec=franz -- %u\nStartupWMClass=Franz franz\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/franz.desktop"
 cd -
-
-# # Don't telegram anymore
-# wget https://updates.tdesktop.com/tlinux/tsetup.0.10.19.tar.xz
-# mv tsetup.0.10.19.tar.xz /home/oney/bin/src/
-# cd  /home/oney/bin/src/
-# tar xJf tsetup.0.10.19.tar.xz
-# mv Telegram/* ~/bin/src/
-# rmdir Telegram
 
 wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
 sudo dpkg --add-architecture i386
@@ -188,7 +181,7 @@ add_desktop_launcher chromium                   $HOME/.config/icons/chromium.png
 add_desktop_launcher $HOME/bin/sync_org.sh      $HOME/.config/icons/orgzly.png
 add_desktop_launcher "emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")'" $HOME/.config/icons/emacs22.png
 # add_desktop_launcher VirtualBox                 $HOME/.config/icons/virtualbox.png
-add_desktop_launcher $HOME/bin/zotero           $HOME/.config/icons/zotero.png 
+# add_desktop_launcher $HOME/bin/zotero           $HOME/.config/icons/zotero.png 
 Terminal="true"
 add_desktop_launcher $HOME/bin/.backup_file.sh  $HOME/.config/icons/text-x-script.png
 add_desktop_launcher $HOME/bin/.sync_phone.sh   $HOME/.config/icons/stock_cell-phone.png
@@ -249,12 +242,12 @@ Description=Anamnesis is a clipboard manager. It stores all clipboard history an
 
 [Service]
 Type=forking
-ExecStart=/usr/bin/anamnesis --start
-ExecRestart=/usr/bin/anamnesis --restart --clean
-ExecStop=/usr/bin/anamnesis --stop
+ExecStart=%h/bin/anamnesis --start
+ExecStop=%h/bin/anamnesis --stop --clean
 Restart=always
 TimeoutStartSec=0
 RestartSec=10800
+EnvironmentFile=%h/.profile
 
 # [Install]
 # WantedBy=default.target" > ~/.config/systemd/user/anamnesis.service

@@ -289,7 +289,7 @@ function wget-R()
     wget -R $1 -m -p -E -k -K -np -e robots=off $2
 }
 
-function song-play()
+function play-song()
 {
     grep -iE "${1}[^/]*$" /d/music/playlists/all_music.m3u > /tmp/currentplaylist.m3u
     # find /d/music/$2 -type f -iname "*$1*" > /tmp/currentplaylist.m3u
@@ -309,7 +309,7 @@ _play()
 }
 complete -F _play play
 
-function song-find()
+function find-song()
 {
     grep -iE "${1}[^/]*$" /d/music/playlists/all_music.m3u
     # echo `find /D/Music/$2 -type f -iname "*$1*"`
