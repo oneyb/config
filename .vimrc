@@ -16,7 +16,12 @@ call plug#begin()
   Plug 'scrooloose/nerdtree'
   Plug 'jceb/vim-orgmode'
   Plug 'hecal3/vim-leader-guide'
+  Plug 'mswift42/vim-themes'
+  Plug 'kien/ctrlp.vim'
 call plug#end()
+
+" set background=light
+colorscheme soft-morning
 
 let mapleader = "\<SPACE>"
 

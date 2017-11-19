@@ -37,7 +37,8 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     helm
+     ;; helm
+     ivy
      ;; auto-completion
      (auto-completion :variables
                       auto-completion-return-key-behavior 'complete
@@ -45,6 +46,7 @@ values."
                       auto-completion-complete-with-key-sequence nil
                       auto-completion-complete-with-key-sequence-delay 0.1
                       auto-completion-private-snippets-directory nil)
+     ansible
      better-defaults
      spacemacs-evil
      evil-commentary
@@ -380,6 +382,50 @@ explicitly specified that a variable should be set before a
 package is loaded, you should place your code here."
   ;; (xclip-mode 1)
   ;; (fset 'evil-visual-update-x-selection 'ignore)
+  (define-key ivy-minibuffer-map (kbd "<escape>")
+    (defhydra soo-ivy (:hint nil :color pink)
+      "
+ Move     ^^^^^^^^^^ | Call         ^^^^ | Cancel^^ | Options^^ | Action _w_/_s_/_a_: %s(ivy-action-name)
+----------^^^^^^^^^^-+--------------^^^^-+-------^^-+--------^^-+---------------------------------
+ _g_ ^ ^ _k_ ^ ^ _u_ | _f_orward _o_ccur | _i_nsert | _c_alling: %-7s(if ivy-calling \"on\" \"off\") _C_ase-fold: %-10`ivy-case-fold-search
+ ^↨^ _h_ ^+^ _l_ ^↕^ | _RET_ done     ^^ | _q_uit   | _m_atcher: %-7s(ivy--matcher-desc) _t_runcate: %-11`truncate-lines
+ _G_ ^ ^ _j_ ^ ^ _d_ | _TAB_ alt-done ^^ | ^ ^      | _<_/_>_: shrink/grow
+"
+      ;; arrows
+      ("j" ivy-next-line)
+      ("k" ivy-previous-line)
+      ("l" ivy-forward-char)
+      ("h" ivy-backward-delete-char)
+      ("b" ivy-backward-kill-word)
+      ("g" ivy-beginning-of-buffer)
+      ("G" ivy-end-of-buffer)
+      ("d" ivy-scroll-up-command)
+      ("u" ivy-scroll-down-command)
+      ("e" ivy-kill-word)
+      ;; actions
+      ("q" keyboard-escape-quit :exit t)
+      ("C-g" keyboard-escape-quit :exit t)
+      ("<escape>" keyboard-escape-quit :exit t)
+      ("C-o" nil)
+      ("i" nil)
+      ;; ("TAB" ivy-alt-done :exit nil)
+      ("C-j" ivy-alt-done :exit nil)
+      ;; ("d" ivy-done :exit t)
+      ("RET" ivy-done :exit t)
+      ("C-m" ivy-done :exit t)
+      ("f" ivy-call)
+      ("c" ivy-toggle-calling)
+      ("m" ivy-toggle-fuzzy)
+      (">" ivy-minibuffer-grow)
+      ("<" ivy-minibuffer-shrink)
+      ("w" ivy-prev-action)
+      ("s" ivy-next-action)
+      ("a" ivy-read-action)
+      ("t" (setq truncate-lines (not truncate-lines)))
+      ("C" ivy-toggle-case-fold)
+      ("o" ivy-occur :exit t)
+      )
+    )
   (define-key evil-normal-state-map (kbd "SPC oc") 'org-capture)
   (define-key evil-normal-state-map (kbd "SPC oa") 'org-agenda)
   (define-key evil-normal-state-map (kbd "SPC ob") 'org-iswitchb)   
@@ -647,7 +693,7 @@ package is loaded, you should place your code here."
               (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
                 "p"   'org-priority
                 "z"   'org-pomodoro
-                "z"   'org-pomodoro
+                "c"   'org-capture
                 "oo"  'org-gcal-sync
                 "or"  'org-gcal-refresh-token
                 "od"  'org-gcal-delete-at-point
@@ -757,8 +803,8 @@ package is loaded, you should place your code here."
               ;; (require 'org-trello)
               ;; (setq org-trello-files (file-expand-wildcards "~/org-trello/*.org"))
               (add-to-list 'auto-mode-alist '("\\.eml\\'" . org-mode))
-              (add-hook 'markdown-mode-hook
-                        '(lambda () (define-key markdown-mode-map "\c-c[" 'helm-bibtex)))
+              ;; (add-hook 'markdown-mode-hook
+              ;;           '(lambda () (define-key markdown-mode-map "\c-c[" 'helm-bibtex)))
               ;; (setq bibtex-completion-bibliography '("~/zotero/insects.bib"))
               (setq bibtex-completion-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
               (setq reftex-default-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
@@ -779,7 +825,7 @@ package is loaded, you should place your code here."
  '(evil-want-Y-yank-to-eol t)
  '(package-selected-packages
    (quote
-    (evil-commentary org-caldav auctex-latexmk zotxt yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el paradox pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-gcal org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc insert-shebang info+ indent-guide ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump define-word dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (wgrep smex ivy-hydra counsel-projectile counsel swiper zotxt yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el paradox pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-gcal org-download org-caldav org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc jinja2-mode insert-shebang info+ indent-guide ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump define-word dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile ansible-doc ansible aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
