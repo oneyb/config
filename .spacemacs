@@ -47,6 +47,7 @@ values."
                       auto-completion-private-snippets-directory nil)
      better-defaults
      spacemacs-evil
+     evil-commentary
      emacs-lisp
      git
      lua
@@ -169,16 +170,16 @@ values."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    dotspacemacs-startup-lists '(
-                                (recents . 9)
-                                (projects . 3)
-                                (bookmarks . 6)
                                 (agenda . 10)
                                 (todos . 9)
+                                (recents . 9)
+                                ;; (projects . 3)
+                                ;; (bookmarks . 6)
                                 )
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
-   dotspacemacs-scratch-mode 'text-mode
+   dotspacemacs-scratch-mode 'org-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
@@ -379,8 +380,11 @@ explicitly specified that a variable should be set before a
 package is loaded, you should place your code here."
   ;; (xclip-mode 1)
   ;; (fset 'evil-visual-update-x-selection 'ignore)
-  ;; 
-  (require 'helm-bookmark)
+  (define-key evil-normal-state-map (kbd "SPC oc") 'org-capture)
+  (define-key evil-normal-state-map (kbd "SPC oa") 'org-agenda)
+  (define-key evil-normal-state-map (kbd "SPC ob") 'org-iswitchb)   
+  (define-key evil-normal-state-map (kbd "SPC ol") 'org-store-link)
+  ;; (require 'helm-bookmark)
   (setq x-select-enable-primary t)
   (setq x-select-enable-clipboard nil)
   (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
@@ -575,6 +579,14 @@ package is loaded, you should place your code here."
   (add-hook 'org-mode-hook
             (lambda ()
               (require 'ox-koma-letter)
+              (add-hook 'org-capture-mode-hook 'evil-insert-state)
+              (setq org-capture-templates
+                    '(
+                      ("t" "TODO" entry (file+headline "~/org/personal.org" "Refile Tasks") "* TODO %?\n %i")
+                      ("s" "Appt." entry (file+headline "~/org/personal.org" "Refile Appointments") "* %?\n SCHEDULED: %^T\n %i")
+                      ("h" "TODO @ Home" entry (file+headline "~/org/personal.org" "Refile Tasks") "* TODO %?\n %i")
+                      ("H" "Appt. @ Home" entry (file+headline "~/org/personal.org" "Refile Appointments") "* %?\n SCHEDULED: %^T\n %i")
+                      ))
               ;; (require 'org-ref)
               ;; ;; (defun helm-bibtex-format-pandoc-citation (keys)
               ;; ;;   (concat "[" (mapconcat (lambda (key) (concat "@" key)) keys "; ") "]"))
@@ -588,12 +600,6 @@ package is loaded, you should place your code here."
               ;;                                          (mapconcat 'identity x ",")
               ;;                                          "}")) ""))))
               ;; ))
-              (defun org-todo-list-next ()
-                "My escape and save"
-                (interactive)
-                (org-todo-list "NEXT")
-                (ace-maximize-window)
-                )
               (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
               (setq reftex-default-bibliography    "~/zotero/Insects.bib"
                     org-ref-bibliography-notes     "~/zotero/biblio-notes.org"
@@ -647,21 +653,24 @@ package is loaded, you should place your code here."
                 "od"  'org-gcal-delete-at-point
                 "op"  'org-gcal-post-at-point
                 )
-              (setq org-agenda-custom-commands '(("d" "My next action" todo "NEXT")))
+              (setq org-agenda-custom-commands 
+                    '(
+                      ("d" "My next action" todo "NEXT")
+                      ))
                       ;; ("h" . "HOME + Name tag searches") ; describe prefix "h"
                       ;; ("hl" tags "+HOME+Lisa")
                       ;; ("hp" tags "+HOME+Peter")
                       ;; ("hk" tags "+HOME+Kim")
                       
-              (require 'org-ref)
-              (require 'org-ref-latex)
-              (require 'org-ref-pdf)
-              (require 'org-ref-url-utils)
-              (setq org-latex-pdf-process
-                    '("pdflatex -interaction nonstopmode -output-directory %o %f"
-                      "bibtex %b"
-                      "pdflatex -interaction nonstopmode -output-directory %o %f"
-                      "pdflatex -interaction nonstopmode -output-directory %o %f"))
+              ;; (require 'org-ref)
+              ;; (require 'org-ref-latex)
+              ;; (require 'org-ref-pdf)
+              ;; (require 'org-ref-url-utils)
+              ;; (setq org-latex-pdf-process
+              ;;       '("pdflatex -interaction nonstopmode -output-directory %o %f"
+              ;;         "bibtex %b"
+              ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"
+              ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"))
               (require 'ox-koma-letter)
               (add-to-list 'org-latex-classes
                            '("a4-labels"
@@ -706,11 +715,11 @@ package is loaded, you should place your code here."
                  (emacs-lisp . t)
                  (R          . t)
                  (shell      . t)
-                 (yaml      . t)
                  (python     . t)
                  (ditaa      . t)
                  ))
               (setq org-confirm-babel-evaluate nil)
+              (setq org-src-preserve-indentation t)
               ;; (defun my-org-confirm-babel-evaluate (lang body)
               ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
               ;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
@@ -768,12 +777,9 @@ package is loaded, you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol t)
- '(org-agenda-files
-   (quote
-    ("~/org/ensectable-cal.org" "~/org/ensectable.org" "~/org/personal-cal.org" "~/org/personal.org")))
  '(package-selected-packages
    (quote
-    (org-caldav auctex-latexmk zotxt yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el paradox pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-gcal org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc insert-shebang info+ indent-guide ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump define-word dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (evil-commentary org-caldav auctex-latexmk zotxt yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el paradox pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-gcal org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc insert-shebang info+ indent-guide ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump define-word dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
