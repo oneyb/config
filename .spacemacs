@@ -87,7 +87,6 @@ values."
      vimscript
      ibuffer
      pdf-tools
-     ;; themes-megapack
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -628,8 +627,8 @@ package is loaded, you should place your code here."
               (add-hook 'org-capture-mode-hook 'evil-insert-state)
               (setq org-capture-templates
                     '(
-                      ("t" "TODO" entry (file+headline "~/org/personal.org" "Refile Tasks") "* TODO %?\n %i")
-                      ("s" "Appt." entry (file+headline "~/org/personal.org" "Refile Appointments") "* %?\n SCHEDULED: %^T\n %i")
+                      ("t" "TODO" entry (file+headline "~/org/ensectable.org" "Refile Tasks") "* TODO %?\n %i")
+                      ("s" "Appt." entry (file+headline "~/org/ensectable.org" "Refile Appointments") "* %?\n SCHEDULED: %^T\n %i")
                       ("h" "TODO @ Home" entry (file+headline "~/org/personal.org" "Refile Tasks") "* TODO %?\n %i")
                       ("H" "Appt. @ Home" entry (file+headline "~/org/personal.org" "Refile Appointments") "* %?\n SCHEDULED: %^T\n %i")
                       ))
@@ -811,6 +810,7 @@ package is loaded, you should place your code here."
               ;; (setq org-archive-location "~/org-archive/datetree.org::datetree/* Finished Tasks")
               (setq org-archive-location "~/org-archive/%s::")
               )
+            (add-to-list 'default-frame-alist '(background-color . "#102372"))
             )
   ;; (setq request-backend 'url-retrieve )
   (setq request-message-level 'debug)
@@ -822,13 +822,15 @@ package is loaded, you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
  '(evil-want-Y-yank-to-eol t)
  '(package-selected-packages
    (quote
-    (wgrep smex ivy-hydra counsel-projectile counsel swiper zotxt yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el paradox pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-gcal org-download org-caldav org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc jinja2-mode insert-shebang info+ indent-guide ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump define-word dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile ansible-doc ansible aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (auctex-latexmk zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme wgrep smex ivy-hydra counsel-projectile counsel swiper zotxt yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el paradox pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-gcal org-download org-caldav org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc jinja2-mode insert-shebang info+ indent-guide ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump define-word dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile ansible-doc ansible aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil)))))
