@@ -429,6 +429,7 @@ package is loaded, you should place your code here."
   (define-key evil-normal-state-map (kbd "SPC oa") 'org-agenda)
   (define-key evil-normal-state-map (kbd "SPC ob") 'org-iswitchb)   
   (define-key evil-normal-state-map (kbd "SPC ol") 'org-store-link)
+  (define-key evil-normal-state-map (kbd "SPC ot") 'org-todo-list)
   ;; (require 'helm-bookmark)
   (setq x-select-enable-primary t)
   (setq x-select-enable-clipboard nil)
