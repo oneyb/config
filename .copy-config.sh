@@ -8,7 +8,6 @@ stuff="
      $HOME/.bashrc
      $HOME/.vimrc
      $HOME/.config/awesome/rc.lua
-     $HOME/.config/i3/config
      $HOME/r/rprofile.site
      $HOME/.config/systemd/user/emacs.service
      $HOME/.config/systemd/user/anamnesis.service

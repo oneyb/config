@@ -231,8 +231,8 @@ Description=Delay emacs startup
 OnBootSec=26s
 # Unit=emacs.service
 
-[Install]
-WantedBy=default.target" > ~/.config/systemd/user/emacs.timer
+# [Install]
+# WantedBy=default.target" > ~/.config/systemd/user/emacs.timer
 systemctl --user enable emacs.timer
 systemctl --user start emacs.timer
 
@@ -249,13 +249,14 @@ TimeoutStartSec=0
 RestartSec=10800
 EnvironmentFile=%h/.profile
 
-# [Install]
-# WantedBy=default.target" > ~/.config/systemd/user/anamnesis.service
+[Install]
+WantedBy=default.target" > ~/.config/systemd/user/anamnesis.service
+
 echo "[Unit]
 Description=Delay start of anamnesis
 
 [Timer]
-OnBootSec=19s
+OnBootSec=39s
 OnUnitActiveSec=10h
 # Unit=anamnesis.service
 

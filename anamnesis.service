@@ -10,5 +10,5 @@ TimeoutStartSec=0
 RestartSec=10800
 EnvironmentFile=%h/.profile
 
-# [Install]
-# WantedBy=default.target
+[Install]
+WantedBy=default.target
