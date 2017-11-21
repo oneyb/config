@@ -186,6 +186,9 @@ Terminal="true"
 add_desktop_launcher $HOME/bin/.backup_file.sh  $HOME/.config/icons/text-x-script.png
 add_desktop_launcher $HOME/bin/.sync_phone.sh   $HOME/.config/icons/stock_cell-phone.png
 
+# configuration
+git clone git@github.com:oneyb/qpdfview-shortcuts-config.git ~/.config/qpdfview
+
 # # PDF-tools awesomeness
 # sudo aptitude install libpng-dev libz-dev libpoppler-glib-dev  \
 #      libpoppler-private-dev
