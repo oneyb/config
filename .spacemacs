@@ -680,6 +680,7 @@ package is loaded, you should place your code here."
                 "ir"  'org-ref-helm-insert-cite-link
                 "p"   'org-priority
                 "z"   'org-pomodoro
+                "xd"  'org-do-demote
                 "oo"  'org-gcal-sync
                 "or"  'org-gcal-refresh-token
                 "od"  'org-gcal-delete-at-point
