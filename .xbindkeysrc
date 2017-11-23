@@ -24,12 +24,14 @@ F9
 Control + Mod1 + t
 "dmenu_run"
 Mod4 + r
-"anamnesis --browse"
+"$HOME/bin/anamnesis --browse"
 Mod4 + c
 # "anamnesis --restart"
 # Control + Mod1 + c
 "~/bin/drop"
 Mod4 + g
+"~/bin/dbi"
+Control + Mod1 + g
 # "sh -c '~/bin/aenea.sh windows7'"
 # F6
 # "VirtualBox --startvm w7_clone 2>&1 ~/.vm.log"

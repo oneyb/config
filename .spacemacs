@@ -827,7 +827,9 @@ package is loaded, you should place your code here."
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(evil-want-Y-yank-to-eol t)
- )
+ '(org-agenda-files
+   (quote
+    ("~/org/ensectable-cal.org" "~/org/ensectable.org" "~/org/personal.org"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
