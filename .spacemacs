@@ -369,7 +369,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq evil-toggle-key (kbd "C-e"))
   (setq ess-eval-visibly nil)
   (setq ess-ask-for-ess-directory nil)
-  (setq org-todo-keywords '((sequence "TODO" "NEXT" "WAIT" "|" "DONE")))
+  (setq org-todo-keywords '((sequence "TODO" "NEXT" "|" "WAIT" "DONE")))
   )
 
 (defun dotspacemacs/user-config ()
@@ -466,6 +466,17 @@ package is loaded, you should place your code here."
     (evil-escape)
     (bury-buffer)
     )
+  ;; (setq auto-mode-alist
+  ;;       (append '(
+  ;;                 ("\\.png\\'"   . system)
+  ;;                 ("\\.pdf\\'"   . system)
+  ;;                 ("\\.ps\\'"    . system)
+  ;;                 ("\\.docx?\\'" . system)
+  ;;                 ("\\.xlsx?\\'" . "xdg-open %s")
+  ;;                 ("\\.html\\'"  . system)
+  ;;                 )
+  ;;               auto-mode-alist)
+  ;;       )
   (setq sentence-end-double-space t)
   (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
   (key-chord-mode 1)
@@ -625,6 +636,13 @@ package is loaded, you should place your code here."
   (add-hook 'org-mode-hook
             (lambda ()
               (require 'ox-koma-letter)
+              (delete '("\\.pdf\\'" . default) org-file-apps)
+              (add-to-list 'org-file-apps '(
+                                            ("\\.pdf\\'" . "evince %s")
+                                            ("\\.xlsx?\\'" . "xdg-open %s")
+                                            )
+                           )
+              
               (add-hook 'org-capture-mode-hook 'evil-insert-state)
               (setq org-capture-templates
                     '(
