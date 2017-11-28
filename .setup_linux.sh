@@ -309,6 +309,11 @@ echo -e "if [ -d /usr/local/src/texlive/ ]; then\n\tPATH=\"/usr/local/src/texliv
 sudo systemctl disable tor
 sudo systemctl stop tor
 
+# Terminal pimpinghttps://github.com/afg984/base16-xfce4-terminal.git
+git clone https://github.com/afg984/base16-xfce4-terminal.git ~/.config/base16-xfce4-terminal
+[[ ! -d  ~/.local/share/xfce4/terminal/colorschemes/ ]] && mkdir -p ~/.local/share/xfce4/terminal/colorschemes/ 
+rsync -vurt --delete ~/.config/base16-xfce4-terminal/colorschemes/ ~/.local/share/xfce4/terminal/colorschemes/
+
 # May change this
 echo "Wanna? sudo localectl set-x11-keymap us pc105 qwerty 'compose:102'"
 echo "Wanna? sudo localectl set-x11-keymap us pc105 qwerty 'compose:prsc,caps:escape'"
