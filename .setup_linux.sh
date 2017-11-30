@@ -313,6 +313,7 @@ sudo systemctl stop tor
 git clone https://github.com/afg984/base16-xfce4-terminal.git ~/.config/base16-xfce4-terminal
 [[ ! -d  ~/.local/share/xfce4/terminal/colorschemes/ ]] && mkdir -p ~/.local/share/xfce4/terminal/colorschemes/ 
 rsync -vurt --delete ~/.config/base16-xfce4-terminal/colorschemes/ ~/.local/share/xfce4/terminal/colorschemes/
+# Choose 'Nord'
 
 # May change this
 echo "Wanna? sudo localectl set-x11-keymap us pc105 qwerty 'compose:102'"

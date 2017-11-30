@@ -18,6 +18,7 @@ call plug#begin()
   Plug 'hecal3/vim-leader-guide'
   Plug 'mswift42/vim-themes'
   Plug 'kien/ctrlp.vim'
+  Plug 'dhruvasagar/vim-table-mode'
 call plug#end()
 
 " set background=light
