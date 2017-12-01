@@ -24,7 +24,7 @@ sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       
       xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
       exfat-utils libxft-dev libfreetype6-dev rclone evolution                  \
       breeze-cursor-theme bash-completion lshw libimage-exiftool-perl           \
-      broadcom-sta-dkms picard hplip dialog mupdf-tools
+      broadcom-sta-dkms picard hplip dialog mupdf mupdf-tools
 
 # python packages
 sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
