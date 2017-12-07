@@ -32,8 +32,9 @@ sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
       python-numpy python-openpyxl python-openssl python-pandas               \
       python-jsonrpclib python-pyparsing python-scipy python-setuptools       \
       python-simplejson python-unittest2 python3 python-gdal python-pdfminer  \
-      pdfminer-data python-pip python3-pip jupyter-notebook
+      pdfminer-data python-pip python3-pip jupyter-notebook grasp
 
+echo "c.InteractiveShellApp.extensions = ['grasp']" >> ~/.ipython/profile_default/ipython_config.py 
 
 # Remove stuff
 sudo apt-get remove thunderbird
