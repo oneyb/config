@@ -451,9 +451,10 @@ ex ()
     if [ -f $1 ] ; then
         case $1 in
             *.tar.bz2)   tar xjf $1   ;;
+            *.tar.xz)    tar xJf $1   ;;
             *.tar.gz)    tar xzf $1   ;;
             *.bz2)       bunzip2 $1   ;;
-            *.rar)       unrar x $1     ;;
+            *.rar)       unrar x $1   ;;
             *.gz)        gunzip $1    ;;
             *.tar)       tar xf $1    ;;
             *.tbz2)      tar xjf $1   ;;
@@ -467,6 +468,7 @@ ex ()
         echo "'$1' is not a valid file"
     fi
 }
+
 # if [ -d ~/Downloads ]; then rmdir ~/Downloads; fi
 
 # get xbindkeys started
