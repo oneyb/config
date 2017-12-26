@@ -225,12 +225,12 @@ function gitty-up () {
 # tex to docx
 # htlatex test.tex "xhtml,ooffice" "ooffice/! -cmozhtf" "-cooxtpipes -coo"
 #   pandoc sig-alternate.tex                \
-#     --from=latex                       \
-#     --to=docx                          \
-#     --biblatex                         \
-#     --bibliography sigproc.bib         \
-#     --output=sig-alternate.docx        \
-#     --reference-docx=my-reference.docx
+    #     --from=latex                       \
+    #     --to=docx                          \
+    #     --biblatex                         \
+    #     --bibliography sigproc.bib         \
+    #     --output=sig-alternate.docx        \
+    #     --reference-docx=my-reference.docx
 
 # Keyboard shortcuts
 # https://github.com/kermit666/dotfiles/tree/master/autokey
@@ -499,3 +499,8 @@ fi
 set -o vi
 bind -m vi-insert "\C-l":clear-screen
 
+anamnesis --restart
+
+# on Linux the default is
+export ARDUINO_PATH=/usr/local/arduino
+export SKETCHBOOK_DIR=$HOME/Arduino
