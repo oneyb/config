@@ -80,7 +80,7 @@ sudo update-alternatives --config editor
 # sudo apt-get install virtualbox-5.2
 
 mkdir -p documents
-git clone https://github.com/oneyb/config.git
+git clone git@github.com:oneyb/config.git
 bash documents/config/.copy-config.sh in
 
 # curl -O http://downloads.rclone.org/rclone-current-linux-amd64.zip
@@ -141,6 +141,10 @@ wget https://www.archlinux.org/packages/community/any/arch-wiki-lite/download/ -
 sudo tar xJf arch-wiki-lite.tar.xz -C /
 mv arch-wiki* ~/bin/src/
 sudo rm /.BUILDINFO /.MTREE /.PKGINFO
+
+# easy org export
+git clone https://github.com/nhoffman/org-export ~/bin/src/org-export
+ln -s ~/bin/src/org-export/{org-export,*.el} ~/bin/.
 
 # NodeJS
 if [ -n $(grep nodesource /etc/apt/sources.list) ]; then
