@@ -480,6 +480,7 @@ package is loaded, you should place your code here."
   ;;       )
   (setq sentence-end-double-space t)
   (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.ino\\'" . c++-mode))
   (key-chord-mode 1)
   ;; (key-chord-define evil-insert-state-map "jk" 'evil-escape)
   ;; (key-chord-define evil-normal-state-map "lk" 'kill-this-buffer)
