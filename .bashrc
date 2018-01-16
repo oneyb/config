@@ -163,6 +163,10 @@ function o()
 
 function clean-lit()
 {
+    rmspace
+    rename -v 's/[-_]?\(.*\)[-_]?//' *
+    rename -v 's/\[[a-zA-Z-_]+\][-_]?//' *
+    rename -v 's/[\[\]]//g' *
     ls *pdf | while read p; do 
         pdftk $p cat output ${p/.pdf/.PDF}
         if [ $? -eq 0 ]; then
@@ -175,10 +179,6 @@ function clean-lit()
             rm $e
         fi
     done
-    rename -v 's/[-_]?\(.*\)[-_]?//' *
-    rename -v 's/\[[a-zA-Z-_]+\][-_]?//' *
-    rename -v 's/[\[\]]//g' *
-    rmspace
 }
 
 function cbc()
