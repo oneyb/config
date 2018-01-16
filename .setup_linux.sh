@@ -29,10 +29,12 @@ sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       
 # python packages
 sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
       python3-cupshelpers python-flake8 python-libxml2                        \
-      python-numpy python-openpyxl python-openssl python-pandas               \
+      python-numpy python-openpyxl python-openssl                             \
       python-jsonrpclib python-pyparsing python-scipy python-setuptools       \
       python-simplejson python-unittest2 python3 python-gdal python-pdfminer  \
-      pdfminer-data python-pip python3-pip jupyter-notebook grasp
+      pdfminer-data python-pip python3-pip jupyter-notebook 
+
+sudo pip3 install -U grasp pandas xlrd xlrt openpyxl beautifulsoup4 html5lib reportlab
 
 echo "c.InteractiveShellApp.extensions = ['grasp']" >> ~/.ipython/profile_default/ipython_config.py 
 

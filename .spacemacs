@@ -607,7 +607,7 @@ package is loaded, you should place your code here."
                 "k"   'anaconda-mode-complete
                 "TAB" 'python-start-or-switch-repl
                 )
-              ;; (setq python-shell-interpreter "/usr/bin/ipython3")
+              ;; (setq python-shell-interpreter "/usr/bin/ipython")
               (setq python-shell-interpreter "ipython3")
               ;;       python-shell-interpreter-args "--simple-prompt -i")
               )
