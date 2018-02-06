@@ -24,7 +24,8 @@ sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       
       xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
       exfat-utils libxft-dev libfreetype6-dev rclone evolution                  \
       breeze-cursor-theme bash-completion lshw libimage-exiftool-perl           \
-      broadcom-sta-dkms picard hplip dialog mupdf mupdf-tools
+      broadcom-sta-dkms picard hplip dialog mupdf mupdf-tools socat
+
 
 # python packages
 sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
@@ -321,6 +322,10 @@ git clone https://github.com/afg984/base16-xfce4-terminal.git ~/.config/base16-x
 [[ ! -d  ~/.local/share/xfce4/terminal/colorschemes/ ]] && mkdir -p ~/.local/share/xfce4/terminal/colorschemes/ 
 rsync -vurt --delete ~/.config/base16-xfce4-terminal/colorschemes/ ~/.local/share/xfce4/terminal/colorschemes/
 # Choose 'Nord'
+
+git clone https://github.com/google/adb-sync ~/bin/src/adb-sync/
+ln -sf ~/bin/src/adb-sync/adb-* ~/bin/.
+
 
 # May change this
 echo "Wanna? sudo localectl set-x11-keymap us pc105 qwerty 'compose:102'"
