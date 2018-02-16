@@ -293,12 +293,12 @@ function play-song()
 {
     grep -iE "${1}[^/]*$" /d/music/playlists/all_music.m3u > /tmp/currentplaylist.m3u
     # find /d/music/$2 -type f -iname "*$1*" > /tmp/currentplaylist.m3u
-    mplayer -playlist /tmp/currentplaylist.m3u
+    mplayer --shuffle -playlist /tmp/currentplaylist.m3u
 }
 
 function play()
 {
-    mplayer -playlist /d/music/playlists/$1
+    mplayer --shuffle -playlist /d/music/playlists/$1
 }
 
 _play()
