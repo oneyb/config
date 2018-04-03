@@ -1,8 +1,10 @@
 # emacs please make this -*- sh -*-
+"emacs --daemon"
+Mod4 + e
 "emacsclient -c --eval '(org-agenda-list)' --eval '(delete-other-windows)'"
 Mod4 + a
 "emacsclient -c --eval '(switch-to-buffer "*spacemacs*")'"
-Control + Mod1 + E
+Mod1 + Control + e
 "xset dpms force off"
  Mod4 + d
 "~/bin/tb"

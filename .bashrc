@@ -273,11 +273,11 @@ alias sti='xkbset exp 1 sticky -twokey -latchlock'
 
 function red()
 {
-    bash -c 'systemctl --user restart emacs' &
-    # if [[ -n "`pgrep -f emacs`" ]]; then
-	  #       killall -w 'emacs'
-	  #   fi
-	  #   emacs --daemon
+    # bash -c 'systemctl --user restart emacs' &
+    if [[ -n "`pgrep -f emacs`" ]]; then
+	        killall -w 'emacs'
+	    fi
+	    emacs --daemon
 }
 
 function wget-R()
