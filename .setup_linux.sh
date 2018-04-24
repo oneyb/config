@@ -326,6 +326,8 @@ rsync -vurt --delete ~/.config/base16-xfce4-terminal/colorschemes/ ~/.local/shar
 git clone https://github.com/google/adb-sync ~/bin/src/adb-sync/
 ln -sf ~/bin/src/adb-sync/adb-* ~/bin/.
 
+# get scripts from http://www.fmwconcepts.com/imagemagick/index.php
+bash ~/bin/download_fmwconcepts.py
 
 # May change this
 echo "Wanna? sudo localectl set-x11-keymap us pc105 qwerty 'compose:102'"
