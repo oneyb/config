@@ -2,29 +2,52 @@
 
 cd ~
 
-
 sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       \
       aspell-bg aspell-de aspell-en aspell-es audacity automake awesome         \
-      awesome-extra build-essential calendar-google-provider calibre chromium   \
-      cmake cmake-data cryptsetup-bin cups curl dash evince firefox-esr         \
-      firmware-linux-free firmware-linux-nonfree flac freecad gdal-bin          \
+      awesome-extra build-essential calibre chromium-browser   \
+      cmake cmake-data cryptsetup cups curl dash evince firefox\
+      flac freecad gdal-bin mpv      \
       genisoimage geoip-database gfortran gimp git gnome-disk-utility gocr      \
       gocr-tk googleearth-package gparted handbrake handbrake-cli imagemagick   \
-      inkscape ispell java-common lame laptop-detect mplayer2 nco ncview        \
+      inkscape ispell java-common lame laptop-detect mplayer nco ncview        \
       netcdf-bin netcdf-doc ntfs-3g ntfs-config openssh-client openssh-server   \
-      p7zip-full pavucontrol pcmanfm pdftk proj-bin proj-data pulseaudio        \
+      p7zip-full pavucontrol pcmanfm proj-bin proj-data pulseaudio        \
       pulseaudio-utils qpdf qpdfview r-base r-cran-xml2 r-cran-ncdf4            \
       recordmydesktop ristretto rsync scrot seahorse simple-scan smplayer       \
       subversion suckless-tools synaptic tor tor-arm autoconf automake g++ gcc  \
       libpng-dev libpoppler-dev libpoppler-glib-dev libpoppler-private-dev      \
-      libz-dev make pkg-config tor-geoipdb torshplipocks transmission-gtk trash-cli  \
+      zlib1g-dev make pkg-config tor-geoipdb transmission-gtk trash-cli  \
       udevil unattended-upgrades unoconv vim-gtk wget epiphany-browser          \
       bleachbit wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool   \
-      xfburn xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere  \
-      xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
+      xfburn xpdf xsel  \
+      libssl-dev libgdal-dev libmariadb-dev        \
       exfat-utils libxft-dev libfreetype6-dev rclone evolution                  \
       breeze-cursor-theme bash-completion lshw libimage-exiftool-perl           \
       broadcom-sta-dkms picard hplip dialog mupdf mupdf-tools socat
+
+exit 0
+# sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       \
+#       aspell-bg aspell-de aspell-en aspell-es audacity automake awesome         \
+#       awesome-extra build-essential calendar-google-provider calibre chromium   \
+#       cmake cmake-data cryptsetup-bin cups curl dash evince firefox-esr         \
+#       firmware-linux-free firmware-linux-nonfree flac freecad gdal-bin          \
+#       genisoimage geoip-database gfortran gimp git gnome-disk-utility gocr      \
+#       gocr-tk googleearth-package gparted handbrake handbrake-cli imagemagick   \
+#       inkscape ispell java-common lame laptop-detect mplayer2 nco ncview        \
+#       netcdf-bin netcdf-doc ntfs-3g ntfs-config openssh-client openssh-server   \
+#       p7zip-full pavucontrol pcmanfm pdftk proj-bin proj-data pulseaudio        \
+#       pulseaudio-utils qpdf qpdfview r-base r-cran-xml2 r-cran-ncdf4            \
+#       recordmydesktop ristretto rsync scrot seahorse simple-scan smplayer       \
+#       subversion suckless-tools synaptic tor tor-arm autoconf automake g++ gcc  \
+#       libpng-dev libpoppler-dev libpoppler-glib-dev libpoppler-private-dev      \
+#       libz-dev make pkg-config tor-geoipdb torshplipocks transmission-gtk trash-cli  \
+#       udevil unattended-upgrades unoconv vim-gtk wget epiphany-browser          \
+#       bleachbit wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool   \
+#       xfburn xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere  \
+#       xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
+#       exfat-utils libxft-dev libfreetype6-dev rclone evolution                  \
+#       breeze-cursor-theme bash-completion lshw libimage-exiftool-perl           \
+#       broadcom-sta-dkms picard hplip dialog mupdf mupdf-tools socat
 
 
 # python packages
@@ -185,7 +208,7 @@ add_desktop_launcher $HOME/bin/signal           $HOME/.config/icons/signal.png
 add_desktop_launcher pcmanfm                    $HOME/.config/icons/file-manager.png
 add_desktop_launcher firefox                    $HOME/.config/icons/firefox.png
 add_desktop_launcher epiphany-browser           $HOME/.config/icons/web-browser.png
-add_desktop_launcher chromium                   $HOME/.config/icons/chromium.png
+add_desktop_launcher chromium-browser                   $HOME/.config/icons/chromium.png
 add_desktop_launcher $HOME/bin/sync_org.sh      $HOME/.config/icons/orgzly.png
 add_desktop_launcher "emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")'" $HOME/.config/icons/emacs22.png
 # add_desktop_launcher VirtualBox                 $HOME/.config/icons/virtualbox.png
@@ -285,7 +308,7 @@ ExecStart=/usr/bin/xbindkeys
 ExecRestart=/usr/bin/killall -HUP xbindkeys
 ExecStop=/usr/bin/killall -w xbindkeys
 Restart=always
-TimeoutStartSec=0
+TimeoutStartSec=0sudo apt-get install cryptsetup
 RestartSec=10800
 
 [Install]
