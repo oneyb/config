@@ -499,7 +499,7 @@ fi
 set -o vi
 bind -m vi-insert "\C-l":clear-screen
 
-# anamnesis --restart
+anamnesis --restart
 
 # on Linux the default is
 export ARDUINO_PATH=/usr/local/arduino

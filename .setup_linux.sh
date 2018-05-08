@@ -185,7 +185,7 @@ add_desktop_launcher $HOME/bin/signal           $HOME/.config/icons/signal.png
 add_desktop_launcher pcmanfm                    $HOME/.config/icons/file-manager.png
 add_desktop_launcher firefox                    $HOME/.config/icons/firefox.png
 add_desktop_launcher epiphany-browser           $HOME/.config/icons/web-browser.png
-add_desktop_launcher chromium-browser                   $HOME/.config/icons/chromium.png
+add_desktop_launcher chromium                   $HOME/.config/icons/chromium.png
 add_desktop_launcher $HOME/bin/sync_org.sh      $HOME/.config/icons/orgzly.png
 add_desktop_launcher "emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")'" $HOME/.config/icons/emacs22.png
 # add_desktop_launcher VirtualBox                 $HOME/.config/icons/virtualbox.png
@@ -285,7 +285,7 @@ ExecStart=/usr/bin/xbindkeys
 ExecRestart=/usr/bin/killall -HUP xbindkeys
 ExecStop=/usr/bin/killall -w xbindkeys
 Restart=always
-TimeoutStartSec=0sudo apt-get install cryptsetup
+TimeoutStartSec=0
 RestartSec=10800
 
 [Install]
