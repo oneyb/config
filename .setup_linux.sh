@@ -5,7 +5,7 @@ cd ~
 sudo apt-get update
 
 sudo apt-get install htop  gfortran    automake   \
-       build-essential  git gnome-disk-utility \
+       aptitude build-essential  git gnome-disk-utility \
       cmake cmake-data cryptsetup cups curl dash \
       firmware-linux-free firmware-linux-nonfree ntfs-3g ntfs-config openssh-client openssh-server   \
       p7zip-full pavucontrol pcmanfm rsync       \
