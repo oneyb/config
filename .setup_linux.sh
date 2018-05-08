@@ -2,52 +2,29 @@
 
 cd ~
 
+
 sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       \
       aspell-bg aspell-de aspell-en aspell-es audacity automake awesome         \
-      awesome-extra build-essential calibre chromium-browser   \
-      cmake cmake-data cryptsetup cups curl dash evince firefox\
-      flac freecad gdal-bin mpv      \
+      awesome-extra build-essential calendar-google-provider calibre chromium   \
+      cmake cmake-data cryptsetup-bin cups curl dash evince firefox-esr         \
+      firmware-linux-free firmware-linux-nonfree flac freecad gdal-bin          \
       genisoimage geoip-database gfortran gimp git gnome-disk-utility gocr      \
       gocr-tk googleearth-package gparted handbrake handbrake-cli imagemagick   \
-      inkscape ispell java-common lame laptop-detect mplayer nco ncview        \
+      inkscape ispell java-common lame laptop-detect mplayer2 nco ncview        \
       netcdf-bin netcdf-doc ntfs-3g ntfs-config openssh-client openssh-server   \
-      p7zip-full pavucontrol pcmanfm proj-bin proj-data pulseaudio        \
+      p7zip-full pavucontrol pcmanfm pdftk proj-bin proj-data pulseaudio        \
       pulseaudio-utils qpdf qpdfview r-base r-cran-xml2 r-cran-ncdf4            \
       recordmydesktop ristretto rsync scrot seahorse simple-scan smplayer       \
       subversion suckless-tools synaptic tor tor-arm autoconf automake g++ gcc  \
       libpng-dev libpoppler-dev libpoppler-glib-dev libpoppler-private-dev      \
-      zlib1g-dev make pkg-config tor-geoipdb transmission-gtk trash-cli  \
+      libz-dev make pkg-config tor-geoipdb torshplipocks transmission-gtk trash-cli  \
       udevil unattended-upgrades unoconv vim-gtk wget epiphany-browser          \
       bleachbit wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool   \
-      xfburn xpdf xsel  \
-      libssl-dev libgdal-dev libmariadb-dev        \
+      xfburn xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere  \
+      xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
       exfat-utils libxft-dev libfreetype6-dev rclone evolution                  \
       breeze-cursor-theme bash-completion lshw libimage-exiftool-perl           \
       broadcom-sta-dkms picard hplip dialog mupdf mupdf-tools socat
-
-exit 0
-# sudo apt-get install android-tools-adb android-tools-fastboot htop aspell       \
-#       aspell-bg aspell-de aspell-en aspell-es audacity automake awesome         \
-#       awesome-extra build-essential calendar-google-provider calibre chromium   \
-#       cmake cmake-data cryptsetup-bin cups curl dash evince firefox-esr         \
-#       firmware-linux-free firmware-linux-nonfree flac freecad gdal-bin          \
-#       genisoimage geoip-database gfortran gimp git gnome-disk-utility gocr      \
-#       gocr-tk googleearth-package gparted handbrake handbrake-cli imagemagick   \
-#       inkscape ispell java-common lame laptop-detect mplayer2 nco ncview        \
-#       netcdf-bin netcdf-doc ntfs-3g ntfs-config openssh-client openssh-server   \
-#       p7zip-full pavucontrol pcmanfm pdftk proj-bin proj-data pulseaudio        \
-#       pulseaudio-utils qpdf qpdfview r-base r-cran-xml2 r-cran-ncdf4            \
-#       recordmydesktop ristretto rsync scrot seahorse simple-scan smplayer       \
-#       subversion suckless-tools synaptic tor tor-arm autoconf automake g++ gcc  \
-#       libpng-dev libpoppler-dev libpoppler-glib-dev libpoppler-private-dev      \
-#       libz-dev make pkg-config tor-geoipdb torshplipocks transmission-gtk trash-cli  \
-#       udevil unattended-upgrades unoconv vim-gtk wget epiphany-browser          \
-#       bleachbit wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool   \
-#       xfburn xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere  \
-#       xul-ext-noscript libssl-dev libgdal-dev libmariadb-client-lgpl-dev        \
-#       exfat-utils libxft-dev libfreetype6-dev rclone evolution                  \
-#       breeze-cursor-theme bash-completion lshw libimage-exiftool-perl           \
-#       broadcom-sta-dkms picard hplip dialog mupdf mupdf-tools socat
 
 
 # python packages
@@ -349,9 +326,11 @@ rsync -vurt --delete ~/.config/base16-xfce4-terminal/colorschemes/ ~/.local/shar
 git clone https://github.com/google/adb-sync ~/bin/src/adb-sync/
 ln -sf ~/bin/src/adb-sync/adb-* ~/bin/.
 
-# get scripts from http://www.fmwconcepts.com/imagemagick/index.php
-bash ~/bin/download_fmwconcepts.py
 
 # May change this
 echo "Wanna? sudo localectl set-x11-keymap us pc105 qwerty 'compose:102'"
 echo "Wanna? sudo localectl set-x11-keymap us pc105 qwerty 'compose:prsc,caps:escape'"
+
+
+# get scripts from http://www.fmwconcepts.com/imagemagick/index.php
+echo "want picture processing scripts? try: \n\tbash ~/bin/download_fmwconcepts.py"
