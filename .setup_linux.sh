@@ -133,6 +133,9 @@ wget -O anamnesis.tar.gz  https://sourceforge.net/projects/anamnesis/files/lates
 tar xzf anamnesis.tar.gz
 ln -sf ~/bin/src/anamnesis-1.0.4/source/anamnesis.py ~/bin/anamnesis
 
+# dropbox 
+cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+
 # Messenger services with Franz
 cd $HOME/bin/src/
 [[ ! -f Franz-linux-x64-4.0.4.tgz ]] && wget https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz
