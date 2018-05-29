@@ -55,20 +55,6 @@ echo "c.InteractiveShellApp.extensions = ['grasp']" >> ~/.ipython/profile_defaul
 # Remove stuff
 sudo apt-get remove thunderbird
 
-function add_desktop {
-    echo "[Desktop Entry]                                
-Version=1.0                                     
-Type=Application                                
-Name=$(basename $1)
-Comment=                                        
-Exec=$1
-Icon=$2
-Path=                                           
-Terminal=$Terminal
-StartupNotify=false" > ~/.config/xfce4/desktop/$(basename $1).desktop
-}
-
-
 # Zotero on debian 9
 wget -O $HOME/bin/src/Zotero_linux-x86_64.tar.bz2 'https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64&version=5.0.24'
 cd  ~/bin/src/
@@ -197,7 +183,7 @@ StartupNotify=false" > ~/.config/xfce4/desktop/$(basename $1).desktop
 
 add_desktop_launcher $HOME/bin/tb               $HOME/.config/icons/evolution-mail.png
 add_desktop_launcher $HOME/bin/franz.sh         $HOME/.config/icons/franz.png
-add_desktop_launcher $HOME/bin/signal           $HOME/.config/icons/signal.png
+add_desktop_launcher signal-desktop             $HOME/.config/icons/signal.png
 add_desktop_launcher pcmanfm                    $HOME/.config/icons/file-manager.png
 add_desktop_launcher firefox                    $HOME/.config/icons/firefox.png
 add_desktop_launcher epiphany-browser           $HOME/.config/icons/web-browser.png
@@ -212,6 +198,8 @@ add_desktop_launcher $HOME/bin/.sync_phone.sh   $HOME/.config/icons/stock_cell-p
 
 # configuration
 git clone git@github.com:oneyb/qpdfview-shortcuts-config.git ~/.config/qpdfview
+
+xdg-settings set default-web-browser chromium.desktop
 
 # # PDF-tools awesomeness
 # sudo aptitude install libpng-dev libz-dev libpoppler-glib-dev  \
