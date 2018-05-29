@@ -13,7 +13,7 @@ sudo apt-get install htop  gfortran    automake   \
        make pkg-config tor-geoipdb  transmission-gtk trash-cli  \
       udevil unattended-upgrades unoconv vim-gtk wget epiphany-browser          \
       bleachbit wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool   \
-      xfburn xpdf xsel libssl-dev  exfat-utils libxft-dev libfreetype6-dev bash-completion dialog xkbset xinput
+      xfburn xpdf xsel libssl-dev  exfat-utils libxft-dev libfreetype6-dev bash-completion dialog xkbset xinput apt-transport-https
 
 
 sudo apt-get install android-tools-adb android-tools-fastboot aspell       \
