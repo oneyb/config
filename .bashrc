@@ -222,6 +222,32 @@ function gitty-up () {
     git commit -a -m "$*" && git push origin master
 }
 
+push-pio-dev () {
+    box=pi@raspberrypi.local
+    rsync -vurt $HOME/ensectable/ $box:/home/pi/ensectable/ 
+    box=pi@hassbian.local
+    rsync -vurt $HOME/ensectable/rpi-ap-ha/homeassistant/ $box:/home/homeassistant/.homeassistant/ 
+}
+push-pio-dev-del () {
+    box=pi@raspberrypi.local
+    rsync -vurt --delete $HOME/ensectable/ $box:/home/pi/ensectable/ 
+    box=pi@hassbian.local
+    rsync -vurt --delete $HOME/ensectable/rpi-ap-ha/homeassistant/ $box:/home/homeassistant/.homeassistant/ 
+}
+
+pull-pio-dev-del () {
+    box=pi@raspberrypi.local
+    rsync -vurt --delete $box:/home/pi/ensectable/ $HOME/ensectable/
+    box=pi@hassbian.local
+    rsync -vurt --delete $box:/home/homeassistant/.homeassistant/ $HOME/ensectable/rpi-ap-ha/homeassistant/
+}
+pull-pio-dev () {
+    box=pi@raspberrypi.local
+   rsync -vurt $box:/home/pi/ensectable/ $HOME/ensectable/
+   box=pi@hassbian.local
+   rsync -vurt $box:/home/homeassistant/.homeassistant/ $HOME/ensectable/rpi-ap-ha/homeassistant/
+}
+
 # tex to docx
 # htlatex test.tex "xhtml,ooffice" "ooffice/! -cmozhtf" "-cooxtpipes -coo"
 #   pandoc sig-alternate.tex                \

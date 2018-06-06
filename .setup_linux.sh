@@ -48,7 +48,7 @@ sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
       python-simplejson python-unittest2 python3 python-gdal python-pdfminer  \
       pdfminer-data python-pip python3-pip jupyter-notebook 
 
-sudo pip3 install -U grasp pandas xlrd xlrt openpyxl beautifulsoup4 html5lib reportlab
+sudo pip3 install -U grasp pandas xlrd xlrt openpyxl beautifulsoup4 html5lib reportlab youtube-dl
 
 echo "c.InteractiveShellApp.extensions = ['grasp']" >> ~/.ipython/profile_default/ipython_config.py 
 
@@ -158,6 +158,11 @@ else
     curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
     sudo apt-get install -y nodejs
 fi
+
+# spacemacs!!!
+if [ -d ~/.emacs.d ]; then \rm -rf ~/.emacs.d/; fi
+git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+bash -c "emacs" &
 
 # # i3-py and quickswitch
 # sudo pip3 install i3-py
