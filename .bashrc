@@ -465,7 +465,13 @@ function reduce-pix()
     if [[ $? -eq 0 ]]; then cd .. && rm -rf tmp/; fi
 }
 
-function youtube()
+function organize-photos (){
+    reduce-pix
+    exiftool '-FileName<CreateDate' -d %Y%m%d_%H%M%S%%-c.%%e *jpg
+    ls | sed -r 's/^([0-9]+)_.*$/\1/' | uniq | while read d; do mkdir -p $(date -d $d +%F); mv $d* $(date -d $d +%F); done
+}
+
+function youtube-dl-music()
 {
     youtube-dl --extract-audio --audio-format "best" -k $1
     rename 's/-[[:alnum:]_-]+\.([[:alnum:]]+$)/$1/' *mp{3,4} *mkv *m4a
