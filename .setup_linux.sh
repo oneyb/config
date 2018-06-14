@@ -24,7 +24,7 @@ sudo apt-get install android-tools-adb android-tools-fastboot aspell       \
       genisoimage geoip-database gimp  gocr      \
       gocr-tk gparted handbrake handbrake-cli imagemagick   \
       inkscape ispell java-common lame laptop-detect mplayer2 nco ncview        \
-      netcdf-bin netcdf-doc ntfs-3g ntfs-config   \
+      netcdf-bin netcdf-doc   \
       p7zip-full pdftk proj-bin proj-data pulseaudio        \
       pulseaudio-utils qpdf qpdfview r-base r-cran-xml2 r-cran-ncdf4            \
       recordmydesktop ristretto scrot seahorse simple-scan smplayer       \
@@ -61,7 +61,7 @@ cd  ~/bin/src/
 tar xjf Zotero_linux-x86_64.tar.bz2
 cd Zotero_linux-x86_64/
 ./set_launcher_icon
-sed -ri "s_^Exec=.*_Exec=$PWD/zotero -url %U_" zotero.desktop
+sed -ri "s:^Exec=.*:Exec=$PWD/zotero -url %U:" zotero.desktop
 desktop-file-install zotero.desktop --dir=~/.local/share/applications/
 
 # Playonlinux!!
@@ -312,7 +312,10 @@ systemctl --user enable xbindkeys
 # For LaTeX
 if [ -d /media/oney/stuff/texlive/ ];
 then
-    sudo cp -a /media/oney/stuff/texlive/ /usr/local/src/
+    sudo cp -r --preserve=timestamps,mode /media/oney/stuff/texlive/ /usr/local/src/
+	  # sudo find /usr/local/src/texlive/ -type f -print0 | xargs -0 chmod 655
+	  # sudo find /usr/local/src/texlive/ -type d -print0 | xargs -0 chmod 755
+
 else
     wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
     tar xzf install-tl-unx.tar.gz

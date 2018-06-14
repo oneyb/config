@@ -161,6 +161,15 @@ function o()
 }
 
 
+function check-setpath()
+{
+    pres=$(echo $PATH | grep texlive)
+    if [[ -z $pres ]]; then
+        source ~/.profile
+        anamnesis --restart
+        xb
+    fi
+}
 function clean-lit()
 {
     rmspace
@@ -207,6 +216,8 @@ function convert-notebooks ()
 
 function backport_debian()
 {
+    # from debian wiki
+
     # apt-get update
     mkdir -p $1-`date +%F`
     cd $1-`date +%F`
@@ -271,6 +282,7 @@ function bulgarian ()
     name=/d/literature/languages/bulgarian/intensive-bulgarian-1/`printf %.2d $1`.-track-$1.flac
     mplayer $name
 }
+
 function spanish ()
 {
     name=/d/literature/languages/spanish/caminos-plus-2-cd-zum-arbeitsbuch/`printf %.2d $1`-track-$1.mp3
@@ -319,21 +331,21 @@ function play-song()
 {
     grep -iE "${1}[^/]*$" /d/music/playlists/all_music.m3u > /tmp/currentplaylist.m3u
     # find /d/music/$2 -type f -iname "*$1*" > /tmp/currentplaylist.m3u
-    mplayer --shuffle -playlist /tmp/currentplaylist.m3u
+    mplayer --shuffle -playlist --audio-display=no /tmp/currentplaylist.m3u
 }
 
 function play()
 {
-    mplayer --shuffle -playlist /d/music/playlists/$1
+    mplayer --shuffle -playlist --audio-display=no /d/music/playlists/$1
 }
 
-_play()
+_play_completion()
 {
     local cur=${COMP_WORDS[COMP_CWORD]}
     COMPREPLY=( $(compgen -W "$(find /d/music/playlists/ -type f -name '*m3u' | sed -r 's:/d/music/playlists/::')" -- $cur) )
     # COMPREPLY=( $(compgen -W "$(ls /d/music/playlists/)" -- $cur) )
 }
-complete -F _play play
+complete -F _play_completion play
 
 function find-song()
 {
@@ -452,17 +464,22 @@ function pdf-shrink ()
 
 function reduce-pix()
 {
+    _DIR=$PWD
     if [[ $# -eq 0 ]]; then
 	      q=96
     else
 	      q=$1
     fi
     rmspace
-    mkdir tmp && mv *jpg tmp/ && cd tmp/
-    ls *jpg | while read pic; do
-	      convert -quality $q $pic ../$pic;
-    done
-    if [[ $? -eq 0 ]]; then cd .. && rm -rf tmp/; fi
+    mkdir -p tmp && mv *jpg tmp/ 
+    if [[ $? -eq 0 ]]; then 
+        cd tmp/
+        ls *jpg | while read pic; do
+	          convert -quality $q $pic ../$pic;
+        done
+        if [[ $? -eq 0 ]]; then cd .. && rm -rf tmp/; fi
+    fi
+    cd $_DIR
 }
 
 function organize-photos (){
@@ -476,6 +493,16 @@ function youtube-dl-music()
     youtube-dl --extract-audio --audio-format "best" -k $1
     rename 's/-[[:alnum:]_-]+\.([[:alnum:]]+$)/$1/' *mp{3,4} *mkv *m4a
 }
+
+# function send-to-printer ()
+# {
+#     printer=$(lpstat -a | sed -r 's/([^ ]+).*/\1/')
+#     echo $printer
+#     for d in $*; do
+#         echo $d
+#         [[ -f $d ]] && /usr/bin/lpr -P $printer -o media=A4 -o sides=two-sided-long-edge -o PaperSource=AutomaticallySelect $d
+#     done
+# }
 
 # ex - archive extractor
 # usage: ex <file>
