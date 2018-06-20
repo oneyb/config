@@ -320,11 +320,10 @@ function red()
 
 function wget-R()
 {
-	  if [[ $# -eq 0 ]]; then
-        echo usage: \n wget -R "comma-separate list of file suffixes" -m -p -E -k -K -np  -e robots=off "Website URL"
-        exit 1
+	  if [[ $# -ne 2 ]]; then
+        echo usage: \n wget -R -A "comma-separate list of file suffixes" -m -p -E -k -K -np  -e robots=off "Website URL" exit 1
     fi
-    wget -R $1 -m -p -E -k -K -np -e robots=off $2
+    wget -R -A $1 -m -p -E -k -K -np -e robots=off $2
 }
 
 function play-song()
