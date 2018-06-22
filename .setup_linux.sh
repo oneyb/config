@@ -46,7 +46,7 @@ sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
       python-numpy python-openpyxl python-openssl                             \
       python-jsonrpclib python-pyparsing python-scipy python-setuptools       \
       python-simplejson python-unittest2 python3 python-gdal python-pdfminer  \
-      pdfminer-data python-pip python3-pip jupyter-notebook 
+      pdfminer-data python-pip python3-pip jupyter-notebook python3-pdfkit 
 
 sudo pip3 install -U grasp pandas xlrd xlrt openpyxl beautifulsoup4 html5lib reportlab youtube-dl
 
@@ -124,12 +124,12 @@ cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
 
 # Messenger services with Franz
 cd $HOME/bin/src/
-[[ ! -f Franz-linux-x64-4.0.4.tgz ]] && wget https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz
-sudo mkdir /opt/franz
-sudo tar xzf Franz-linux*.tgz -C /opt/franz
-sudo ln -s /opt/franz/Franz /usr/bin/franz
-sudo wget https://cdn-images-1.medium.com/max/360/1*v86tTomtFZIdqzMNpvwIZw.png -O /usr/share/icons/franz.png
-sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Franz\nComment=A free messaging app for WhatsApp, Facebook Messenger, Telegram, Slack and more.\nExec=franz -- %u\nStartupWMClass=Franz franz\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/franz.desktop"
+[[ ! -f Rambox-latest-x64.tar.gz ]] && wget https://getrambox.herokuapp.com/download/linux_64?filetype=deb -O Rambox-latest-x64.tar.gz && sudo \rm -rf /opt/Rambox-*
+sudo tar xzf Rambox-latest-x64.tar.gz -C /opt/
+sudo ln -sf /opt/Rambox*/rambox /usr/local/bin/rambox
+sudo wget https://rambox.pro/images/logo.png -O /usr/share/icons/rambox.png
+sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Rambox\nComment=Free, Open Source and Cross Platform messaging and emailing app that combines common web applications into one.\nExec=rambox -- %u\nStartupWMClass=Rambox rambox\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/rambox.desktop"
+sudo desktop-file-install /usr/share/applications/rambox.desktop
 cd -
 
 wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
@@ -187,7 +187,6 @@ StartupNotify=false" > ~/.config/xfce4/desktop/$(basename $1).desktop
 }
 
 add_desktop_launcher $HOME/bin/tb               $HOME/.config/icons/evolution-mail.png
-add_desktop_launcher $HOME/bin/franz.sh         $HOME/.config/icons/franz.png
 add_desktop_launcher signal-desktop             $HOME/.config/icons/signal.png
 add_desktop_launcher pcmanfm                    $HOME/.config/icons/file-manager.png
 add_desktop_launcher firefox                    $HOME/.config/icons/firefox.png
