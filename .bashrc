@@ -393,7 +393,7 @@ function install_manual_deb ()
 function ebook-convert-to-pdf()
 {
     b=${2:-${1/%.*/.pdf}}
-    echo ebook-convert $1 $b                             \
+    ebook-convert $1 $b                                       \
                   --margin-top=69                             \
                   --margin-left=69                            \
                   --margin-right=69                           \

@@ -56,13 +56,9 @@ echo "c.InteractiveShellApp.extensions = ['grasp']" >> ~/.ipython/profile_defaul
 sudo apt-get remove thunderbird
 
 # Zotero on debian 9
-wget -O $HOME/bin/src/Zotero_linux-x86_64.tar.bz2 'https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64&version=5.0.24'
-cd  ~/bin/src/
-tar xjf Zotero_linux-x86_64.tar.bz2
-cd Zotero_linux-x86_64/
-./set_launcher_icon
-sed -ri "s:^Exec=.*:Exec=$PWD/zotero -url %U:" zotero.desktop
-desktop-file-install zotero.desktop --dir=~/.local/share/applications/
+wget https://raw.github.com/smathot/zotero_installer/master/zotero_installer.sh -O /tmp/zotero_installer.sh
+chmod +x /tmp/zotero_installer.sh
+sudo /tmp/zotero_installer.sh
 
 # Playonlinux!!
 # wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
