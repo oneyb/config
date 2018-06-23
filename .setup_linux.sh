@@ -127,7 +127,7 @@ cd $HOME/bin/src/
 [[ ! -f Rambox-latest-x64.tar.gz ]] && wget https://getrambox.herokuapp.com/download/linux_64?filetype=deb -O Rambox-latest-x64.tar.gz && sudo \rm -rf /opt/Rambox-*
 sudo tar xzf Rambox-latest-x64.tar.gz -C /opt/
 sudo ln -sf /opt/Rambox*/rambox /usr/local/bin/rambox
-sudo wget https://rambox.pro/images/logo.png -O /usr/share/icons/rambox.png
+[[ ! -f /usr/share/icons/rambox.png ]] && sudo wget https://rambox.pro/images/logo.png -O /usr/share/icons/rambox.png
 sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Rambox\nComment=Free, Open Source and Cross Platform messaging and emailing app that combines common web applications into one.\nExec=rambox -- %u\nStartupWMClass=Rambox rambox\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/rambox.desktop"
 sudo desktop-file-install /usr/share/applications/rambox.desktop
 cd -
@@ -192,6 +192,7 @@ add_desktop_launcher pcmanfm                    $HOME/.config/icons/file-manager
 add_desktop_launcher firefox                    $HOME/.config/icons/firefox.png
 add_desktop_launcher epiphany-browser           $HOME/.config/icons/web-browser.png
 add_desktop_launcher chromium                   $HOME/.config/icons/chromium.png
+add_desktop_launcher $HOME/bin/rambox.sh        /usr/share/icons/rambox.png 
 add_desktop_launcher $HOME/bin/sync_org.sh      $HOME/.config/icons/orgzly.png
 add_desktop_launcher "emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")'" $HOME/.config/icons/emacs22.png
 # add_desktop_launcher VirtualBox                 $HOME/.config/icons/virtualbox.png
