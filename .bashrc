@@ -330,12 +330,12 @@ function play-song()
 {
     grep -iE "${1}[^/]*$" /d/music/playlists/all_music.m3u > /tmp/currentplaylist.m3u
     # find /d/music/$2 -type f -iname "*$1*" > /tmp/currentplaylist.m3u
-    mplayer --shuffle -playlist --audio-display=no /tmp/currentplaylist.m3u
+    mplayer --shuffle --audio-display=no -playlist /tmp/currentplaylist.m3u
 }
 
 function play()
 {
-    mplayer --shuffle -playlist --audio-display=no /d/music/playlists/$1
+    mplayer --shuffle --audio-display=no -playlist /d/music/playlists/$1
 }
 
 _play_completion()
@@ -489,8 +489,8 @@ function organize-photos (){
 
 function youtube-dl-music()
 {
-    youtube-dl --extract-audio --audio-format "best" -k $1
-    rename 's/-[[:alnum:]_-]+\.([[:alnum:]]+$)/$1/' *mp{3,4} *mkv *m4a
+    # youtube-dl --extract-audio --audio-format "best" -k $1 --exec "'rename \"s/-[[:alnum:]_-]+\.([[:alnum:]]+$)/$1/\" {}'" --cache-dir ~/youtube-dl/ $*
+    youtube-dl --extract-audio --audio-format "best" -k $1 --cache-dir ~/youtube-dl/ --restrict-filenames $*
 }
 
 # function send-to-printer ()
