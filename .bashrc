@@ -62,31 +62,6 @@ fi
 # xterm*|rxvt*)
 #     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 #     ;;
-# *)
-#     ;;
-# esac
-
-PS1='\w \$ '
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-# some more ls aliases
-alias ll='ls -alFh'
-alias lt='ls -alFht'
-alias la='ls -A'
-alias l='ls -lh'
-
-# Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
@@ -166,10 +141,11 @@ function check-setpath()
     pres=$(echo $PATH | grep texlive)
     if [[ -z $pres ]]; then
         source ~/.profile
-        anamnesis --restart
-        xb
+        # anamnesis --restart
+        # xb
     fi
 }
+
 function clean-lit()
 {
     rmspace
@@ -177,13 +153,13 @@ function clean-lit()
     rename -v 's/\[[a-zA-Z-_]+\][-_]?//' *
     rename -v 's/[\[\]]//g' *
     ls *pdf | while read p; do 
-        pdftk $p cat output ${p/.pdf/.PDF}
+        pdftk $p cat output ${p/%.pdf/.PDF}
         if [ $? -eq 0 ]; then
             rm $p
         fi
     done
     ls *epub | while read e; do 
-        ebook-convert $e ${e/.epub/.EPUB}
+        ebook-convert $e ${e/%.epub/.EPUB}
         if [ $? -eq 0 ]; then
             rm $e
         fi
@@ -392,7 +368,7 @@ function install_manual_deb ()
 
 function ebook-convert-to-pdf()
 {
-    b=${2:-${1/%.*/.pdf}}
+    b=${2:-${1%.*}}.pdf
     ebook-convert $1 $b                                       \
                   --margin-top=69                             \
                   --margin-left=69                            \
@@ -484,7 +460,123 @@ function reduce-pix()
 function organize-photos (){
     reduce-pix
     exiftool '-FileName<CreateDate' -d %Y%m%d_%H%M%S%%-c.%%e *jpg
-    ls | sed -r 's/^([0-9]+)_.*$/\1/' | uniq | while read d; do mkdir -p $(date -d $d +%F); mv $d* $(date -d $d +%F); done
+    # ls | sed -r 's/^([0-9]+)_.*$/\1/' | uniq | while read d; do mkdir -p $(date -d $d +%F); mv $d* $(date -d $d +%F); done
+}
+
+
+function apply--preset-to-pic()
+{
+    pix=$* 
+    PATH=$PATH:$HOME/bin/src/fmwconcepts
+    ls ~/bin/src/fmwconcepts/ | while read s; do
+        mkdir -p $s;
+        for f in $pix; do
+            $s $f $s/$f;
+        done;
+    done
+}
+
+function apply-edgefx-bw-pictures()
+{
+    PATH=$PATH:$HOME/bin/src/fmwconcepts
+    mkdir -p $0
+    for f in $*; do
+        edgefx $f $0/$f;
+        localthresh $0/$f $0/$f;
+    done
+}
+
+function apply-funny-effect-to-pix()
+{
+    pix=$* 
+    scripts='
+      edgefx
+      feather
+      furrowed
+      lichtenstein
+      localthresh
+      lucisarteffect
+      sketch
+      sketching
+      tintilize
+      toon
+      vintage1
+      vintage3
+    '
+    PATH=$PATH:$HOME/bin/src/fmwconcepts
+    for s in $scripts; do
+        mkdir -p $s;
+        for f in $pix; do
+            [[ ! -f $s/$f ]] && $s $f $s/$f;
+        done;
+    done
+}
+
+function paperpix-to-pdf ()
+{
+    PATH=$PATH:$HOME/bin/src/fmwconcepts
+    for f in $*; do
+        textdeskew $f /tmp/${f}
+        textcleaner /tmp/${f} /tmp/${f}
+        whiteboard /tmp/${f} ${f%.*}-paper.${f##*.}
+    done
+}
+
+function go-fish-pictures()
+{
+    pix=$* 
+    scripts='
+      adaptivegamma
+      autolevel
+      autotone
+      autotone2
+      balance
+      bcimage
+      binomial
+      cartoon
+      color2gray
+      colortoning
+      crossprocess
+      dualtonemap
+      duotonemap
+      edgefx
+      emboss
+      enhancelab
+      enrich
+      feather
+      furrowed
+      gradient
+      graytoning
+      isolatecolor
+      lichtenstein
+      localthresh
+      lucisarteffect
+      painteffect
+      peelingpaint
+      remap
+      removecolorcast
+      shadowhighlight
+      sharpedge
+      sketch
+      sketcher
+      sketching
+      smartcrop
+      splittone2
+      splittone3
+      tintilize
+      toon
+      toonify
+      vintage1
+      woodcut
+    '
+    PATH=$PATH:$HOME/bin/src/fmwconcepts
+    for s in $scripts; do
+        mkdir -p $s;
+        # for f in $pix; do $s $f $s/$f; done;
+        for f in $pix; do
+            $s $f $s/$f;
+        done;
+    done
 }
 
 function youtube-dl-music()
