@@ -79,7 +79,7 @@ values."
           ess-enable-smart-equals t)
      python
      ;; ranger
-     vinegar
+     ;; vinegar
      csv
      ;; ipython-notebook
      ;; (ipython-notebook :variables ein:use-auto-complete t)
@@ -844,7 +844,8 @@ package is loaded, you should place your code here."
               (setq bibtex-completion-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
               (setq reftex-default-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
               ;; (setq org-archive-location "~/org-archive/datetree.org::datetree/* Finished Tasks")
-              (setq org-archive-location "~/org-archive/%s::")
+              ;; (setq org-archive-location "~/org-archive/%s::")
+              (setq org-archive-location "~/org/archive.org::datetree/* %s Archive")
               )
             (add-to-list 'default-frame-alist '(background-color . "beige"))
             )

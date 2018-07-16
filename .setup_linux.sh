@@ -36,7 +36,7 @@ sudo apt-get install android-tools-adb android-tools-fastboot aspell       \
       xul-ext-noscript libgdal-dev libmariadb-dev        \
       exfat-utils libxft-dev libfreetype6-dev rclone evolution                  \
       breeze-cursor-theme lshw libimage-exiftool-perl           \
-      picard hplip dialog mupdf mupdf-tools socat
+      picard hplip dialog mupdf mupdf-tools socat syncthing
 
 
 # exit 0
@@ -253,50 +253,50 @@ systemctl --user enable emacs.timer
 systemctl --user start emacs.timer
 
 # anamnesis
-echo -e  "[Unit]
-Description=Anamnesis is a clipboard manager. It stores all clipboard history and offers an easy interface to do a full-text search on the items of its history.
+# echo -e  "[Unit]
+# Description=Anamnesis is a clipboard manager. It stores all clipboard history and offers an easy interface to do a full-text search on the items of its history.
 
-[Service]
-Type=forking
-ExecStart=%h/bin/anamnesis --start
-ExecStop=%h/bin/anamnesis --stop --clean
-Restart=always
-TimeoutStartSec=0
-RestartSec=10800
-EnvironmentFile=%h/.profile
+# [Service]
+# Type=forking
+# ExecStart=%h/bin/anamnesis --start
+# ExecStop=%h/bin/anamnesis --stop --clean
+# Restart=always
+# TimeoutStartSec=0
+# RestartSec=10800
+# EnvironmentFile=%h/.profile
 
-[Install]
-WantedBy=default.target" > ~/.config/systemd/user/anamnesis.service
+# [Install]
+# WantedBy=default.target" > ~/.config/systemd/user/anamnesis.service
 
-echo "[Unit]
-Description=Delay start of anamnesis
+# echo "[Unit]
+# Description=Delay start of anamnesis
 
-[Timer]
-OnBootSec=39s
-OnUnitActiveSec=10h
-# Unit=anamnesis.service
+# [Timer]
+# OnBootSec=39s
+# OnUnitActiveSec=10h
+# # Unit=anamnesis.service
 
-[Install]
-WantedBy=default.target" > ~/.config/systemd/user/anamnesis.timer
-systemctl --user start anamnesis.timer
-systemctl --user enable anamnesis.timer
+# [Install]
+# WantedBy=default.target" > ~/.config/systemd/user/anamnesis.timer
+# systemctl --user start anamnesis.timer
+# systemctl --user enable anamnesis.timer
 
-echo -e  "[Unit]
-Description=Awesomeness with xbindkeys
+# echo -e  "[Unit]
+# Description=Awesomeness with xbindkeys
 
-[Service]
-Type=forking
-ExecStart=/usr/bin/xbindkeys
-ExecRestart=/usr/bin/killall -HUP xbindkeys
-ExecStop=/usr/bin/killall -w xbindkeys
-Restart=always
-TimeoutStartSec=0
-RestartSec=10800
+# [Service]
+# Type=forking
+# ExecStart=/usr/bin/xbindkeys
+# ExecRestart=/usr/bin/killall -HUP xbindkeys
+# ExecStop=/usr/bin/killall -w xbindkeys
+# Restart=always
+# TimeoutStartSec=0
+# RestartSec=10800
 
-[Install]
-WantedBy=default.target" > ~/.config/systemd/user/xbindkeys.service
-systemctl --user start xbindkeys 
-systemctl --user enable xbindkeys
+# [Install]
+# WantedBy=default.target" > ~/.config/systemd/user/xbindkeys.service
+# systemctl --user start xbindkeys 
+# systemctl --user enable xbindkeys
 
 # # skype
 # wget https://www.skype.com/de/download-skype/skype-for-linux/downloading/?type=debian32 -O skype-`date +%F`.deb
@@ -304,6 +304,7 @@ systemctl --user enable xbindkeys
 # agi -f/etc/defaults/grub
 # mv skype-`date +%F`.deb ~/bin/src/
 
+systemctl --user enable syncthing.service
 
 # For LaTeX
 if [ -d /media/oney/stuff/texlive/ ];

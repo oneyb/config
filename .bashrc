@@ -65,13 +65,6 @@ fi
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# # Alias definitions.
-# # You may want to put all your additions into a separate file like
-# # ~/.bash_aliases, instead of adding them here directly.
-# # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-# if [ -f ~/.bash_aliases ]; then
-#     . ~/.bash_aliases
 # fi
 
 # enable programmable completion features (you don't need to enable
@@ -93,6 +86,9 @@ alias awh='wiki-search-html'
 
 
 ### ----- App related stuff ----- ###
+alias l='ls -l --color'
+alias lt='ls -lt --color'
+alias ll='ls -Al --color'
 alias ask='ps aux | grep -i'
 alias agi='sudo apt-get install'
 alias agr='sudo apt-get remove'
@@ -135,6 +131,10 @@ function o()
     fi
 }
 
+function begin-working()
+{
+    cd ~/github/baerfutt.github.io/; source venv/bin/activate; xdotool type 'python app.py'
+}
 
 function check-setpath()
 {
@@ -171,6 +171,12 @@ function cbc()
     echo $* | cb
 }
 
+function addid-to-remote-machine ()
+{
+    STID=$(stman device info $USER | sed -r '/ID:/!d;s/^.*: +([[:alnum:]-]+)/\1/')
+    ssh $remote stman device add $STID
+}
+
 function get-bash-functions-for-bw2 ()
 {
     source /d/documents/eaternity/eaternity/eaternity-brightway-functions.bash
@@ -199,7 +205,6 @@ function backport_debian()
     cd $1-`date +%F`
     sudo apt-get build-dep $1
     sudo apt-get -b source $1
-    ls -l
     sudo dpkg -i *.deb
 }
 
