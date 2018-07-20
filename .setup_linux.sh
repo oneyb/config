@@ -56,7 +56,7 @@ echo "c.InteractiveShellApp.extensions = ['grasp']" >> ~/.ipython/profile_defaul
 sudo apt-get remove thunderbird
 
 # Zotero on debian 9
-wget https://raw.github.com/smathot/zotero_installer/master/zotero_installer.sh -O /tmp/zotero_installer.sh
+wget https://raw.github.com/oneyb/zotero_installer/master/zotero_installer.sh -O /tmp/zotero_installer.sh
 chmod +x /tmp/zotero_installer.sh
 sudo /tmp/zotero_installer.sh
 

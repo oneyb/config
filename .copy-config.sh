@@ -12,6 +12,7 @@ stuff="
      $HOME/.config/systemd/user/emacs.service
      $HOME/.config/systemd/user/anamnesis.service
      $HOME/bin/.setup_linux.sh
+     $HOME/bin/.setup_linux.yaml
      $HOME/bin/.copy-config.sh
 "
 

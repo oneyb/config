@@ -140,18 +140,30 @@ function check-setpath()
 {
     pres=$(echo $PATH | grep texlive)
     if [[ -z $pres ]]; then
-        source ~/.profile
+	    if [ -d "$HOME/bin" ] ; then
+	        export PATH="$HOME/bin:$PATH"
+	    fi
+	    
+	    if [ -d /usr/local/src/texlive/ ]; then
+	        export PATH="/usr/local/src/texlive/bin/$(uname -m)-$(uname -s | sed 's/.*/\L&/'):$PATH" 
+	    fi
+	    
+	    if [ -d /usr/local/arduino ]; then
+	        export PATH="/usr/local/arduino:$PATH" 
+	    fi
+
         # anamnesis --restart
         # xb
     fi
 }
+# check-setpath
 
 function clean-lit()
 {
     rmspace
     rename -v 's/[-_]?\(.*\)[-_]?//' *
-    rename -v 's/\[[a-zA-Z-_]+\][-_]?//' *
-    rename -v 's/[\[\]]//g' *
+    # rename -v 's/\[[a-zA-Z-_]+\][-_]?//' *
+    # rename -v 's/[\[\]]//g' *
     ls *pdf | while read p; do 
         pdftk $p cat output ${p/%.pdf/.PDF}
         if [ $? -eq 0 ]; then
