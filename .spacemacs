@@ -103,6 +103,8 @@ values."
                                       key-chord
                                       ;; org-gcal
                                       org-ref
+                                      paperless
+                                      org-paperless
                                       ;; vdiff
                                       ;; paperless
                                       ;; let-alist
@@ -111,7 +113,8 @@ values."
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '(
-                                    ess-R-object-popup
+                                    ;; ess-R-object-popup
+                                    exec-path-from-shell
                                     ;; ipython
                                     )
    ;; Defines the behaviour of Spacemacs when installing packages.
@@ -371,7 +374,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq evil-toggle-key (kbd "C-e"))
   (setq ess-eval-visibly nil)
   (setq ess-ask-for-ess-directory nil)
-  (setq org-todo-keywords '((sequence "TODO" "NEXT" "|" "DONE" "WAIT")))
+  (setq org-todo-keywords '((sequence "TODO" "NEXT" "WAIT" "|" "DONE")))
   )
 
 (defun dotspacemacs/user-config ()
@@ -715,6 +718,7 @@ package is loaded, you should place your code here."
                 "p"   'org-priority
                 "z"   'org-pomodoro
                 "xd"  'org-do-demote
+                "r"  'org-refile
                 ;; "oo"  'org-gcal-sync
                 ;; "or"  'org-gcal-refresh-token
                 ;; "od"  'org-gcal-delete-at-point
@@ -729,11 +733,19 @@ package is loaded, you should place your code here."
                 "p"   'org-priority
                 "z"   'org-pomodoro
                 "c"   'org-capture
+                "r"  'org-refile
                 ;; "oo"  'org-gcal-sync
                 ;; "or"  'org-gcal-refresh-token
                 ;; "od"  'org-gcal-delete-at-point
                 ;; "op"  'org-gcal-post-at-point
                 )
+              (setq org-tags-column -91)
+              (setq org-tag-alist '(
+                                    ("@errands" . ?e)
+                                    ("@home"    . ?h)
+                                    ("phone"    . ?p)
+                                    ("computer" . ?c)
+                                    ))
               (setq org-agenda-custom-commands 
                     '(
                       ("d" "My next action" todo "NEXT")
@@ -816,7 +828,8 @@ package is loaded, you should place your code here."
               ;;       )
               ;; (auto-fill-mode 1)
               (spacemacs/toggle-auto-completion)
-              (setq org-agenda-span 'month)
+              ;; (setq org-agenda-span 'month)
+
               (setq org-agenda-include-diary t)
               ;; (setq org-time-stamp-custom-formats '("<%y-%m-%d>" . "<%y-%m-%d %H:%M>"))
 
@@ -827,25 +840,21 @@ package is loaded, you should place your code here."
                org-icalendar-use-deadline '(event-if-not-todo)
                org-icalendar-use-scheduled '(event-if-not-todo)
                )
-              ;; org-agenda-sorting-strategy
-              ;; (setq org-todo-keywords
-              ;;       '((sequence "TODO" "NEXT" "OPEN" "|" "DONE"))
-              ;;       )
-              ;; (setq paperless-capture-directory "/home/oney/documents/scans"
-              ;;       paperless-root-directory    "/home/oney/documents")
-              ;; (require 'paperless)
-              ;; ;; (require 'org-paperless)
+              (setq paperless-capture-directory "/home/oney/Sync/inbox/"
+                    paperless-root-directory    "/home/oney/"
+                    ;; paperless-root-directory    "/home/oney/documents"
+                    )
+              (require 'paperless)
+              (require 'org-paperless)
               ;; (require 'org-trello)
               ;; (setq org-trello-files (file-expand-wildcards "~/org-trello/*.org"))
               (add-to-list 'auto-mode-alist '("\\.eml\\'" . org-mode))
               ;; (add-hook 'markdown-mode-hook
               ;;           '(lambda () (define-key markdown-mode-map "\c-c[" 'helm-bibtex)))
               ;; (setq bibtex-completion-bibliography '("~/zotero/insects.bib"))
-              (setq bibtex-completion-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
-              (setq reftex-default-bibliography '("~/documents/pubmaterials/anthropogenicsignal/carbocountch.bib"))
               ;; (setq org-archive-location "~/org-archive/datetree.org::datetree/* Finished Tasks")
               ;; (setq org-archive-location "~/org-archive/%s::")
-              (setq org-archive-location "~/Sync/org/archive.org::datetree/* %s Archive")
+              (setq org-archive-location "~/Sync/org-archive/%s::datetree/")
               )
             (add-to-list 'default-frame-alist '(background-color . "beige"))
             )
@@ -862,7 +871,7 @@ package is loaded, you should place your code here."
  '(evil-want-Y-yank-to-eol t)
  '(package-selected-packages
    (quote
-    (magit-gh-pulls github-search github-clone github-browse-file gist gh marshal logito pcache request-deferred deferred request spinner biblio parsebib biblio-core tablist org-category-capture org-mime skewer-mode simple-httpd json-snatcher json-reformat parent-mode haml-mode pos-tip flx ghub let-alist iedit anzu highlight ctable epl tern bind-map yasnippet packed auctex anaconda-mode pythonic auto-complete popup platformio-mode winum which-key web-mode use-package spaceline powerline pip-requirements ox-pandoc ht org-ref org-pomodoro org-download org-bullets live-py-mode js2-refactor ivy-hydra ibuffer-projectile hy-mode helm-make helm helm-core eyebrowse evil-surround evil-matchit dumb-jump define-word counsel-projectile counsel swiper ivy company-web column-enforce-mode bind-key ace-window ace-link dash-functional company ess julia-mode smartparens evil flycheck avy markdown-mode alert projectile org-plus-contrib magit magit-popup git-commit with-editor hydra f js2-mode dash s zotxt yapfify yaml-mode ws-butler wgrep web-completion-data web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen unfill undo-tree toc-org tagedit smex smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pkg-info persp-mode pdf-tools pcre2el paradox pandoc-mode ox-twbs orgit org-projectile org-present org-caldav open-junk-file neotree mwim multiple-cursors move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum log4e livid-mode linum-relative link-hint less-css-mode key-chord json-mode js-doc jinja2-mode insert-shebang info+ indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-bibtex goto-chg google-translate golden-ratio gnuplot gntp gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-search-highlight-persist evil-numbers evil-mc evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav diminish dactyl-mode cython-mode csv-mode company-tern company-statistics company-shell company-auctex company-ansible company-anaconda coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk async ansible-doc ansible aggressive-indent adaptive-wrap ac-ispell))))
+    (paperless magit-gh-pulls github-search github-clone github-browse-file gist gh marshal logito pcache request-deferred deferred request spinner biblio parsebib biblio-core tablist org-category-capture org-mime skewer-mode simple-httpd json-snatcher json-reformat parent-mode haml-mode pos-tip flx ghub let-alist iedit anzu highlight ctable epl tern bind-map yasnippet packed auctex anaconda-mode pythonic auto-complete popup platformio-mode winum which-key web-mode use-package spaceline powerline pip-requirements ox-pandoc ht org-ref org-pomodoro org-download org-bullets live-py-mode js2-refactor ivy-hydra ibuffer-projectile hy-mode helm-make helm helm-core eyebrowse evil-surround evil-matchit dumb-jump define-word counsel-projectile counsel swiper ivy company-web column-enforce-mode bind-key ace-window ace-link dash-functional company ess julia-mode smartparens evil flycheck avy markdown-mode alert projectile org-plus-contrib magit magit-popup git-commit with-editor hydra f js2-mode dash s zotxt yapfify yaml-mode ws-butler wgrep web-completion-data web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen unfill undo-tree toc-org tagedit smex smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pkg-info persp-mode pdf-tools pcre2el paradox pandoc-mode ox-twbs orgit org-projectile org-present org-caldav open-junk-file neotree mwim multiple-cursors move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum log4e livid-mode linum-relative link-hint less-css-mode key-chord json-mode js-doc jinja2-mode insert-shebang info+ indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-bibtex goto-chg google-translate golden-ratio gnuplot gntp gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-search-highlight-persist evil-numbers evil-mc evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav diminish dactyl-mode cython-mode csv-mode company-tern company-statistics company-shell company-auctex company-ansible company-anaconda coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk async ansible-doc ansible aggressive-indent adaptive-wrap ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

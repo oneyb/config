@@ -535,7 +535,7 @@ function paperpix-to-pdf ()
     for f in $*; do
         textdeskew $f /tmp/${f}
         textcleaner /tmp/${f} /tmp/${f}
-        whiteboard /tmp/${f} ${f%.*}-paper.${f##*.}
+        whiteboard /tmp/${f} ${f%.*}-paper.${f##*.}.pdf
     done
 }
 
@@ -602,15 +602,6 @@ function youtube-dl-music()
     youtube-dl --extract-audio --audio-format "best" -k $1 --cache-dir ~/youtube-dl/ --restrict-filenames $*
 }
 
-# function send-to-printer ()
-# {
-#     printer=$(lpstat -a | sed -r 's/([^ ]+).*/\1/')
-#     echo $printer
-#     for d in $*; do
-#         echo $d
-#         [[ -f $d ]] && /usr/bin/lpr -P $printer -o media=A4 -o sides=two-sided-long-edge -o PaperSource=AutomaticallySelect $d
-#     done
-# }
 
 # ex - archive extractor
 # usage: ex <file>

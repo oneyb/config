@@ -4,51 +4,6 @@ cd ~
 
 sudo apt-get update
 
-sudo apt-get install htop  gfortran    automake   \
-       aptitude build-essential  git gnome-disk-utility \
-      cmake cmake-data cryptsetup cups curl dash \
-      firmware-linux-free firmware-linux-nonfree ntfs-3g ntfs-config openssh-client openssh-server   \
-      p7zip-full pavucontrol pcmanfm rsync       \
-      subversion suckless-tools synaptic  autoconf automake g++ gcc  \
-       make pkg-config tor-geoipdb  transmission-gtk trash-cli  \
-      udevil unattended-upgrades unoconv vim-gtk wget epiphany-browser          \
-      bleachbit wodim wordnet xbindkeys xclip xdg-user-dirs xdg-utils xdotool   \
-      xfburn xpdf xsel libssl-dev  exfat-utils libxft-dev libfreetype6-dev bash-completion dialog xkbset xinput apt-transport-https
-
-
-sudo apt-get install android-tools-adb android-tools-fastboot aspell       \
-      aspell-bg aspell-de aspell-en aspell-es audacity \
-      calibre chromium   \
-      evince firefox-esr         \
-      flac freecad gdal-bin          \
-      genisoimage geoip-database gimp  gocr      \
-      gocr-tk gparted handbrake handbrake-cli imagemagick   \
-      inkscape ispell java-common lame laptop-detect mplayer2 nco ncview        \
-      netcdf-bin netcdf-doc   \
-      p7zip-full pdftk proj-bin proj-data pulseaudio        \
-      pulseaudio-utils qpdf qpdfview r-base r-cran-xml2 r-cran-ncdf4            \
-      recordmydesktop ristretto scrot seahorse simple-scan smplayer       \
-      subversion suckless-tools synaptic tor tor-arm  \
-      libpng-dev libpoppler-dev libpoppler-glib-dev libpoppler-private-dev      \
-      libz-dev make pkg-config tor-geoipdb  transmission-gtk trash-cli  \
-      udevil unattended-upgrades unoconv vim-gtk wget epiphany-browser          \
-      bleachbit wodim wordnet xfburn xpdf xsel xul-ext-firebug xul-ext-itsalltext xul-ext-monkeysphere  \
-      xul-ext-noscript libgdal-dev libmariadb-dev        \
-      exfat-utils libxft-dev libfreetype6-dev rclone evolution                  \
-      breeze-cursor-theme lshw libimage-exiftool-perl           \
-      picard hplip dialog mupdf mupdf-tools socat syncthing
-
-
-# exit 0
-# python packages
-sudo apt-get install python-xdg ipython ipython3 pyflakes python python-cups  \
-      python3-cupshelpers python-flake8 python-libxml2                        \
-      python-numpy python-openpyxl python-openssl                             \
-      python-jsonrpclib python-pyparsing python-scipy python-setuptools       \
-      python-simplejson python-unittest2 python3 python-gdal python-pdfminer  \
-      pdfminer-data python-pip python3-pip jupyter-notebook python3-pdfkit 
-
-sudo pip3 install -U grasp pandas xlrd xlrt openpyxl beautifulsoup4 html5lib reportlab youtube-dl
 
 echo "c.InteractiveShellApp.extensions = ['grasp']" >> ~/.ipython/profile_default/ipython_config.py 
 
@@ -116,7 +71,7 @@ tar xzf anamnesis.tar.gz
 ln -sf ~/bin/src/anamnesis-1.0.4/source/anamnesis.py ~/bin/anamnesis
 
 # dropbox 
-cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+# cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
 
 # Messenger services with Franz
 cd $HOME/bin/src/
@@ -144,16 +99,16 @@ mv arch-wiki* ~/bin/src/
 sudo rm /.BUILDINFO /.MTREE /.PKGINFO
 
 # easy org export
-git clone https://github.com/nhoffman/org-export ~/bin/src/org-export
-ln -s ~/bin/src/org-export/{org-export,*.el} ~/bin/.
+# git clone https://github.com/nhoffman/org-export ~/bin/src/org-export
+# ln -s ~/bin/src/org-export/{org-export,*.el} ~/bin/.
 
-# NodeJS
-if [ -n $(grep nodesource /etc/apt/sources.list) ]; then
-    curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
-else
-    curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
-    sudo apt-get install -y nodejs
-fi
+# # NodeJS
+# if [ -n $(grep nodesource /etc/apt/sources.list) ]; then
+#     curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
+# else
+#     curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
+#     sudo apt-get install -y nodejs
+# fi
 
 # spacemacs!!!
 if [ -d ~/.emacs.d ]; then \rm -rf ~/.emacs.d/; fi
@@ -190,7 +145,7 @@ add_desktop_launcher epiphany-browser           $HOME/.config/icons/web-browser.
 add_desktop_launcher chromium                   $HOME/.config/icons/chromium.png
 add_desktop_launcher $HOME/bin/rambox.sh        /usr/share/icons/rambox.png 
 add_desktop_launcher $HOME/bin/sync_org.sh      $HOME/.config/icons/orgzly.png
-add_desktop_launcher "emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")'" $HOME/.config/icons/emacs22.png
+# add_desktop_launcher "emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")'" $HOME/.config/icons/emacs22.png
 # add_desktop_launcher VirtualBox                 $HOME/.config/icons/virtualbox.png
 # add_desktop_launcher $HOME/bin/zotero           $HOME/.config/icons/zotero.png 
 Terminal="true"

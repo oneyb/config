@@ -1,9 +1,8 @@
 # emacs please make this -*- sh -*-
-"emacs --daemon"
-Mod4 + e
 "emacsclient -c --eval '(org-agenda-list)' --eval '(delete-other-windows)'"
 Mod4 + a
-"emacsclient -c"
+# "emacsclient -c"
+"emacsclient -c --eval '(org-agenda-list)' --eval '(delete-other-windows)'"
 Mod1 + Control + e
 "xset dpms force off"
  Mod4 + d
@@ -17,10 +16,10 @@ Control + Mod1 + W
 Mod4 + n
 "pcmanfm"
 Mod4 + f
-"xfce4-terminal --geometry 79x39-0-0 --title Mplayer --working-directory ~/Music/Playlists/"
-Control + Shift + Mod1 + M
-"xfce4-terminal --command htop --title htop --geometry 120x32+66+66"
-F9
+# "xfce4-terminal --geometry 79x39-0-0 --title Mplayer --working-directory ~/Music/Playlists/"
+# Control + Shift + Mod1 + M
+# "xfce4-terminal --command htop --title htop --geometry 120x32+66+66"
+# F9
 # Mod4 + t
 "xfce4-terminal --title Terminator --geometry 84x44+0+0 --working-directory ~/"
 Control + Mod1 + t
@@ -31,9 +30,10 @@ Mod4 + c
 # "anamnesis --restart"
 # Control + Mod1 + c
 "~/bin/drop"
+"systemctl --user restart syncthing"
 Mod4 + g
-"~/bin/dbi"
-Control + Mod1 + g
+# "~/bin/dbi"
+# Control + Mod1 + g
 # "sh -c '~/bin/aenea.sh windows7'"
 # F6
 # "VirtualBox --startvm w7_clone 2>&1 ~/.vm.log"
