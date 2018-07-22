@@ -665,10 +665,14 @@ package is loaded, you should place your code here."
               (add-hook 'org-capture-mode-hook 'evil-insert-state)
               (setq org-capture-templates
                     '(
-                      ("t" "TODO" entry (file+headline "~/Sync/org/ensectable.org" "Refile Tasks") "* TODO %?\n %i")
-                      ("s" "Appt." entry (file+headline "~/Sync/org/ensectable.org" "Refile Appointments") "* %?\n SCHEDULED: %^T\n %i")
-                      ("h" "TODO @ Home" entry (file+headline "~/Sync/org/personal.org" "Refile Tasks") "* TODO %?\n %i")
-                      ("H" "Appt. @ Home" entry (file+headline "~/Sync/org/personal.org" "Refile Appointments") "* %?\n SCHEDULED: %^T\n %i")
+                      ("t" "General Tasks" entry (file+headline "~/Sync/org/capture.org" "Tasks") "* TODO %?%^G\n %i")
+                      ("p" "Programming" entry (file+headline "~/Sync/org/capture.org" "Programming Tasks") "* TODO %? %F\t :@computer:\n %i")
+                      ("a" "Appt." entry (file+headline "~/Sync/org/capture.org" "Appointments") "* %?%^G\n SCHEDULED: %^T\n %i")
+                      ("i" "TODO" entry (file+headline "~/Sync/org/capture.org" "Information") "* %?%^G\n %x%i")
+                      ("k" "TODO" entry (file+headline "~/Sync/org/capture.org" "Kitchen Assistant") "* %?%^G\n %x%i")
+                      ("m" "Emails to write" entry (file+headline "~/Sync/org/capture.org" "Emails to write") "* TODO %?%x% \t:@computer:@phone:\n %i ")
+                      ("j" "Jokes" entry (file+headline "~/Sync/org/capture.org" "Jokes") "* %?\n %U\n %i")
+                      ("b" "Braindumps" entry (file+headline "~/Sync/org/capture.org" "Braindumps") "* %?\n %U\n %i")
                       ))
               ;; (require 'org-ref)
               ;; ;; (defun helm-bibtex-format-pandoc-citation (keys)
@@ -741,10 +745,11 @@ package is loaded, you should place your code here."
                 )
               (setq org-tags-column -91)
               (setq org-tag-alist '(
-                                    ("@errands" . ?e)
-                                    ("@home"    . ?h)
-                                    ("phone"    . ?p)
-                                    ("computer" . ?c)
+                                    ("@errands"  . ?e)
+                                    ("@home"     . ?h)
+                                    ("Onroad"    . ?r)
+                                    ("@phone"    . ?p)
+                                    ("@computer" . ?c)
                                     ))
               (setq org-agenda-custom-commands 
                     '(
@@ -869,6 +874,9 @@ package is loaded, you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol t)
+ '(org-agenda-files
+   (quote
+    ("~/Sync/org/capture.org" "~/Sync/org/ensectable.org" "~/Sync/org/personal.org")))
  '(package-selected-packages
    (quote
     (paperless magit-gh-pulls github-search github-clone github-browse-file gist gh marshal logito pcache request-deferred deferred request spinner biblio parsebib biblio-core tablist org-category-capture org-mime skewer-mode simple-httpd json-snatcher json-reformat parent-mode haml-mode pos-tip flx ghub let-alist iedit anzu highlight ctable epl tern bind-map yasnippet packed auctex anaconda-mode pythonic auto-complete popup platformio-mode winum which-key web-mode use-package spaceline powerline pip-requirements ox-pandoc ht org-ref org-pomodoro org-download org-bullets live-py-mode js2-refactor ivy-hydra ibuffer-projectile hy-mode helm-make helm helm-core eyebrowse evil-surround evil-matchit dumb-jump define-word counsel-projectile counsel swiper ivy company-web column-enforce-mode bind-key ace-window ace-link dash-functional company ess julia-mode smartparens evil flycheck avy markdown-mode alert projectile org-plus-contrib magit magit-popup git-commit with-editor hydra f js2-mode dash s zotxt yapfify yaml-mode ws-butler wgrep web-completion-data web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen unfill undo-tree toc-org tagedit smex smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pkg-info persp-mode pdf-tools pcre2el paradox pandoc-mode ox-twbs orgit org-projectile org-present org-caldav open-junk-file neotree mwim multiple-cursors move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum log4e livid-mode linum-relative link-hint less-css-mode key-chord json-mode js-doc jinja2-mode insert-shebang info+ indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-bibtex goto-chg google-translate golden-ratio gnuplot gntp gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-search-highlight-persist evil-numbers evil-mc evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav diminish dactyl-mode cython-mode csv-mode company-tern company-statistics company-shell company-auctex company-ansible company-anaconda coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk async ansible-doc ansible aggressive-indent adaptive-wrap ac-ispell))))

@@ -349,7 +349,7 @@ function find-song()
 function E()
 {
     if [[ $# -eq 0 ]]; then
-	      sh -c "emacsclient -c" &
+	      sh -c "emacsclient -c --eval '(org-tags-view t \"computer\")'" &
     else
 	      sh -c "emacsclient -c $* " &
     fi
@@ -358,11 +358,13 @@ function E()
 function e()
 {
     if [[ $# -eq 0 ]]; then
-	      emacsclient -nw
+	      emacsclient -nw --eval '(org-tags-view t "computer")'
+ 
     else
 	      emacsclient -nw "$*"
     fi
 }
+
 # if [[ -n `which pandoc` ]]; then
 #     eval "$(pandoc --bash-completion)"
 # fi

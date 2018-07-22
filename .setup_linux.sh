@@ -145,6 +145,7 @@ add_desktop_launcher epiphany-browser           $HOME/.config/icons/web-browser.
 add_desktop_launcher chromium                   $HOME/.config/icons/chromium.png
 add_desktop_launcher $HOME/bin/rambox.sh        /usr/share/icons/rambox.png 
 add_desktop_launcher $HOME/bin/sync_org.sh      $HOME/.config/icons/orgzly.png
+add_desktop_launcher "emacsclient -c --eval '(org-capture)'" $HOME/.config/icons/emacs22.png
 # add_desktop_launcher "emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")'" $HOME/.config/icons/emacs22.png
 # add_desktop_launcher VirtualBox                 $HOME/.config/icons/virtualbox.png
 # add_desktop_launcher $HOME/bin/zotero           $HOME/.config/icons/zotero.png 

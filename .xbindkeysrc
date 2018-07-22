@@ -1,8 +1,8 @@
 # emacs please make this -*- sh -*-
-"emacsclient -c --eval '(org-agenda-list)' --eval '(delete-other-windows)'"
-Mod4 + a
+"emacsclient -c --eval '(org-capture)'"
+Mod4 + y
 # "emacsclient -c"
-"emacsclient -c --eval '(org-agenda-list)' --eval '(delete-other-windows)'"
+"emacsclient -c --eval '(org-tags-view t "computer")' --eval '(delete-other-windows)'"
 Mod1 + Control + e
 "xset dpms force off"
  Mod4 + d
@@ -29,7 +29,7 @@ Mod4 + r
 Mod4 + c
 # "anamnesis --restart"
 # Control + Mod1 + c
-"~/bin/drop"
+# "~/bin/drop"
 "systemctl --user restart syncthing"
 Mod4 + g
 # "~/bin/dbi"
@@ -48,7 +48,7 @@ Mod4 + t
 # "pavucontrol"
 # F10
 "sleep .1; xdotool click 2"
-Mod4 + y
+Mod4 + p
 # "scrot"
 # Print
 "xfce4-appfinder"
