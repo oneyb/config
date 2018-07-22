@@ -156,7 +156,6 @@ function check-setpath()
         # xb
     fi
 }
-# check-setpath
 
 function clean-lit()
 {
