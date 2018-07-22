@@ -1,0 +1,287 @@
+---
+- hosts: all
+  # run this: ansible-playbook -i hassbian.local, -u pi .setup_linux.yaml
+  vars:
+    template_dir: "{{ ansible_env.HOME }}/bin/config"
+  tasks:
+  # - name: get config files
+  #   fetch: 
+  #     dest: "{{ ansible_hostname }}"
+  #     src: '{{ item }}' 
+  #     mode: 0600
+  #     backup: yes
+  #   become: yes
+  #   with_items:
+  #     - /etc/wpa_supplicant/wpa_supplicant.conf
+
+  # - name: get info
+  #   debug:
+  #     # msg: "{{ ansible_env }}"
+  #     # or:
+  #     var: ansible_env
+
+  # install packages
+  - name: install necessary packages
+    apt: pkg={{ item }} update_cache=yes cache_valid_time=3600 upgrade=safe
+    become: yes
+    # remash with !sed -r 's/  +/ /g;s/\\ ?//g;s/(\w) (\w)/\1\n      - \2/g;s/^ +\w/      -&/'
+    with_items:
+      - htop
+      - gfortran
+      - automake
+      - aptitude
+      - build-essential
+      - git
+      - gnome-disk-utility
+      - cmake
+      - cmake-data
+      - cryptsetup
+      - cups
+      - curl
+      - dash
+      - firmware-linux-free
+      - firmware-linux-nonfree
+      - ntfs-3g
+      - ntfs-config
+      - openssh-client
+      - openssh-server
+      - p7zip-full
+      - pavucontrol
+      - pcmanfm
+      - rsync
+      - subversion
+      - suckless-tools
+      - synaptic
+      - autoconf
+      - automake
+      - g++
+      - gcc
+      - make
+      - pkg-config
+      - tor-geoipdb
+      - transmission-gtk
+      - trash-cli
+      - udevil
+      - unattended-upgrades
+      - unoconv
+      - vim-gtk
+      - wget
+      - epiphany-browser
+      - bleachbit
+      - wodim
+      - wordnet
+      - xbindkeys
+      - xclip
+      - xdg-user-dirs
+      - xdg-utils
+      - xdotool
+      - xfburn
+      - xpdf
+      - xsel
+      - libssl-dev
+      - exfat-utils
+      - libxft-dev
+      - libfreetype6-dev
+      - bash-completion
+      - dialog
+      - xkbset
+      - xinput
+      - apt-transport-https
+
+
+  - name: install necessary packages
+    apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
+    become: yes
+    with_items:
+      - android-tools-adb
+      - android-tools-fastboot
+      - aspell 
+      - aspell-bg
+      - aspell-de
+      - aspell-en
+      - aspell-es
+      - audacity 
+      - calibre
+      - chromium 
+      - evince
+      - firefox-esr 
+      - flac
+      - freecad
+      - gdal-bin 
+      - genisoimage
+      - geoip-database
+      - gimp
+      - gocr 
+      - gocr-tk
+      - gparted
+      - handbrake
+      - handbrake-cli
+      - imagemagick 
+      - inkscape
+      - ispell
+      - java-common
+      - lame
+      - laptop-detect
+      - mplayer2
+      - nco
+      - ncview 
+      - netcdf-bin
+      - netcdf-doc 
+      - p7zip-full
+      - pdftk
+      - proj-bin
+      - proj-data
+      - pulseaudio 
+      - pulseaudio-utils
+      - qpdf
+      - qpdfview
+      - r-base
+      - r-cran-xml2
+      - r-cran-ncdf4 
+      - recordmydesktop
+      - ristretto
+      - scrot
+      - seahorse
+      - simple-scan
+      - smplayer 
+      - subversion
+      - suckless-tools
+      - synaptic
+      - tor
+      - tor-arm 
+      - libpng-dev
+      - libpoppler-dev
+      - libpoppler-glib-dev
+      - libpoppler-private-dev 
+      - libz-dev
+      - make
+      - pkg-config
+      - tor-geoipdb
+      - transmission-gtk
+      - trash-cli 
+      - udevil
+      - unattended-upgrades
+      - unoconv
+      - vim-gtk
+      - wget
+      - epiphany-browser 
+      - bleachbit
+      - wodim
+      - wordnet
+      - xfburn
+      - xpdf
+      - xsel
+      - xul-ext-firebug
+      - xul-ext-itsalltext
+      - xul-ext-monkeysphere 
+      - xul-ext-noscript
+      - libgdal-dev
+      - libmariadb-dev 
+      - exfat-utils
+      - libxft-dev
+      - libfreetype6-dev
+      - rclone
+      - evolution 
+      - breeze-cursor-theme
+      - lshw
+      - libimage-exiftool-perl 
+      - picard
+      - hplip
+      - dialog
+      - mupdf
+      - mupdf-tools
+      - socat
+      - syncthing
+
+  - name: install necessary packages
+    apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
+    become: yes
+    with_items:
+      - python-xdg
+      - ipython
+      - ipython3
+      - pyflakes
+      - python
+      - python-cups 
+      - python3-cupshelpers
+      - python-flake8
+      - python-libxml2 
+      - python-numpy
+      - python-openpyxl
+      - python-openssl 
+      - python-jsonrpclib
+      - python-pyparsing
+      - python-scipy
+      - python-setuptools 
+      - python-simplejson
+      - python-unittest2
+      - python3
+      - python-gdal
+      - python-pdfminer 
+      - pdfminer-data
+      - python-pip
+      - python3-pip
+      - jupyter-notebook
+      - python3-pdfkit 
+
+  - name: install pip3 packages
+    pip: name={{ item }} extra_args="--upgrade" executable=pip3
+    become: yes
+    with_items:
+      - grasp
+      - pandas
+      # - xlwt
+      # - xlrd
+      - openpyxl
+      - beautifulsoup4
+      - html5lib
+      - reportlab
+      - youtube-dl
+      - syncthingmanager
+
+
+  - name: get adobe reader
+    get_url:
+      url: ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
+      dest: "{{ ansible_env.HOME }}/bin/src/adberdr9.5.5-1_i386linux_enu.deb"
+      checksum: md5:88036c68998d565c4365e2ad89b04d51
+
+  - name: Install/add i386 Architecture
+    command: dpkg --add-architecture i386
+    args:
+      creates: /var/lib/dpkg/arch
+    when: ansible_architecture != 'i386'
+    register: archrc
+  
+  - name: Install / Update APT Cache for i386
+    apt:
+      update_cache: true
+    when: archrc is defined and archrc.changed
+  
+  - name: Install i386 deps
+    apt:
+      name: "{{ item }}"
+    with_items:
+      - libgtk2.0-0:i386
+      - libxml2:i386
+      - libstdc++6:i386
+    when: ansible_architecture != 'i386'
+
+  - name: install adobe reader deb packages
+    become: yes
+    apt: deb="{{ ansible_env.HOME }}/bin/src/adberdr9.5.5-1_i386linux_enu.deb"
+
+  - name: start syncthing
+    systemd: name=syncthing state=restarted daemon_reload=yes enabled=yes user=yes
+
+# - tasks:
+#   - name: fill and copy wifi config files
+#     template: 
+#       src: '{{ template_dir }}/{{ item | basename }}' 
+#       dest: '{{ item }}' 
+#       owner: root 
+#       mode: 0600
+#       backup: yes
+#     become: yes
+#     with_items:
+#       - /etc/wpa_supplicant/wpa_supplicant.conf
