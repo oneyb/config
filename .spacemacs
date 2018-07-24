@@ -103,9 +103,7 @@ values."
                                       key-chord
                                       ;; org-gcal
                                       org-ref
-                                      paperless
                                       ;; vdiff
-                                      ;; paperless
                                       ;; let-alist
                                       )
    ;; A list of packages that cannot be updated.
@@ -666,14 +664,14 @@ package is loaded, you should place your code here."
               (add-hook 'org-capture-mode-hook 'evil-insert-state)
               (setq org-capture-templates
                     '(
-                      ("t" "General Tasks" entry (file "~/org/capture.org") "* TODO %?\t%^G\n %i")
-                      ("l" "Linked Task" entry (file "~/org/capture.org") "* TODO %? %a \t :computer:\n %i")
-                      ("p" "Programming Task" entry (file "~/org/capture.org") "* TODO %? \t :computer:\n %i")
-                      ("s" "Specific Programming Task" entry (file "~/org/capture.org") "* TODO %? %a \t :computer:\n %i")
-                      ("a" "Set Appt." entry (file "~/org/capture.org") "* %?\t%^G\n SCHEDULED: %^T\n %i")
+                      ("t" "General Tasks" entry (file "~/org/capture.org") "* TODO %?\t\t%^G\n %i")
+                      ("l" "Linked Task" entry (file "~/org/capture.org") "* TODO %? %a \t\t :computer:\n %i")
+                      ("p" "Programming Task" entry (file "~/org/capture.org") "* TODO %? \t\t :computer:\n %i")
+                      ("s" "Specific Programming Task" entry (file "~/org/capture.org") "* TODO %? %a \t\t :computer:\n %i")
+                      ("a" "Set Appt." entry (file "~/org/capture.org") "* %?\t\t%^G\n SCHEDULED: %^T\n %i")
                       ("i" "Collect Info" entry (file "~/org/capture.org") "* %? %x \n %i")
-                      ("m" "Emails to write" entry (file "~/org/capture.org") "* TODO %?%x \t:computer:phone:\n %i ")
-                      ("c" "Phone calls to make" entry (file "~/org/capture.org") "* TODO call %?%x \t:phone:\n %i ")
+                      ("m" "Emails to write" entry (file "~/org/capture.org") "* TODO %?%x \t\t:computer:phone:\n %i ")
+                      ("c" "Phone calls to make" entry (file "~/org/capture.org") "* TODO call %?%x \t\t:phone:\n %i ")
                       ("j" "Jokes" entry (file "~/org/capture.org") "* Joke: %?\n %U %i")
                       ("b" "Braindumps" entry (file "~/org/capture.org") "* Braindump: %?\n %U\n %i")
                       ))
@@ -852,12 +850,6 @@ package is loaded, you should place your code here."
                org-icalendar-use-deadline '(event-if-not-todo)
                org-icalendar-use-scheduled '(event-if-not-todo)
                )
-              (setq paperless-capture-directory "/home/oney/Sync/inbox/"
-                    ;; paperless-root-directory    "/home/oney/"
-                    paperless-root-directory    "/home/oney/documents"
-                    )
-              (require 'paperless)
-              (require 'org-paperless)
               ;; (require 'org-trello)
               ;; (setq org-trello-files (file-expand-wildcards "~/org-trello/*.org"))
               (add-to-list 'auto-mode-alist '("\\.eml\\'" . org-mode))
@@ -866,7 +858,7 @@ package is loaded, you should place your code here."
               ;; (setq bibtex-completion-bibliography '("~/zotero/insects.bib"))
               ;; (setq org-archive-location "~/org-archive/datetree.org::datetree/* Finished Tasks")
               ;; (setq org-archive-location "~/org-archive/%s::")
-              (setq org-archive-location "~/Sync/org-archive/%s::datetree/")
+              (setq org-archive-location "~/Sync/org/org-archive/%s::datetree/")
               )
             (add-to-list 'default-frame-alist '(background-color . "beige"))
             )
@@ -881,7 +873,10 @@ package is loaded, you should place your code here."
  '(evil-want-Y-yank-to-eol t)
  '(org-agenda-files
    (quote
-    ("~/org/capture.org" "~/org/ensectable.org" "~/org/personal.org"))))
+    ("~/org/capture.org" "~/org/ensectable.org" "~/org/personal.org")))
+ '(package-selected-packages
+   (quote
+    (zotxt yapfify yaml-mode ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smex smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin platformio-mode pip-requirements persp-mode pcre2el paradox paperless pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc jinja2-mode ivy-hydra insert-shebang indent-guide ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-make google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump diminish define-word dactyl-mode cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-shell company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk ansible-doc ansible aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -661,6 +661,7 @@ set -o vi
 bind -m vi-insert "\C-l":clear-screen
 
 anamnesis --restart
+rsync -ut ~/org/ ~/Sync/org
 
 # on Linux the default is
 export ARDUINO_PATH=/usr/local/arduino
