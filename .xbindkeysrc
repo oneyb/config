@@ -1,6 +1,6 @@
 # emacs please make this -*- sh -*-
 "emacsclient -c --eval '(org-capture)'"
-Mod4 + y
+Mod4 + i
 # "emacsclient -c"
 "emacsclient -c --eval '(org-tags-view t "computer")' --eval '(delete-other-windows)'"
 Mod1 + Control + e
@@ -8,8 +8,6 @@ Mod1 + Control + e
  Mod4 + d
 "~/bin/tb"
 Mod4 + m
-"chromium"
-Mod4 + i
 "x-www-browser"
 Control + Mod1 + W
 "firefox"
@@ -32,11 +30,8 @@ Mod4 + c
 # "~/bin/drop"
 "systemctl --user restart syncthing"
 Mod4 + g
-# "~/bin/dbi"
-# Control + Mod1 + g
-# "sh -c '~/bin/aenea.sh windows7'"
+# "sh -c '~/bin/aenea.sh w7'"
 # F6
-# "VirtualBox --startvm w7_clone 2>&1 ~/.vm.log"
 # "sh -c '~/bin/aenea.sh x'"
 # F7
 "~/bin/toggle-sticky-keys.sh"
@@ -48,7 +43,7 @@ Mod4 + t
 # "pavucontrol"
 # F10
 "sleep .1; xdotool click 2"
-Mod4 + p
+Mod4 + y
 # "scrot"
 # Print
 "xfce4-appfinder"

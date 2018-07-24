@@ -4,6 +4,7 @@ cd ~
 
 sudo apt-get update
 
+sudo loginctl enable-linger $USER
 
 echo "c.InteractiveShellApp.extensions = ['grasp']" >> ~/.ipython/profile_default/ipython_config.py 
 

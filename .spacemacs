@@ -385,6 +385,7 @@ explicitly specified that a variable should be set before a
 package is loaded, you should place your code here."
   ;; (xclip-mode 1)
   ;; (fset 'evil-visual-update-x-selection 'ignore)
+  (setq warning-minimum-level :error)
   (define-key ivy-minibuffer-map (kbd "<escape>")
     (defhydra soo-ivy (:hint nil :color pink)
       "
@@ -490,10 +491,11 @@ package is loaded, you should place your code here."
   ;; (key-chord-define evil-insert-state-map "df" 'evil-escape)
   (setq recentf-auto-cleanup "1:00pm")
   (key-chord-define-global ";l" 'kill-this-buffer)
+  (key-chord-define-global "ii" 'org-capture)
   (key-chord-define-global "wq" 'vim-wq)
   (key-chord-define-global "jk" 'my-escape-and-save)
   (key-chord-define-global "BB" 'my-escape-and-bury)
-  (key-chord-define-global "ii" 'completion-at-point)
+  ;; (key-chord-define-global "ii" 'completion-at-point)
   (setq text-mode-hook (quote (text-mode-hook-identify toggle-truncate-lines)))
   (setq-default fill-column 78)
   ;; ;; Visual stuff
@@ -664,14 +666,16 @@ package is loaded, you should place your code here."
               (add-hook 'org-capture-mode-hook 'evil-insert-state)
               (setq org-capture-templates
                     '(
-                      ("t" "General Tasks" entry (file+headline "~/Sync/org/capture.org" "Tasks") "* TODO %?%^G\n %i")
-                      ("p" "Programming" entry (file+headline "~/Sync/org/capture.org" "Programming Tasks") "* TODO %? %F\t :@computer:\n %i")
-                      ("a" "Appt." entry (file+headline "~/Sync/org/capture.org" "Appointments") "* %?%^G\n SCHEDULED: %^T\n %i")
-                      ("i" "TODO" entry (file+headline "~/Sync/org/capture.org" "Information") "* %?%^G\n %x%i")
-                      ("k" "TODO" entry (file+headline "~/Sync/org/capture.org" "Kitchen Assistant") "* %?%^G\n %x%i")
-                      ("m" "Emails to write" entry (file+headline "~/Sync/org/capture.org" "Emails to write") "* TODO %?%x% \t:@computer:@phone:\n %i ")
-                      ("j" "Jokes" entry (file+headline "~/Sync/org/capture.org" "Jokes") "* %?\n %U\n %i")
-                      ("b" "Braindumps" entry (file+headline "~/Sync/org/capture.org" "Braindumps") "* %?\n %U\n %i")
+                      ("t" "General Tasks" entry (file "~/org/capture.org") "* TODO %?\t%^G\n %i")
+                      ("l" "Linked Task" entry (file "~/org/capture.org") "* TODO %? %a \t :computer:\n %i")
+                      ("p" "Programming Task" entry (file "~/org/capture.org") "* TODO %? \t :computer:\n %i")
+                      ("s" "Specific Programming Task" entry (file "~/org/capture.org") "* TODO %? %a \t :computer:\n %i")
+                      ("a" "Set Appt." entry (file "~/org/capture.org") "* %?\t%^G\n SCHEDULED: %^T\n %i")
+                      ("i" "Collect Info" entry (file "~/org/capture.org") "* %? %x \n %i")
+                      ("m" "Emails to write" entry (file "~/org/capture.org") "* TODO %?%x \t:computer:phone:\n %i ")
+                      ("c" "Phone calls to make" entry (file "~/org/capture.org") "* TODO call %?%x \t:phone:\n %i ")
+                      ("j" "Jokes" entry (file "~/org/capture.org") "* Joke: %?\n %U %i")
+                      ("b" "Braindumps" entry (file "~/org/capture.org") "* Braindump: %?\n %U\n %i")
                       ))
               ;; (require 'org-ref)
               ;; ;; (defun helm-bibtex-format-pandoc-citation (keys)
@@ -686,7 +690,7 @@ package is loaded, you should place your code here."
               ;;                                          (mapconcat 'identity x ",")
               ;;                                          "}")) ""))))
               ;; ))
-              (setq org-agenda-files (file-expand-wildcards "~/Sync/org/*.org"))
+              (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
               (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))	
               (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
               (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
@@ -748,11 +752,11 @@ package is loaded, you should place your code here."
                 )
               (setq org-tags-column -91)
               (setq org-tag-alist '(
-                                    ("@errands"  . ?e)
-                                    ("@home"     . ?h)
-                                    ("Onroad"    . ?r)
-                                    ("@phone"    . ?p)
-                                    ("@computer" . ?c)
+                                    ("out"  . ?e)
+                                    ("home"     . ?h)
+                                    ("away"    . ?r)
+                                    ("phone"    . ?p)
+                                    ("computer" . ?c)
                                     ))
               (setq org-agenda-custom-commands 
                     '(
@@ -849,8 +853,8 @@ package is loaded, you should place your code here."
                org-icalendar-use-scheduled '(event-if-not-todo)
                )
               (setq paperless-capture-directory "/home/oney/Sync/inbox/"
-                    paperless-root-directory    "/home/oney/"
-                    ;; paperless-root-directory    "/home/oney/documents"
+                    ;; paperless-root-directory    "/home/oney/"
+                    paperless-root-directory    "/home/oney/documents"
                     )
               (require 'paperless)
               (require 'org-paperless)
@@ -869,3 +873,18 @@ package is loaded, you should place your code here."
   ;; (setq request-backend 'url-retrieve )
   (setq request-message-level 'debug)
   )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol t)
+ '(org-agenda-files
+   (quote
+    ("~/org/capture.org" "~/org/ensectable.org" "~/org/personal.org"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
