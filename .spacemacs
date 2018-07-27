@@ -371,7 +371,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq evil-toggle-key (kbd "C-e"))
   (setq ess-eval-visibly nil)
   (setq ess-ask-for-ess-directory nil)
-  (setq org-todo-keywords '((sequence "TODO" "NEXT" "WAIT" "|" "DONE")))
+  (setq org-todo-keywords '((sequence "WAIT" "TODO" "NEXT" "|" "DONE")))
   )
 
 (defun dotspacemacs/user-config ()
@@ -672,7 +672,8 @@ package is loaded, you should place your code here."
                       ("i" "Collect Info" entry (file "~/org/capture.org") "* %? %x \n %i")
                       ("m" "Emails to write" entry (file "~/org/capture.org") "* TODO %?%x \t\t:computer:phone:\n %i ")
                       ("c" "Phone calls to make" entry (file "~/org/capture.org") "* TODO call %?%x \t\t:phone:\n %i ")
-                      ("j" "Jokes" entry (file "~/org/capture.org") "* Joke: %?\n %U %i")
+                      ("j" "Jobs" entry (file "~/org/capture.org") "* apply to %? %x \t :job:computer:")
+                      ("J" "Jokes" entry (file "~/org/capture.org") "* Joke: %?\n %U %i")
                       ("b" "Braindumps" entry (file "~/org/capture.org") "* Braindump: %?\n %U\n %i")
                       ))
               ;; (require 'org-ref)
@@ -688,8 +689,13 @@ package is loaded, you should place your code here."
               ;;                                          (mapconcat 'identity x ",")
               ;;                                          "}")) ""))))
               ;; ))
-              (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
-              (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))	
+              ;; (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
+              (setq org-agenda-files '(
+                                      "~/org/capture.org"
+                                      "~/org/personal.org"
+                                      "~/org/ensectable.org"
+                                      ))
+              (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
               (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
               (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
 
