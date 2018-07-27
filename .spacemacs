@@ -691,9 +691,11 @@ package is loaded, you should place your code here."
               ;; ))
               ;; (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
               (setq org-agenda-files '(
-                                      "~/org/capture.org"
-                                      "~/org/personal.org"
-                                      "~/org/ensectable.org"
+                                       "~/org/capture.org"
+                                       "~/org/ensectable.org"
+                                       "~/org/family.org"
+                                       "~/org/kitchen-assistant.org"
+                                       "~/org/personal-development.org"
                                       ))
               (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
               (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
@@ -871,21 +873,3 @@ package is loaded, you should place your code here."
   ;; (setq request-backend 'url-retrieve )
   (setq request-message-level 'debug)
   )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-want-Y-yank-to-eol t)
- '(org-agenda-files
-   (quote
-    ("~/org/capture.org" "~/org/ensectable.org" "~/org/personal.org")))
- '(package-selected-packages
-   (quote
-    (zotxt yapfify yaml-mode ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smex smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin platformio-mode pip-requirements persp-mode pcre2el paradox paperless pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc jinja2-mode ivy-hydra insert-shebang indent-guide ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-make google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump diminish define-word dactyl-mode cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-shell company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk ansible-doc ansible aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

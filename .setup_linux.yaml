@@ -1,8 +1,8 @@
 ---
 - hosts: all
-  # run this: ansible-playbook -i tinkbox.local, -u oney .configure-syncthing.yaml --ask-become-pass
-  vars:
-    template_dir: "{{ ansible_env.HOME }}/bin/config"
+  # run this: ansible-playbook -i tinkbox.local, -u oney ~/bin/.setup_linux.yaml --ask-become-pass
+  # vars:
+    # template_dir: "{{ ansible_env.HOME }}/bin/config"
   tasks:
   # - name: get config files
   #   fetch: 
@@ -22,7 +22,7 @@
 
   # install packages
   - name: install necessary packages
-    apt: pkg={{ item }} update_cache=yes cache_valid_time=3600 upgrade=safe
+    apt: pkg={{ item }} update_cache=yes cache_valid_time=3600 
     become: yes
     # remash with !sed -r 's/  +/ /g;s/\\ ?//g;s/(\w) (\w)/\1\n      - \2/g;s/^ +\w/      -&/'
     with_items:
@@ -62,7 +62,6 @@
       - transmission-gtk
       - trash-cli
       - udevil
-      - unattended-upgrades
       - unoconv
       - vim-gtk
       - wget
@@ -160,7 +159,6 @@
       - transmission-gtk
       - trash-cli 
       - udevil
-      - unattended-upgrades
       - unoconv
       - vim-gtk
       - wget
@@ -238,6 +236,8 @@
       - reportlab
       - youtube-dl
       - syncthingmanager
+      - gcalcli
+      - jinja2
 
 
   - name: get adobe reader
@@ -251,16 +251,21 @@
     args:
       creates: /var/lib/dpkg/arch
     when: ansible_architecture != 'i386'
+    become: yes
     register: archrc
   
   - name: Install / Update APT Cache for i386
     apt:
       update_cache: true
+    become: yes
     when: archrc is defined and archrc.changed
   
   - name: Install i386 deps
     apt:
       name: "{{ item }}"
+      update_cache: true
+      cache_valid_time: 3600
+    become: yes
     with_items:
       - libgtk2.0-0:i386
       - libxml2:i386
@@ -271,10 +276,9 @@
     become: yes
     apt: deb="{{ ansible_env.HOME }}/bin/src/adberdr9.5.5-1_i386linux_enu.deb"
 
-  - name: start syncthing
-    systemd: name=syncthing state=restarted daemon_reload=yes enabled=yes user=yes
+  # - name: start syncthing
+  #   systemd: name=syncthing state=restarted daemon_reload=yes enabled=yes user=yes
 
-# - tasks:
 #   - name: fill and copy wifi config files
 #     template: 
 #       src: '{{ template_dir }}/{{ item | basename }}' 
