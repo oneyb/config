@@ -469,6 +469,12 @@ package is loaded, you should place your code here."
     (evil-escape)
     (bury-buffer)
     )
+  (defun my-get-tasks ()
+    "Get org tasks"
+    (interactive)
+    (org-tags-view t "computer")
+    (delete-other-windows)
+    )
   ;; (setq auto-mode-alist
   ;;       (append '(
   ;;                 ("\\.png\\'"   . system)
@@ -490,6 +496,7 @@ package is loaded, you should place your code here."
   (setq recentf-auto-cleanup "1:00pm")
   (key-chord-define-global ";l" 'kill-this-buffer)
   (key-chord-define-global "ii" 'org-capture)
+  (key-chord-define-global ";'" 'my-get-tasks)
   (key-chord-define-global "wq" 'vim-wq)
   (key-chord-define-global "jk" 'my-escape-and-save)
   (key-chord-define-global "BB" 'my-escape-and-bury)
@@ -693,7 +700,6 @@ package is loaded, you should place your code here."
               (setq org-agenda-files '(
                                        "~/org/capture.org"
                                        "~/org/ensectable.org"
-                                       "~/org/family.org"
                                        "~/org/kitchen-assistant.org"
                                        "~/org/personal-development.org"
                                       ))
@@ -873,3 +879,18 @@ package is loaded, you should place your code here."
   ;; (setq request-backend 'url-retrieve )
   (setq request-message-level 'debug)
   )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol t)
+ '(org-agenda-files
+   (quote
+    ("~/org/capture.org" "~/org/ensectable.org" "~/org/kitchen-assistant.org" "~/org/personal-development.org"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
