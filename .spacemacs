@@ -679,7 +679,7 @@ package is loaded, you should place your code here."
                       ("i" "Collect Info" entry (file "~/org/capture.org") "* %? %x \n %i")
                       ("m" "Emails to write" entry (file "~/org/capture.org") "* TODO %?%x \t\t:computer:phone:\n %i ")
                       ("c" "Phone calls to make" entry (file "~/org/capture.org") "* TODO call %?%x \t\t:phone:\n %i ")
-                      ("j" "Jobs" entry (file "~/org/capture.org") "* apply to %? %x \t :job:computer:")
+                      ("j" "Jobs" entry (file "~/org/capture.org") "* TODO apply to %? %x \t :job:computer:")
                       ("J" "Jokes" entry (file "~/org/capture.org") "* Joke: %?\n %U %i")
                       ("b" "Braindumps" entry (file "~/org/capture.org") "* Braindump: %?\n %U\n %i")
                       ))
@@ -879,18 +879,3 @@ package is loaded, you should place your code here."
   ;; (setq request-backend 'url-retrieve )
   (setq request-message-level 'debug)
   )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-want-Y-yank-to-eol t)
- '(org-agenda-files
-   (quote
-    ("~/org/capture.org" "~/org/ensectable.org" "~/org/kitchen-assistant.org" "~/org/personal-development.org"))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
