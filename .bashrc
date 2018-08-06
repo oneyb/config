@@ -266,7 +266,7 @@ pull-pio-dev () {
 # https://github.com/kermit666/dotfiles/tree/master/autokey
 
 # R & Python stuff
-export R_PROFILE=$HOME/r/rprofile.site
+export R_PROFILE=$HOME/documents/config/rprofile.site
 export WORKON_HOME=$HOME/.virtualenvs
 
 ### ----- Random Documentation stuff ----- ###
