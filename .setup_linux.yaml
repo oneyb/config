@@ -171,7 +171,7 @@
       - xsel
       - xul-ext-firebug
       - xul-ext-itsalltext
-      - xul-ext-monkeysphere 
+      # - xul-ext-monkeysphere 
       - xul-ext-noscript
       - libgdal-dev
       - libmariadb-dev 
@@ -235,7 +235,8 @@
       - html5lib
       - reportlab
       - youtube-dl
-      - syncthingmanager
+      # - syncthingmanager
+      - git+https://github.com/oneyb/syncthingmanager
       - gcalcli
       - jinja2
 
