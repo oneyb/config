@@ -764,9 +764,9 @@ package is loaded, you should place your code here."
                 )
               (setq org-tags-column -91)
               (setq org-tag-alist '(
-                                    ("out"  . ?e)
+                                    ("out"      . ?o)
                                     ("home"     . ?h)
-                                    ("away"    . ?r)
+                                    ("away"     . ?a)
                                     ("phone"    . ?p)
                                     ("computer" . ?c)
                                     ))
