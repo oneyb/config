@@ -16,6 +16,14 @@ wget https://raw.github.com/oneyb/zotero_installer/master/zotero_installer.sh -O
 chmod +x /tmp/zotero_installer.sh
 sudo /tmp/zotero_installer.sh
 
+# flutter
+wget https://storage.googleapis.com/flutter_infra/releases/beta/linux/flutter_linux_v0.5.1-beta.tar.xz
+sudo tar xJf flutter_linux_v0.5.1-beta.tar.xz -C ~/Android/
+
+# android studio
+sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1 libbz2-1.0:i386
+sudo unzip -d /opt/ android-studio-ide-173.4907809-linux.zip
+sudo apt-get install qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils ia32-libs-multiarch
 # Playonlinux!!
 # wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
 # sudo wget http://deb.playonlinux.com/playonlinux_wheezy.list -O /etc/apt/sources.list.d/playonlinux.list

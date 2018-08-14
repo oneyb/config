@@ -131,9 +131,14 @@ function o()
     fi
 }
 
-function begin-working()
+function begin-working-baerfutt-website()
 {
     cd ~/github/baerfutt.github.io/; source venv/bin/activate; xdotool type 'python app.py'
+}
+
+function begin-working-app()
+{
+    cd ~/Sync/flutter/flutter_lkjh; flutter run
 }
 
 function check-setpath()
