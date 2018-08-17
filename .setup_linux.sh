@@ -287,11 +287,28 @@ else
 fi
 echo -e "if [ -d /usr/local/src/texlive/ ]; then\n\tPATH=\"/usr/local/src/texlive/bin/$(uname -m)-$(uname -s | sed "s/.*/\L&/"):\$PATH\"\nfi"
 
-# systemd-stuff
-sudo systemctl disable tor
-sudo systemctl stop tor
+# # systemd-stuff
+# sudo systemctl disable tor
+# sudo systemctl stop tor
 
-# Terminal pimpinghttps://github.com/afg984/base16-xfce4-terminal.git
+wget https://raw.githubusercontent.com/raspberrypi-ui/piclone/master/src/backup 
+bash backup /dev/sda
+sudo dbus-launch piclone
+wget http://www.iozone.org/src/current/iozone3_434.tar
+cat iozone3_434.tar | tar -x
+cd iozone3_434/src/current
+make linux-arm
+~/iozone3_434/src/current/iozone -e -I -a -s 100M -r 4k -i 0 -i 1 -i 2 -f test.txt
+
+sudo apt-get update
+sudo apt-get install apt-transport-https
+sudo sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
+sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list'
+
+sudo apt-get update
+sudo apt-get install dart
+
+# Terminal pimping https://github.com/afg984/base16-xfce4-terminal.git
 git clone https://github.com/afg984/base16-xfce4-terminal.git ~/.config/base16-xfce4-terminal
 [[ ! -d  ~/.local/share/xfce4/terminal/colorschemes/ ]] && mkdir -p ~/.local/share/xfce4/terminal/colorschemes/ 
 rsync -vurt --delete ~/.config/base16-xfce4-terminal/colorschemes/ ~/.local/share/xfce4/terminal/colorschemes/

@@ -225,6 +225,10 @@ function backport_debian()
     sudo dpkg -i *.deb
 }
 
+function concatenate-media ()
+{
+    ffmpeg -f concat -safe 0 -i <(for f in $*; do echo "file '$PWD/$f'"; done) -c copy concatenated-${1}
+}
 
 # cool function name
 function gitty-up () {

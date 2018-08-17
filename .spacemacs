@@ -550,8 +550,9 @@ package is loaded, you should place your code here."
                 "," 'dart-send-line-or-region-and-step
                 "i" 'complete-symbol
                 "?" 'dart-show-hover
-                "f" 'dart-find-refs 
-                "p" 'dart-popup-mode
+                "r" 'dart-find-refs 
+                "f" 'dart-format
+                "hh" 'dart-goto
                 ;; "," 'sh-execute-region
                 ;; "." 'sh-exec
                 ;; "hh" 'sh-heredoc
@@ -559,6 +560,7 @@ package is loaded, you should place your code here."
               (setq dart-sdk-path "/home/oney/Android/flutter/bin/cache/dart-sdk/")
               (setq dart-executable-path "/home/oney/Android/flutter/bin/cache/dart-sdk/bin/dart")
               (setq dart-enable-analysis-server t)
+              (setq dart-format-on-save t)
               (flycheck-mode)
               (setq dart-debug t)
               
