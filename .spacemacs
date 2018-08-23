@@ -386,6 +386,7 @@ explicitly specified that a variable should be set before a
 package is loaded, you should place your code here."
   ;; (xclip-mode 1)
   ;; (fset 'evil-visual-update-x-selection 'ignore)
+  (setq browse-url-firefox-program "chromium")
   (setq warning-minimum-level :error)
   (define-key ivy-minibuffer-map (kbd "<escape>")
     (defhydra soo-ivy (:hint nil :color pink)
