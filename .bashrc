@@ -225,7 +225,19 @@ function backport_debian()
     sudo dpkg -i *.deb
 }
 
+function wait-on-process-then ()
+{
+    if [[ $# -eq 0 ]]; then
+        type wait-on-process-then;
+    else 
+        while [[ -n $(pgrep $1) ]]; do echo waiting on $1; sleep 10; done
+        ${@:2}
+    fi
+}
+# wait-on-process-then firefox echo craap
+
 function concatenate-media ()
+
 {
     ffmpeg -f concat -safe 0 -i <(for f in $*; do echo "file '$PWD/$f'"; done) -c copy concatenated-${1}
 }
@@ -669,8 +681,8 @@ fi
 set -o vi
 bind -m vi-insert "\C-l":clear-screen
 
-anamnesis --restart
-rsync -ut ~/org/ ~/Sync/org
+anamnesis --restart &> /dev/null
+rsync -a --exclude=".stfolder" ~/org/ ~/Sync/org/
 
 # on Linux the default is
 export ARDUINO_PATH=/usr/local/arduino
