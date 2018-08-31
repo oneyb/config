@@ -697,17 +697,17 @@ package is loaded, you should place your code here."
               (add-hook 'org-capture-mode-hook 'evil-insert-state)
               (setq org-capture-templates
                     '(
-                      ("t" "General Tasks" entry (file "~/org/capture.org") "* TODO %?\t\t%^G\n %i")
-                      ("l" "Linked Task" entry (file "~/org/capture.org") "* TODO %? %a \t\t :computer:\n %i")
-                      ("p" "Programming Task" entry (file "~/org/capture.org") "* TODO %? \t\t :computer:\n %i")
-                      ("s" "Specific Programming Task" entry (file "~/org/capture.org") "* TODO %? %a \t\t :computer:\n %i")
-                      ("a" "Set Appt." entry (file "~/org/capture.org") "* %?\t\t%^G\n SCHEDULED: %^T\n %i")
-                      ("i" "Collect Info" entry (file "~/org/capture.org") "* %? %x \n %i")
-                      ("m" "Emails to write" entry (file "~/org/capture.org") "* TODO %?%x \t\t:computer:phone:\n %i ")
-                      ("c" "Phone calls to make" entry (file "~/org/capture.org") "* TODO call %?%x \t\t:phone:\n %i ")
-                      ("j" "Jobs" entry (file "~/org/capture.org") "* TODO apply to %? %x \t :job:computer:")
-                      ("J" "Jokes" entry (file "~/org/capture.org") "* Joke: %?\n %U %i")
-                      ("b" "Braindumps" entry (file "~/org/capture.org") "* Braindump: %?\n %U\n %i")
+                      ("t" "General Tasks" entry (file "~/org/0-capture.org") "* TODO %?\t\t%^G\n %i")
+                      ("l" "Linked Task" entry (file "~/org/0-capture.org") "* TODO %? %a \t\t :computer:\n %i")
+                      ("p" "Programming Task" entry (file "~/org/0-capture.org") "* TODO %? \t\t :computer:\n %i")
+                      ("s" "Specific Programming Task" entry (file "~/org/0-capture.org") "* TODO %? %a \t\t :computer:\n %i")
+                      ("a" "Set Appt." entry (file "~/org/0-capture.org") "* %?\t\t%^G\n SCHEDULED: %^T\n %i")
+                      ("i" "Collect Info" entry (file "~/org/0-capture.org") "* %? %x \n %i")
+                      ("m" "Emails to write" entry (file "~/org/0-capture.org") "* TODO %?%x \t\t:computer:phone:\n %i ")
+                      ("c" "Phone calls to make" entry (file "~/org/0-capture.org") "* TODO call %?%x \t\t:phone:\n %i ")
+                      ("j" "Jobs" entry (file "~/org/0-capture.org") "* TODO apply to %? %x \t :job:computer:")
+                      ("J" "Jokes" entry (file "~/org/0-capture.org") "* Joke: %?\n %U %i")
+                      ("b" "Braindumps" entry (file "~/org/0-capture.org") "* Braindump: %?\n %U\n %i")
                       ))
               ;; (require 'org-ref)
               ;; ;; (defun helm-bibtex-format-pandoc-citation (keys)
@@ -813,7 +813,6 @@ package is loaded, you should place your code here."
               ;;         "bibtex %b"
               ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"
               ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"))
-              (require 'ox-koma-letter)
               (add-to-list 'org-latex-classes
                            '("a4-labels"
                              "\\documentclass[a4paper,12pt]{article}
@@ -905,3 +904,18 @@ package is loaded, you should place your code here."
   ;; (setq request-backend 'url-retrieve )
   (setq request-message-level 'debug)
   )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol t)
+ '(package-selected-packages
+   (quote
+    (zotxt yapfify yaml-mode ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smex smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin platformio-mode pip-requirements persp-mode pcre2el paradox pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-dart ob-async neotree mwim move-text mmm-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc jinja2-mode ivy-hydra insert-shebang indent-guide ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-make google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump diminish define-word dart-mode dactyl-mode cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-shell company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk ansible-doc ansible aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

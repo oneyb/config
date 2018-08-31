@@ -682,7 +682,7 @@ set -o vi
 bind -m vi-insert "\C-l":clear-screen
 
 anamnesis --restart &> /dev/null
-rsync -a --exclude=".stfolder" ~/org/ ~/Sync/org/
+rsync -a --delete --exclude=".stfolder" ~/org/ ~/Sync/org/
 
 # on Linux the default is
 export ARDUINO_PATH=/usr/local/arduino
