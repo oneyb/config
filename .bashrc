@@ -141,6 +141,11 @@ function begin-working-app()
     cd ~/Sync/flutter/flutter_lkjh; flutter run
 }
 
+function begin-working-mellowsplit-website()
+{
+    cd ~/github/baerfutt.github.io/; source venv/bin/activate; xdotool type 'python app.py'
+}
+
 function check-setpath()
 {
     pres=$(echo $PATH | grep texlive)
@@ -247,30 +252,37 @@ function gitty-up () {
     git commit -a -m "$*" && git push origin master
 }
 
+sync-machines () {
+    box=oney@tinkbox.local
+    rsync -vurt --delete .profile $box:/home/oney/
+    rsync -vurt --delete $HOME/literature/ $box:/home/oney/literature/
+    rsync -vurt --delete $HOME/github/ $box:/home/oney/github/
+}
+
 push-pio-dev () {
     box=pi@raspberrypi.local
-    rsync -vurt $HOME/ensectable/ $box:/home/pi/ensectable/ 
+    rsync -vurt $HOME/gebastel/ $box:/home/pi/gebastel/ 
     box=pi@hassbian.local
-    rsync -vurt $HOME/ensectable/rpi-ap-ha/homeassistant/ $box:/home/homeassistant/.homeassistant/ 
+    rsync -vurt $HOME/gebastel/rpi-ap-ha/homeassistant/ $box:/home/homeassistant/.homeassistant/ 
 }
 push-pio-dev-del () {
     box=pi@raspberrypi.local
-    rsync -vurt --delete $HOME/ensectable/ $box:/home/pi/ensectable/ 
+    rsync -vurt --delete $HOME/gebastel/ $box:/home/pi/gebastel/ 
     box=pi@hassbian.local
-    rsync -vurt --delete $HOME/ensectable/rpi-ap-ha/homeassistant/ $box:/home/homeassistant/.homeassistant/ 
+    rsync -vurt --delete $HOME/gebastel/rpi-ap-ha/homeassistant/ $box:/home/homeassistant/.homeassistant/ 
 }
 
 pull-pio-dev-del () {
     box=pi@raspberrypi.local
-    rsync -vurt --delete $box:/home/pi/ensectable/ $HOME/ensectable/
+    rsync -vurt --delete $box:/home/pi/gebastel/ $HOME/gebastel/
     box=pi@hassbian.local
-    rsync -vurt --delete $box:/home/homeassistant/.homeassistant/ $HOME/ensectable/rpi-ap-ha/homeassistant/
+    rsync -vurt --delete $box:/home/homeassistant/.homeassistant/ $HOME/gebastel/rpi-ap-ha/homeassistant/
 }
 pull-pio-dev () {
     box=pi@raspberrypi.local
-   rsync -vurt $box:/home/pi/ensectable/ $HOME/ensectable/
+   rsync -vurt $box:/home/pi/gebastel/ $HOME/gebastel/
    box=pi@hassbian.local
-   rsync -vurt $box:/home/homeassistant/.homeassistant/ $HOME/ensectable/rpi-ap-ha/homeassistant/
+   rsync -vurt $box:/home/homeassistant/.homeassistant/ $HOME/gebastel/rpi-ap-ha/homeassistant/
 }
 
 # tex to docx
@@ -561,6 +573,8 @@ function paperpix-to-pdf ()
         whiteboard /tmp/${f} ${f%.*}-paper.${f##*.}.pdf
     done
 }
+
+
 
 function go-fish-pictures()
 {

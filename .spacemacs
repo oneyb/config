@@ -371,7 +371,7 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   ;; set this before evil loads
-  (setq evil-toggle-key (kbd "C-e"))
+  (setq evil-toggle-key (kbd "C-h"))
   (setq ess-eval-visibly nil)
   (setq ess-ask-for-ess-directory nil)
   (setq org-todo-keywords '((sequence "WAIT" "TODO" "NEXT" "|" "DONE")))
@@ -645,6 +645,7 @@ package is loaded, you should place your code here."
                 )
               ;; (setq python-shell-interpreter "/usr/bin/ipython")
               (setq python-shell-interpreter "ipython3")
+              (setq python-enable-yapf-format-on-save t)
               ;;       python-shell-interpreter-args "--simple-prompt -i")
               )
             )
@@ -687,6 +688,9 @@ package is loaded, you should place your code here."
   (add-hook 'org-mode-hook
             (lambda ()
               (require 'ox-koma-letter)
+              (require 'org-contacts)
+              (setq org-contacts-files (list "~/documents/contacts/contacts.org" ))
+              (setq org-contacts-vcard-file "~/documents/contacts/org-contacts.vcf")
               (delete '("\\.pdf\\'" . default) org-file-apps)
               (add-to-list 'org-file-apps '(
                                             ("\\.pdf\\'" . "evince %s")
@@ -722,6 +726,7 @@ package is loaded, you should place your code here."
               ;;                                          (mapconcat 'identity x ",")
               ;;                                          "}")) ""))))
               ;; ))
+              ;; (setq org-agenda-files (-remove (lambda (str) (string-match  "#" str)) (file-expand-wildcards "~/org/*.org")))
               (setq org-agenda-files (-remove
                                       (lambda (str) (string-match  "#" str))
                                       (file-expand-wildcards "~/org/*.org")))
@@ -903,16 +908,16 @@ package is loaded, you should place your code here."
             )
   ;; (setq request-backend 'url-retrieve )
   (setq request-message-level 'debug)
+  (remove-hook 'python-mode-hook 'spacemacs//init-eldoc-python-mode)
   )
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(evil-want-Y-yank-to-eol t)
  '(package-selected-packages
    (quote
-    (zotxt yapfify yaml-mode ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spaceline smex smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin platformio-mode pip-requirements persp-mode pcre2el paradox pandoc-mode ox-twbs ox-pandoc orgit org-ref org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-dart ob-async neotree mwim move-text mmm-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc jinja2-mode ivy-hydra insert-shebang indent-guide ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-make google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh-md fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump diminish define-word dart-mode dactyl-mode cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-shell company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk ansible-doc ansible aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
+    (zotxt request-deferred deferred yapfify yaml-mode web-mode web-beautify vimrc-mode unfill tagedit smeargle slim-mode scss-mode sass-mode pyvenv pytest pyenv-mode py-isort pug-mode platformio-mode pip-requirements pandoc-mode ox-twbs ox-pandoc orgit org-ref pdf-tools helm-bibtex biblio parsebib biblio-core tablist org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download ob-dart ob-async mwim mmm-mode markdown-toc markdown-mode magit-gitflow magit-gh-pulls lua-mode livid-mode skewer-mode simple-httpd live-py-mode less-css-mode key-chord json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc jinja2-mode insert-shebang ibuffer-projectile hy-mode htmlize haml-mode gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh marshal logito pcache ht gh-md fuzzy flycheck-pos-tip pos-tip fish-mode evil-magit magit magit-popup git-commit ghub let-alist with-editor ws-butler winum which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline smex restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint ivy-hydra indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-make google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump diminish define-word dart-mode dactyl-mode cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-shell company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk ansible-doc ansible aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
