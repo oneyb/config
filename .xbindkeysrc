@@ -32,8 +32,8 @@ Mod4 + c
 # "~/bin/drop"
 "systemctl --user restart syncthing"
 Mod4 + g
-# "sh -c '~/bin/aenea.sh w7'"
-# F6
+"sh -c '~/bin/aenea.sh w7'"
+F7
 # "sh -c '~/bin/aenea.sh x'"
 # F7
 "~/bin/toggle-sticky-keys.sh"

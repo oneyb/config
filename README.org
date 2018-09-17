@@ -6,18 +6,20 @@ A repository for my no longer embarassing config files
    - Editing style: vim+emacs=spacemacs(awesomeness)
    - WM: xfwm4
    - Reference manager: zotero
-   - Number cruncher: ~python~, ~R~, paper
-   - Note taker: org-mode, paper
+   - Number cruncher: ~python~, ~R~, ~C~, paper
+   - Note taker: org-mode, orgzly, paper
    - Text compiler: org-mode, latex, libreoffice
-   - Website builder: flask, frappe
+   - Website builder: flask, AngularDart
    - ERP: ERPnext
+   - Stuff Syncer: -dropbox-, syncthing!
    - Preferred user interface: emacs, command-line
    - repository: github!
 
 * Usage
 Should you be so inclined, or if I forget stuff, we can come here and figure out how to use this crap
 
-** anamnesis.service
+** anamnesis.service DOESN'T WORK (X11 not running yet) 
+... and systemd timer does not work either. 
 [[http://anamnesis.sourceforge.net/][Anamnesis]] is an awesome and awesomely simple clipboard manager. Ever have to copy and paste something but get sidetracked and have to go back and copy it again? Is that annoying? Well:
 
 *** Anamnesis dependencies
@@ -68,11 +70,8 @@ Copies all of the files in this repository into a clean version-controlled direc
 Back when I thought the awesome window manager was indeed awesome. A bug that where a compose key could not bound left my computer hot and slow, and a bad taste in my mouth
 ** rprofile.site
 To customize ~R~.
-** TODO merge .setup_linux.sh into this file
-
-   
-** i3 [[file:config]] 
-The i3 window manager ist dead simple and works nicely. 
+** TODO translate .setup_linux.sh into ansible playbook
+ 
 ** .spacemacs
 Modest setup to stand on the shoulders of the two true giants of the text editing world.
 ** .vimrc

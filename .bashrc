@@ -230,6 +230,20 @@ function backport_debian()
     sudo dpkg -i *.deb
 }
 
+function update-boxes ()
+{
+    ~/bin/.copy-config.sh out
+    cd $HOME/documents/config
+    git commit . -m 'gitting things together' && git push origin master
+    cd -
+    if [[ $(hostname) == 'tinkbox.local' ]]; then
+        goal=oney@oney.local
+    else
+        goal=oney@tinkbox.local
+    fi
+    ssh $goal ~/bin/.copy-config.sh in 
+}
+
 function wait-on-process-then ()
 {
     if [[ $# -eq 0 ]]; then
