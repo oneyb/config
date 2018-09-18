@@ -904,7 +904,7 @@ package is loaded, you should place your code here."
               ;; (setq bibtex-completion-bibliography '("~/zotero/insects.bib"))
               ;; (setq org-archive-location "~/org-archive/datetree.org::datetree/* Finished Tasks")
               ;; (setq org-archive-location "~/org-archive/%s::")
-              (setq org-archive-location "~/Sync/org/org-archive/%s::datetree/")
+              (setq org-archive-location "~/Sync/org/%s::datetree/")
               )
             (add-to-list 'default-frame-alist '(background-color . "beige"))
             )
