@@ -710,9 +710,8 @@ set -o vi
 bind -m vi-insert "\C-l":clear-screen
 
 anamnesis --restart &> /dev/null
-cp -a ~/Sync/org/ /d/academic-archive/org/
+# git clone -l --no-hardlinks ~/Sync/org /stuff/academic-archive/org
+rsync -urt ~/Sync/org/ /stuff/academic-archive/org/
 rsync -a --cvs-exclude --delete --exclude=".gitignore" --exclude=".stfolder" --exclude="org-archive" ~/org/ ~/Sync/org/
 bash -c 'cd ~/Sync/org/; git commit . -m "$(date +%F-%R) saving org stuff progress"' &> /dev/null
-# on Linux the default is
-export ARDUINO_PATH=/usr/local/arduino
-export SKETCHBOOK_DIR=$HOME/Arduino
+
