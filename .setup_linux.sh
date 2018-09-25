@@ -217,6 +217,32 @@ OnBootSec=26s
 systemctl --user enable emacs.timer
 systemctl --user start emacs.timer
 
+
+# set up atom-chrome https://github.com/alpha22jp/atomic-chrome
+
+# Set up automatic phone sync
+echo -e  "
+# ACTION=="add",ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860",MODE="660", GROUP="plugdev",RUN+="/bin/su oney -c /home/oney/bin/.sync_phone.sh | at now"
+# ACTION=="add",ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860",TAG+="systemd",ENV{SYSTEMD_WANTS}="sync-phone.service" 
+ACTION=="add",ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860",TAG+="systemd",ENV{SYSTEMD_USER_WANTS}="sync-phone.service" 
+" | sudo tee -a /etc/udev/rules.d/phone-plugin.rule
+
+echo -e  "
+[Unit]
+Description=Automatically sync phone with udev and systemd
+
+[Service]
+WorkingDirectory=%h
+Type=oneshot
+ExecStart=%h/bin/.sync_phone.sh
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target
+" > ~/.config/systemd/user/sync-phone.service
+systemctl --user enable sync-phone.service
+
+
 # anamnesis
 # echo -e  "[Unit]
 # Description=Anamnesis is a clipboard manager. It stores all clipboard history and offers an easy interface to do a full-text search on the items of its history.

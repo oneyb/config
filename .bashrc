@@ -502,6 +502,19 @@ function pdf-shrink ()
        -dCompressFonts=true -r150 -sOutputFile=$opdf $1
 }
 
+function pdf-shrink-rasterize () {
+    if [ $# -eq 0 ]; then
+        echo usage $0 input_pdf [output_pdf]
+    elif [ $# -eq 1 ]; then
+        opdf=${1/.pdf/-compress.pdf}
+    else
+        opdf=$2
+    fi
+    tmp=$(tempfile)
+    pdftocairo -jpeg $1 $tmp
+    convert $tmp*jpg $opdf
+}
+
 
 function reduce-pix()
 {
@@ -711,7 +724,9 @@ bind -m vi-insert "\C-l":clear-screen
 
 anamnesis --restart &> /dev/null
 # git clone -l --no-hardlinks ~/Sync/org /stuff/academic-archive/org
-rsync -urt ~/Sync/org/ /stuff/academic-archive/org/
+if [ -d /stuff/academic-archive/org/ ]; then
+    rsync -urt ~/Sync/org/ /stuff/academic-archive/org/
+fi
 rsync -a --cvs-exclude --delete --exclude=".gitignore" --exclude=".stfolder" --exclude="org-archive" ~/org/ ~/Sync/org/
 bash -c 'cd ~/Sync/org/; git commit . -m "$(date +%F-%R) saving org stuff progress"' &> /dev/null
 
