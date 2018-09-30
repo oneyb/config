@@ -270,7 +270,9 @@ sync-machines () {
     box=oney@tinkbox.local
     rsync -vurt --delete .profile $box:/home/oney/
     rsync -vurt --delete $HOME/literature/ $box:/home/oney/literature/
+    rsync -vurt --delete $HOME/documents/ $box:/home/oney/documents/
     rsync -vurt --delete $HOME/github/ $box:/home/oney/github/
+    rsync -vurt --delete $HOME/gebastel/ $box:/home/oney/gebastel/
 }
 
 push-pio-dev () {
