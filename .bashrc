@@ -275,30 +275,20 @@ sync-machines () {
     rsync -vurt --delete $HOME/gebastel/ $box:/home/oney/gebastel/
 }
 
-push-pio-dev () {
-    box=pi@raspberrypi.local
-    rsync -vurt $HOME/gebastel/ $box:/home/pi/gebastel/ 
+push-rpi-config () {
+    # box=pi@raspberrypi.local
+    # rsync -vurt $HOME/gebastel/ $box:/home/pi/gebastel/ 
     box=pi@hassbian.local
-    rsync -vurt $HOME/gebastel/rpi-ap-ha/homeassistant/ $box:/home/homeassistant/.homeassistant/ 
-}
-push-pio-dev-del () {
-    box=pi@raspberrypi.local
-    rsync -vurt --delete $HOME/gebastel/ $box:/home/pi/gebastel/ 
-    box=pi@hassbian.local
-    rsync -vurt --delete $HOME/gebastel/rpi-ap-ha/homeassistant/ $box:/home/homeassistant/.homeassistant/ 
-}
+    rsync -vurt $HOME/gebastel/deployed/rpi-heisterkampstrasse/homeassistant/ $box:/home/homeassistant/.homeassistant/ 
+    ssh $box sudo systemctl restart home-assistant@homeassistant.service &
 
-pull-pio-dev-del () {
-    box=pi@raspberrypi.local
-    rsync -vurt --delete $box:/home/pi/gebastel/ $HOME/gebastel/
-    box=pi@hassbian.local
-    rsync -vurt --delete $box:/home/homeassistant/.homeassistant/ $HOME/gebastel/rpi-ap-ha/homeassistant/
 }
-pull-pio-dev () {
-    box=pi@raspberrypi.local
-   rsync -vurt $box:/home/pi/gebastel/ $HOME/gebastel/
-   box=pi@hassbian.local
-   rsync -vurt $box:/home/homeassistant/.homeassistant/ $HOME/gebastel/rpi-ap-ha/homeassistant/
+push-rpi-config-del () {
+    # box=pi@raspberrypi.local
+    # rsync -vurt --delete $HOME/gebastel/ $box:/home/pi/gebastel/ 
+    box=pi@hassbian.local
+    rsync -vurt --delete $HOME/gebastel/deployed/rpi-heisterkampstrasse/homeassistant/ $box:/home/homeassistant/.homeassistant/ 
+    ssh $box sudo systemctl restart home-assistant@homeassistant.service &
 }
 
 # tex to docx
