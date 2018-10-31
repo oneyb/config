@@ -133,7 +133,30 @@ function o()
 
 function begin-working-baerfutt-website()
 {
-    cd ~/github/baerfutt.github.io/; source venv/bin/activate; xdotool type 'python app.py'
+    venv=oneyb.github.io
+    if [ ! -d ~/venvs/$venv ]; then
+        virtualenv ~/venvs/$venv
+        source ~/venvs/$venv/bin/activate
+        pip install -r ~/github/$venv/requirements.txt
+    else 
+        source ~/venvs/$venv/bin/activate
+        cd ~/github/$venv/
+        xdotool type 'python app.py'
+    fi
+}
+
+function begin-working-baerfutt-website()
+{
+    venv=baerfutt.github.io
+    if [ ! -d ~/venvs/$venv ]; then
+        virtualenv ~/venvs/$venv
+        source ~/venvs/$venv/bin/activate
+        pip install -r ~/github/$venv/requirements.txt
+    else 
+        source ~/venvs/$venv/bin/activate
+        cd ~/github/$venv/
+        xdotool type 'python app.py'
+    fi
 }
 
 function begin-working-app()
@@ -141,10 +164,6 @@ function begin-working-app()
     cd ~/Sync/flutter/flutter_lkjh; flutter run
 }
 
-function begin-working-mellowsplit-website()
-{
-    cd ~/github/baerfutt.github.io/; source venv/bin/activate; xdotool type 'python app.py'
-}
 
 function check-setpath()
 {
@@ -275,20 +294,30 @@ sync-machines () {
     rsync -vurt --delete $HOME/gebastel/ $box:/home/oney/gebastel/
 }
 
-push-rpi-config () {
-    # box=pi@raspberrypi.local
-    # rsync -vurt $HOME/gebastel/ $box:/home/pi/gebastel/ 
+push-pio-dev () {
+    box=pi@raspberrypi.local
+    rsync -vurt $HOME/gebastel/ $box:/home/pi/gebastel/ 
     box=pi@hassbian.local
-    rsync -vurt $HOME/gebastel/deployed/rpi-heisterkampstrasse/homeassistant/ $box:/home/homeassistant/.homeassistant/ 
-    ssh $box sudo systemctl restart home-assistant@homeassistant.service &
-
+    rsync -vurt $HOME/gebastel/rpi-ap-ha/homeassistant/ $box:/home/homeassistant/.homeassistant/ 
 }
-push-rpi-config-del () {
-    # box=pi@raspberrypi.local
-    # rsync -vurt --delete $HOME/gebastel/ $box:/home/pi/gebastel/ 
+push-pio-dev-del () {
+    box=pi@raspberrypi.local
+    rsync -vurt --delete $HOME/gebastel/ $box:/home/pi/gebastel/ 
     box=pi@hassbian.local
-    rsync -vurt --delete $HOME/gebastel/deployed/rpi-heisterkampstrasse/homeassistant/ $box:/home/homeassistant/.homeassistant/ 
-    ssh $box sudo systemctl restart home-assistant@homeassistant.service &
+    rsync -vurt --delete $HOME/gebastel/rpi-ap-ha/homeassistant/ $box:/home/homeassistant/.homeassistant/ 
+}
+
+pull-pio-dev-del () {
+    box=pi@raspberrypi.local
+    rsync -vurt --delete $box:/home/pi/gebastel/ $HOME/gebastel/
+    box=pi@hassbian.local
+    rsync -vurt --delete $box:/home/homeassistant/.homeassistant/ $HOME/gebastel/rpi-ap-ha/homeassistant/
+}
+pull-pio-dev () {
+    box=pi@raspberrypi.local
+   rsync -vurt $box:/home/pi/gebastel/ $HOME/gebastel/
+   box=pi@hassbian.local
+   rsync -vurt $box:/home/homeassistant/.homeassistant/ $HOME/gebastel/rpi-ap-ha/homeassistant/
 }
 
 # tex to docx

@@ -85,7 +85,7 @@ ln -sf ~/bin/src/anamnesis-1.0.4/source/anamnesis.py ~/bin/anamnesis
 # Messenger services with Franz
 cd $HOME/bin/src/
 rm Rambox-latest-x64.tar.gz
-[[ ! -f Rambox-latest-x64.tar.gz ]] && wget https://github.com/ramboxapp/community-edition/releases/download/0.6.1/Rambox-0.6.1-linux-x64.tar.gz -O Rambox-latest-x64.tar.gz && sudo \rm -rf /opt/Rambox-*
+[[ ! -f Rambox-latest-x64.tar.gz ]] && wget https://github.com/ramboxapp/community-edition/releases/download/0.6.2/Rambox-0.6.2-linux-x64.tar.gz -O Rambox-latest-x64.tar.gz && sudo \rm -rf /opt/Rambox-*
 sudo tar xzf Rambox-latest-x64.tar.gz -C /opt/
 sudo ln -sf /opt/Rambox*/rambox /usr/local/bin/rambox
 [[ ! -f /usr/share/icons/rambox.png ]] && sudo wget https://rambox.pro/images/logo.png -O /usr/share/icons/rambox.png
@@ -224,11 +224,11 @@ systemctl --user start emacs.timer
 # set up atom-chrome https://github.com/alpha22jp/atomic-chrome
 
 # Set up automatic phone sync
-echo -e  "
+echo -e  '
 # ACTION=="add",ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860",MODE="660", GROUP="plugdev",RUN+="/bin/su oney -c /home/oney/bin/.sync_phone.sh | at now"
 # ACTION=="add",ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860",TAG+="systemd",ENV{SYSTEMD_WANTS}="sync-phone.service" 
 ACTION=="add",ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860",TAG+="systemd",ENV{SYSTEMD_USER_WANTS}="sync-phone.service" 
-" | sudo tee -a /etc/udev/rules.d/phone-plugin.rule
+' | sudo tee -a /etc/udev/rules.d/phone-plugin.rule
 
 echo -e  "
 [Unit]
@@ -343,8 +343,15 @@ git clone https://github.com/afg984/base16-xfce4-terminal.git ~/.config/base16-x
 rsync -vurt --delete ~/.config/base16-xfce4-terminal/colorschemes/ ~/.local/share/xfce4/terminal/colorschemes/
 # Choose 'Nord'
 
-git clone https://github.com/google/adb-sync ~/bin/src/adb-sync/
-ln -sf ~/bin/src/adb-sync/adb-* ~/bin/.
+if [ -d ~/bin/src/adb-sync/ ]; then
+    cd ~/bin/src/adb-sync/
+    git pull
+    cd -
+else
+    # git clone https://github.com/google/adb-sync ~/bin/src/adb-sync/
+    git clone https://github.com/chatziko/adb-sync ~/bin/src/adb-sync/
+    ln -sf ~/bin/src/adb-sync/adb-* ~/bin/.
+fi
 
 
 # May change this
