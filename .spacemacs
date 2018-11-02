@@ -736,6 +736,11 @@ package is loaded, you should place your code here."
               (setq org-contacts-files (list "~/documents/contacts/contacts.org" ))
               ;; (setq org-contacts-files (list "~/documents/contacts/processed/OLD-CONTACTS.org" ))
               (setq org-contacts-vcard-file "~/documents/contacts/org-contacts.vcf")
+              ;; (setq org-agenda-entry-text-exclude-regexps '("DONE"))
+              ;; org-stuck-projects is a variable defined in ‘org-agenda.el’.
+              ;; Its value is ("+LEVEL=2/-DONE" ("TODO" "NEXT" "NEXTACTION") nil "")
+              (setq org-stuck-projects '("+LEVEL=1/-DONE" ("TODO" "NEXT") ("ref") "\\<SCHEDULED\\>|\\<DEADLINE\\>"))
+
               (delete '("\\.pdf\\'" . default) org-file-apps)
               (add-to-list 'org-file-apps '(
                                             ("\\.pdf\\'" . "evince %s")
@@ -751,7 +756,7 @@ package is loaded, you should place your code here."
                       ("p" "Programming Task" entry (file "~/org/0-capture.org") "* TODO %? \t\t :computer:\n %i")
                       ("s" "Specific Programming Task" entry (file "~/org/0-capture.org") "* TODO %? %a \t\t :computer:\n %i")
                       ("a" "Set Appt." entry (file "~/org/0-capture.org") "* %?\t\t%^G\n SCHEDULED: %^T\n %i")
-                      ("i" "Collect Info" entry (file "~/org/0-capture.org") "* %? %x \n %i")
+                      ("i" "Collect Info" entry (file "~/org/0-capture.org") "* %? %x \t\t:ref:\n %i")
                       ("m" "Emails to write" entry (file "~/org/0-capture.org") "* TODO %?%x \t\t:computer:phone:\n %i ")
                       ("c" "Phone calls to make" entry (file "~/org/0-capture.org") "* TODO call %?%x \t\t:phone:\n %i ")
                       ("j" "Jobs" entry (file "~/org/0-capture.org") "* TODO apply to %? %x \t :getjob:computer:")
@@ -842,6 +847,7 @@ package is loaded, you should place your code here."
                                     ("computer" . ?c)
                                     ("learn"    . ?l)
                                     ("getjob"   . ?j)
+                                    ("ref"      . ?r)
                                     ))
               (setq org-agenda-custom-commands
                     '(

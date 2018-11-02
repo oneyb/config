@@ -248,6 +248,7 @@
       # - syncthingmanager
       - git+https://github.com/oneyb/syncthingmanager
       - jinja2
+      - cppman
 
 
   - name: get adobe reader

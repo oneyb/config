@@ -4,6 +4,10 @@ cd ~
 
 sudo apt-get update
 
+ansible-playbook -i tinkbox.local, -u oney ~/bin/.setup_linux.yaml --ask-become-pass
+
+$? == 0 && cppman -c
+
 sudo loginctl enable-linger $USER
 
 echo "c.InteractiveShellApp.extensions = ['grasp']" >> ~/.ipython/profile_default/ipython_config.py 
