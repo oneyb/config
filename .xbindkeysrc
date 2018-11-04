@@ -2,9 +2,10 @@
 "emacsclient -c --eval '(org-capture)'"
 Mod4 + i
 # "emacsclient -c"
-"emacsclient -c --eval '(org-tags-view t "computer")' --eval '(delete-other-windows)'"
+# "emacsclient -c --eval '(org-tags-view t "computer")' --eval '(delete-other-windows)'"
+"emacsclient -c --eval '(org-search-view t "+NEXT -TODO")' --eval '(delete-other-windows)'"
 Mod4 + e
-"emacsclient -c --eval '(org-tags-view t "computer")' --eval '(delete-other-windows)'"
+"emacsclient -c --eval '(org-search-view t "+NEXT -TODO")' --eval '(delete-other-windows)'"
 Mod1 + Control + e
 "xset dpms force off"
  Mod4 + d
