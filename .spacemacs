@@ -756,7 +756,7 @@ package is loaded, you should place your code here."
                       ("p" "Programming Task" entry (file "~/org/0-capture.org") "* TODO %? \t\t :computer:\n %i")
                       ("s" "Specific Programming Task" entry (file "~/org/0-capture.org") "* TODO %? %a \t\t :computer:\n %i")
                       ("a" "Set Appt." entry (file "~/org/0-capture.org") "* %?\t\t%^G\n SCHEDULED: %^T\n %i")
-                      ("i" "Collect Info" entry (file "~/org/0-capture.org") "* %? %x \t\t:ref:\n %i")
+                      ("i" "Collect Info" entry (file "~/org/0-capture.org") "* %? %x \t\t:note:\n %i")
                       ("m" "Emails to write" entry (file "~/org/0-capture.org") "* TODO %?%x \t\t:computer:phone:\n %i ")
                       ("c" "Phone calls to make" entry (file "~/org/0-capture.org") "* TODO call %?%x \t\t:phone:\n %i ")
                       ("j" "Jobs" entry (file "~/org/0-capture.org") "* TODO apply to %? %x \t :getjob:computer:")
@@ -847,7 +847,7 @@ package is loaded, you should place your code here."
                                     ("computer" . ?c)
                                     ("learn"    . ?l)
                                     ("getjob"   . ?j)
-                                    ("ref"      . ?r)
+                                    ("note"     . ?n)
                                     ))
               (setq org-agenda-custom-commands
                     '(
