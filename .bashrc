@@ -131,32 +131,63 @@ function o()
     fi
 }
 
-function begin-working-baerfutt-website()
+function begin-working-on-pymodule()
 {
-    venv=oneyb.github.io
+    venv=$1
     if [ ! -d ~/venvs/$venv ]; then
         virtualenv ~/venvs/$venv
         source ~/venvs/$venv/bin/activate
         pip install -r ~/github/$venv/requirements.txt
+        if [ $? -eq 0 ]; then
+            cd ~/github/$venv/
+            git status
+        else
+            \rm -rf ~/venvs/$venv
+            echo 'Fix something please'
+        fi
     else 
         source ~/venvs/$venv/bin/activate
         cd ~/github/$venv/
+        git status
+    fi
+}
+
+function begin-working-on-website()
+{
+    venv=$1
+    if [ ! -d ~/venvs/$venv ]; then
+        virtualenv ~/venvs/$venv
+        source ~/venvs/$venv/bin/activate
+        pip install -r ~/github/$venv/requirements.txt
+        if [ $? -eq 0 ]; then
+            cd ~/github/$venv/
+            git status
+            xdotool type 'python app.py'
+        else
+            \rm -rf ~/venvs/$venv
+            echo 'Fix something please'
+        fi
+    else 
+        source ~/venvs/$venv/bin/activate
+        cd ~/github/$venv/
+        git status
         xdotool type 'python app.py'
     fi
 }
 
+function begin-working-oneyb-website()
+{
+    begin-working-on-website oneyb.github.io
+}
+
 function begin-working-baerfutt-website()
 {
-    venv=baerfutt.github.io
-    if [ ! -d ~/venvs/$venv ]; then
-        virtualenv ~/venvs/$venv
-        source ~/venvs/$venv/bin/activate
-        pip install -r ~/github/$venv/requirements.txt
-    else 
-        source ~/venvs/$venv/bin/activate
-        cd ~/github/$venv/
-        xdotool type 'python app.py'
-    fi
+    begin-working-on-website baerfutt.github.io
+}
+
+function begin-working-maildog()
+{
+    begin-working-on-pymodule maildog
 }
 
 function begin-working-app()
@@ -164,6 +195,11 @@ function begin-working-app()
     cd ~/Sync/flutter/flutter_lkjh; flutter run
 }
 
+function begin-learning-embedded()
+{
+    cd ~/Sync/embedded-programming
+    o  
+}
 
 function check-setpath()
 {
@@ -206,22 +242,33 @@ function clean-lit()
     done
 }
 
+function video-shrink () {
+    for i in $*; do ffmpeg -i $i -vf scale=iw/2:-1 shrunk_${i}; done
+}
+
 
 function cbc()
 {
     echo $* | cb
 }
 
-function addid-to-remote-machine ()
+function stman-addid-to-remote-machine ()
 {
     STID=$(stman device info $USER | sed -r '/ID:/!d;s/^.*: +([[:alnum:]-]+)/\1/')
     ssh $remote stman device add $STID
 }
 
-function get-bash-functions-for-bw2 ()
-{
-    source /d/documents/eaternity/eaternity/eaternity-brightway-functions.bash
+function clean-phone () {
+    adb shell rm /storage/6FAA-E43C/DCIM/Camera/*
 }
+# function organize-udacity () {
+#     adb shell mv /storage/6FAA-E43C/Android/data/com.udacity.android/files/udacity-downloads/* \
+#         /sdcard/Android/data/com.udacity.android/files/udacity-downloads/
+# }
+# function get-bash-functions-for-bw2 ()
+# {
+#     source /d/documents/eaternity/eaternity/eaternity-brightway-functions.bash
+# }
 
 function convert-notebooks ()
 {
