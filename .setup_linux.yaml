@@ -193,6 +193,11 @@
       # C++ documentation, usage: man std_basic_string
       - libstdc++-6-doc
       - cppreference-doc-en-html
+      - gcc-doc
+      - avr-libc
+      - gdb-doc
+      - gcc-avr
+      - gdb-avr
 
   - name: install necessary packages
     apt: pkg={{ item }} update_cache=yes cache_valid_time=3600

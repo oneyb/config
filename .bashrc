@@ -228,10 +228,17 @@ function clean-lit()
     rename -v 's/[-_]?\(.*\)[-_]?//' *
     # rename -v 's/\[[a-zA-Z-_]+\][-_]?//' *
     # rename -v 's/[\[\]]//g' *
+    tmp=$(tempfile)
     ls *pdf | while read p; do 
         pdftk $p cat output ${p/%.pdf/.PDF}
         if [ $? -eq 0 ]; then
             rm $p
+        fi
+        pdf-shrink ${p/%.pdf/.PDF} $tmp
+        if [ $? -eq 0 ]; then
+            mv "$tmp" "$p"
+        else
+            rm $tmp
         fi
     done
     ls *epub | while read e; do 
@@ -559,15 +566,26 @@ function convert-flac()
 function pdf-shrink ()
 {
     if [ $# -eq 0 ]; then
-        echo usage $0 input_pdf [output_pdf]
+        echo usage: $0 input_pdf [output_pdf]
     elif [ $# -eq 1 ]; then
-        opdf=${1/.pdf/-compress.pdf}
-    else
-        opdf=$2
+        opdf=${1/%.pdf/-compress.pdf}
+        tpdf=$(tempfile)
+    elif [ "$2" == "$1" ]; then
+        opdf=$(tempfile)
+        tpdf=$opdf
     fi
-    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default \
-       -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages \
-       -dCompressFonts=true -r150 -sOutputFile=$opdf $1
+    pdftk "$1" cat output "$tpdf"
+    # mutool clean "$1" "$tpdf"
+    if [ $? -eq 0 ]; then
+        gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default \
+           -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages \
+           -dCompressFonts=true -r150 -sOutputFile="$tpdf" "$opdf"
+    fi
+    if [ $? -eq 0 ] &&  [ $# -eq 2 ] && [ "$2" == "$1" ]; then
+        mv "$opdf" "$1"
+    else
+        \rm $tpdf
+    fi
 }
 
 function pdf-shrink-rasterize () {
