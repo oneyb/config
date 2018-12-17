@@ -230,16 +230,7 @@ function clean-lit()
     # rename -v 's/[\[\]]//g' *
     tmp=$(tempfile)
     ls *pdf | while read p; do 
-        pdftk $p cat output ${p/%.pdf/.PDF}
-        if [ $? -eq 0 ]; then
-            rm $p
-        fi
-        pdf-shrink ${p/%.pdf/.PDF} $tmp
-        if [ $? -eq 0 ]; then
-            mv "$tmp" "$p"
-        else
-            rm $tmp
-        fi
+        pdf-shrink ${p} ${p}
     done
     ls *epub | while read e; do 
         ebook-convert $e ${e/%.epub/.EPUB}
@@ -569,21 +560,18 @@ function pdf-shrink ()
         echo usage: $0 input_pdf [output_pdf]
     elif [ $# -eq 1 ]; then
         opdf=${1/%.pdf/-compress.pdf}
-        tpdf=$(tempfile)
     elif [ "$2" == "$1" ]; then
-        opdf=$(tempfile)
-        tpdf=$opdf
+        opdf=$1
+    else
+        opdf=$2
     fi
+    tpdf=$(tempfile)
     pdftk "$1" cat output "$tpdf"
     # mutool clean "$1" "$tpdf"
     if [ $? -eq 0 ]; then
         gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default \
            -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages \
-           -dCompressFonts=true -r150 -sOutputFile="$tpdf" "$opdf"
-    fi
-    if [ $? -eq 0 ] &&  [ $# -eq 2 ] && [ "$2" == "$1" ]; then
-        mv "$opdf" "$1"
-    else
+           -dCompressFonts=true -r150 -sOutputFile="$opdf" "$tpdf"
         \rm $tpdf
     fi
 }

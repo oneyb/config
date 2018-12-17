@@ -86,18 +86,22 @@ ln -sf ~/bin/src/anamnesis-1.0.4/source/anamnesis.py ~/bin/anamnesis
 # dropbox 
 # cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
 
-# Messenger services with Franz
-cd $HOME/bin/src/
-rm Rambox-latest-x64.tar.gz
-[[ ! -f Rambox-latest-x64.tar.gz ]] && wget https://github.com/ramboxapp/community-edition/releases/download/0.6.2/Rambox-0.6.2-linux-x64.tar.gz -O Rambox-latest-x64.tar.gz && sudo \rm -rf /opt/Rambox-*
-sudo tar xzf Rambox-latest-x64.tar.gz -C /opt/
-sudo ln -sf /opt/Rambox*/rambox /usr/local/bin/rambox
-[[ ! -f /usr/share/icons/rambox.png ]] && sudo wget https://rambox.pro/images/logo.png -O /usr/share/icons/rambox.png
-sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Rambox\nComment=Free, Open Source and Cross Platform messaging and emailing app that combines common web applications into one.\nExec=rambox -- %u\nStartupWMClass=Rambox rambox\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/rambox.desktop"
-sudo desktop-file-install /usr/share/applications/rambox.desktop
-# wget https://github.com/ramboxapp/community-edition/releases/download/0.6.1/Rambox-0.6.1-linux-amd64.deb
-# dpkg -i Rambox-0.6.1-linux-amd64.deb
-cd -
+# Messenger services with Rambox
+function install-rambox ()
+{
+    cd $HOME/bin/src/
+    rm Rambox-latest-x64.tar.gz
+    version=0.6.3
+    [[ ! -f Rambox-latest-x64.tar.gz ]] && wget https://github.com/ramboxapp/community-edition/releases/download/$version/Rambox-$version-linux-x64.tar.gz -O Rambox-latest-x64.tar.gz && sudo \rm -rf /opt/Rambox-*
+    sudo tar xzf Rambox-latest-x64.tar.gz -C /opt/
+    sudo ln -sf /opt/Rambox*/rambox /usr/local/bin/rambox
+    [[ ! -f /usr/share/icons/rambox.png ]] && sudo wget https://rambox.pro/images/logo.png -O /usr/share/icons/rambox.png
+    sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Rambox\nComment=Free, Open Source and Cross Platform messaging and emailing app that combines common web applications into one.\nExec=rambox -- %u\nStartupWMClass=Rambox rambox\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/rambox.desktop"
+    sudo desktop-file-install /usr/share/applications/rambox.desktop
+    # wget https://github.com/ramboxapp/community-edition/releases/download/0.6.1/Rambox-0.6.1-linux-amd64.deb
+    # dpkg -i Rambox-0.6.1-linux-amd64.deb
+    cd -
+}
 
 wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
 sudo dpkg --add-architecture i386
