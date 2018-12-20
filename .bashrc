@@ -131,6 +131,26 @@ function o()
     fi
 }
 
+function begin-working-on-py3module()
+{
+    venv=$1
+    if [ ! -d ~/venvs/$venv ]; then
+        virtualenv3 ~/venvs/$venv
+        source ~/venvs/$venv/bin/activate
+        pip3 install -r ~/github/$venv/requirements.txt
+        if [ $? -eq 0 ]; then
+            cd ~/github/$venv/
+            git status
+        else
+            \rm -rf ~/venvs/$venv
+            echo 'Fix something please'
+        fi
+    else 
+        source ~/venvs/$venv/bin/activate
+        cd ~/github/$venv/
+        git status
+    fi
+}
 function begin-working-on-pymodule()
 {
     venv=$1
