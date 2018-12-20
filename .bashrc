@@ -135,7 +135,7 @@ function begin-working-on-py3module()
 {
     venv=$1
     if [ ! -d ~/venvs/$venv ]; then
-        virtualenv3 ~/venvs/$venv
+        virtualenv -p python3 ~/venvs/$venv
         source ~/venvs/$venv/bin/activate
         pip3 install -r ~/github/$venv/requirements.txt
         if [ $? -eq 0 ]; then
