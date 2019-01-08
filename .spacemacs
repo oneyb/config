@@ -39,8 +39,8 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; helm
-     ivy
+     helm
+     ;; ivy
      ;; auto-completion
      (auto-completion :variables
                       auto-completion-return-key-behavior 'complete
@@ -403,50 +403,50 @@ package is loaded, you should place your code here."
   (atomic-chrome-start-server)
   (setq atomic-chrome-default-major-mode 'org-mode)
   (setq warning-minimum-level :error)
-  (define-key ivy-minibuffer-map (kbd "<escape>")
-    (defhydra soo-ivy (:hint nil :color pink)
-      "
- Move     ^^^^^^^^^^ | Call         ^^^^ | Cancel^^ | Options^^ | Action _w_/_s_/_a_: %s(ivy-action-name)
-----------^^^^^^^^^^-+--------------^^^^-+-------^^-+--------^^-+---------------------------------
- _g_ ^ ^ _k_ ^ ^ _u_ | _f_orward _o_ccur | _i_nsert | _c_alling: %-7s(if ivy-calling \"on\" \"off\") _C_ase-fold: %-10`ivy-case-fold-search
- ^↨^ _h_ ^+^ _l_ ^↕^ | _RET_ done     ^^ | _q_uit   | _m_atcher: %-7s(ivy--matcher-desc) _t_runcate: %-11`truncate-lines
- _G_ ^ ^ _j_ ^ ^ _d_ | _TAB_ alt-done ^^ | ^ ^      | _<_/_>_: shrink/grow
-"
-      ;; arrows
-      ("j" ivy-next-line)
-      ("k" ivy-previous-line)
-      ("l" ivy-forward-char)
-      ("h" ivy-backward-delete-char)
-      ("b" ivy-backward-kill-word)
-      ("g" ivy-beginning-of-buffer)
-      ("G" ivy-end-of-buffer)
-      ("d" ivy-scroll-up-command)
-      ("u" ivy-scroll-down-command)
-      ("e" ivy-kill-word)
-      ;; actions
-      ("q" keyboard-escape-quit :exit t)
-      ("C-g" keyboard-escape-quit :exit t)
-      ("<escape>" keyboard-escape-quit :exit t)
-      ("C-o" nil)
-      ("i" nil)
-      ;; ("TAB" ivy-alt-done :exit nil)
-      ("C-j" ivy-alt-done :exit nil)
-      ;; ("d" ivy-done :exit t)
-      ("RET" ivy-done :exit t)
-      ("C-m" ivy-done :exit t)
-      ("f" ivy-call)
-      ("c" ivy-toggle-calling)
-      ("m" ivy-toggle-fuzzy)
-      (">" ivy-minibuffer-grow)
-      ("<" ivy-minibuffer-shrink)
-      ("w" ivy-prev-action)
-      ("s" ivy-next-action)
-      ("a" ivy-read-action)
-      ("t" (setq truncate-lines (not truncate-lines)))
-      ("C" ivy-toggle-case-fold)
-      ("o" ivy-occur :exit t)
-      )
-    )
+;;   (define-key ivy-minibuffer-map (kbd "<escape>")
+;;     (defhydra soo-ivy (:hint nil :color pink)
+;;       "
+;;  Move     ^^^^^^^^^^ | Call         ^^^^ | Cancel^^ | Options^^ | Action _w_/_s_/_a_: %s(ivy-action-name)
+;; ----------^^^^^^^^^^-+--------------^^^^-+-------^^-+--------^^-+---------------------------------
+;;  _g_ ^ ^ _k_ ^ ^ _u_ | _f_orward _o_ccur | _i_nsert | _c_alling: %-7s(if ivy-calling \"on\" \"off\") _C_ase-fold: %-10`ivy-case-fold-search
+;;  ^↨^ _h_ ^+^ _l_ ^↕^ | _RET_ done     ^^ | _q_uit   | _m_atcher: %-7s(ivy--matcher-desc) _t_runcate: %-11`truncate-lines
+;;  _G_ ^ ^ _j_ ^ ^ _d_ | _TAB_ alt-done ^^ | ^ ^      | _<_/_>_: shrink/grow
+;; "
+;;       ;; arrows
+;;       ("j" ivy-next-line)
+;;       ("k" ivy-previous-line)
+;;       ("l" ivy-forward-char)
+;;       ("h" ivy-backward-delete-char)
+;;       ("b" ivy-backward-kill-word)
+;;       ("g" ivy-beginning-of-buffer)
+;;       ("G" ivy-end-of-buffer)
+;;       ("d" ivy-scroll-up-command)
+;;       ("u" ivy-scroll-down-command)
+;;       ("e" ivy-kill-word)
+;;       ;; actions
+;;       ("q" keyboard-escape-quit :exit t)
+;;       ("C-g" keyboard-escape-quit :exit t)
+;;       ("<escape>" keyboard-escape-quit :exit t)
+;;       ("C-o" nil)
+;;       ("i" nil)
+;;       ;; ("TAB" ivy-alt-done :exit nil)
+;;       ("C-j" ivy-alt-done :exit nil)
+;;       ;; ("d" ivy-done :exit t)
+;;       ("RET" ivy-done :exit t)
+;;       ("C-m" ivy-done :exit t)
+;;       ("f" ivy-call)
+;;       ("c" ivy-toggle-calling)
+;;       ("m" ivy-toggle-fuzzy)
+;;       (">" ivy-minibuffer-grow)
+;;       ("<" ivy-minibuffer-shrink)
+;;       ("w" ivy-prev-action)
+;;       ("s" ivy-next-action)
+;;       ("a" ivy-read-action)
+;;       ("t" (setq truncate-lines (not truncate-lines)))
+;;       ("C" ivy-toggle-case-fold)
+;;       ("o" ivy-occur :exit t)
+;;       )
+;;     )
   (define-key evil-normal-state-map (kbd "SPC oc") 'org-capture)
   (define-key evil-normal-state-map (kbd "SPC oa") 'org-agenda)
   (define-key evil-normal-state-map (kbd "SPC ob") 'org-iswitchb)   
@@ -977,7 +977,7 @@ package is loaded, you should place your code here."
  '(evil-want-Y-yank-to-eol t)
  '(org-agenda-files
    (quote
-    ("~/org/0-capture.org" "~/org/baerfutt.org" "~/org/gtd.org" "~/org/job-search.org" "~/org/kitchen-assistant.org" "~/org/personal-development.org")))
+    ("~/org/0-capture.org" "~/org/baerfutt.org" "~/org/gtd.org" "~/org/job-search.org" "~/org/personal-development.org")))
  '(package-selected-packages
    (quote
     (ggtags powershell xcscope stickyfunc-enhance srefactor atomic-chrome websocket edit-server disaster company-c-headers cmake-mode clang-format zotxt request-deferred deferred yapfify yaml-mode web-mode web-beautify vimrc-mode unfill tagedit smeargle slim-mode scss-mode sass-mode pyvenv pytest pyenv-mode py-isort pug-mode platformio-mode pip-requirements pandoc-mode ox-twbs ox-pandoc orgit org-ref pdf-tools helm-bibtex biblio parsebib biblio-core tablist org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download ob-dart ob-async mwim mmm-mode markdown-toc markdown-mode magit-gitflow magit-gh-pulls lua-mode livid-mode skewer-mode simple-httpd live-py-mode less-css-mode key-chord json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc jinja2-mode insert-shebang ibuffer-projectile hy-mode htmlize haml-mode gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh marshal logito pcache ht gh-md fuzzy flycheck-pos-tip pos-tip fish-mode evil-magit magit magit-popup git-commit ghub let-alist with-editor ws-butler winum which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline smex restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint ivy-hydra indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-make google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump diminish define-word dart-mode dactyl-mode cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-shell company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk ansible-doc ansible aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
