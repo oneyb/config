@@ -198,6 +198,9 @@
       - gdb-doc
       - gcc-avr
       - gdb-avr
+      - cgdb
+      - gdbserver 
+      - gdb-doc
 
   - name: install necessary packages
     apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
