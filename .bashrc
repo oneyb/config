@@ -139,6 +139,7 @@ function begin-working-on-py3module()
         virtualenv -p python3 ~/venvs/$venv
         source ~/venvs/$venv/bin/activate
         pip3 install -r ~/github/$venv/requirements.txt
+        pip3 install Ipython
         if [ $? -eq 0 ]; then
             cd ~/github/$venv/
             git status
@@ -159,6 +160,7 @@ function begin-working-on-pymodule()
         virtualenv ~/venvs/$venv
         source ~/venvs/$venv/bin/activate
         pip install -r ~/github/$venv/requirements.txt
+        pip install Ipython
         if [ $? -eq 0 ]; then
             cd ~/github/$venv/
             git status
@@ -208,7 +210,7 @@ function begin-working-baerfutt-website()
 
 function begin-working-maildog()
 {
-    begin-working-on-pymodule maildog
+    begin-working-on-py3module maildog
 }
 
 function begin-working-app()
@@ -401,7 +403,8 @@ pull-pio-dev () {
 
 # R & Python stuff
 export R_PROFILE=$HOME/documents/config/rprofile.site
-export WORKON_HOME=$HOME/.virtualenvs
+# export WORKON_HOME=$HOME/.virtualenvs
+export WORKON_HOME=$HOME/venvs
 
 ### ----- Random Documentation stuff ----- ###
 function bulgarian ()
@@ -630,6 +633,24 @@ function reduce-pix()
     fi
     cd $_DIR
 }
+
+function reduce-pixx()
+{
+    if [[ $# -eq 0 ]]; then
+        type reduce-pixx
+    fi
+    __DIR=$PWD
+    for d in $*; do
+        if [[ -d $d ]]; then 
+            cd $d
+            reduce-pix
+            cd $__DIR
+        else
+            type reduce-pixx
+        fi
+    done
+}
+
 
 function organize-photos (){
     reduce-pix

@@ -201,6 +201,7 @@
       - cgdb
       - gdbserver 
       - gdb-doc
+      - snapd
 
   - name: install necessary packages
     apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
@@ -258,6 +259,11 @@
       - jinja2
       - cppman
 
+  - name: Install libreoffice
+    snap:
+      name:
+        - libreoffice
+        # - bar
 
   - name: get adobe reader
     get_url:
