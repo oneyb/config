@@ -486,19 +486,19 @@ function find-song()
 function E()
 {
     if [[ $# -eq 0 ]]; then
-	      sh -c "emacsclient -c --eval '(org-tags-view t \"computer\")'" &
+	      sh -c "emacsclient -c --eval '(org-tags-view t \"computer\")'" -a gvim &
     else
-	      sh -c "emacsclient -c $* " &
+	      sh -c "emacsclient -c $* " -a gvim &
     fi
     #emacs -rv -fh --geometry 84x24+0+0 $1 &
 }
 function e()
 {
     if [[ $# -eq 0 ]]; then
-	      emacsclient -nw --eval '(org-tags-view t "computer")'
+	      emacsclient -nw --eval '(org-tags-view t "computer") -a gvim'
  
     else
-	      emacsclient -nw "$*"
+	      emacsclient -nw "$*" -a gvim
     fi
 }
 
