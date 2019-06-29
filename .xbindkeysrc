@@ -1,12 +1,12 @@
 # emacs please make this -*- sh -*-
-"emacsclient -c --eval '(org-capture)'"
+"emacsclient -c --eval '(org-capture)' -a gvim"
 Mod4 + i
 # "emacsclient -c"
 # "emacsclient -c --eval '(org-tags-view t "computer")' --eval '(delete-other-windows)'"
 # "emacsclient -c --eval '(org-search-view t "+NEXT -TODO")' --eval '(delete-other-windows)'"
-"emacsclient -c --eval '(org-tags-view t "computer+TODO=\"NEXT\"")' --eval '(delete-other-windows)'"
+"emacsclient -c --eval '(org-tags-view t "computer+TODO=\"NEXT\"")' --eval '(delete-other-windows)' -a gvim"
 Mod4 + e
-"emacsclient -c --eval '(org-tags-view t "computer+TODO=\"NEXT\"")' --eval '(delete-other-windows)'"
+"emacsclient -c --eval '(org-tags-view t "computer+TODO=\"NEXT\"")' --eval '(delete-other-windows)' -a gvim"
 Mod1 + Control + e
 "xset dpms force off"
  Mod4 + d
