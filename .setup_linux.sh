@@ -195,6 +195,7 @@ echo "much easier to install pdf-tools layer and then:"
 emacsclient -e "(pdf-tools-install)"
 
 # Nice grub screen hiding
+# https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Hide_GRUB_unless_the_Shift_key_is_held_down
 wget https://raw.githubusercontent.com/hobarrera/grub-holdshift/master/31_hold_shift -O /etc/grub.d/31_hold_shift
 sudo bash -c 'echo -e "GRUB_TIMEOUT=\"0\"\nGRUB_HIDDEN_TIMEOUT=\"0\"\nGRUB_FORCE_HIDDEN_MENU=\"true\"" >> /etc/default/grub'
 sudo grub-mkconfig -o /boot/grub/grub.cfg

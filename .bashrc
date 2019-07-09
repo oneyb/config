@@ -622,6 +622,7 @@ function reduce-pix()
     else
 	      q=$1
     fi
+    exiftool '-FileName<${CreateDate}_${model;}.%e' -d '%Y%m%d_%H%M%S%%-c' .
     rmspace
     mkdir -p tmp && mv *jpg tmp/ 
     if [[ $? -eq 0 ]]; then 
