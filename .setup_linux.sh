@@ -21,13 +21,13 @@ chmod +x /tmp/zotero_installer.sh
 sudo /tmp/zotero_installer.sh
 
 # flutter
-wget https://storage.googleapis.com/flutter_infra/releases/beta/linux/flutter_linux_v0.5.1-beta.tar.xz
-sudo tar xJf flutter_linux_v0.5.1-beta.tar.xz -C ~/Android/
+# wget https://storage.googleapis.com/flutter_infra/releases/beta/linux/flutter_linux_v0.5.1-beta.tar.xz
+# sudo tar xJf flutter_linux_v0.5.1-beta.tar.xz -C ~/Android/
 
 # android studio
-sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1 libbz2-1.0:i386
-sudo unzip -d /opt/ android-studio-ide-173.4907809-linux.zip
-sudo apt-get install qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils ia32-libs-multiarch
+# sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1 libbz2-1.0:i386
+# sudo unzip -d /opt/ android-studio-ide-173.4907809-linux.zip
+# sudo apt-get install qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils ia32-libs-multiarch
 # Playonlinux!!
 # wget -q "http://deb.playonlinux.com/public.gpg" -O- | sudo apt-key add -
 # sudo wget http://deb.playonlinux.com/playonlinux_wheezy.list -O /etc/apt/sources.list.d/playonlinux.list
@@ -60,7 +60,7 @@ bash documents/config/.copy-config.sh in
 # sudo mandb
 
 pkgs=(
-    https://github.com/jgm/pandoc/releases/download/2.0.1/pandoc-2.0.1-1-amd64.deb
+	https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
 )
 
 function install_manual_deb ()
@@ -83,18 +83,16 @@ wget -O anamnesis.tar.gz  https://sourceforge.net/projects/anamnesis/files/lates
 tar xzf anamnesis.tar.gz
 ln -sf ~/bin/src/anamnesis-1.0.4/source/anamnesis.py ~/bin/anamnesis
 
-# dropbox 
-# cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
-
 # Messenger services with Rambox
 function install-rambox ()
 {
     cd $HOME/bin/src/
     rm Rambox-latest-x64.tar.gz
     version=0.6.3
-    [[ ! -f Rambox-latest-x64.tar.gz ]] && wget https://github.com/ramboxapp/community-edition/releases/download/$version/Rambox-$version-linux-x64.tar.gz -O Rambox-latest-x64.tar.gz && sudo \rm -rf /opt/Rambox-*
-    sudo tar xzf Rambox-latest-x64.tar.gz -C /opt/
-    sudo ln -sf /opt/Rambox*/rambox /usr/local/bin/rambox
+    download=https://github.com/TheGoddessInari/rambox/releases/download/nightly/Rambox_0.5.18_amd64.deb
+    [[ ! -f Rambox-latest-x64.tar.gz ]] && wget $download -O Rambox-latest-x64.deb
+    # sudo tar xzf Rambox-latest-x64.tar.gz -C /opt/
+    # sudo ln -sf /opt/Rambox*/rambox /usr/local/bin/rambox
     [[ ! -f /usr/share/icons/rambox.png ]] && sudo wget https://rambox.pro/images/logo.png -O /usr/share/icons/rambox.png
     sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Rambox\nComment=Free, Open Source and Cross Platform messaging and emailing app that combines common web applications into one.\nExec=rambox -- %u\nStartupWMClass=Rambox rambox\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/rambox.desktop"
     sudo desktop-file-install /usr/share/applications/rambox.desktop
@@ -102,6 +100,7 @@ function install-rambox ()
     # dpkg -i Rambox-0.6.1-linux-amd64.deb
     cd -
 }
+install-rambox
 
 wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
 sudo dpkg --add-architecture i386

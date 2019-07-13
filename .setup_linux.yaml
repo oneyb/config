@@ -42,7 +42,7 @@
       - firmware-linux-free
       - firmware-linux-nonfree
       - ntfs-3g
-      - ntfs-config
+      # - ntfs-config
       - openssh-client
       - openssh-server
       - p7zip-full
@@ -121,7 +121,7 @@
       - java-common
       - lame
       - laptop-detect
-      - mplayer2
+      - mpv
       # - nco
       # - ncview 
       # - netcdf-bin
@@ -169,10 +169,10 @@
       - xfburn
       - xpdf
       - xsel
-      - xul-ext-firebug
-      - xul-ext-itsalltext
+      # - xul-ext-firebug
+      # - xul-ext-itsalltext
       # - xul-ext-monkeysphere 
-      - xul-ext-noscript
+      # - xul-ext-noscript
       - libgdal-dev
       - libmariadb-dev 
       - exfat-utils
@@ -191,16 +191,14 @@
       - socat
       - syncthing
       # C++ documentation, usage: man std_basic_string
-      - libstdc++-6-doc
+      - libstdc++-8-doc
       - cppreference-doc-en-html
-      - gcc-doc
+      # - gcc-doc
       - avr-libc
-      - gdb-doc
       - gcc-avr
       - gdb-avr
       - cgdb
       - gdbserver 
-      - gdb-doc
       - snapd
 
   - name: install necessary packages
@@ -259,11 +257,11 @@
       - jinja2
       - cppman
 
-  - name: Install libreoffice
-    snap:
-      name:
-        - libreoffice
-        # - bar
+  # - name: Install libreoffice
+  #   snap:
+  #     name:
+  #       - libreoffice
+  #       # - bar
 
   - name: get adobe reader
     get_url:
