@@ -257,10 +257,10 @@
       - jinja2
       - cppman
 
-  # - name: Install libreoffice
-  #   snap:
-  #     name:
-  #       - libreoffice
+  - name: Install libreoffice
+    snap:
+      - libreoffice
+      - signal-desktop
   #       # - bar
 
   - name: get adobe reader
