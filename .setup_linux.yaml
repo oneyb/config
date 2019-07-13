@@ -106,12 +106,12 @@
       - firefox-esr 
       - flac
       - freecad
-      - gdal-bin 
+      # - gdal-bin 
       - genisoimage
       - geoip-database
       - gimp
-      - gocr 
-      - gocr-tk
+      # - gocr 
+      # - gocr-tk
       - gparted
       - handbrake
       - handbrake-cli
@@ -122,21 +122,21 @@
       - lame
       - laptop-detect
       - mplayer2
-      - nco
-      - ncview 
-      - netcdf-bin
-      - netcdf-doc 
+      # - nco
+      # - ncview 
+      # - netcdf-bin
+      # - netcdf-doc 
       - p7zip-full
       - pdftk
-      - proj-bin
-      - proj-data
+      # - proj-bin
+      # - proj-data
       - pulseaudio 
       - pulseaudio-utils
       - qpdf
       - qpdfview
       - r-base
-      - r-cran-xml2
-      - r-cran-ncdf4 
+      # - r-cran-xml2
+      # - r-cran-ncdf4 
       - recordmydesktop
       - ristretto
       - scrot
@@ -147,7 +147,7 @@
       - suckless-tools
       - synaptic
       - tor
-      - tor-arm 
+      # - tor-arm 
       - libpng-dev
       - libpoppler-dev
       - libpoppler-glib-dev
@@ -301,8 +301,8 @@
     become: yes
     apt: deb="{{ ansible_env.HOME }}/bin/src/adberdr9.5.5-1_i386linux_enu.deb"
 
-  # - name: start syncthing
-  #   systemd: name=syncthing state=restarted daemon_reload=yes enabled=yes user=yes
+  - name: start syncthing
+    systemd: name=syncthing state=restarted daemon_reload=yes enabled=yes user=yes
 
 #   - name: fill and copy wifi config files
 #     template: 
