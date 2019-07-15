@@ -33,10 +33,10 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     autohotkey
-     windows-scripts
+     ; autohotkey
+     ; windows-scripts
      ;; ansible
-     yaml
+     ; yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -57,11 +57,12 @@ This function should only modify configuration layer settings."
      ;; for windows https://code.google.com/archive/p/cscope-win32/downloads
      cscope
      gtags
+     ; csharp
      spacemacs-misc
      ;; ycmd ;; above 
      ;; semantic
      spacemacs-evil
-     spacemacs-org
+     ;; spacemacs-org
      evil-commentary
      multiple-cursors
      treemacs
@@ -78,29 +79,29 @@ This function should only modify configuration layer settings."
       )
      pandoc
      ;; org
-     (org :variables
-          ;; org-enable-github-support t
-          org-enable-bootstrap-support t)
+     ; (org :variables
+     ;      ;; org-enable-github-support t
+     ;      org-enable-bootstrap-support nil)
      spacemacs-org
-     (latex
-      :variables latex-enable-auto-fill t
-      :eval-after-load
-      ;; (auto-fill-mode 1)
-      (spacemacs/toggle-auto-completion)
-      )
-     (shell
-      :variables
-      shell-default-shell 'shell
-      ;; shell-default-position 'bottom
-      ;; shell-default-height 30
-      )
+     ; (latex
+     ;  :variables latex-enable-auto-fill t
+     ;  :eval-after-load
+     ;  ;; (auto-fill-mode 1)
+     ;  (spacemacs/toggle-auto-completion)
+     ;  )
+     ;; (shell
+     ;;  :variables
+     ;;  shell-default-shell 'shell
+     ;;  ;; shell-default-position 'bottom
+     ;;  ;; shell-default-height 30
+     ;;  )
 
      shell-scripts
      ;; (spell-checking
      ;;  :variables spell-checking-enable-auto-dictionary t)
      syntax-checking
      ;; version-control
-     ess
+     ; ess
      ;; (ess :variables
      ;;      ess-enable-smart-equals t)
      python
@@ -109,9 +110,9 @@ This function should only modify configuration layer settings."
      csv
      ;; ipython-notebook
      ;; (ipython-notebook :variables ein:use-auto-complete t)
-     javascript
-     html
-     vimscript
+     ; javascript
+     ; html
+     ; vimscript
      ibuffer
      ;; pdf-tools
      )
@@ -126,6 +127,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-additional-packages '(
                                       ;; xclip
                                       ;; csv
+                                      undo-tree
                                       zotxt
                                       ox-pandoc
                                       platformio-mode
@@ -300,7 +302,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-default-font '(
                                ;; "Source Code Pro"
                                "Courier New"
-                               :size 12
+                               :size 13
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -538,629 +540,637 @@ It should only modify the values of Spacemacs settings."
   )
 
 
-  (defun dotspacemacs/user-env ()
-    "Environment variables setup.
+(defun dotspacemacs/user-env ()
+  "Environment variables setup.
 This function defines the environment variables for your Emacs session. By
 default it calls `spacemacs/load-spacemacs-env' which loads the environment
 variables declared in `~/.spacemacs.env' or `~/.spacemacs.d/.spacemacs.env'.
 See the header of this file for more information."
-    (spacemacs/load-spacemacs-env)
-    )
+  (spacemacs/load-spacemacs-env)
+  )
 
-  (defun dotspacemacs/user-init ()
-    "Initialization function for user code.
+(defun dotspacemacs/user-init ()
+  "Initialization function for user code.
 It is called immediately after `dotspacemacs/init', before layer configuration
 executes.
 This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-    ;; set this before evil loads
-    ;; (setq evil-toggle-key (kbd "C-h"))
-    (if (eq (getenv "USERNAME") "oney")
-        (load (concat (getenv "HOME") "\\.spacemacs.home.el"))
-      (load (concat (getenv "HOME") "\\.spacemacs.work.el"))
-      )
-    (setq ess-eval-visibly nil)
-    (setq ess-ask-for-ess-directory nil)
-    (setq org-todo-keywords '((sequence "TODO" "NEXT" "|" "DONE" "WAIT" )))
-    ;; (setq helm-grep-default-command 
-    ;;       ;; Its value is "grep --color=always -a -d skip %e -n%cH -e %p %f"
-    ;;       "rg --vimgrep --no-heading --smart-case"
-    ;;  )
-    )
+  ;; set this before evil loads
+  ;; (setq evil-toggle-key (kbd "C-h"))
 
-  (defun dotspacemacs/user-load ()
-    "Library to load while dumping.
+  (setq ess-eval-visibly nil)
+    ; (if (eq (getenv "USERNAME") "oney")
+    ;     (load (concat (getenv "HOME") ".spacemacs.home.el"))
+    ;   (load (concat (getenv "HOME") ".spacemacs.work.el")))
+  (setq ess-ask-for-ess-directory nil)
+  (setq org-todo-keywords '((sequence "WAIT" "TODO" "NEXT" "|" "DONE")))
+  (add-to-list 'default-frame-alist '(background-color . "beige"))
+  ;; (setq helm-grep-default-command 
+  ;;       ;; Its value is "grep --color=always -a -d skip %e -n%cH -e %p %f"
+  ;;       "rg --vimgrep --no-heading --smart-case"
+  ;;  )
+  )
+
+(defun dotspacemacs/user-load ()
+  "Library to load while dumping.
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
-    )
+  )
 
-  (defun dotspacemacs/user-config ()
-    "Configuration function for user code.
+(defun dotspacemacs/user-config ()
+  "Configuration function for user code.
 This function is called at the very end of Spacemacs
 initialization after layers configuration.  This is the place
 where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a
 package is loaded, you should place your code here."
-    ;; (xclip-mode 1)
-    ;; (fset 'evil-visual-update-x-selection 'ignore)
-    ;; (setq ycmd-server-command '("python" "C:/Sources/brian.oney/.vim/plugged/YouCompleteMe/third_party/ycmd/ycmd"))
-    ;; (setq ycmd-force-semantic-completion t)
-    (add-hook 'prog-mode-hook #'(lambda ()
-                                  (modify-syntax-entry ?_ "w")
-                                  (key-chord-define prog-mode-map ";i" 'completion-at-point) 
-                                  ))
-    (add-hook 'org-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
-    (setq sentence-end-double-space t)
-    (require 'powerline)
-    (powerline-default-theme)
-    (evil-leader/set-key "?" 'ripgrep-regexp)
-    (evil-leader/set-key "/" 'projectile-ripgrep)
-    ;; (setq term-ansi-default-program "C:\\Program Files\\Git\\git-bash.exe") 
-    (add-hook 'ediff-prepare-buffer-hook #'outline-show-all)
-    (global-set-key (kbd "C-h") 'spacemacs/toggle-holy-mode)
-    (setq browse-url-firefox-program "chromium")
-    ;; (edit-server-start)
-    ;; (require 'atomic-chrome)
-    ;; (atomic-chrome-start-server)
-    ;; (setq atomic-chrome-default-major-mode 'org-mode)
-    (setq warning-minimum-level :error)
-    ;;   (define-key ivy-minibuffer-map (kbd "<escape>")
-    ;;     (defhydra soo-ivy (:hint nil :color pink)
-    ;;       "
-    ;;  Move     ^^^^^^^^^^ | Call         ^^^^ | Cancel^^ | Options^^ | Action _w_/_s_/_a_: %s(ivy-action-name)
-    ;; ----------^^^^^^^^^^-+--------------^^^^-+-------^^-+--------^^-+---------------------------------
-    ;;  _g_ ^ ^ _k_ ^ ^ _u_ | _f_orward _o_ccur | _i_nsert | _c_alling: %-7s(if ivy-calling \"on\" \"off\") _C_ase-fold: %-10`ivy-case-fold-search
-    ;;  ^↨^ _h_ ^+^ _l_ ^↕^ | _RET_ done     ^^ | _q_uit   | _m_atcher: %-7s(ivy--matcher-desc) _t_runcate: %-11`truncate-lines
-    ;;  _G_ ^ ^ _j_ ^ ^ _d_ | _TAB_ alt-done ^^ | ^ ^      | _<_/_>_: shrink/grow
-    ;; "
-    ;;       ;; arrows
-    ;;       ("j" ivy-next-line)
-    ;;       ("k" ivy-previous-line)
-    ;;       ("l" ivy-forward-char)
-    ;;       ("h" ivy-backward-delete-char)
-    ;;       ("b" ivy-backward-kill-word)
-    ;;       ("g" ivy-beginning-of-buffer)
-    ;;       ("G" ivy-end-of-buffer)
-    ;;       ("d" ivy-scroll-up-command)
-    ;;       ("u" ivy-scroll-down-command)
-    ;;       ("e" ivy-kill-word)
-    ;;       ;; actions
-    ;;       ("q" keyboard-escape-quit :exit t)
-    ;;       ("C-g" keyboard-escape-quit :exit t)
-    ;;       ("<escape>" keyboard-escape-quit :exit t)
-    ;;       ("C-o" nil)
-    ;;       ("i" nil)
-    ;;       ;; ("TAB" ivy-alt-done :exit nil)
-    ;;       ("C-j" ivy-alt-done :exit nil)
-    ;;       ;; ("d" ivy-done :exit t)
-    ;;       ("RET" ivy-done :exit t)
-    ;;       ("C-m" ivy-done :exit t)
-    ;;       ("f" ivy-call)
-    ;;       ("c" ivy-toggle-calling)
-    ;;       ("m" ivy-toggle-fuzzy)
-    ;;       (">" ivy-minibuffer-grow)
-    ;;       ("<" ivy-minibuffer-shrink)
-    ;;       ("w" ivy-prev-action)
-    ;;       ("s" ivy-next-action)
-    ;;       ("a" ivy-read-action)
-    ;;       ("t" (setq truncate-lines (not truncate-lines)))
-    ;;       ("C" ivy-toggle-case-fold)
-    ;;       ("o" ivy-occur :exit t)
-    ;;       )
-    ;;     )
-    (define-key evil-normal-state-map (kbd "SPC oc") 'org-capture)
-    (define-key evil-normal-state-map (kbd "SPC oa") 'org-agenda)
-    (define-key evil-normal-state-map (kbd "SPC ob") 'org-iswitchb)   
-    (define-key evil-normal-state-map (kbd "SPC ol") 'org-store-link)
-    (define-key evil-normal-state-map (kbd "SPC ot") 'org-todo-list)
-    (defun my-capitalize-first-char (&optional string)
-      "Capitalize only the first character of the input STRING."
-      (when (and string (> (length string) 0))
-        (let ((first-char (substring string nil 1))
-              (rest-str   (substring string 1)))
-          (concat (capitalize first-char) rest-str))))
-    (defun my-put-current-directory-in-clipboard ()
-      "Put the current directory name on the clipboard"
-      (interactive)
-      (let ((x-select-enable-clipboard t)) (kill-new (my-capitalize-first-char default-directory)))
-      )
-    (defun my-put-file-name-in-clipboard ()
-      "Put the current file name on the clipboard"
-      (interactive)
-      (let ((filename (if (equal major-mode 'dired-mode)
-                          default-directory
-                        (buffer-file-name))))
-        (when filename
-          ;; (with-temp-buffer
-          ;;   (insert filename)
-          ;;   (clipboard-kill-region (point-min) (point-max)))
-          (let ((x-select-enable-clipboard t)) (kill-new (my-capitalize-first-char filename)))
-          )))
-    (define-key evil-normal-state-map (kbd "SPC of") 'my-put-file-name-in-clipboard)
-    (define-key evil-normal-state-map (kbd "SPC op") 'my-put-current-directory-in-clipboard)
-    ;; (require 'helm-bookmark)
-    ;; (setq x-select-enable-primary t)
-    ;; (setq x-select-enable-clipboard nil)
-    ;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
-    (setq-default kill-ring-max 666)
-    (setq history-length 666)
-    ;; (setq gdb-many-windows t)
-    ;; (setq gdb-show-main t)
-    (setq-default history-delete-duplicates t)
-    (setq-default kill-do-not-save-duplicates t)
-    (setq visible-bell t)
-    (defalias 'ttl         'toggle-truncate-lines)
-    (defalias 'ke          'kill-emacs)
-    (defalias 'es          'eshell)
-    (defalias 'at          'ansi-term)
-    (defalias 'ss          'shell)
-    (defalias 'sd          'desktop-save-in-desktop-dir)
-    (defalias 'ed          'ediff-files)
-    (defalias 'yes-or-no-p 'y-or-n-p)
-    (defun my-escape-and-save ()
-      "My escape and save"
-      (interactive)
-      (evil-escape)
-      (save-buffer)
-      )
-    (defun vim-wq ()
-      "My save and quit"
-      (interactive)
-      (evil-escape)
-      (save-buffer)
-      (kill-this-buffer)
-      )
-    (defun my-escape-and-bury ()
-      "My save and quit"
-      (interactive)
-      (evil-escape)
-      (bury-buffer)
-      )
-    (defun my-get-tasks ()
-      "Get org tasks"
-      (interactive)
-      (org-tags-view t "computer")
-      (delete-other-windows)
-      )
-    (setq auto-mode-alist
-          (append '(
-                    ("\\.Rmd\\'" . markdown-mode)
-                    ("\\.ino\\'" . c++-mode)
-                    ("\\.eml\\'" . org-mode)
-                    ("mailto:"   . system)
-                    ;; ("\\.png\\'"   . system)
-                    ;; ("\\.pdf\\'"   . system)
-                    ;; ("\\.ps\\'"    . system)
-                    ;; ("\\.docx?\\'" . system)
-                    ;; ("\\.xlsx?\\'" . "xdg-open %s")
-                    ;; ("\\.html\\'"  . system)
-                    )
-                  auto-mode-alist)
-          )
-    (setq sentence-end-double-space t)
-    (key-chord-mode 1)
-    ;; (key-chord-define evil-insert-state-map "jk" 'evil-escape)
-    ;; (key-chord-define evil-normal-state-map "lk" 'kill-this-buffer)
-    ;; (key-chord-define evil-insert-state-map "df" 'evil-escape)
-    (setq recentf-auto-cleanup "1:00pm")
-    (key-chord-define-global ";l" 'kill-this-buffer)
-    (key-chord-define-global "ii" 'org-capture)
-    (key-chord-define-global ";'" 'my-get-tasks)
-    (key-chord-define-global ";t" 'shell)
-    (key-chord-define-global "wq" 'vim-wq)
-    (key-chord-define-global "jk" 'my-escape-and-save)
-    (key-chord-define-global "BB" 'my-escape-and-bury)
-    (key-chord-define-global ";i" 'completion-at-point)
-    (setq text-mode-hook (quote (text-mode-hook-identify toggle-truncate-lines)))
-    (setq-default fill-column 78)
-    ;; ;; Visual stuff
-    ;; (set-frame-width (selected-frame) 112)
-    ;; (set-frame-height (selected-frame) 76)
-    ;; (setq frame-title-format '("%b | " mode-name))
-    (setq frame-title-format '("%b"))
-    (setq-default spacemacs-show-trailing-whitespace nil)
-    (setq doc-view-continuous t)
-    (setq font-use-system-font t)
-    (setq display-time-day-and-date t display-time-24hr-format t)
-    (display-time-mode 1)
-    (setq truncate-lines t)
-    ;; (setq-default cursor-type '(bar . 3))
-    ;; (setq evil-move-cursor-back nil)
-    (setq evil-want-Y-yank-to-eol t)
-    (setq kill-buffer-query-functions (remq 'process-kill-buffer-query-function kill-buffer-query-functions))
-    (setq ediff-split-window-function 'split-window-horizontally
-          ediff-window-setup-function 'ediff-setup-windows-plain)
-    ;; Ispell
-    (eval-after-load "ispell"
-      (progn
-        (setq ispell-extra-args '("-w" "äöüÄÖÜß")
-              ispell-dictionary "english"
-              ispell-silently-savep t)))
-    (setq-default ispell-program-name "aspell")
-    ;; For R-Sweave chunks
-    (add-to-list 'ispell-skip-region-alist '("^<<.*>>=" . "^@"))
-    ;; Rmarkdown
-    (add-to-list 'ispell-skip-region-alist '("^```" . "^```"))
-    ;; skip org chunks
-    (add-to-list 'ispell-skip-region-alist '("^#\\+.*" . "^#\\+.*"))
-    ;; LaTeX crap
-    (add-to-list 'ispell-skip-region-alist '("\\\\cite.*{" . "}"))
-    (add-to-list 'ispell-skip-region-alist '("\\\\chem{" . "}"))
-    (add-to-list 'ispell-skip-region-alist '("\\$" . "\\$"))
-    (setq latex-run-command "pdflatex")
-    (setq tex-process-asynchronous t)
-    (set-face-attribute 'default nil :height 94)
-    (add-hook 'LaTeX-mode-hook (lambda () (require 'org-ref)))
-    (add-hook 'atomic-chrome-edit-mode-hook
-              (lambda ()
-                (spacemacs/set-leader-keys-for-minor-mode 'atomic-chrome-edit-mode
-                  "," 'atomic-chrome-close-current-buffer
+  ;; (xclip-mode 1)
+  ;; (fset 'evil-visual-update-x-selection 'ignore)
+  ;; (setq ycmd-server-command '("python" "C:/Sources/brian.oney/.vim/plugged/YouCompleteMe/third_party/ycmd/ycmd"))
+  ;; (setq ycmd-force-semantic-completion t)
+  (add-hook 'prog-mode-hook #'(lambda ()
+                                (modify-syntax-entry ?_ "w")
+                                (key-chord-define prog-mode-map ";i" 'completion-at-point) 
+                                ))
+  (setq sentence-end-double-space t)
+  (require 'powerline)
+  (powerline-default-theme)
+  (evil-leader/set-key "?" 'ripgrep-regexp)
+  (evil-leader/set-key "/" 'projectile-ripgrep)
+  ;; (setq term-ansi-default-program "C:\\Program Files\\Git\\git-bash.exe") 
+  (add-hook 'ediff-prepare-buffer-hook #'outline-show-all)
+  (global-set-key (kbd "C-h") 'spacemacs/toggle-holy-mode)
+  (setq browse-url-firefox-program "chromium")
+  ;; (edit-server-start)
+  ;; (require 'atomic-chrome)
+  ;; (atomic-chrome-start-server)
+  ;; (setq atomic-chrome-default-major-mode 'org-mode)
+  (setq warning-minimum-level :error)
+  ;;   (define-key ivy-minibuffer-map (kbd "<escape>")
+  ;;     (defhydra soo-ivy (:hint nil :color pink)
+  ;;       "
+  ;;  Move     ^^^^^^^^^^ | Call         ^^^^ | Cancel^^ | Options^^ | Action _w_/_s_/_a_: %s(ivy-action-name)
+  ;; ----------^^^^^^^^^^-+--------------^^^^-+-------^^-+--------^^-+---------------------------------
+  ;;  _g_ ^ ^ _k_ ^ ^ _u_ | _f_orward _o_ccur | _i_nsert | _c_alling: %-7s(if ivy-calling \"on\" \"off\") _C_ase-fold: %-10`ivy-case-fold-search
+  ;;  ^↨^ _h_ ^+^ _l_ ^↕^ | _RET_ done     ^^ | _q_uit   | _m_atcher: %-7s(ivy--matcher-desc) _t_runcate: %-11`truncate-lines
+  ;;  _G_ ^ ^ _j_ ^ ^ _d_ | _TAB_ alt-done ^^ | ^ ^      | _<_/_>_: shrink/grow
+  ;; "
+  ;;       ;; arrows
+  ;;       ("j" ivy-next-line)
+  ;;       ("k" ivy-previous-line)
+  ;;       ("l" ivy-forward-char)
+  ;;       ("h" ivy-backward-delete-char)
+  ;;       ("b" ivy-backward-kill-word)
+  ;;       ("g" ivy-beginning-of-buffer)
+  ;;       ("G" ivy-end-of-buffer)
+  ;;       ("d" ivy-scroll-up-command)
+  ;;       ("u" ivy-scroll-down-command)
+  ;;       ("e" ivy-kill-word)
+  ;;       ;; actions
+  ;;       ("q" keyboard-escape-quit :exit t)
+  ;;       ("C-g" keyboard-escape-quit :exit t)
+  ;;       ("<escape>" keyboard-escape-quit :exit t)
+  ;;       ("C-o" nil)
+  ;;       ("i" nil)
+  ;;       ;; ("TAB" ivy-alt-done :exit nil)
+  ;;       ("C-j" ivy-alt-done :exit nil)
+  ;;       ;; ("d" ivy-done :exit t)
+  ;;       ("RET" ivy-done :exit t)
+  ;;       ("C-m" ivy-done :exit t)
+  ;;       ("f" ivy-call)
+  ;;       ("c" ivy-toggle-calling)
+  ;;       ("m" ivy-toggle-fuzzy)
+  ;;       (">" ivy-minibuffer-grow)
+  ;;       ("<" ivy-minibuffer-shrink)
+  ;;       ("w" ivy-prev-action)
+  ;;       ("s" ivy-next-action)
+  ;;       ("a" ivy-read-action)
+  ;;       ("t" (setq truncate-lines (not truncate-lines)))
+  ;;       ("C" ivy-toggle-case-fold)
+  ;;       ("o" ivy-occur :exit t)
+  ;;       )
+  ;;     )
+  (define-key evil-normal-state-map (kbd "SPC oc") 'org-capture)
+  (define-key evil-normal-state-map (kbd "SPC oa") 'org-agenda)
+  (define-key evil-normal-state-map (kbd "SPC ob") 'org-iswitchb)   
+  (define-key evil-normal-state-map (kbd "SPC ol") 'org-store-link)
+  (define-key evil-normal-state-map (kbd "SPC ot") 'org-todo-list)
+  (defun my-capitalize-first-char (&optional string)
+    "Capitalize only the first character of the input STRING."
+    (when (and string (> (length string) 0))
+      (let ((first-char (substring string nil 1))
+            (rest-str   (substring string 1)))
+        (concat (capitalize first-char) rest-str))))
+  (defun my-put-current-directory-in-clipboard ()
+    "Put the current directory name on the clipboard"
+    (interactive)
+    (let ((x-select-enable-clipboard t)) (kill-new (my-capitalize-first-char default-directory)))
+    )
+  (defun my-put-file-name+line-number-in-clipboard ()
+    "Put the current file name with lineno on the clipboard"
+    (interactive)
+    (let ((filename (if (equal major-mode 'dired-mode)
+                        default-directory
+                      (buffer-file-name))))
+      (when filename
+        ;; (with-temp-buffer
+        ;;   (insert filename)
+        ;;   (clipboard-kill-region (point-min) (point-max)))
+        (let ((x-select-enable-clipboard t))
+          (kill-new
+           (concat (my-capitalize-first-char filename) ":" (number-to-string (line-number-at-pos)))))
+        )))
+  (defun my-put-file-name-in-clipboard ()
+    "Put the current file name on the clipboard"
+    (interactive)
+    (let ((filename (if (equal major-mode 'dired-mode)
+                        default-directory
+                      (buffer-file-name))))
+      (when filename
+        ;; (with-temp-buffer
+        ;;   (insert filename)
+        ;;   (clipboard-kill-region (point-min) (point-max)))
+        (let ((x-select-enable-clipboard t)) (kill-new (my-capitalize-first-char filename)))
+        )))
+  (define-key evil-normal-state-map (kbd "SPC of") 'my-put-file-name-in-clipboard)
+  (define-key evil-normal-state-map (kbd "SPC on") 'my-put-file-name+line-number-in-clipboard)
+  (define-key evil-normal-state-map (kbd "SPC od") 'my-put-current-directory-in-clipboard)
+  ;; (require 'helm-bookmark)
+  ;; (setq x-select-enable-primary t)
+  ;; (setq x-select-enable-clipboard nil)
+  ;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+  (setq-default kill-ring-max 666)
+  (setq history-length 666)
+  ;; (setq gdb-many-windows t)
+  ;; (setq gdb-show-main t)
+  (setq-default history-delete-duplicates t)
+  (setq-default kill-do-not-save-duplicates t)
+  (setq visible-bell t)
+  (defalias 'ttl         'toggle-truncate-lines)
+  (defalias 'ke          'kill-emacs)
+  (defalias 'es          'eshell)
+  (defalias 'at          'ansi-term)
+  (defalias 'ss          'shell)
+  (defalias 'sd          'desktop-save-in-desktop-dir)
+  (defalias 'ed          'ediff-files)
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (defun my-escape-and-save ()
+    "My escape and save"
+    (interactive)
+    (evil-escape)
+    (save-buffer)
+    )
+  (defun vim-wq ()
+    "My save and quit"
+    (interactive)
+    (evil-escape)
+    (save-buffer)
+    (kill-this-buffer)
+    )
+  (defun my-escape-and-bury ()
+    "My save and quit"
+    (interactive)
+    (evil-escape)
+    (bury-buffer)
+    )
+  (defun my-get-tasks ()
+    "Get org tasks"
+    (interactive)
+    (org-tags-view t "computer")
+    (delete-other-windows)
+    )
+  (setq auto-mode-alist
+        (append '(
+                  ("\\.Rmd\\'" . markdown-mode)
+                  ("\\.ino\\'" . c++-mode)
+                  ("\\.eml\\'" . org-mode)
+                  ("mailto:"   . system)
+                  ;; ("\\.png\\'"   . system)
+                  ;; ("\\.pdf\\'"   . system)
+                  ;; ("\\.ps\\'"    . system)
+                  ;; ("\\.docx?\\'" . system)
+                  ;; ("\\.xlsx?\\'" . "xdg-open %s")
+                  ;; ("\\.html\\'"  . system)
                   )
-                (setq atomic-chrome-default-major-mode 'org-mode)
-                (setq atomic-chrome-url-major-mode-alist
-                      '(("github\\.com" . gfm-mode)
-                        ;; ("." . org-mode))
-                        )
+                auto-mode-alist)
+        )
+  (setq sentence-end-double-space t)
+  (key-chord-mode 1)
+  ;; (key-chord-define evil-insert-state-map "jk" 'evil-escape)
+  ;; (key-chord-define evil-normal-state-map "lk" 'kill-this-buffer)
+  ;; (key-chord-define evil-insert-state-map "df" 'evil-escape)
+  (setq recentf-auto-cleanup "1:00pm")
+  (key-chord-define-global ";l" 'kill-this-buffer)
+  (key-chord-define-global "ii" 'org-capture)
+  (key-chord-define-global ";'" 'my-get-tasks)
+  (key-chord-define-global ";t" 'shell)
+  (key-chord-define-global "wq" 'vim-wq)
+  (key-chord-define-global "jk" 'my-escape-and-save)
+  (key-chord-define-global "BB" 'my-escape-and-bury)
+  (key-chord-define-global ";i" 'completion-at-point)
+  (setq text-mode-hook (quote (text-mode-hook-identify toggle-truncate-lines)))
+  (setq-default fill-column 78)
+  ;; ;; Visual stuff
+  ;; (set-frame-width (selected-frame) 112)
+  ;; (set-frame-height (selected-frame) 76)
+  ;; (setq frame-title-format '("%b | " mode-name))
+  (setq frame-title-format '("%b"))
+  (setq-default spacemacs-show-trailing-whitespace nil)
+  (setq doc-view-continuous t)
+  (setq font-use-system-font t)
+  (setq display-time-day-and-date t display-time-24hr-format t)
+  (display-time-mode 1)
+  (setq truncate-lines t)
+  ;; (setq-default cursor-type '(bar . 3))
+  ;; (setq evil-move-cursor-back nil)
+  (setq evil-want-Y-yank-to-eol t)
+  (setq kill-buffer-query-functions (remq 'process-kill-buffer-query-function kill-buffer-query-functions))
+  (setq ediff-split-window-function 'split-window-horizontally
+        ediff-window-setup-function 'ediff-setup-windows-plain)
+  ;; Ispell
+  (eval-after-load "ispell"
+    (progn
+      (setq ispell-extra-args '("-w" "äöüÄÖÜß")
+            ispell-dictionary "english"
+            ispell-silently-savep t)))
+  (setq-default ispell-program-name "aspell")
+  ;; For R-Sweave chunks
+  (add-to-list 'ispell-skip-region-alist '("^<<.*>>=" . "^@"))
+  ;; Rmarkdown
+  (add-to-list 'ispell-skip-region-alist '("^```" . "^```"))
+  ;; skip org chunks
+  (add-to-list 'ispell-skip-region-alist '("^#\\+.*" . "^#\\+.*"))
+  ;; LaTeX crap
+  (add-to-list 'ispell-skip-region-alist '("\\\\cite.*{" . "}"))
+  (add-to-list 'ispell-skip-region-alist '("\\\\chem{" . "}"))
+  (add-to-list 'ispell-skip-region-alist '("\\$" . "\\$"))
+  (setq latex-run-command "pdflatex")
+  (setq tex-process-asynchronous t)
+  (set-face-attribute 'default nil :height 94)
+  (add-hook 'LaTeX-mode-hook (lambda () (require 'org-ref)))
+  (add-hook 'atomic-chrome-edit-mode-hook
+            (lambda ()
+              (spacemacs/set-leader-keys-for-minor-mode 'atomic-chrome-edit-mode
+                "," 'atomic-chrome-close-current-buffer
+                )
+              (setq atomic-chrome-default-major-mode 'org-mode)
+              (setq atomic-chrome-url-major-mode-alist
+                    '(("github\\.com" . gfm-mode)
+                      ;; ("." . org-mode))
                       )
-                (setq atomic-chrome-buffer-open-style 'frame)
-                (add-hook 'atomic-chrome-edit-done-hook 
-                          (lambda ()
-                            (delete-frame)
-                            )
+                    )
+              (setq atomic-chrome-buffer-open-style 'frame)
+              (add-hook 'atomic-chrome-edit-done-hook 
+                        (lambda ()
+                          (delete-frame)
                           )
-                ))
-    ;; (add-hook 'edit-server-edit-mode-hook
-    ;;           (lambda ()
-    ;;             (spacemacs/set-leader-keys-for-major-mode 'edit-server-edit-mode
-    ;;               "." 'edit-server-save
-    ;;               "," 'edit-server-done
-    ;;               "k" 'edit-server-abort
-    ;;                )
-    ;;             (org-mode)
-    ;;             )
-    ;;           )
-    ;; (add-hook 'c++-mode-hook
-    (add-hook 'c-mode-common-hook
-              (lambda ()
-                (setq
-                 c-c++-enable-clang-support t
-                 c-c++-default-mode-for-headers 'c++-mode
-                 c-default-style "own"
-                 )
-                (define-key evil-normal-state-map (kbd "SPC oc") 'org-capture)
-                (c-add-style "own" 
-                             '("linux"
-                               (c-basic-offset . 2)
-                               ) t)
-			          
-                ;; t ;; set style to this
-                ;; '("gnu"
-                ;;   ;; (c-hanging-braces-alist     . ((substatement-open before after)
-				        ;;   ;;                                (arglist-cont-nonempty)))
-                ;;   ;; (c-offsets-alist . ((statement-block-intro . +)
-			          ;;   ;;                     (knr-argdecl-intro . 5)
-			          ;;   ;;                     (substatement-open . +)
-			          ;;   ;;                     (substatement-label . 0)
-			          ;;   ;;                     (label . 0)
-			          ;;   ;;                     (statement-case-open . +)
-			          ;;   ;;                     (statement-cont . +)
-			          ;;   ;;                     (arglist-intro . c-lineup-arglist-intro-after-paren)
-			          ;;   ;;                     (arglist-close . c-lineup-arglist)
-			          ;;   ;;                     (inline-open . 0)
-			          ;;   ;;                     (brace-list-open . +)
-			          ;;   ;;                     (brace-list-intro . c-lineup-arglist-intro-after-paren)
-			          ;;   ;;                     (topmost-intro-cont
-			          ;;   ;;                      . (first c-lineup-topmost-intro-cont
-				        ;;   ;;                               c-lineup-gnu-DEFUN-intro-cont))))
-                ;;   ;; (c-special-indent-hook . c-gnu-impose-minimum)
-                ;;   (c-hanging-braces-alist . ((brace-list-open)
-				        ;;                              (brace-entry-open)
-				        ;;                              (substatement-open after)
-				        ;;                              (block-close . c-snug-do-while)
-				        ;;                              (arglist-cont-nonempty)))
-                ;;   (c-offsets-alist . ((statement-block-intro . +)
-			          ;;                       (knr-argdecl-intro     . 0)
-			          ;;                       (substatement-open     . 0)
-			          ;;                       (substatement-label    . 0)
-			          ;;                       (label                 . 0)
-			          ;;                       (statement-cont        . +))))
-                ;; ;; t ;; set style to this
-                ;; )
-                )
-              )
-    (add-hook 'dart-mode-hook
-              (lambda ()
-                (spacemacs/set-leader-keys-for-major-mode 'dart-mode
-                  ;; "," 'dart-send-line-or-region-and-step
-                  "i" 'complete-symbol
-                  "?" 'dart-show-hover
-                  "r" 'dart-find-refs 
-                  "f" 'dart-format
-                  "hh" 'dart-goto
-                  ;; "," 'sh-execute-region
-                  ;; "." 'sh-exec
-                  ;; "hh" 'sh-heredoc
-                  )
-                ;; (setq dart-sdk-path "/home/oney/Android/flutter/bin/cache/dart-sdk/")
-                ;; (setq dart-executable-path "/home/oney/Android/flutter/bin/cache/dart-sdk/bin/dart")
-                (setq dart-enable-analysis-server t)
-                (setq dart-format-on-save t)
-                (flycheck-mode)
-                (setq dart-debug t)
-                )
-              )
-    (add-hook 'sh-mode-hook
-              (lambda ()
-                (spacemacs/set-leader-keys-for-major-mode 'sh-mode
-                  "," 'sh-send-line-or-region-and-step
-                  "i" 'complete-symbol
-                  ;; "," 'sh-execute-region
-                  ;; "." 'sh-exec
-                  ;; "hh" 'sh-heredoc
-                  )
-                )
-              )
-    
-    ;; (add-hook 'ein:notebook-multilang-mode-hook
-    ;;           ;; ein:console-open
-    ;;           ;; To use this function, `ein:console-security-dir' and
-    ;;           ;; `ein:console-args' must be set properly.
-    ;;           (lambda ()
-    ;;             (setq ein:console-executable "/d/documents/eaternity/bw2-py/envs/bw2/bin/jupyter-console")
-    ;;             (setq ein:console-args '("--profile" "bw2"))
-    ;;             ;; (setq ein:console-args
-    ;;             ;;       '(
-    ;;             ;;         (8888 . '("--profile" "bw2"))
-    ;;             ;;         ;; (8889 . '("--ssh" "HOSTNAME"))
-    ;;             ;;         (default . '("--profile" "bw2"))))
-    ;;             (spacemacs/set-leader-keys-for-major-mode 'ein:notebook-multilang-mode
-    ;;               ","   'ein:worksheet-execute-cell-and-goto-next
-    ;;               "."   'ein:worksheet-execute-cell
-    ;;               "RET" 'ein:worksheet-execute-cell-and-insert-below
-    ;;               "TAB" 'ein:console-open
-    ;;               )
-    ;;             (defun my-escape-and-kill-ein ()
-    ;;               "My escape and save"
-    ;;               (interactive)
-    ;;               (evil-escape)
-    ;;               (ein:notebook-close 1)
-    ;;               )
-    ;;             (defun my-escape-and-save-ein ()
-    ;;               "My escape and save"
-    ;;               (interactive)
-    ;;               (evil-escape)
-    ;;               (ein:notebook-save-notebook-command)
-    ;;               )
-    ;;             ;; (key-chord-define-local "kj" 'my-escape-and-save-ein)
-    ;;             ;; (key-chord-define-local "lk" 'my-escape-and-kill-ein)
-    ;;             (spacemacs/toggle-auto-completion-on)
-    ;;             (setq ein:use-auto-complete t
-    ;;                   ein:use-auto-complete-superpack t
-    ;;                   ein:enable-keepalive t
-    ;;                   ;; ein:jupyter-default-notebook-directory "/home/oney/documents/eaternity/eaternity"
-    ;;                   ;; ein:jupyter-default-server-command "/home/oney/documents/eaternity/bw2-py/bin/jupyter"
-    ;;                   ;; ein:jupyter-server-args nil
-    ;;                   ein:notebook-autosave-frequency 60
-    ;;                   ein:notebook-checkpoint-frequency 60
-    ;;                   ein:notebook-modes
-    ;;                   (quote
-    ;;                    (ein:notebook-multilang-mode ein:notebook-python-mode))
-    ;;                   ;; ein:org-execute-timeout 120
-    ;;                   ;; ein:slice-image t
-    ;;                   ein:worksheet-enable-undo 'yes
-    ;;                   )
-    ;;             ;; (setq python-shell-interpreter "/d/documents/eaternity/bw2-py/envs/bw2/bin/ipython"
-    ;;             ;; python-shell-interpreter-args "--simple-prompt -i")
-    ;;             (setq python-shell-interpreter "ipython")
-    ;;             )
-    ;;           )
-    (add-hook 'python-mode-hook
-              (lambda ()
-                (spacemacs/set-leader-keys-for-major-mode 'python-mode
-                  ;; "."   'python-shell-send-defun
-                  ;; "."   'python-shell-send-defun-switch
-                  ","   'python-shell-send-region
-                  "."   'python-shell-send-region-switch
-                  ;; "r"   'python-shell-send-buffer-switch
-                  "k"   'anaconda-mode-complete
-                  "TAB" 'python-start-or-switch-repl
-                  )
-                ;; (setq python-shell-interpreter "/usr/bin/ipython")
-                (setq python-shell-interpreter "ipython3")
-                (setq python-enable-yapf-format-on-save t)
-                ;;       python-shell-interpreter-args "--simple-prompt -i")
-                )
-              )
-    (add-hook 'ess-mode-hook
-              (lambda ()
-                (spacemacs/set-leader-keys-for-major-mode 'ess-mode
-                  ;; "'"  'spacemacs/ess-start-repl
-                  ;; "si" 'spacemacs/ess-start-repl
-                  ;; ;; noweb
-                  ;; "cC" 'ess-eval-chunk-and-go
-                  ;; "cc" 'ess-eval-chunk
-                  ;; "cd" 'ess-eval-chunk-and-step
-                  ;; "cm" 'ess-noweb-mark-chunk
-                  ;; "cN" 'ess-noweb-previous-chunk
-                  ;; "cn" 'ess-noweb-next-chunk
-                  ;; REPL
-                  ","   'ess-eval-function-or-paragraph-and-step
-                  "`"   'ess-show-traceback
-                  "i"   'complete-symbol
-                  "."   'ess-eval-region-or-line-and-step
-                  "hh"  'ess-display-help-on-object
-                  "TAB" 'ess-switch-to-inferior-or-script-buffer
-                  )
-                (setq ess-eval-visibly nil)
-                )
-              )
-    ;; (add-hook 'yaml-mode-hook
-    ;;           (lambda ()
-    ;;             (defun my-newline-and-indent ()
-    ;;               "My newline and indent"
-    ;;               (interactive)
-    ;;               (newline-and-indent)
-    ;;               (insert "- ")
-    ;;               )
-    ;;             (spacemacs/set-leader-keys-for-major-mode 'yaml-mode
-    ;;               "o" 'my-newline-and-indent
-    ;;               ) 
-    ;;             )
-    ;;           )
-    (add-hook 'org-mode-hook
-              (lambda ()
-                (require 'ox-koma-letter)
-                ;; (require 'org-contacts)
-                ;; (setq org-contacts-files (list "~/documents/contacts/contacts.org" ))
-                ;; (setq org-contacts-files (list "~/documents/contacts/processed/OLD-CONTACTS.org" ))
-                ;; (setq org-contacts-vcard-file "~/documents/contacts/org-contacts.vcf")
-                ;; (setq org-agenda-entry-text-exclude-regexps '("DONE"))
-                ;; org-stuck-projects is a variable defined in ‘org-agenda.el’.
-                ;; Its value is ("+LEVEL=2/-DONE" ("TODO" "NEXT" "NEXTACTION") nil "")
-                (setq
-                 org-export-with-toc nil
-                 org-export-with-sub-superscripts '{}
-                 )
-                ;; (add-to-list 'org-export-options-alist '(
-                ;;           (:with-toc nil "toc" org-export-with-toc)
-                ;;           (:with-sub-superscript nil "^" "{}"org-export-with-sub-superscripts)
-                ;;           ))
-                (setq org-stuck-projects '("+LEVEL=1/-DONE" ("TODO" "NEXT") ("ref") "\\<SCHEDULED\\>|\\<DEADLINE\\>"))
+                        )
+              ))
+  ;; (add-hook 'edit-server-edit-mode-hook
+  ;;           (lambda ()
+  ;;             (spacemacs/set-leader-keys-for-major-mode 'edit-server-edit-mode
+  ;;               "." 'edit-server-save
+  ;;               "," 'edit-server-done
+  ;;               "k" 'edit-server-abort
+  ;;                )
+  ;;             (org-mode)
+  ;;             )
+  ;;           )
 
-                (key-chord-define org-mode-map ";i" 'pcomplete) 
-                (delete '("\\.pdf\\'" . default) org-file-apps)
-                (add-to-list 'org-file-apps '(
-                                              ("\\.pdf\\'" . "evince %s")
-                                              ("\\.xlsx?\\'" . "xdg-open %s")
-                                              )
-                             )
-                (require 'ob-async)     
-                (add-hook 'org-capture-mode-hook 'evil-insert-state)
-                (setq org-capture-templates
-                      '(
-                        ("t" "General Tasks" entry (file "~/work-exchange/org/work.org") "* TODO %?\n %i")
-                        ("p" "Programming Task" entry (file "~/work-exchange/org/work.org") "* TODO %? \t\t :computer:\n %i")
-                        ("s" "Specific Programming Task" entry (file "~/work-exchange/org/work.org") "* TODO %? %a \t\t :computer:\n %i")
-                        ("i" "Collect Info" entry (file "~/work-exchange/org/work.org") "* %? %x \t\t:note:\n %i")
-                        ("b" "Braindumps" entry (file "~/work-exchange/org/work.org") "* Braindump: %?\n %U\n %i")
-                        ))
-                ;; (require 'org-ref)
-                ;; ;; (defun helm-bibtex-format-pandoc-citation (keys)
-                ;; ;;   (concat "[" (mapconcat (lambda (key) (concat "@" key)) keys "; ") "]"))
-                ;; ;; ;; inform helm-bibtex how to format the citation in org-mode
-                ;; ;; (setf (cdr (assoc 'org-mode helm-bibtex-format-citation-functions))
-                ;; ;;       'helm-bibtex-format-pandoc-citation)
-                ;; ;;(
-                ;; (setq helm-bibtex-format-citation-functions
-                ;;       '((org-mode . (lambda (x) (insert (concat
-                ;;                                          "\\cite{"
-                ;;                                          (mapconcat 'identity x ",")
-                ;;                                          "}")) ""))))
-                ;; ))
-                ;; (setq org-agenda-files (-remove (lambda (str) (string-match  "#" str)) (file-expand-wildcards "~/org/*.org")))
-                (if (eq (getenv "USERNAME") "oney")
-                    (setq org-agenda-files (-remove
-                                            (lambda (str) (string-match  "#" str))
-                                            (file-expand-wildcards "~/org/*.org")))
-                  (setq org-agenda-files (-remove
-                                        (lambda (str) (string-match  "#" str))
-                                        (file-expand-wildcards "~/work-exchange/org/*.org")))
-                )
-                (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
-                (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
-                (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+  (defun my-c-config ()
+    (progn
+      (setq
+       c-c++-enable-clang-support t
+       c-c++-default-mode-for-headers 'c++-mode
+       c-default-style "own"
+       )
+      (spacemacs/set-leader-keys-for-major-mode 'c++-mode
+        ;; "," 'something-awesome
+        "gc" 'helm-cscope-find-calling-this-function
+        "gC" 'helm-cscope-find-called-function
+        "gt" 'helm-gtags-create-tags
+        "gI" 'cscope-index-files
+        )
+      (spacemacs/set-leader-keys-for-major-mode 'c-mode
+        ;; "," 'something-awesome
+        "gc" 'helm-cscope-find-calling-this-function
+        "gC" 'helm-cscope-find-called-function
+        "gt" 'helm-gtags-create-tags
+        "gI" 'cscope-index-files
+        )
+      (c-add-style "own" 
+                   '("linux"
+                     (c-basic-offset . 2)
+                     ) t)
+      ;; (message "set my C-config up")
 
-                ;; (setq reftex-default-bibliography    "~/zotero/Insects.bib"
-                ;;       org-ref-bibliography-notes     "~/zotero/biblio-notes.org"
-                ;;       org-ref-default-bibliography   "~/zotero/Insects.bib"
-                ;;       org-ref-pdf-directory          "~/zotero/"
-                ;;       bibtex-completion-bibliography "~/zotero/Insects.bib"
-                ;;       helm-bibtex-library-path       "~/action/bugs/literature/"
-                ;;       bibtex-completion-notes-path   "~/zotero"
-                ;;       ) 
-                ;; (spacemacs/set-leader-keys-for-minor-mode 'org-mode
-                ;;   "ir"   'org-ref-helm-insert-cite-link
-                ;;   )
-                ;; (defun org-trello-sync-buffer-IN ()
-                ;;   "Sync in"
-                ;;   (interactive)
-                ;;   (org-trello-sync-buffer t)
-                ;;   )
-                ;; (defun org-trello-sync-card-IN ()
-                ;;   "Sync in"
-                ;;   (interactive)
-                ;;   (org-trello-sync-card t)
-                ;;   )
-                ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode
-                ;;   "ob"  'org-trello-sync-buffer
-                ;;   "oB"  'org-trello-sync-buffer-IN 
-                ;;   "oc"  'org-trello-sync-card
-                ;;   "oC"  'org-trello-sync-card-IN
-                ;;   "oI"  'org-trello-create-board-and-install-metadata
-                ;;   "oi"  'org-trello-install-board-metadata
-                ;;   )
-                (spacemacs/set-leader-keys-for-major-mode 'org-mode
-                  "ir"  'org-ref-helm-insert-cite-link
-                  "p"   'org-priority
-                  "z"   'org-pomodoro
-                  "xd"  'org-do-demote
-                  "r"  'org-refile
-                  ;; "oo"  'org-gcal-sync
-                  ;; "or"  'org-gcal-refresh-token
-                  ;; "od"  'org-gcal-delete-at-point
-                  ;; "op"  'org-gcal-post-at-point
-                  "TAB" 'org-babel-switch-to-session
-                  )
-                ;; GCal!
-                ;; https://github.com/myuhe/org-gcal.el
-                ;; (require 'org-gcal)
-                ;; (load "~/.org-gcal.el")
-                (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
-                  "p"   'org-priority
-                  "z"   'org-pomodoro
-                  "c"   'org-capture
-                  "r"  'org-refile
-                  ;; "oo"  'org-gcal-sync
-                  ;; "or"  'org-gcal-refresh-token
-                  ;; "od"  'org-gcal-delete-at-point
-                  ;; "op"  'org-gcal-post-at-point
-                  )
-                (setq org-tags-column -91)
-                (setq org-tag-alist '(
-                                      ("ARCHIVE"  . ?a)
-                                      ("out"      . ?o)
-                                      ("home"     . ?h)
-                                      ("phone"    . ?p)
-                                      ("computer" . ?c)
-                                      ("learn"    . ?l)
-                                      ("getjob"   . ?j)
-                                      ("note"     . ?n)
-                                      ))
-                (setq org-agenda-custom-commands
-                      '(
-                        ("o" tags-todo "out/NEXT"     ) 
-                        ("h" tags-todo "home/NEXT"    ) 
-                        ("p" tags-todo "phone/NEXT"   ) 
-                        ("c" tags-todo "computer/NEXT") 
-                        ("l" tags-todo "learn/NEXT"   )
-                        ("j" tags-todo "getjob/NEXT"  ) 
-                        ("d" "My next action" todo "NEXT")
-                        ))
-                
-                ;; (require 'org-ref)
-                ;; (require 'org-ref-latex)
-                ;; (require 'org-ref-pdf)
-                ;; (require 'org-ref-url-utils)
-                ;; (setq org-latex-pdf-process
-                ;;       '("pdflatex -interaction nonstopmode -output-directory %o %f"
-                ;;         "bibtex %b"
-                ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"
-                ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"))
-                (add-to-list 'org-latex-classes
-                             '("a4-labels"
-                               "\\documentclass[a4paper,12pt]{article}
+      )
+    )
+  ;; (add-hook 'c-initialization-hook 'my-c-config)
+  ;; (add-hook 'c-mode-common-hook 'my-c-config)
+  (add-hook 'c-mode-hook 'my-c-config)
+  (add-hook 'c++-mode-hook 'my-c-config)
+  (add-hook 'realgud-short-key-mode-hook
+            (lambda ()
+              (key-chord-define-local ";k" 'realgud-short-key-mode)
+              ;; ;; If you're having key mapping conflicts with other mode (e.g. evil-mode), you can assign a prefix to the same key shortcuts by adding the following hook:
+              ;; (local-set-key "\C-c" realgud:shortkey-mode-map)
+              )
+            )
+
+  (add-hook 'dart-mode-hook
+            (lambda ()
+              (spacemacs/set-leader-keys-for-major-mode 'dart-mode
+                ;; "," 'dart-send-line-or-region-and-step
+                "i" 'complete-symbol
+                "?" 'dart-show-hover
+                "r" 'dart-find-refs 
+                "f" 'dart-format
+                "hh" 'dart-goto
+                ;; "," 'sh-execute-region
+                ;; "." 'sh-exec
+                ;; "hh" 'sh-heredoc
+                )
+              (setq dart-sdk-path "/home/oney/Android/flutter/bin/cache/dart-sdk/")
+              (setq dart-executable-path "/home/oney/Android/flutter/bin/cache/dart-sdk/bin/dart")
+              (setq dart-enable-analysis-server t)
+              (setq dart-format-on-save t)
+              (flycheck-mode)
+              (setq dart-debug t)
+              )
+            )
+  (add-hook 'sh-mode-hook
+            (lambda ()
+              (spacemacs/set-leader-keys-for-major-mode 'sh-mode
+                "," 'sh-send-line-or-region-and-step
+                "i" 'complete-symbol
+                ;; "," 'sh-execute-region
+                ;; "." 'sh-exec
+                ;; "hh" 'sh-heredoc
+                )
+              )
+            )
+  
+  ;; (add-hook 'ein:notebook-multilang-mode-hook
+  ;;           ;; ein:console-open
+  ;;           ;; To use this function, `ein:console-security-dir' and
+  ;;           ;; `ein:console-args' must be set properly.
+  ;;           (lambda ()
+  ;;             (setq ein:console-executable "/d/documents/eaternity/bw2-py/envs/bw2/bin/jupyter-console")
+  ;;             (setq ein:console-args '("--profile" "bw2"))
+  ;;             ;; (setq ein:console-args
+  ;;             ;;       '(
+  ;;             ;;         (8888 . '("--profile" "bw2"))
+  ;;             ;;         ;; (8889 . '("--ssh" "HOSTNAME"))
+  ;;             ;;         (default . '("--profile" "bw2"))))
+  ;;             (spacemacs/set-leader-keys-for-major-mode 'ein:notebook-multilang-mode
+  ;;               ","   'ein:worksheet-execute-cell-and-goto-next
+  ;;               "."   'ein:worksheet-execute-cell
+  ;;               "RET" 'ein:worksheet-execute-cell-and-insert-below
+  ;;               "TAB" 'ein:console-open
+  ;;               )
+  ;;             (defun my-escape-and-kill-ein ()
+  ;;               "My escape and save"
+  ;;               (interactive)
+  ;;               (evil-escape)
+  ;;               (ein:notebook-close 1)
+  ;;               )
+  ;;             (defun my-escape-and-save-ein ()
+  ;;               "My escape and save"
+  ;;               (interactive)
+  ;;               (evil-escape)
+  ;;               (ein:notebook-save-notebook-command)
+  ;;               )
+  ;;             ;; (key-chord-define-local "kj" 'my-escape-and-save-ein)
+  ;;             ;; (key-chord-define-local "lk" 'my-escape-and-kill-ein)
+  ;;             (spacemacs/toggle-auto-completion-on)
+  ;;             (setq ein:use-auto-complete t
+  ;;                   ein:use-auto-complete-superpack t
+  ;;                   ein:enable-keepalive t
+  ;;                   ;; ein:jupyter-default-notebook-directory "/home/oney/documents/eaternity/eaternity"
+  ;;                   ;; ein:jupyter-default-server-command "/home/oney/documents/eaternity/bw2-py/bin/jupyter"
+  ;;                   ;; ein:jupyter-server-args nil
+  ;;                   ein:notebook-autosave-frequency 60
+  ;;                   ein:notebook-checkpoint-frequency 60
+  ;;                   ein:notebook-modes
+  ;;                   (quote
+  ;;                    (ein:notebook-multilang-mode ein:notebook-python-mode))
+  ;;                   ;; ein:org-execute-timeout 120
+  ;;                   ;; ein:slice-image t
+  ;;                   ein:worksheet-enable-undo 'yes
+  ;;                   )
+  ;;             ;; (setq python-shell-interpreter "/d/documents/eaternity/bw2-py/envs/bw2/bin/ipython"
+  ;;             ;; python-shell-interpreter-args "--simple-prompt -i")
+  ;;             (setq python-shell-interpreter "ipython")
+  ;;             )
+  ;;           )
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (spacemacs/set-leader-keys-for-major-mode 'python-mode
+                ;; "."   'python-shell-send-defun
+                ;; "."   'python-shell-send-defun-switch
+                ","   'python-shell-send-region
+                "."   'python-shell-send-region-switch
+                ;; "r"   'python-shell-send-buffer-switch
+                "k"   'anaconda-mode-complete
+                "TAB" 'python-start-or-switch-repl
+                )
+              ;; (setq python-shell-interpreter "/usr/bin/ipython")
+              (setq python-shell-interpreter "ipython3")
+              (setq python-enable-yapf-format-on-save t)
+              ;;       python-shell-interpreter-args "--simple-prompt -i")
+              )
+            )
+  (add-hook 'ess-mode-hook
+            (lambda ()
+              (spacemacs/set-leader-keys-for-major-mode 'ess-mode
+                ;; "'"  'spacemacs/ess-start-repl
+                ;; "si" 'spacemacs/ess-start-repl
+                ;; ;; noweb
+                ;; "cC" 'ess-eval-chunk-and-go
+                ;; "cc" 'ess-eval-chunk
+                ;; "cd" 'ess-eval-chunk-and-step
+                ;; "cm" 'ess-noweb-mark-chunk
+                ;; "cN" 'ess-noweb-previous-chunk
+                ;; "cn" 'ess-noweb-next-chunk
+                ;; REPL
+                ","   'ess-eval-function-or-paragraph-and-step
+                "`"   'ess-show-traceback
+                "i"   'complete-symbol
+                "."   'ess-eval-region-or-line-and-step
+                "hh"  'ess-display-help-on-object
+                "TAB" 'ess-switch-to-inferior-or-script-buffer
+                )
+              (setq ess-eval-visibly nil)
+              )
+            )
+  ;; (add-hook 'yaml-mode-hook
+  ;;           (lambda ()
+  ;;             (defun my-newline-and-indent ()
+  ;;               "My newline and indent"
+  ;;               (interactive)
+  ;;               (newline-and-indent)
+  ;;               (insert "- ")
+  ;;               )
+  ;;             (spacemacs/set-leader-keys-for-major-mode 'yaml-mode
+  ;;               "o" 'my-newline-and-indent
+  ;;               ) 
+  ;;             )
+  ;;           )
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (require 'ox-koma-letter)
+              ;; re-enable template expansion
+              (require 'org-tempo)
+              ;; change what is considered a word (w_o_r_d)
+              (modify-syntax-entry ?_ "w")
+              (evil-define-key 'normal evil-org-mode-map "t" 'org-todo)
+              ;; (require 'org-contacts)
+              ;; (setq org-contacts-files (list "~/documents/contacts/contacts.org" ))
+              ;; (setq org-contacts-files (list "~/documents/contacts/processed/OLD-CONTACTS.org" ))
+              ;; (setq org-contacts-vcard-file "~/documents/contacts/org-contacts.vcf")
+              ;; (setq org-agenda-entry-text-exclude-regexps '("DONE"))
+              ;; org-stuck-projects is a variable defined in ‘org-agenda.el’.
+              ;; Its value is ("+LEVEL=2/-DONE" ("TODO" "NEXT" "NEXTACTION") nil "")
+              (setq
+               org-export-with-toc nil
+               org-export-with-sub-superscripts '{}
+               org-want-todo-bindings t
+               )
+              ;; (add-to-list 'org-export-options-alist '(
+              ;;           (:with-toc nil "toc" org-export-with-toc)
+              ;;           (:with-sub-superscript nil "^" "{}"org-export-with-sub-superscripts)
+              ;;           ))
+              (setq org-stuck-projects '("+LEVEL=1/-DONE" ("TODO" "NEXT") ("ref") "\\<SCHEDULED\\>|\\<DEADLINE\\>"))
+              (key-chord-define org-mode-map ";i" 'pcomplete) 
+              (delete '("\\.pdf\\'" . default) org-file-apps)
+              (add-to-list 'org-file-apps '(
+                                            ("\\.pdf\\'" . "evince %s")
+                                            ("\\.xlsx?\\'" . "xdg-open %s")
+                                            )
+                           )
+              (require 'ob-async)     
+              (add-hook 'org-capture-mode-hook 'evil-insert-state)
+              (setq org-capture-templates
+                    '(
+                      ("t" "General Tasks" entry (file "~/work-exchange/org/work.org") "* TODO %?\n %i")
+                      ("p" "Programming Task" entry (file "~/work-exchange/org/work.org") "* TODO %? \t\t :computer:\n %i")
+                      ("s" "Specific Programming Task" entry (file "~/work-exchange/org/work.org") "* TODO %? %a \t\t :computer:\n %i")
+                      ("i" "Collect Info" entry (file "~/work-exchange/org/work.org") "* %? %x \t\t:note:\n %i")
+                      ("b" "Braindumps" entry (file "~/work-exchange/org/work.org") "* Braindump: %?\n %U\n %i")
+                      ))
+              ;; (require 'org-ref)
+              ;; ;; (defun helm-bibtex-format-pandoc-citation (keys)
+              ;; ;;   (concat "[" (mapconcat (lambda (key) (concat "@" key)) keys "; ") "]"))
+              ;; ;; ;; inform helm-bibtex how to format the citation in org-mode
+              ;; ;; (setf (cdr (assoc 'org-mode helm-bibtex-format-citation-functions))
+              ;; ;;       'helm-bibtex-format-pandoc-citation)
+              ;; ;;(
+              ;; (setq helm-bibtex-format-citation-functions
+              ;;       '((org-mode . (lambda (x) (insert (concat
+              ;;                                          "\\cite{"
+              ;;                                          (mapconcat 'identity x ",")
+              ;;                                          "}")) ""))))
+              ;; ))
+              ;; (setq org-agenda-files (-remove (lambda (str) (string-match  "#" str)) (file-expand-wildcards "~/org/*.org")))
+              (setq org-agenda-files (-remove
+                                      (lambda (str) (string-match  "#" str))
+                                      (file-expand-wildcards "~/work-exchange/org/*.org")))
+              (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
+              (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+              (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+
+              ;; (setq reftex-default-bibliography    "~/zotero/Insects.bib"
+              ;;       org-ref-bibliography-notes     "~/zotero/biblio-notes.org"
+              ;;       org-ref-default-bibliography   "~/zotero/Insects.bib"
+              ;;       org-ref-pdf-directory          "~/zotero/"
+              ;;       bibtex-completion-bibliography "~/zotero/Insects.bib"
+              ;;       helm-bibtex-library-path       "~/action/bugs/literature/"
+              ;;       bibtex-completion-notes-path   "~/zotero"
+              ;;       ) 
+              ;; (spacemacs/set-leader-keys-for-minor-mode 'org-mode
+              ;;   "ir"   'org-ref-helm-insert-cite-link
+              ;;   )
+              ;; (defun org-trello-sync-buffer-IN ()
+              ;;   "Sync in"
+              ;;   (interactive)
+              ;;   (org-trello-sync-buffer t)
+              ;;   )
+              ;; (defun org-trello-sync-card-IN ()
+              ;;   "Sync in"
+              ;;   (interactive)
+              ;;   (org-trello-sync-card t)
+              ;;   )
+              ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode
+              ;;   "ob"  'org-trello-sync-buffer
+              ;;   "oB"  'org-trello-sync-buffer-IN 
+              ;;   "oc"  'org-trello-sync-card
+              ;;   "oC"  'org-trello-sync-card-IN
+              ;;   "oI"  'org-trello-create-board-and-install-metadata
+              ;;   "oi"  'org-trello-install-board-metadata
+              ;;   )
+              (spacemacs/set-leader-keys-for-major-mode 'org-mode
+                "ir"  'org-ref-helm-insert-cite-link
+                "p"   'org-priority
+                "z"   'org-pomodoro
+                "xd"  'org-do-demote
+                "r"  'org-refile
+                ;; "oo"  'org-gcal-sync
+                ;; "or"  'org-gcal-refresh-token
+                ;; "od"  'org-gcal-delete-at-point
+                ;; "op"  'org-gcal-post-at-point
+                "TAB" 'org-babel-switch-to-session
+                )
+              ;; GCal!
+              ;; https://github.com/myuhe/org-gcal.el
+              ;; (require 'org-gcal)
+              ;; (load "~/.org-gcal.el")
+              (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
+                "p"   'org-priority
+                "z"   'org-pomodoro
+                "c"   'org-capture
+                "r"  'org-refile
+                ;; "oo"  'org-gcal-sync
+                ;; "or"  'org-gcal-refresh-token
+                ;; "od"  'org-gcal-delete-at-point
+                ;; "op"  'org-gcal-post-at-point
+                )
+              (setq org-tags-column -91)
+              (setq org-tag-alist '(
+                                    ("ARCHIVE"  . ?a)
+                                    ("out"      . ?o)
+                                    ("home"     . ?h)
+                                    ("phone"    . ?p)
+                                    ("computer" . ?c)
+                                    ("learn"    . ?l)
+                                    ("getjob"   . ?j)
+                                    ("note"     . ?n)
+                                    ))
+              (setq org-agenda-custom-commands
+                    '(
+                      ("o" tags-todo "out/NEXT"     ) 
+                      ("h" tags-todo "home/NEXT"    ) 
+                      ("p" tags-todo "phone/NEXT"   ) 
+                      ("c" tags-todo "computer/NEXT") 
+                      ("l" tags-todo "learn/NEXT"   )
+                      ("j" tags-todo "getjob/NEXT"  ) 
+                      ("d" "My next action" todo "NEXT")
+                      ))
+              
+              ;; (require 'org-ref)
+              ;; (require 'org-ref-latex)
+              ;; (require 'org-ref-pdf)
+              ;; (require 'org-ref-url-utils)
+              ;; (setq org-latex-pdf-process
+              ;;       '("pdflatex -interaction nonstopmode -output-directory %o %f"
+              ;;         "bibtex %b"
+              ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"
+              ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"))
+              (add-to-list 'org-latex-classes
+                           '("a4-labels"
+                             "\\documentclass[a4paper,12pt]{article}
                              \\usepackage[newdimens]{labels}
                              \\LabelCols=3% Number of columns of labels per page
                              \\LabelRows=8% Number of rows of labels per page
@@ -1171,10 +1181,10 @@ package is loaded, you should place your code here."
                              \\InterLabelColumn=2mm% Gap between columns of labels
                              \\numberoflabels=24
                              "
-                               ))
-                (add-to-list 'org-latex-classes
-                             '("letter-de"
-                               "\\documentclass[DIV=14,
+                             ))
+              (add-to-list 'org-latex-classes
+                           '("letter-de"
+                             "\\documentclass[DIV=14,
                                 fontsize=11pt,
                                 parskip=half,
                                 backaddress=false,
@@ -1182,10 +1192,10 @@ package is loaded, you should place your code here."
                                 fromphone=true,
                               fromalign=left]{scrlttr2}
                              \\usepackage[ngerman]{babel}"
-                               ))
-                (add-to-list 'org-latex-classes
-                             '("letter-en"
-                               "\\documentclass[DIV=14,
+                             ))
+              (add-to-list 'org-latex-classes
+                           '("letter-en"
+                             "\\documentclass[DIV=14,
                                 fontsize=11pt,
                                 parskip=half,
                                 backaddress=false,
@@ -1193,66 +1203,79 @@ package is loaded, you should place your code here."
                                 fromphone=true,
                               fromalign=left]{scrlttr2}
                               \\usepackage[english]{babel}"
-                               ))
-                (setq org-table-use-standard-references t)
-                (org-babel-do-load-languages
-                 'org-babel-load-languages
-                 '(
-                   (emacs-lisp . t)
-                   (R          . t)
-                   (C          . t)
-                   (shell      . t)
-                   (python     . t)
-                   (ditaa      . t)
-                   (plantuml   . t)
-                   ))
-                (setq org-confirm-babel-evaluate nil)
-                (setq org-src-preserve-indentation t)
-                ;; (require 'ob-shell)
-                ;; (defadvice org-babel-sh-evaluate (around set-shell activate)
-                ;;   "Add header argument :shcmd that determines the shell to be called."
-                ;;   (let* ((org-babel-sh-command (or (cdr (assoc :shcmd params)) org-babel-sh-command)))
-                ;;     ad-do-it
-                ;;     ))
-                ;; (defun my-org-confirm-babel-evaluate (lang body)
-                ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
-                ;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
-                (setq org-startup-with-inline-images nil)
-                ;; (setq org-file-apps
-                ;;       (append '(
-                ;;                 ("\\.png\\'"   . system)
-                ;;                 ("\\.pdf\\'"   . system)
-                ;;                 ("\\.docx?\\'" . system)
-                ;;                 ("\\.html\\'"  . system)
-                ;;                 )
-                ;;               org-file-apps )
-                ;;       )
-                ;; (auto-fill-mode 1)
-                (spacemacs/toggle-auto-completion)
-                ;; (setq org-agenda-span 'month)
+                             ))
+              (setq org-table-use-standard-references t)
+              (org-babel-do-load-languages
+               'org-babel-load-languages
+               '(
+                 (emacs-lisp . t)
+                 (R          . t)
+                 (C          . t)
+                 (shell      . t)
+                 (python     . t)
+                 (ditaa      . t)
+                 (plantuml   . t)
+                 ))
+              (setq org-confirm-babel-evaluate nil)
+              (setq org-src-preserve-indentation t)
+              ;; (require 'ob-shell)
+              ;; (defadvice org-babel-sh-evaluate (around set-shell activate)
+              ;;   "Add header argument :shcmd that determines the shell to be called."
+              ;;   (let* ((org-babel-sh-command (or (cdr (assoc :shcmd params)) org-babel-sh-command)))
+              ;;     ad-do-it
+              ;;     ))
+              ;; (defun my-org-confirm-babel-evaluate (lang body)
+              ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
+              ;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+              (setq org-startup-with-inline-images nil)
+              ;; (setq org-file-apps
+              ;;       (append '(
+              ;;                 ("\\.png\\'"   . system)
+              ;;                 ("\\.pdf\\'"   . system)
+              ;;                 ("\\.docx?\\'" . system)
+              ;;                 ("\\.html\\'"  . system)
+              ;;                 )
+              ;;               org-file-apps )
+              ;;       )
+              ;; (auto-fill-mode 1)
+              (spacemacs/toggle-auto-completion)
+              ;; (setq org-agenda-span 'month)
 
-                (setq org-agenda-include-diary t)
-                ;; (setq org-time-stamp-custom-formats '("<%y-%m-%d>" . "<%y-%m-%d %H:%M>"))
+              (setq org-agenda-include-diary t)
+              ;; (setq org-time-stamp-custom-formats '("<%y-%m-%d>" . "<%y-%m-%d %H:%M>"))
 
-                ;; ics export
-                (setq
-                 ;; org-icalendar-include-todo t
-                 ;; org-icalendar-use-deadline '(event-if-not-todo todo-due)
-                 org-icalendar-use-deadline '(event-if-not-todo)
-                 org-icalendar-use-scheduled '(event-if-not-todo)
-                 )
-                ;; (require 'org-trello)
-                ;; (setq org-trello-files (file-expand-wildcards "~/org-trello/*.org"))
-                ;; (add-hook 'markdown-mode-hook
-                ;;           '(lambda () (define-key markdown-mode-map "\c-c[" 'helm-bibtex)))
-                ;; (setq bibtex-completion-bibliography '("~/zotero/insects.bib"))
-                ;; (setq org-archive-location "~/org-archive/datetree.org::datetree/* Finished Tasks")
-                ;; (setq org-archive-location "~/org-archive/%s::")
-                (setq org-archive-location "~/Sync/org/%s::datetree/")
-                )
-              (add-to-list 'default-frame-alist '(background-color . "beige"))
+              ;; ics export
+              (setq
+               ;; org-icalendar-include-todo t
+               ;; org-icalendar-use-deadline '(event-if-not-todo todo-due)
+               org-icalendar-use-deadline '(event-if-not-todo)
+               org-icalendar-use-scheduled '(event-if-not-todo)
+               )
+              ;; (require 'org-trello)
+              ;; (setq org-trello-files (file-expand-wildcards "~/org-trello/*.org"))
+              ;; (add-hook 'markdown-mode-hook
+              ;;           '(lambda () (define-key markdown-mode-map "\c-c[" 'helm-bibtex)))
+              ;; (setq bibtex-completion-bibliography '("~/zotero/insects.bib"))
+              ;; (setq org-archive-location "~/org-archive/datetree.org::datetree/* Finished Tasks")
+              ;; (setq org-archive-location "~/org-archive/%s::")
+              (setq org-archive-location "~/Sync/org/%s::datetree/")
               )
-    ;; (setq request-backend 'url-retrieve )
-    (setq request-message-level 'debug)
-    ;; (remove-hook 'python-mode-hook 'spacemacs//init-eldoc-python-mode)
-    )
+            )
+  ;; (setq request-backend 'url-retrieve )
+  (setq request-message-level 'debug)
+  ;; (remove-hook 'python-mode-hook 'spacemacs//init-eldoc-python-mode)
+  )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (spinner mmm-mode evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-commentary evil-args evil-anzu anzu evil undo-tree csv-mode adaptive-wrap zotxt request-deferred deferred yapfify ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org smartparens ripgrep restart-emacs request rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin platformio-mode pip-requirements persp-mode pcre2el paradox pandoc-mode ox-pandoc ht org-ref pdf-tools ivy helm-bibtex htmlize biblio parsebib biblio-core tablist org-bullets open-junk-file ob-dart ob-async neotree mwim move-text markdown-toc markdown-mode macrostep lua-mode lorem-ipsum live-py-mode linum-relative link-hint key-chord insert-shebang indent-guide ibuffer-projectile hydra lv hy-mode dash-functional hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile projectile helm-mode-manager helm-make helm-gtags helm-flx helm-descbinds helm-cscope xcscope helm-company helm-c-yasnippet helm-ag google-translate golden-ratio git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-commit with-editor git-gutter gh-md ggtags fuzzy flycheck-pos-tip pos-tip flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-unimpaired evil-search-highlight-persist highlight evil-numbers evil-escape goto-chg eval-sexp-fu elisp-slime-nav dumb-jump disaster diminish diff-hl define-word dart-mode flycheck pkg-info epl cython-mode company-statistics company-shell company-c-headers company-anaconda company column-enforce-mode cmake-mode clean-aindent-mode clang-format bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed anaconda-mode pythonic f dash s aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

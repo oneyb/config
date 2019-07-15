@@ -4,18 +4,18 @@ cd ~
 
 sudo apt-get update
 
-ansible-playbook -i tinkbox.local, -u oney ~/bin/.setup_linux.yaml --ask-become-pass
+# ansible-playbook -i tinkbox.local, -u oney ~/bin/.setup_linux.yaml --ask-become-pass
 
 $? == 0 && cppman -c
 
-sudo loginctl enable-linger $USER
+# sudo loginctl enable-linger $USER
 
 echo "c.InteractiveShellApp.extensions = ['grasp']" >> ~/.ipython/profile_default/ipython_config.py 
 
 # Remove stuff
 sudo apt-get remove thunderbird
 
-# Zotero on debian 9
+# Zotero on debian 10
 wget https://raw.github.com/oneyb/zotero_installer/master/zotero_installer.sh -O /tmp/zotero_installer.sh
 chmod +x /tmp/zotero_installer.sh
 sudo /tmp/zotero_installer.sh
@@ -83,6 +83,10 @@ wget -O anamnesis.tar.gz  https://sourceforge.net/projects/anamnesis/files/lates
 tar xzf anamnesis.tar.gz
 ln -sf ~/bin/src/anamnesis-1.0.4/source/anamnesis.py ~/bin/anamnesis
 
+curl -s https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
+echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" | sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
+sudo apt update && sudo apt install signal-desktop
+
 # Messenger services with Rambox
 function install-rambox ()
 {
@@ -102,12 +106,12 @@ function install-rambox ()
 }
 install-rambox
 
-wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
-sudo dpkg --add-architecture i386
-sudo apt-get update
-sudo apt-get install libgtk2.0-0:i386 libxml2:i386 libstdc++6:i386
-sudo dpkg -i AdbeRdr9*.deb
-mv AdbeRdr9*.deb ~/bin/src/
+# wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
+# sudo dpkg --add-architecture i386
+# sudo apt-get update
+# sudo apt-get install libgtk2.0-0:i386 libxml2:i386 libstdc++6:i386
+# sudo dpkg -i AdbeRdr9*.deb
+# mv AdbeRdr9*.deb ~/bin/src/
 
 # archwiki
 wget https://www.archlinux.org/packages/community/any/arch-wiki-docs/download/ -O arch-wiki-docs.tar.xz
@@ -172,26 +176,7 @@ Terminal="true"
 add_desktop_launcher $HOME/bin/.backup_file.sh  $HOME/.config/icons/text-x-script.png
 add_desktop_launcher $HOME/bin/.sync_phone.sh   $HOME/.config/icons/stock_cell-phone.png
 
-# configuration
-git clone git@github.com:oneyb/qpdfview-shortcuts-config.git ~/.config/qpdfview
-
 xdg-settings set default-web-browser chromium.desktop
-
-# # PDF-tools awesomeness
-# sudo aptitude install libpng-dev libz-dev libpoppler-glib-dev  \
-#      libpoppler-private-dev
-# git clone https://github.com/politza/pdf-tools
-# cd pdf-tools
-# # make install-server-deps # optional
-# make -s
-# if [ -f pdf-tools-*.tar ]; then
-#    sudo make install-package
-# fi
-# make clean
-# cd ..
-# mv pdf-tools ~/bin/src/
-echo "much easier to install pdf-tools layer and then:"
-emacsclient -e "(pdf-tools-install)"
 
 # Nice grub screen hiding
 # https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Hide_GRUB_unless_the_Shift_key_is_held_down
@@ -328,14 +313,14 @@ echo -e "if [ -d /usr/local/src/texlive/ ]; then\n\tPATH=\"/usr/local/src/texliv
 # sudo systemctl disable tor
 # sudo systemctl stop tor
 
-wget https://raw.githubusercontent.com/raspberrypi-ui/piclone/master/src/backup 
-bash backup /dev/sda
-sudo dbus-launch piclone
-wget http://www.iozone.org/src/current/iozone3_434.tar
-cat iozone3_434.tar | tar -x
-cd iozone3_434/src/current
-make linux-arm
-~/iozone3_434/src/current/iozone -e -I -a -s 100M -r 4k -i 0 -i 1 -i 2 -f test.txt
+# wget https://raw.githubusercontent.com/raspberrypi-ui/piclone/master/src/backup 
+# bash backup /dev/sda
+# sudo dbus-launch piclone
+# wget http://www.iozone.org/src/current/iozone3_434.tar
+# cat iozone3_434.tar | tar -x
+# cd iozone3_434/src/current
+# make linux-arm
+# ~/iozone3_434/src/current/iozone -e -I -a -s 100M -r 4k -i 0 -i 1 -i 2 -f test.txt
 
 sudo apt-get update
 sudo apt-get install apt-transport-https
@@ -351,20 +336,10 @@ git clone https://github.com/afg984/base16-xfce4-terminal.git ~/.config/base16-x
 rsync -vurt --delete ~/.config/base16-xfce4-terminal/colorschemes/ ~/.local/share/xfce4/terminal/colorschemes/
 # Choose 'Nord'
 
-if [ -d ~/bin/src/adb-sync/ ]; then
-    cd ~/bin/src/adb-sync/
-    git pull
-    cd -
-else
-    # git clone https://github.com/google/adb-sync ~/bin/src/adb-sync/
-    git clone https://github.com/chatziko/adb-sync ~/bin/src/adb-sync/
-    ln -sf ~/bin/src/adb-sync/adb-* ~/bin/.
-fi
-
 
 # May change this
-echo "Wanna? sudo localectl set-x11-keymap us pc105 qwerty 'compose:102'"
-echo "Wanna? sudo localectl set-x11-keymap us pc105 qwerty 'compose:prsc,caps:escape'"
+echo Wanna\? sudo localectl set-x11-keymap us pc105 qwerty 'compose:102'
+echo Wanna\? sudo localectl set-x11-keymap us pc105 qwerty 'compose:prsc,caps:escape'
 
 
 # get scripts from http://www.fmwconcepts.com/imagemagick/index.php
