@@ -86,9 +86,9 @@ alias awh='wiki-search-html'
 
 
 ### ----- App related stuff ----- ###
-alias l='ls -l --color'
-alias lt='ls -lt --color'
-alias ll='ls -Al --color'
+alias l='ls -hl --color'
+alias lt='ls -lht --color'
+alias ll='ls -Alh --color'
 alias ask='ps aux | grep -i'
 alias agi='sudo apt-get install'
 alias agr='sudo apt-get remove'
