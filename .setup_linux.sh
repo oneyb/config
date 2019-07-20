@@ -92,16 +92,13 @@ function install-rambox ()
 {
     cd $HOME/bin/src/
     rm Rambox-latest-x64.tar.gz
-    version=0.6.3
-    download=https://github.com/TheGoddessInari/rambox/releases/download/nightly/Rambox_0.5.18_amd64.deb
-    [[ ! -f Rambox-latest-x64.tar.gz ]] && wget $download -O Rambox-latest-x64.deb
-    # sudo tar xzf Rambox-latest-x64.tar.gz -C /opt/
-    # sudo ln -sf /opt/Rambox*/rambox /usr/local/bin/rambox
+    # download=https://github.com/TheGoddessInari/rambox/releases/download/nightly/Rambox_0.5.18_amd64.deb
+    download=https://github.com/TheGoddessInari/hamsket/releases/download/nightly/Rambox_0.5.18_amd64.deb
+    [[ ! -f Rambox-latest-x64.deb ]] && wget $download -O Rambox-latest-x64.deb
+    dpkg -i Rambox-latest-x64.deb
     [[ ! -f /usr/share/icons/rambox.png ]] && sudo wget https://rambox.pro/images/logo.png -O /usr/share/icons/rambox.png
     sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Rambox\nComment=Free, Open Source and Cross Platform messaging and emailing app that combines common web applications into one.\nExec=rambox -- %u\nStartupWMClass=Rambox rambox\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/rambox.desktop"
     sudo desktop-file-install /usr/share/applications/rambox.desktop
-    # wget https://github.com/ramboxapp/community-edition/releases/download/0.6.1/Rambox-0.6.1-linux-amd64.deb
-    # dpkg -i Rambox-0.6.1-linux-amd64.deb
     cd -
 }
 install-rambox
@@ -147,14 +144,14 @@ bash -c "emacs" &
 
 Terminal="false"
 function add_desktop_launcher {
-    echo "[Desktop Entry]                                
-Version=1.0                                     
-Type=Application                                
+    echo "[Desktop Entry]
+Version=1.0
+Type=Application
 Name=$(basename $1)
-Comment=                                        
+Comment=
 Exec=$1
 Icon=$2
-Path=                                           
+Path=
 Terminal=$Terminal
 StartupNotify=false" > ~/.config/xfce4/desktop/$(basename $1).desktop
     xfce4-panel --add=launcher ~/.config/xfce4/desktop/$(basename $1).desktop
@@ -168,19 +165,19 @@ add_desktop_launcher epiphany-browser           $HOME/.config/icons/web-browser.
 add_desktop_launcher chromium                   $HOME/.config/icons/chromium.png
 add_desktop_launcher $HOME/bin/rambox.sh        /usr/share/icons/rambox.png 
 add_desktop_launcher $HOME/bin/sync_org.sh      $HOME/.config/icons/orgzly.png
-add_desktop_launcher "emacsclient -c --eval '(org-capture)'" $HOME/.config/icons/emacs22.png
+# add_desktop_launcher "emacsclient -c --eval '(org-capture)'" $HOME/.config/icons/emacs22.png
 # add_desktop_launcher "emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")'" $HOME/.config/icons/emacs22.png
 # add_desktop_launcher VirtualBox                 $HOME/.config/icons/virtualbox.png
 # add_desktop_launcher $HOME/bin/zotero           $HOME/.config/icons/zotero.png 
-Terminal="true"
-add_desktop_launcher $HOME/bin/.backup_file.sh  $HOME/.config/icons/text-x-script.png
-add_desktop_launcher $HOME/bin/.sync_phone.sh   $HOME/.config/icons/stock_cell-phone.png
+# Terminal="true"
+# add_desktop_launcher $HOME/bin/.backup_file.sh  $HOME/.config/icons/text-x-script.png
+# add_desktop_launcher $HOME/bin/.sync_phone.sh   $HOME/.config/icons/stock_cell-phone.png
 
 xdg-settings set default-web-browser chromium.desktop
 
 # Nice grub screen hiding
 # https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Hide_GRUB_unless_the_Shift_key_is_held_down
-wget https://raw.githubusercontent.com/hobarrera/grub-holdshift/master/31_hold_shift -O /etc/grub.d/31_hold_shift
+sudo wget https://raw.githubusercontent.com/oneyb/config/master/31_hold_shift -O /etc/grub.d/31_hold_shift
 sudo bash -c 'echo -e "GRUB_TIMEOUT=\"0\"\nGRUB_HIDDEN_TIMEOUT=\"0\"\nGRUB_FORCE_HIDDEN_MENU=\"true\"" >> /etc/default/grub'
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -216,27 +213,27 @@ systemctl --user start emacs.timer
 
 # set up atom-chrome https://github.com/alpha22jp/atomic-chrome
 
-# Set up automatic phone sync
-echo -e  '
-# ACTION=="add",ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860",MODE="660", GROUP="plugdev",RUN+="/bin/su oney -c /home/oney/bin/.sync_phone.sh | at now"
-# ACTION=="add",ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860",TAG+="systemd",ENV{SYSTEMD_WANTS}="sync-phone.service" 
-ACTION=="add",ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860",TAG+="systemd",ENV{SYSTEMD_USER_WANTS}="sync-phone.service" 
-' | sudo tee -a /etc/udev/rules.d/phone-plugin.rule
+# # Set up automatic phone sync
+# echo -e  '
+# # ACTION=="add",ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860",MODE="660", GROUP="plugdev",RUN+="/bin/su oney -c /home/oney/bin/.sync_phone.sh | at now"
+# # ACTION=="add",ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860",TAG+="systemd",ENV{SYSTEMD_WANTS}="sync-phone.service" 
+# ACTION=="add",ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860",TAG+="systemd",ENV{SYSTEMD_USER_WANTS}="sync-phone.service" 
+# ' | sudo tee -a /etc/udev/rules.d/phone-plugin.rule
 
-echo -e  "
-[Unit]
-Description=Automatically sync phone with udev and systemd
+# echo -e  "
+# [Unit]
+# Description=Automatically sync phone with udev and systemd
 
-[Service]
-WorkingDirectory=%h
-Type=oneshot
-ExecStart=%h/bin/.sync_phone.sh
-StandardOutput=journal
+# [Service]
+# WorkingDirectory=%h
+# Type=oneshot
+# ExecStart=%h/bin/.sync_phone.sh
+# StandardOutput=journal
 
-[Install]
-WantedBy=multi-user.target
-" > ~/.config/systemd/user/sync-phone.service
-systemctl --user enable sync-phone.service
+# [Install]
+# WantedBy=multi-user.target
+# " > ~/.config/systemd/user/sync-phone.service
+# systemctl --user enable sync-phone.service
 
 
 # anamnesis

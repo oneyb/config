@@ -33,10 +33,10 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     ; autohotkey
-     ; windows-scripts
+     autohotkey
+     windows-scripts
      ;; ansible
-     ; yaml
+     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -57,21 +57,17 @@ This function should only modify configuration layer settings."
      ;; for windows https://code.google.com/archive/p/cscope-win32/downloads
      cscope
      gtags
-     ; csharp
      spacemacs-misc
      ;; ycmd ;; above 
      ;; semantic
      spacemacs-evil
      ;; spacemacs-org
      evil-commentary
-     multiple-cursors
-     treemacs
      emacs-lisp
      ;; git
      ;; github
      version-control
      lua
-     debug
      (markdown
       :eval-after-load
       ;; (auto-fill-mode 1)
@@ -79,16 +75,16 @@ This function should only modify configuration layer settings."
       )
      pandoc
      ;; org
-     ; (org :variables
-     ;      ;; org-enable-github-support t
-     ;      org-enable-bootstrap-support nil)
+     (org :variables
+          ;; org-enable-github-support t
+          org-enable-bootstrap-support nil)
      spacemacs-org
-     ; (latex
-     ;  :variables latex-enable-auto-fill t
-     ;  :eval-after-load
-     ;  ;; (auto-fill-mode 1)
-     ;  (spacemacs/toggle-auto-completion)
-     ;  )
+     (latex
+      :variables latex-enable-auto-fill t
+      :eval-after-load
+      ;; (auto-fill-mode 1)
+      (spacemacs/toggle-auto-completion)
+      )
      ;; (shell
      ;;  :variables
      ;;  shell-default-shell 'shell
@@ -101,7 +97,7 @@ This function should only modify configuration layer settings."
      ;;  :variables spell-checking-enable-auto-dictionary t)
      syntax-checking
      ;; version-control
-     ; ess
+     ess
      ;; (ess :variables
      ;;      ess-enable-smart-equals t)
      python
@@ -110,9 +106,9 @@ This function should only modify configuration layer settings."
      csv
      ;; ipython-notebook
      ;; (ipython-notebook :variables ein:use-auto-complete t)
-     ; javascript
-     ; html
-     ; vimscript
+     javascript
+     html
+     vimscript
      ibuffer
      ;; pdf-tools
      )
@@ -560,9 +556,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; (setq evil-toggle-key (kbd "C-h"))
 
   (setq ess-eval-visibly nil)
-    ; (if (eq (getenv "USERNAME") "oney")
-    ;     (load (concat (getenv "HOME") ".spacemacs.home.el"))
-    ;   (load (concat (getenv "HOME") ".spacemacs.work.el")))
   (setq ess-ask-for-ess-directory nil)
   (setq org-todo-keywords '((sequence "WAIT" "TODO" "NEXT" "|" "DONE")))
   (add-to-list 'default-frame-alist '(background-color . "beige"))
@@ -590,15 +583,70 @@ package is loaded, you should place your code here."
   ;; (fset 'evil-visual-update-x-selection 'ignore)
   ;; (setq ycmd-server-command '("python" "C:/Sources/brian.oney/.vim/plugged/YouCompleteMe/third_party/ycmd/ycmd"))
   ;; (setq ycmd-force-semantic-completion t)
-  (add-hook 'prog-mode-hook #'(lambda ()
-                                (modify-syntax-entry ?_ "w")
-                                (key-chord-define prog-mode-map ";i" 'completion-at-point) 
-                                ))
+  (defun work-config ()
+    (interactive)
+    (progn
+      (add-to-list 'dotspacemacs-configuration-layers '(
+                                                        debug
+                                                        csharp
+                                                        spacemacs-defaults
+                                                        multiple-cursors
+                                                        treemacs
+                                                        )
+                   )
+
+      (setq dotspacemacs-default-font '(
+                                        ;; "Source Code Pro"
+                                        "Courier New"
+                                        :size 13
+                                        :weight normal
+                                        :width normal
+                                        :powerline-scale 1.1)
+            )
+      (global-set-key (kbd "<S-Insert>") #'clipboard-yank)
+      (add-to-list 'exec-path "C:\\Program Files\\Git\\mingw64\\bin")
+      (setenv "PATH" (mapconcat #'identity exec-path path-separator))
+      (add-hook 'projectile-mode-hook
+                (lambda ()
+                  (add-to-list 'projectile-globally-ignored-files "cscope.out")
+                  (add-to-list 'projectile-globally-ignored-files "cscope.files")
+                  (add-to-list 'projectile-globally-ignored-files "*TAGS")
+                  (add-to-list 'projectile-globally-ignored-files "*.map")
+                  (add-to-list 'projectile-globally-ignored-files "*.mac")
+                  ;; (add-to-list 'projectile-globally-ignored-files ".ld")
+                  (add-to-list 'projectile-globally-ignored-files "*.lst")
+                  (add-to-list 'projectile-globally-ignored-files "*.csv")
+                  (add-to-list 'projectile-globally-ignored-files "*.html")
+                  (add-to-list 'projectile-globally-ignored-files "*.xml")
+                  )
+                )
+
+      (setq explicit-cmd.exe-args '("/K bigc"))
+      (setq explicit-cmdproxy.exe-args '("/K bigc"))
+      (setq shell-default-term-shell "C:\\Windows\\System32\\cmd.exe")
+      (add-to-list 'exec-path "C:\\Program Files\\Git\\bin")
+      (add-to-list 'exec-path "C:\\Sources\\programs\\python36")
+      ;; (add-to-list 'exec-path "C:\\MinGW\\msys\\1.0\\bin")
+      ;; (setq find-program "C:\\MinGW\\msys\\1.0\\bin\\find.exe"
+      ;;       grep-program "C:\\MinGW\\msys\\1.0\\bin\\grep.exe")
+      (setq python-shell-interpreter "python")
+      ;; (setenv "PATH" (mapconcat #'identity exec-path path-separator))
+      ;; (setq grep-find-template
+      ;;       "fd . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
+      )
+    )
+  (if (string= (getenv "USER") "oney")
+      (message "Go to bed on time...")
+    (message "Get to work!")
+    (work-config)
+    )
   (setq sentence-end-double-space t)
   (require 'powerline)
   (powerline-default-theme)
-  (evil-leader/set-key "?" 'ripgrep-regexp)
-  (evil-leader/set-key "/" 'projectile-ripgrep)
+  ;; (evil-leader/set-key "?" 'ripgrep-regexp)
+  (evil-leader/set-key "?" 'spacemacs/helm-dir-do-rg)
+  ;; (evil-leader/set-key "/" 'projectile-ripgrep)
+  (evil-leader/set-key "/" 'spacemacs/helm-project-do-rg)
   ;; (setq term-ansi-default-program "C:\\Program Files\\Git\\git-bash.exe") 
   (add-hook 'ediff-prepare-buffer-hook #'outline-show-all)
   (global-set-key (kbd "C-h") 'spacemacs/toggle-holy-mode)
@@ -666,7 +714,11 @@ package is loaded, you should place your code here."
   (defun my-put-current-directory-in-clipboard ()
     "Put the current directory name on the clipboard"
     (interactive)
-    (let ((x-select-enable-clipboard t)) (kill-new (my-capitalize-first-char default-directory)))
+    (let ((x-select-enable-clipboard t)
+          (res (my-capitalize-first-char default-directory)))
+      (kill-new res)
+      (message (concat "Copied: " res))
+      )
     )
   (defun my-put-file-name+line-number-in-clipboard ()
     "Put the current file name with lineno on the clipboard"
@@ -675,13 +727,15 @@ package is loaded, you should place your code here."
                         default-directory
                       (buffer-file-name))))
       (when filename
-        ;; (with-temp-buffer
-        ;;   (insert filename)
-        ;;   (clipboard-kill-region (point-min) (point-max)))
-        (let ((x-select-enable-clipboard t))
-          (kill-new
-           (concat (my-capitalize-first-char filename) ":" (number-to-string (line-number-at-pos)))))
-        )))
+        (let ((x-select-enable-clipboard t)
+              (res (concat (my-capitalize-first-char filename) ":"
+                           (number-to-string (line-number-at-pos)))))
+           (kill-new res)
+           (message (concat "Copied: " res))
+           )
+        )
+      )
+    )
   (defun my-put-file-name-in-clipboard ()
     "Put the current file name on the clipboard"
     (interactive)
@@ -689,11 +743,13 @@ package is loaded, you should place your code here."
                         default-directory
                       (buffer-file-name))))
       (when filename
-        ;; (with-temp-buffer
-        ;;   (insert filename)
-        ;;   (clipboard-kill-region (point-min) (point-max)))
-        (let ((x-select-enable-clipboard t)) (kill-new (my-capitalize-first-char filename)))
-        )))
+        (let ((x-select-enable-clipboard t)
+              (res (my-capitalize-first-char filename)))
+          (kill-new res)
+          (message (concat "Copied: " res)))
+        )
+      )
+    )
   (define-key evil-normal-state-map (kbd "SPC of") 'my-put-file-name-in-clipboard)
   (define-key evil-normal-state-map (kbd "SPC on") 'my-put-file-name+line-number-in-clipboard)
   (define-key evil-normal-state-map (kbd "SPC od") 'my-put-current-directory-in-clipboard)
@@ -770,6 +826,11 @@ package is loaded, you should place your code here."
   (key-chord-define-global "jk" 'my-escape-and-save)
   (key-chord-define-global "BB" 'my-escape-and-bury)
   (key-chord-define-global ";i" 'completion-at-point)
+  (add-hook 'prog-mode-hook
+            #'(lambda ()
+                (modify-syntax-entry ?_ "w")
+                (key-chord-define prog-mode-map ";i" 'completion-at-point)
+                ))
   (setq text-mode-hook (quote (text-mode-hook-identify toggle-truncate-lines)))
   (setq-default fill-column 78)
   ;; ;; Visual stuff
@@ -845,6 +906,7 @@ package is loaded, you should place your code here."
        c-c++-enable-clang-support t
        c-c++-default-mode-for-headers 'c++-mode
        c-default-style "own"
+       realgud-safe-mode nil
        )
       (spacemacs/set-leader-keys-for-major-mode 'c++-mode
         ;; "," 'something-awesome
@@ -880,27 +942,27 @@ package is loaded, you should place your code here."
               )
             )
 
-  (add-hook 'dart-mode-hook
-            (lambda ()
-              (spacemacs/set-leader-keys-for-major-mode 'dart-mode
-                ;; "," 'dart-send-line-or-region-and-step
-                "i" 'complete-symbol
-                "?" 'dart-show-hover
-                "r" 'dart-find-refs 
-                "f" 'dart-format
-                "hh" 'dart-goto
-                ;; "," 'sh-execute-region
-                ;; "." 'sh-exec
-                ;; "hh" 'sh-heredoc
-                )
-              (setq dart-sdk-path "/home/oney/Android/flutter/bin/cache/dart-sdk/")
-              (setq dart-executable-path "/home/oney/Android/flutter/bin/cache/dart-sdk/bin/dart")
-              (setq dart-enable-analysis-server t)
-              (setq dart-format-on-save t)
-              (flycheck-mode)
-              (setq dart-debug t)
-              )
-            )
+  ;; (add-hook 'dart-mode-hook
+  ;;           (lambda ()
+  ;;             (spacemacs/set-leader-keys-for-major-mode 'dart-mode
+  ;;               ;; "," 'dart-send-line-or-region-and-step
+  ;;               "i" 'complete-symbol
+  ;;               "?" 'dart-show-hover
+  ;;               "r" 'dart-find-refs 
+  ;;               "f" 'dart-format
+  ;;               "hh" 'dart-goto
+  ;;               ;; "," 'sh-execute-region
+  ;;               ;; "." 'sh-exec
+  ;;               ;; "hh" 'sh-heredoc
+  ;;               )
+  ;;             (setq dart-sdk-path "/home/oney/Android/flutter/bin/cache/dart-sdk/")
+  ;;             (setq dart-executable-path "/home/oney/Android/flutter/bin/cache/dart-sdk/bin/dart")
+  ;;             (setq dart-enable-analysis-server t)
+  ;;             (setq dart-format-on-save t)
+  ;;             (flycheck-mode)
+  ;;             (setq dart-debug t)
+  ;;             )
+  ;;           )
   (add-hook 'sh-mode-hook
             (lambda ()
               (spacemacs/set-leader-keys-for-major-mode 'sh-mode
@@ -1270,9 +1332,10 @@ package is loaded, you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (spinner mmm-mode evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-commentary evil-args evil-anzu anzu evil undo-tree csv-mode adaptive-wrap zotxt request-deferred deferred yapfify ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org smartparens ripgrep restart-emacs request rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin platformio-mode pip-requirements persp-mode pcre2el paradox pandoc-mode ox-pandoc ht org-ref pdf-tools ivy helm-bibtex htmlize biblio parsebib biblio-core tablist org-bullets open-junk-file ob-dart ob-async neotree mwim move-text markdown-toc markdown-mode macrostep lua-mode lorem-ipsum live-py-mode linum-relative link-hint key-chord insert-shebang indent-guide ibuffer-projectile hydra lv hy-mode dash-functional hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile projectile helm-mode-manager helm-make helm-gtags helm-flx helm-descbinds helm-cscope xcscope helm-company helm-c-yasnippet helm-ag google-translate golden-ratio git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-commit with-editor git-gutter gh-md ggtags fuzzy flycheck-pos-tip pos-tip flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-unimpaired evil-search-highlight-persist highlight evil-numbers evil-escape goto-chg eval-sexp-fu elisp-slime-nav dumb-jump disaster diminish diff-hl define-word dart-mode flycheck pkg-info epl cython-mode company-statistics company-shell company-c-headers company-anaconda company column-enforce-mode cmake-mode clean-aindent-mode clang-format bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed anaconda-mode pythonic f dash s aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup))))
+    (yaml-mode web-mode web-beautify vimrc-mode tagedit slim-mode scss-mode sass-mode pug-mode powershell org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc helm-css-scss haml-mode gnuplot ess-smart-equals ess-R-data-view ctable ess julia-mode emmet-mode dactyl-mode company-web web-completion-data company-tern tern coffee-mode auctex ahk-mode spinner mmm-mode evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-commentary evil-args evil-anzu anzu evil undo-tree csv-mode adaptive-wrap zotxt request-deferred deferred yapfify ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org smartparens ripgrep restart-emacs request rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin platformio-mode pip-requirements persp-mode pcre2el paradox pandoc-mode ox-pandoc ht org-ref pdf-tools ivy helm-bibtex htmlize biblio parsebib biblio-core tablist org-bullets open-junk-file ob-dart ob-async neotree mwim move-text markdown-toc markdown-mode macrostep lua-mode lorem-ipsum live-py-mode linum-relative link-hint key-chord insert-shebang indent-guide ibuffer-projectile hydra lv hy-mode dash-functional hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile projectile helm-mode-manager helm-make helm-gtags helm-flx helm-descbinds helm-cscope xcscope helm-company helm-c-yasnippet helm-ag google-translate golden-ratio git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-commit with-editor git-gutter gh-md ggtags fuzzy flycheck-pos-tip pos-tip flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-unimpaired evil-search-highlight-persist highlight evil-numbers evil-escape goto-chg eval-sexp-fu elisp-slime-nav dumb-jump disaster diminish diff-hl define-word dart-mode flycheck pkg-info epl cython-mode company-statistics company-shell company-c-headers company-anaconda company column-enforce-mode cmake-mode clean-aindent-mode clang-format bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed anaconda-mode pythonic f dash s aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
