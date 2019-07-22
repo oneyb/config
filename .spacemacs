@@ -197,7 +197,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-elpa-https t
 
    ;; Maximum allowed time in seconds to contact an ELPA repository.
-   dotspacemacs-elpa-timeout 5
+   dotspacemacs-elpa-timeout 6
 
    ;; Set `gc-cons-threshold' and `gc-cons-percentage' when startup finishes.
    ;; This is an advanced option and should not be changed unless you suspect
@@ -296,12 +296,13 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font or prioritized list of fonts.
    dotspacemacs-default-font '(
-                               ;; "Source Code Pro"
-                               "Courier New"
-                               :size 13
-                               :weight normal
-                               :width normal
-                               :powerline-scale 1.1)
+                               ;; ;; "Source Code Pro"
+                               ;; "Courier New"
+                               ;; :size 13
+                               ;; :weight normal
+                               ;; :width normal
+                               ;; :powerline-scale 1.1
+                               )
    ;; The leader key
    dotspacemacs-leader-key "SPC"
 
@@ -385,7 +386,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
    ;; nil to boost the loading time. (default t)
-   dotspacemacs-loading-progress-bar t
+   dotspacemacs-loading-progress-bar nil
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
@@ -398,7 +399,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
    ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
@@ -510,7 +511,7 @@ It should only modify the values of Spacemacs settings."
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%I@%S"
+   dotspacemacs-frame-title-format "%b"
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
@@ -633,16 +634,12 @@ package is loaded, you should place your code here."
       ;; (setenv "PATH" (mapconcat #'identity exec-path path-separator))
       ;; (setq grep-find-template
       ;;       "fd . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
+      (setq org-agenda-files (-remove
+                              (lambda (str) (string-match  "#" str))
+                              (file-expand-wildcards "~/work-exchange/org/*.org")))
       )
     )
-  (if (string= (getenv "USER") "oney")
-      (message "Go to bed on time...")
-    (message "Get to work!")
-    (work-config)
-    )
   (setq sentence-end-double-space t)
-  (require 'powerline)
-  (powerline-default-theme)
   ;; (evil-leader/set-key "?" 'ripgrep-regexp)
   (evil-leader/set-key "?" 'spacemacs/helm-dir-do-rg)
   ;; (evil-leader/set-key "/" 'projectile-ripgrep)
@@ -655,51 +652,6 @@ package is loaded, you should place your code here."
   ;; (require 'atomic-chrome)
   ;; (atomic-chrome-start-server)
   ;; (setq atomic-chrome-default-major-mode 'org-mode)
-  (setq warning-minimum-level :error)
-  ;;   (define-key ivy-minibuffer-map (kbd "<escape>")
-  ;;     (defhydra soo-ivy (:hint nil :color pink)
-  ;;       "
-  ;;  Move     ^^^^^^^^^^ | Call         ^^^^ | Cancel^^ | Options^^ | Action _w_/_s_/_a_: %s(ivy-action-name)
-  ;; ----------^^^^^^^^^^-+--------------^^^^-+-------^^-+--------^^-+---------------------------------
-  ;;  _g_ ^ ^ _k_ ^ ^ _u_ | _f_orward _o_ccur | _i_nsert | _c_alling: %-7s(if ivy-calling \"on\" \"off\") _C_ase-fold: %-10`ivy-case-fold-search
-  ;;  ^↨^ _h_ ^+^ _l_ ^↕^ | _RET_ done     ^^ | _q_uit   | _m_atcher: %-7s(ivy--matcher-desc) _t_runcate: %-11`truncate-lines
-  ;;  _G_ ^ ^ _j_ ^ ^ _d_ | _TAB_ alt-done ^^ | ^ ^      | _<_/_>_: shrink/grow
-  ;; "
-  ;;       ;; arrows
-  ;;       ("j" ivy-next-line)
-  ;;       ("k" ivy-previous-line)
-  ;;       ("l" ivy-forward-char)
-  ;;       ("h" ivy-backward-delete-char)
-  ;;       ("b" ivy-backward-kill-word)
-  ;;       ("g" ivy-beginning-of-buffer)
-  ;;       ("G" ivy-end-of-buffer)
-  ;;       ("d" ivy-scroll-up-command)
-  ;;       ("u" ivy-scroll-down-command)
-  ;;       ("e" ivy-kill-word)
-  ;;       ;; actions
-  ;;       ("q" keyboard-escape-quit :exit t)
-  ;;       ("C-g" keyboard-escape-quit :exit t)
-  ;;       ("<escape>" keyboard-escape-quit :exit t)
-  ;;       ("C-o" nil)
-  ;;       ("i" nil)
-  ;;       ;; ("TAB" ivy-alt-done :exit nil)
-  ;;       ("C-j" ivy-alt-done :exit nil)
-  ;;       ;; ("d" ivy-done :exit t)
-  ;;       ("RET" ivy-done :exit t)
-  ;;       ("C-m" ivy-done :exit t)
-  ;;       ("f" ivy-call)
-  ;;       ("c" ivy-toggle-calling)
-  ;;       ("m" ivy-toggle-fuzzy)
-  ;;       (">" ivy-minibuffer-grow)
-  ;;       ("<" ivy-minibuffer-shrink)
-  ;;       ("w" ivy-prev-action)
-  ;;       ("s" ivy-next-action)
-  ;;       ("a" ivy-read-action)
-  ;;       ("t" (setq truncate-lines (not truncate-lines)))
-  ;;       ("C" ivy-toggle-case-fold)
-  ;;       ("o" ivy-occur :exit t)
-  ;;       )
-  ;;     )
   (define-key evil-normal-state-map (kbd "SPC oc") 'org-capture)
   (define-key evil-normal-state-map (kbd "SPC oa") 'org-agenda)
   (define-key evil-normal-state-map (kbd "SPC ob") 'org-iswitchb)   
@@ -753,7 +705,6 @@ package is loaded, you should place your code here."
   (define-key evil-normal-state-map (kbd "SPC of") 'my-put-file-name-in-clipboard)
   (define-key evil-normal-state-map (kbd "SPC on") 'my-put-file-name+line-number-in-clipboard)
   (define-key evil-normal-state-map (kbd "SPC od") 'my-put-current-directory-in-clipboard)
-  ;; (require 'helm-bookmark)
   ;; (setq x-select-enable-primary t)
   ;; (setq x-select-enable-clipboard nil)
   ;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
@@ -837,7 +788,6 @@ package is loaded, you should place your code here."
   ;; (set-frame-width (selected-frame) 112)
   ;; (set-frame-height (selected-frame) 76)
   ;; (setq frame-title-format '("%b | " mode-name))
-  (setq frame-title-format '("%b"))
   (setq-default spacemacs-show-trailing-whitespace nil)
   (setq doc-view-continuous t)
   (setq font-use-system-font t)
@@ -871,35 +821,6 @@ package is loaded, you should place your code here."
   (setq tex-process-asynchronous t)
   (set-face-attribute 'default nil :height 94)
   (add-hook 'LaTeX-mode-hook (lambda () (require 'org-ref)))
-  (add-hook 'atomic-chrome-edit-mode-hook
-            (lambda ()
-              (spacemacs/set-leader-keys-for-minor-mode 'atomic-chrome-edit-mode
-                "," 'atomic-chrome-close-current-buffer
-                )
-              (setq atomic-chrome-default-major-mode 'org-mode)
-              (setq atomic-chrome-url-major-mode-alist
-                    '(("github\\.com" . gfm-mode)
-                      ;; ("." . org-mode))
-                      )
-                    )
-              (setq atomic-chrome-buffer-open-style 'frame)
-              (add-hook 'atomic-chrome-edit-done-hook 
-                        (lambda ()
-                          (delete-frame)
-                          )
-                        )
-              ))
-  ;; (add-hook 'edit-server-edit-mode-hook
-  ;;           (lambda ()
-  ;;             (spacemacs/set-leader-keys-for-major-mode 'edit-server-edit-mode
-  ;;               "." 'edit-server-save
-  ;;               "," 'edit-server-done
-  ;;               "k" 'edit-server-abort
-  ;;                )
-  ;;             (org-mode)
-  ;;             )
-  ;;           )
-
   (defun my-c-config ()
     (progn
       (setq
@@ -974,60 +895,6 @@ package is loaded, you should place your code here."
                 )
               )
             )
-  
-  ;; (add-hook 'ein:notebook-multilang-mode-hook
-  ;;           ;; ein:console-open
-  ;;           ;; To use this function, `ein:console-security-dir' and
-  ;;           ;; `ein:console-args' must be set properly.
-  ;;           (lambda ()
-  ;;             (setq ein:console-executable "/d/documents/eaternity/bw2-py/envs/bw2/bin/jupyter-console")
-  ;;             (setq ein:console-args '("--profile" "bw2"))
-  ;;             ;; (setq ein:console-args
-  ;;             ;;       '(
-  ;;             ;;         (8888 . '("--profile" "bw2"))
-  ;;             ;;         ;; (8889 . '("--ssh" "HOSTNAME"))
-  ;;             ;;         (default . '("--profile" "bw2"))))
-  ;;             (spacemacs/set-leader-keys-for-major-mode 'ein:notebook-multilang-mode
-  ;;               ","   'ein:worksheet-execute-cell-and-goto-next
-  ;;               "."   'ein:worksheet-execute-cell
-  ;;               "RET" 'ein:worksheet-execute-cell-and-insert-below
-  ;;               "TAB" 'ein:console-open
-  ;;               )
-  ;;             (defun my-escape-and-kill-ein ()
-  ;;               "My escape and save"
-  ;;               (interactive)
-  ;;               (evil-escape)
-  ;;               (ein:notebook-close 1)
-  ;;               )
-  ;;             (defun my-escape-and-save-ein ()
-  ;;               "My escape and save"
-  ;;               (interactive)
-  ;;               (evil-escape)
-  ;;               (ein:notebook-save-notebook-command)
-  ;;               )
-  ;;             ;; (key-chord-define-local "kj" 'my-escape-and-save-ein)
-  ;;             ;; (key-chord-define-local "lk" 'my-escape-and-kill-ein)
-  ;;             (spacemacs/toggle-auto-completion-on)
-  ;;             (setq ein:use-auto-complete t
-  ;;                   ein:use-auto-complete-superpack t
-  ;;                   ein:enable-keepalive t
-  ;;                   ;; ein:jupyter-default-notebook-directory "/home/oney/documents/eaternity/eaternity"
-  ;;                   ;; ein:jupyter-default-server-command "/home/oney/documents/eaternity/bw2-py/bin/jupyter"
-  ;;                   ;; ein:jupyter-server-args nil
-  ;;                   ein:notebook-autosave-frequency 60
-  ;;                   ein:notebook-checkpoint-frequency 60
-  ;;                   ein:notebook-modes
-  ;;                   (quote
-  ;;                    (ein:notebook-multilang-mode ein:notebook-python-mode))
-  ;;                   ;; ein:org-execute-timeout 120
-  ;;                   ;; ein:slice-image t
-  ;;                   ein:worksheet-enable-undo 'yes
-  ;;                   )
-  ;;             ;; (setq python-shell-interpreter "/d/documents/eaternity/bw2-py/envs/bw2/bin/ipython"
-  ;;             ;; python-shell-interpreter-args "--simple-prompt -i")
-  ;;             (setq python-shell-interpreter "ipython")
-  ;;             )
-  ;;           )
   (add-hook 'python-mode-hook
             (lambda ()
               (spacemacs/set-leader-keys-for-major-mode 'python-mode
@@ -1039,6 +906,7 @@ package is loaded, you should place your code here."
                 "k"   'anaconda-mode-complete
                 "TAB" 'python-start-or-switch-repl
                 )
+              ;; (remove-hook 'python-mode-hook 'spacemacs//init-eldoc-python-mode)
               ;; (setq python-shell-interpreter "/usr/bin/ipython")
               (setq python-shell-interpreter "ipython3")
               (setq python-enable-yapf-format-on-save t)
@@ -1083,6 +951,9 @@ package is loaded, you should place your code here."
   ;;           )
   (add-hook 'org-mode-hook
             (lambda ()
+              ;; (org-link-set-parameters "tel" :export (lambda (path desc format) (concat "tel:" desc))) 
+              (org-link-set-parameters "tel")
+
               (require 'ox-koma-letter)
               ;; re-enable template expansion
               (require 'org-tempo)
@@ -1136,10 +1007,7 @@ package is loaded, you should place your code here."
               ;;                                          (mapconcat 'identity x ",")
               ;;                                          "}")) ""))))
               ;; ))
-              ;; (setq org-agenda-files (-remove (lambda (str) (string-match  "#" str)) (file-expand-wildcards "~/org/*.org")))
-              (setq org-agenda-files (-remove
-                                      (lambda (str) (string-match  "#" str))
-                                      (file-expand-wildcards "~/work-exchange/org/*.org")))
+              (setq org-agenda-files (-remove (lambda (str) (string-match  "#" str)) (file-expand-wildcards "~/org/*.org")))
               (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
               (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
               (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
@@ -1323,19 +1191,23 @@ package is loaded, you should place your code here."
               (setq org-archive-location "~/Sync/org/%s::datetree/")
               )
             )
+  (if (string= (getenv "USER") "oney")
+      (message "Go to bed on time...")
+    (message "Get to work!")
+    (work-config)
+    )
   ;; (setq request-backend 'url-retrieve )
   (setq request-message-level 'debug)
-  ;; (remove-hook 'python-mode-hook 'spacemacs//init-eldoc-python-mode)
+  (setq warning-minimum-level :error)
   )
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (yaml-mode web-mode web-beautify vimrc-mode tagedit slim-mode scss-mode sass-mode pug-mode powershell org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc helm-css-scss haml-mode gnuplot ess-smart-equals ess-R-data-view ctable ess julia-mode emmet-mode dactyl-mode company-web web-completion-data company-tern tern coffee-mode auctex ahk-mode spinner mmm-mode evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-commentary evil-args evil-anzu anzu evil undo-tree csv-mode adaptive-wrap zotxt request-deferred deferred yapfify ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org smartparens ripgrep restart-emacs request rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin platformio-mode pip-requirements persp-mode pcre2el paradox pandoc-mode ox-pandoc ht org-ref pdf-tools ivy helm-bibtex htmlize biblio parsebib biblio-core tablist org-bullets open-junk-file ob-dart ob-async neotree mwim move-text markdown-toc markdown-mode macrostep lua-mode lorem-ipsum live-py-mode linum-relative link-hint key-chord insert-shebang indent-guide ibuffer-projectile hydra lv hy-mode dash-functional hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile projectile helm-mode-manager helm-make helm-gtags helm-flx helm-descbinds helm-cscope xcscope helm-company helm-c-yasnippet helm-ag google-translate golden-ratio git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-commit with-editor git-gutter gh-md ggtags fuzzy flycheck-pos-tip pos-tip flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-unimpaired evil-search-highlight-persist highlight evil-numbers evil-escape goto-chg eval-sexp-fu elisp-slime-nav dumb-jump disaster diminish diff-hl define-word dart-mode flycheck pkg-info epl cython-mode company-statistics company-shell company-c-headers company-anaconda company column-enforce-mode cmake-mode clean-aindent-mode clang-format bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed anaconda-mode pythonic f dash s aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup))))
+    (mmm-mode auctex zotxt yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit slim-mode scss-mode sass-mode ripgrep restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode powershell popwin platformio-mode pip-requirements persp-mode pcre2el paradox pandoc-mode ox-pandoc org-ref org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-dart ob-async neotree mwim move-text markdown-toc macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc insert-shebang indent-guide ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gtags helm-flx helm-descbinds helm-css-scss helm-cscope helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot git-gutter-fringe git-gutter-fringe+ gh-md ggtags fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump disaster diminish diff-hl define-word dart-mode dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
