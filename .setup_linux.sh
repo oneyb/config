@@ -65,7 +65,7 @@ pkgs=(
 
 function install_manual_deb ()
 {
-        wget $1
+        [ ! -f $(basename $1) ] && wget $1
         sudo dpkg -i `basename $1`
         if [ $# -eq 0 ]; then
             sudo apt-get install -f
@@ -162,7 +162,8 @@ add_desktop_launcher signal-desktop             $HOME/.config/icons/signal.png
 add_desktop_launcher pcmanfm                    $HOME/.config/icons/file-manager.png
 add_desktop_launcher firefox                    $HOME/.config/icons/firefox.png
 add_desktop_launcher epiphany-browser           $HOME/.config/icons/web-browser.png
-add_desktop_launcher chromium                   $HOME/.config/icons/chromium.png
+# add_desktop_launcher chromium                   $HOME/.config/icons/chromium.png
+add_desktop_launcher chromium-browser           $HOME/.config/icons/chromium.png
 add_desktop_launcher $HOME/bin/rambox.sh        /usr/share/icons/rambox.png 
 add_desktop_launcher $HOME/bin/sync_org.sh      $HOME/.config/icons/orgzly.png
 # add_desktop_launcher "emacsclient -c --eval '(org-capture)'" $HOME/.config/icons/emacs22.png

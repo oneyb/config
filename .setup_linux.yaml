@@ -39,6 +39,9 @@
       - cups
       - curl
       - dash
+      - xfce4-clipman
+      - xfce4-clipman-plugin
+      - openshot
       - firmware-linux-free
       - firmware-linux-nonfree
       - ntfs-3g
@@ -101,9 +104,9 @@
       - aspell-es
       - audacity 
       - calibre
-      - chromium 
       - evince
-      - firefox-esr 
+      # - chromium-browser
+      # - firefox-esr 
       - flac
       - freecad
       # - gdal-bin 

@@ -2,6 +2,83 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
+;;
+
+(defun home-config ()
+  (interactive)
+  (progn
+    (add-to-list 'dotspacemacs-configuration-layers '(octave
+                                                      octave
+                                                      git
+                                                      github
+                                                      )
+                 )
+
+    (setq python-shell-interpreter "ipython")
+    ;; (setenv "PATH" (mapconcat #'identity exec-path path-separator))
+    ;; (setq grep-find-template
+    ;;       "fd . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
+    (setq org-agenda-files (-remove
+                            (lambda (str) (string-match  "#" str))
+                            (file-expand-wildcards "~/org/*.org")))
+    )
+  )
+(defun work-config ()
+  (interactive)
+  (progn
+    (add-to-list 'dotspacemacs-configuration-layers '(
+                                                      debug
+                                                      csharp
+                                                      spacemacs-defaults
+                                                      multiple-cursors
+                                                      treemacs
+                                                      )
+                 )
+
+    (setq dotspacemacs-default-font '(
+                                      ;; "Source Code Pro"
+                                      "Courier New"
+                                      :size 13
+                                      :weight normal
+                                      :width normal
+                                      :powerline-scale 1.1)
+          )
+    (global-set-key (kbd "<S-Insert>") #'clipboard-yank)
+    (add-to-list 'exec-path "C:\\Program Files\\Git\\mingw64\\bin")
+    (setenv "PATH" (mapconcat #'identity exec-path path-separator))
+    (add-hook 'projectile-mode-hook
+              (lambda ()
+                (add-to-list 'projectile-globally-ignored-files "cscope.out")
+                (add-to-list 'projectile-globally-ignored-files "cscope.files")
+                (add-to-list 'projectile-globally-ignored-files "*TAGS")
+                (add-to-list 'projectile-globally-ignored-files "*.map")
+                (add-to-list 'projectile-globally-ignored-files "*.mac")
+                ;; (add-to-list 'projectile-globally-ignored-files ".ld")
+                (add-to-list 'projectile-globally-ignored-files "*.lst")
+                (add-to-list 'projectile-globally-ignored-files "*.csv")
+                (add-to-list 'projectile-globally-ignored-files "*.html")
+                (add-to-list 'projectile-globally-ignored-files "*.xml")
+                )
+              )
+
+    (setq explicit-cmd.exe-args '("/K bigc"))
+    (setq explicit-cmdproxy.exe-args '("/K bigc"))
+    (setq shell-default-term-shell "C:\\Windows\\System32\\cmd.exe")
+    (add-to-list 'exec-path "C:\\Program Files\\Git\\bin")
+    (add-to-list 'exec-path "C:\\Sources\\programs\\python36")
+    ;; (add-to-list 'exec-path "C:\\MinGW\\msys\\1.0\\bin")
+    ;; (setq find-program "C:\\MinGW\\msys\\1.0\\bin\\find.exe"
+    ;;       grep-program "C:\\MinGW\\msys\\1.0\\bin\\grep.exe")
+    (setq python-shell-interpreter "python")
+    ;; (setenv "PATH" (mapconcat #'identity exec-path path-separator))
+    ;; (setq grep-find-template
+    ;;       "fd . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
+    (setq org-agenda-files (-remove
+                            (lambda (str) (string-match  "#" str))
+                            (file-expand-wildcards "~/work-exchange/org/*.org")))
+    )
+  )
+
 (defun dotspacemacs/layers ()
   "Layer configuration:
 This function should only modify configuration layer settings."
@@ -64,8 +141,6 @@ This function should only modify configuration layer settings."
      ;; spacemacs-org
      evil-commentary
      emacs-lisp
-     ;; git
-     ;; github
      version-control
      lua
      (markdown
@@ -511,7 +586,7 @@ It should only modify the values of Spacemacs settings."
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%b"
+   dotspacemacs-frame-title-format "%b in %t"
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
@@ -558,7 +633,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (setq ess-eval-visibly nil)
   (setq ess-ask-for-ess-directory nil)
-  (setq org-todo-keywords '((sequence "WAIT" "TODO" "NEXT" "|" "DONE")))
+  (setq org-todo-keywords '((sequence "TODO" "NEXT" "|" "DONE" "WAIT")))
   (add-to-list 'default-frame-alist '(background-color . "beige"))
   ;; (setq helm-grep-default-command 
   ;;       ;; Its value is "grep --color=always -a -d skip %e -n%cH -e %p %f"
@@ -580,65 +655,20 @@ initialization after layers configuration.  This is the place
 where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a
 package is loaded, you should place your code here."
+  (require 'dash)
+  (if (string= (getenv "USER") "oney")
+      (progn
+        (message "Go to bed on time...")
+        (home-config)
+        )
+    (message "Get to work!")
+    (work-config)
+    )
   ;; (xclip-mode 1)
   ;; (fset 'evil-visual-update-x-selection 'ignore)
   ;; (setq ycmd-server-command '("python" "C:/Sources/brian.oney/.vim/plugged/YouCompleteMe/third_party/ycmd/ycmd"))
   ;; (setq ycmd-force-semantic-completion t)
-  (defun work-config ()
-    (interactive)
-    (progn
-      (add-to-list 'dotspacemacs-configuration-layers '(
-                                                        debug
-                                                        csharp
-                                                        spacemacs-defaults
-                                                        multiple-cursors
-                                                        treemacs
-                                                        )
-                   )
 
-      (setq dotspacemacs-default-font '(
-                                        ;; "Source Code Pro"
-                                        "Courier New"
-                                        :size 13
-                                        :weight normal
-                                        :width normal
-                                        :powerline-scale 1.1)
-            )
-      (global-set-key (kbd "<S-Insert>") #'clipboard-yank)
-      (add-to-list 'exec-path "C:\\Program Files\\Git\\mingw64\\bin")
-      (setenv "PATH" (mapconcat #'identity exec-path path-separator))
-      (add-hook 'projectile-mode-hook
-                (lambda ()
-                  (add-to-list 'projectile-globally-ignored-files "cscope.out")
-                  (add-to-list 'projectile-globally-ignored-files "cscope.files")
-                  (add-to-list 'projectile-globally-ignored-files "*TAGS")
-                  (add-to-list 'projectile-globally-ignored-files "*.map")
-                  (add-to-list 'projectile-globally-ignored-files "*.mac")
-                  ;; (add-to-list 'projectile-globally-ignored-files ".ld")
-                  (add-to-list 'projectile-globally-ignored-files "*.lst")
-                  (add-to-list 'projectile-globally-ignored-files "*.csv")
-                  (add-to-list 'projectile-globally-ignored-files "*.html")
-                  (add-to-list 'projectile-globally-ignored-files "*.xml")
-                  )
-                )
-
-      (setq explicit-cmd.exe-args '("/K bigc"))
-      (setq explicit-cmdproxy.exe-args '("/K bigc"))
-      (setq shell-default-term-shell "C:\\Windows\\System32\\cmd.exe")
-      (add-to-list 'exec-path "C:\\Program Files\\Git\\bin")
-      (add-to-list 'exec-path "C:\\Sources\\programs\\python36")
-      ;; (add-to-list 'exec-path "C:\\MinGW\\msys\\1.0\\bin")
-      ;; (setq find-program "C:\\MinGW\\msys\\1.0\\bin\\find.exe"
-      ;;       grep-program "C:\\MinGW\\msys\\1.0\\bin\\grep.exe")
-      (setq python-shell-interpreter "python")
-      ;; (setenv "PATH" (mapconcat #'identity exec-path path-separator))
-      ;; (setq grep-find-template
-      ;;       "fd . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
-      (setq org-agenda-files (-remove
-                              (lambda (str) (string-match  "#" str))
-                              (file-expand-wildcards "~/work-exchange/org/*.org")))
-      )
-    )
   (setq sentence-end-double-space t)
   ;; (evil-leader/set-key "?" 'ripgrep-regexp)
   (evil-leader/set-key "?" 'spacemacs/helm-dir-do-rg)
@@ -748,6 +778,11 @@ package is loaded, you should place your code here."
     (org-tags-view t "computer")
     (delete-other-windows)
     )
+  (defun my-make ()
+    "fave make settings"
+    (interactive)
+    (helm-make '(3))
+    )
   (setq auto-mode-alist
         (append '(
                   ("\\.Rmd\\'" . markdown-mode)
@@ -777,6 +812,7 @@ package is loaded, you should place your code here."
   (key-chord-define-global "jk" 'my-escape-and-save)
   (key-chord-define-global "BB" 'my-escape-and-bury)
   (key-chord-define-global ";i" 'completion-at-point)
+  (key-chord-define-global ";c" 'my-make)
   (add-hook 'prog-mode-hook
             #'(lambda ()
                 (modify-syntax-entry ?_ "w")
@@ -829,6 +865,7 @@ package is loaded, you should place your code here."
        c-default-style "own"
        realgud-safe-mode nil
        )
+      (key-chord-define-local ";k" 'realgud-short-key-mode)
       (spacemacs/set-leader-keys-for-major-mode 'c++-mode
         ;; "," 'something-awesome
         "gc" 'helm-cscope-find-calling-this-function
@@ -858,6 +895,7 @@ package is loaded, you should place your code here."
   (add-hook 'realgud-short-key-mode-hook
             (lambda ()
               (key-chord-define-local ";k" 'realgud-short-key-mode)
+              ;; (gdb-display-locals-buffer)
               ;; ;; If you're having key mapping conflicts with other mode (e.g. evil-mode), you can assign a prefix to the same key shortcuts by adding the following hook:
               ;; (local-set-key "\C-c" realgud:shortkey-mode-map)
               )
@@ -1191,11 +1229,6 @@ package is loaded, you should place your code here."
               (setq org-archive-location "~/Sync/org/%s::datetree/")
               )
             )
-  (if (string= (getenv "USER") "oney")
-      (message "Go to bed on time...")
-    (message "Get to work!")
-    (work-config)
-    )
   ;; (setq request-backend 'url-retrieve )
   (setq request-message-level 'debug)
   (setq warning-minimum-level :error)
