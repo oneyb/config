@@ -2,7 +2,8 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
-;;
+;; Bug in emacs 26.1
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (defun home-config ()
   (interactive)
@@ -36,9 +37,8 @@
                  )
 
     (setq dotspacemacs-default-font '(
-                                      ;; "Source Code Pro"
-                                      "Courier New"
-                                      :size 13
+                                      "Source Code Pro"
+                                      :size 14
                                       :weight normal
                                       :width normal
                                       :powerline-scale 1.1)
@@ -143,23 +143,23 @@ This function should only modify configuration layer settings."
      emacs-lisp
      version-control
      lua
-     (markdown
-      :eval-after-load
-      ;; (auto-fill-mode 1)
-      (spacemacs/toggle-auto-completion)
-      )
+     ;;(markdown
+     ;; :eval-after-load
+     ;; ;; (auto-fill-mode 1)
+     ;; (spacemacs/toggle-auto-completion)
+     ;; )
      pandoc
      ;; org
      (org :variables
           ;; org-enable-github-support t
           org-enable-bootstrap-support nil)
      spacemacs-org
-     (latex
-      :variables latex-enable-auto-fill t
-      :eval-after-load
-      ;; (auto-fill-mode 1)
-      (spacemacs/toggle-auto-completion)
-      )
+     ;;(latex
+     ;; :variables latex-enable-auto-fill t
+     ;; :eval-after-load
+     ;; ;; (auto-fill-mode 1)
+     ;; (spacemacs/toggle-auto-completion)
+     ;; )
      ;; (shell
      ;;  :variables
      ;;  shell-default-shell 'shell
@@ -205,14 +205,15 @@ This function should only modify configuration layer settings."
                                       key-chord
                                       ;; org-gcal
                                       org-ref
+                                      auctex
+                                      company-auctex
+                                      mmm-mode
                                       ob-async
                                       ob-dart
                                       dart-mode
                                       ;; vdiff
                                       ripgrep
                                       ;; powerline
-                                      ;; edit-server
-                                      ;; atomic-chrome
                                       ;; vdiff
                                       ;; let-alist
                                       )
@@ -221,9 +222,7 @@ This function should only modify configuration layer settings."
 
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '(
-                                    ;; ess-R-object-popup
                                     exec-path-from-shell
-                                    ;; ipython
                                     spaceline
                                     )
    ;; Defines the behaviour of Spacemacs when installing packages.
@@ -283,7 +282,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil then Spacelpa repository is the primary source to install
    ;; a locked version of packages. If nil then Spacemacs will install the
    ;; latest version of packages from MELPA. (default nil)
-   dotspacemacs-use-spacelpa nil
+   dotspacemacs-use-spacelpa t
 
    ;; If non-nil then verify the signature for downloaded Spacelpa archives.
    ;; (default nil)
@@ -551,7 +550,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, start an Emacs server if one is not already running.
    ;; (default nil)
-   dotspacemacs-enable-server nil
+   dotspacemacs-enable-server t
 
    ;; Set the emacs server socket location.
    ;; If nil, uses whatever the Emacs default is, otherwise a directory path
@@ -586,7 +585,7 @@ It should only modify the values of Spacemacs settings."
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%b in %t"
+   dotspacemacs-frame-title-format "%b@%t"
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
@@ -630,11 +629,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   ;; set this before evil loads
   ;; (setq evil-toggle-key (kbd "C-h"))
-
+ ;; (add-to-list 'package-archives
+ ;;            '("melpa" . "https://melpa.org/packages/") t)
   (setq ess-eval-visibly nil)
   (setq ess-ask-for-ess-directory nil)
   (setq org-todo-keywords '((sequence "TODO" "NEXT" "|" "DONE" "WAIT")))
-  (add-to-list 'default-frame-alist '(background-color . "beige"))
+  ;; (add-to-list 'default-frame-alist '(background-color . "beige"))
   ;; (setq helm-grep-default-command 
   ;;       ;; Its value is "grep --color=always -a -d skip %e -n%cH -e %p %f"
   ;;       "rg --vimgrep --no-heading --smart-case"
@@ -1240,7 +1240,7 @@ package is loaded, you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (mmm-mode auctex zotxt yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit slim-mode scss-mode sass-mode ripgrep restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode powershell popwin platformio-mode pip-requirements persp-mode pcre2el paradox pandoc-mode ox-pandoc org-ref org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-dart ob-async neotree mwim move-text markdown-toc macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc insert-shebang indent-guide ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gtags helm-flx helm-descbinds helm-css-scss helm-cscope helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot git-gutter-fringe git-gutter-fringe+ gh-md ggtags fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump disaster diminish diff-hl define-word dart-mode dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (f s dash mmm-mode auctex zotxt yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit slim-mode scss-mode sass-mode ripgrep restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode powershell popwin platformio-mode pip-requirements persp-mode pcre2el paradox pandoc-mode ox-pandoc org-ref org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-dart ob-async neotree mwim move-text markdown-toc macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc insert-shebang indent-guide ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gtags helm-flx helm-descbinds helm-css-scss helm-cscope helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot git-gutter-fringe git-gutter-fringe+ gh-md ggtags fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump disaster diminish diff-hl define-word dart-mode dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

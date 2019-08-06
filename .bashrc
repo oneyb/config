@@ -890,3 +890,5 @@ fi
 rsync -a --cvs-exclude --delete --exclude=".gitignore" --exclude=".stfolder" --exclude="org-archive" ~/org/ ~/Sync/org/
 bash -c 'cd ~/Sync/org/; git commit . -m "$(date +%F-%R) saving org stuff progress"' &> /dev/null
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
