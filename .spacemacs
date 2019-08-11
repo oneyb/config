@@ -15,13 +15,22 @@
                                                       )
                  )
 
-    (setq python-shell-interpreter "ipython")
-    ;; (setenv "PATH" (mapconcat #'identity exec-path path-separator))
-    ;; (setq grep-find-template
-    ;;       "fd . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
-    (setq org-agenda-files (-remove
+    (setq
+     dotspacemacs-default-font '(
+                                 "Source Code Pro"
+                                 :size 14
+                                 :weight normal
+                                 :width normal
+                                 :powerline-scale 1.1
+                                 )
+     setq python-shell-interpreter "ipython"
+     ;; (setenv "PATH" (mapconcat #'identity exec-path path-separator))
+     ;; (setq grep-find-template
+     ;;       "fd . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
+     org-agenda-files (-remove
                             (lambda (str) (string-match  "#" str))
-                            (file-expand-wildcards "~/org/*.org")))
+                            (file-expand-wildcards "~/org/*.org"))
+     )
     )
   )
 (defun work-config ()

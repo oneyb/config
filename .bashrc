@@ -379,7 +379,7 @@ function wait-on-process-then ()
     if [[ $# -eq 0 ]]; then
         type wait-on-process-then;
     else 
-        while [[ -n $(pgrep $1) ]]; do echo waiting on $1; sleep 10; done
+        while [[ -n $(pgrep -f $1) ]]; do echo waiting on $1; sleep 10; done
         ${@:2}
     fi
 }
