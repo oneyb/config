@@ -891,4 +891,10 @@ rsync -a --cvs-exclude --delete --exclude=".gitignore" --exclude=".stfolder" --e
 bash -c 'cd ~/Sync/org/; git commit . -m "$(date +%F-%R) saving org stuff progress"' &> /dev/null
 
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# lineageos stuff
+
+
+export USE_CCACHE=1
+export ANDROID_JACK_VM_ARGS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4G"

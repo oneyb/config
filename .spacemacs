@@ -8,31 +8,62 @@
 (defun home-config ()
   (interactive)
   (progn
-    (add-to-list 'dotspacemacs-configuration-layers '(octave
-                                                      octave
+    (add-to-list 'dotspacemacs-configuration-layers '(graphviz
                                                       git
                                                       github
+                                                      graphviz
+                                                      ;; (rcirc
+                                                      ;;  :variables rcirc-enable-authinfo-support t
+                                                      ;;              rcirc-server-alist '(("irc.freenode.net"
+                                                      ;;                                    :user-name "oneyb"
+                                                      ;;                                    ;; :port "6697"
+                                                      ;;                                    :port "nickserv"
+                                                      ;;                                    :channels ("#lineageos" "#lineageos-dev")))
+                                                      ;;  )
+                                                      (erc
+                                                       :variables
+                                                       erc-server-list
+                                                       '(("freenode.net"
+                                                          :port "6697"
+                                                          :ssl t
+                                                          :nick "oneyb"
+                                                          ))
+                                                       )
                                                       )
                  )
-
     (setq
      dotspacemacs-default-font '(
-                                 "Source Code Pro"
+                                 ;; "Source Code Pro"
                                  :size 14
                                  :weight normal
                                  :width normal
                                  :powerline-scale 1.1
                                  )
-     setq python-shell-interpreter "ipython"
-     ;; (setenv "PATH" (mapconcat #'identity exec-path path-separator))
-     ;; (setq grep-find-template
-     ;;       "fd . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
-     org-agenda-files (-remove
-                            (lambda (str) (string-match  "#" str))
-                            (file-expand-wildcards "~/org/*.org"))
+     x-select-enable-primary t
+     x-select-enable-clipboard nil
+     interprogram-paste-function 'x-cut-buffer-or-selection-value
      )
-    )
+    (add-hook 'erc-mode-hook
+              (lambda ()
+                (setq
+                 erc-autojoin-channels-alist 
+                 '(("freenode.net" "#lineageos-dev" "#lineageos"))
+                 )))
+     (add-hook 'python-mode-hook
+               (lambda ()
+                 (setq
+                  python-shell-interpreter "ipython"
+                  )))
+     (add-hook 'org-mode-hook
+               (lambda ()
+                 (setq
+                  org-agenda-files (-remove
+                                    (lambda (str) (string-match  "#" str))
+                                    (file-expand-wildcards "~/org/*.org"))
+                  )))
+     )
   )
+
 (defun work-config ()
   (interactive)
   (progn
@@ -82,9 +113,12 @@
     ;; (setenv "PATH" (mapconcat #'identity exec-path path-separator))
     ;; (setq grep-find-template
     ;;       "fd . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
-    (setq org-agenda-files (-remove
-                            (lambda (str) (string-match  "#" str))
-                            (file-expand-wildcards "~/work-exchange/org/*.org")))
+    (add-hook 'org-mode-hook
+              (lambda ()
+                (setq org-agenda-files (-remove
+                                        (lambda (str) (string-match  "#" str))
+                                        (file-expand-wildcards "~/work-exchange/org/*.org")))
+                ))
     )
   )
 
@@ -185,8 +219,7 @@ This function should only modify configuration layer settings."
      ;; (ess :variables
      ;;      ess-enable-smart-equals t)
      python
-     ;; ranger
-     ;; vinegar
+     ranger
      csv
      ;; ipython-notebook
      ;; (ipython-notebook :variables ein:use-auto-complete t)
@@ -744,9 +777,6 @@ package is loaded, you should place your code here."
   (define-key evil-normal-state-map (kbd "SPC of") 'my-put-file-name-in-clipboard)
   (define-key evil-normal-state-map (kbd "SPC on") 'my-put-file-name+line-number-in-clipboard)
   (define-key evil-normal-state-map (kbd "SPC od") 'my-put-current-directory-in-clipboard)
-  ;; (setq x-select-enable-primary t)
-  ;; (setq x-select-enable-clipboard nil)
-  ;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
   (setq-default kill-ring-max 666)
   (setq history-length 666)
   ;; (setq gdb-many-windows t)
@@ -1054,8 +1084,8 @@ package is loaded, you should place your code here."
               ;;                                          (mapconcat 'identity x ",")
               ;;                                          "}")) ""))))
               ;; ))
-              (setq org-agenda-files (-remove (lambda (str) (string-match  "#" str)) (file-expand-wildcards "~/org/*.org")))
-              (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
+              ;; (setq org-agenda-files (-remove (lambda (str) (string-match  "#" str)) (file-expand-wildcards "~/org/*.org")))
+              ;; (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
               (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
               (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
 
@@ -1256,3 +1286,24 @@ package is loaded, you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol t)
+ '(package-selected-packages
+   (quote
+    (erc-view-log erc-social-graph erc-hl-nicks f s dash mmm-mode auctex zotxt yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit slim-mode scss-mode sass-mode ripgrep restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode powershell popwin platformio-mode pip-requirements persp-mode pcre2el paradox pandoc-mode ox-pandoc org-ref org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-dart ob-async neotree mwim move-text markdown-toc macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc insert-shebang indent-guide ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gtags helm-flx helm-descbinds helm-css-scss helm-cscope helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot git-gutter-fringe git-gutter-fringe+ gh-md ggtags fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump disaster diminish diff-hl define-word dart-mode dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
