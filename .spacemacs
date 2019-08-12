@@ -8,37 +8,15 @@
 (defun home-config ()
   (interactive)
   (progn
-    (add-to-list 'dotspacemacs-configuration-layers '(graphviz
-                                                      git
-                                                      github
-                                                      graphviz
-                                                      ;; (rcirc
-                                                      ;;  :variables rcirc-enable-authinfo-support t
-                                                      ;;              rcirc-server-alist '(("irc.freenode.net"
-                                                      ;;                                    :user-name "oneyb"
-                                                      ;;                                    ;; :port "6697"
-                                                      ;;                                    :port "nickserv"
-                                                      ;;                                    :channels ("#lineageos" "#lineageos-dev")))
-                                                      ;;  )
-                                                      (erc
-                                                       :variables
-                                                       erc-server-list
-                                                       '(("freenode.net"
-                                                          :port "6697"
-                                                          :ssl t
-                                                          :nick "oneyb"
-                                                          ))
-                                                       )
-                                                      )
-                 )
     (setq
      dotspacemacs-default-font '(
-                                 ;; "Source Code Pro"
+                                 "Monospace"
                                  :size 14
                                  :weight normal
                                  :width normal
                                  :powerline-scale 1.1
                                  )
+     browse-url-firefox-program "chromium-browser"
      x-select-enable-primary t
      x-select-enable-clipboard nil
      interprogram-paste-function 'x-cut-buffer-or-selection-value
@@ -67,15 +45,6 @@
 (defun work-config ()
   (interactive)
   (progn
-    (add-to-list 'dotspacemacs-configuration-layers '(
-                                                      debug
-                                                      csharp
-                                                      spacemacs-defaults
-                                                      multiple-cursors
-                                                      treemacs
-                                                      )
-                 )
-
     (setq dotspacemacs-default-font '(
                                       "Source Code Pro"
                                       :size 14
@@ -155,7 +124,6 @@ This function should only modify configuration layer settings."
    '(
      autohotkey
      windows-scripts
-     ;; ansible
      yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -163,15 +131,12 @@ This function should only modify configuration layer settings."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     ;; ivy
-     ;; auto-completion
      (auto-completion :variables
                       auto-completion-return-key-behavior 'complete
                       auto-completion-tab-key-behavior 'complete
                       auto-completion-complete-with-key-sequence nil
                       auto-completion-complete-with-key-sequence-delay 0.1
                       auto-completion-private-snippets-directory nil)
-     ;; ansible
      better-defaults
      c-c++
      ;; for windows https://code.google.com/archive/p/cscope-win32/downloads
@@ -181,55 +146,31 @@ This function should only modify configuration layer settings."
      ;; ycmd ;; above 
      ;; semantic
      spacemacs-evil
-     ;; spacemacs-org
+     spacemacs-org
+     spacemacs-defaults
      evil-commentary
      emacs-lisp
-     version-control
      lua
-     ;;(markdown
-     ;; :eval-after-load
-     ;; ;; (auto-fill-mode 1)
-     ;; (spacemacs/toggle-auto-completion)
-     ;; )
      pandoc
      ;; org
      (org :variables
           ;; org-enable-github-support t
           org-enable-bootstrap-support nil)
-     spacemacs-org
-     ;;(latex
-     ;; :variables latex-enable-auto-fill t
-     ;; :eval-after-load
-     ;; ;; (auto-fill-mode 1)
-     ;; (spacemacs/toggle-auto-completion)
-     ;; )
-     ;; (shell
-     ;;  :variables
-     ;;  shell-default-shell 'shell
-     ;;  ;; shell-default-position 'bottom
-     ;;  ;; shell-default-height 30
-     ;;  )
-
      shell-scripts
      ;; (spell-checking
      ;;  :variables spell-checking-enable-auto-dictionary t)
      syntax-checking
-     ;; version-control
      ess
      ;; (ess :variables
      ;;      ess-enable-smart-equals t)
      python
      ranger
      csv
-     ;; ipython-notebook
-     ;; (ipython-notebook :variables ein:use-auto-complete t)
      javascript
      html
      vimscript
      ibuffer
-     ;; pdf-tools
      )
-
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
@@ -239,13 +180,11 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
                                       ;; xclip
-                                      ;; csv
                                       undo-tree
                                       zotxt
                                       ox-pandoc
                                       platformio-mode
                                       key-chord
-                                      ;; org-gcal
                                       org-ref
                                       auctex
                                       company-auctex
@@ -255,9 +194,6 @@ This function should only modify configuration layer settings."
                                       dart-mode
                                       ;; vdiff
                                       ripgrep
-                                      ;; powerline
-                                      ;; vdiff
-                                      ;; let-alist
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -275,6 +211,28 @@ This function should only modify configuration layer settings."
    ;; installs *all* packages supported by Spacemacs and never uninstalls them.
    ;; (default is `used-only')
    dotspacemacs-install-packages 'used-only)
+  (if (string= (getenv "USER") "oney")
+      (setf dotspacemacs-configuration-layers (cl-list*
+                                               'graphviz
+                                               'git
+                                               'github
+                                               '(erc :variables erc-server-list
+                                                     '(("irc.freenode.net" :port "6697" :ssl t :nick "oneyb")))
+                                               '(markdown
+                                                 :eval-after-load
+                                                 ;; (auto-fill-mode 1)
+                                                 (spacemacs/toggle-auto-completion)
+                                                 )
+                                               'pdf
+                                               dotspacemacs-configuration-layers))
+    (setf dotspacemacs-configuration-layers (cl-list*
+                                             'debug
+                                             'csharp
+                                             'multiple-cursors
+                                             'treemacs
+                                             'version-control
+                                             dotspacemacs-configuration-layers))
+    )
   )
 
 (defun dotspacemacs/init ()
@@ -324,7 +282,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil then Spacelpa repository is the primary source to install
    ;; a locked version of packages. If nil then Spacemacs will install the
    ;; latest version of packages from MELPA. (default nil)
-   dotspacemacs-use-spacelpa t
+   dotspacemacs-use-spacelpa nil
 
    ;; If non-nil then verify the signature for downloaded Spacelpa archives.
    ;; (default nil)
@@ -631,7 +589,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
-   dotspacemacs-icon-title-format nil
+   dotspacemacs-icon-title-format  "%b@%t"
 
    ;; Delete whitespace while saving buffer. Possible values are `all'
    ;; to aggressively delete empty line and long sequences of whitespace,
@@ -712,6 +670,8 @@ package is loaded, you should place your code here."
   ;; (setq ycmd-force-semantic-completion t)
 
   (setq sentence-end-double-space t)
+  (customize-set-variable 'helm-ff-lynx-style-map nil)
+  (setq helm-ff-DEL-up-one-level-maybe t)
   ;; (evil-leader/set-key "?" 'ripgrep-regexp)
   (evil-leader/set-key "?" 'spacemacs/helm-dir-do-rg)
   ;; (evil-leader/set-key "/" 'projectile-ripgrep)
@@ -719,7 +679,6 @@ package is loaded, you should place your code here."
   ;; (setq term-ansi-default-program "C:\\Program Files\\Git\\git-bash.exe") 
   (add-hook 'ediff-prepare-buffer-hook #'outline-show-all)
   (global-set-key (kbd "C-h") 'spacemacs/toggle-holy-mode)
-  (setq browse-url-firefox-program "chromium")
   ;; (edit-server-start)
   ;; (require 'atomic-chrome)
   ;; (atomic-chrome-start-server)
@@ -1299,7 +1258,7 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-want-Y-yank-to-eol t)
  '(package-selected-packages
    (quote
-    (erc-view-log erc-social-graph erc-hl-nicks f s dash mmm-mode auctex zotxt yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit slim-mode scss-mode sass-mode ripgrep restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode powershell popwin platformio-mode pip-requirements persp-mode pcre2el paradox pandoc-mode ox-pandoc org-ref org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-dart ob-async neotree mwim move-text markdown-toc macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc insert-shebang indent-guide ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gtags helm-flx helm-descbinds helm-css-scss helm-cscope helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot git-gutter-fringe git-gutter-fringe+ gh-md ggtags fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump disaster diminish diff-hl define-word dart-mode dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (graphviz-dot-mode f s dash mmm-mode auctex zotxt yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit slim-mode scss-mode sass-mode ripgrep restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode powershell popwin platformio-mode pip-requirements persp-mode pcre2el paradox pandoc-mode ox-pandoc org-ref org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-dart ob-async neotree mwim move-text markdown-toc macrostep lua-mode lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc insert-shebang indent-guide ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gtags helm-flx helm-descbinds helm-css-scss helm-cscope helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot git-gutter-fringe git-gutter-fringe+ gh-md ggtags fuzzy flycheck-pos-tip flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav dumb-jump disaster diminish diff-hl define-word dart-mode dactyl-mode cython-mode csv-mode company-web company-tern company-statistics company-shell company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
