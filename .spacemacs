@@ -3,18 +3,21 @@
 ;; It must be stored in your home directory.
 
 ;; Bug in emacs 26.1
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(if (string-match "26\.1" (emacs-version)) 
+    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+  )
 
 (defun home-config ()
   (interactive)
   (progn
     (setq
      dotspacemacs-default-font '(
-                                 "Monospace"
-                                 :size 14
+                                 ;; "Monospace"
+                                 "Ubuntu Mono"
+                                 :size 19
                                  :weight normal
                                  :width normal
-                                 :powerline-scale 1.1
+                                 :powerline-scale 1.0
                                  )
      browse-url-firefox-program "chromium-browser"
      x-select-enable-primary t
@@ -155,7 +158,8 @@ This function should only modify configuration layer settings."
      ;; org
      (org :variables
           ;; org-enable-github-support t
-          org-enable-bootstrap-support nil)
+          org-enable-bootstrap-support nil
+          org-list-allow-alphabetical t)
      shell-scripts
      ;; (spell-checking
      ;;  :variables spell-checking-enable-auto-dictionary t)
@@ -585,11 +589,12 @@ It should only modify the values of Spacemacs settings."
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%b@%t"
+   dotspacemacs-frame-title-format "%b"
+   ;; dotspacemacs-frame-title-format "%b in %t"
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
-   dotspacemacs-icon-title-format  "%b@%t"
+   dotspacemacs-icon-title-format  nil
 
    ;; Delete whitespace while saving buffer. Possible values are `all'
    ;; to aggressively delete empty line and long sequences of whitespace,
@@ -819,9 +824,9 @@ package is loaded, you should place your code here."
   (setq text-mode-hook (quote (text-mode-hook-identify toggle-truncate-lines)))
   (setq-default fill-column 78)
   ;; ;; Visual stuff
-  ;; (set-frame-width (selected-frame) 112)
-  ;; (set-frame-height (selected-frame) 76)
   ;; (setq frame-title-format '("%b | " mode-name))
+  ;; (setq frame-title-format '("%b | " projectile-project-name))
+  (setq frame-title-format '("%b | " default-directory))
   (setq-default spacemacs-show-trailing-whitespace nil)
   (setq doc-view-continuous t)
   (setq font-use-system-font t)
@@ -830,7 +835,7 @@ package is loaded, you should place your code here."
   (setq truncate-lines t)
   ;; (setq-default cursor-type '(bar . 3))
   ;; (setq evil-move-cursor-back nil)
-  (setq evil-want-Y-yank-to-eol t)
+  ;; (setq evil-want-Y-yank-to-eol t)
   (setq kill-buffer-query-functions (remq 'process-kill-buffer-query-function kill-buffer-query-functions))
   (setq ediff-split-window-function 'split-window-horizontally
         ediff-window-setup-function 'ediff-setup-windows-plain)
@@ -1044,7 +1049,7 @@ package is loaded, you should place your code here."
               ;;                                          "}")) ""))))
               ;; ))
               ;; (setq org-agenda-files (-remove (lambda (str) (string-match  "#" str)) (file-expand-wildcards "~/org/*.org")))
-              ;; (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
+              (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
               (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
               (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
 
