@@ -488,7 +488,9 @@ function red()
     if [[ -n "`pgrep -f emacs`" ]]; then
 	        killall -w 'emacs'
 	    fi
-	    emacs --daemon
+    cd ~
+	  emacs --daemon
+    cd -
 }
 
 function wget-R()
@@ -871,7 +873,6 @@ if [ $USER = "pi" ]; then
 	  xkbset exp 1 =sticky -twokey -latchlock
 fi
 
-
 if [ "$(ls -1 /dev/disk/by-uuid | sed '1!d')" = "23e07b94-b859-4ead-914c-a8f763120cea" ];
 then
 	  # keyboard stuff
@@ -889,12 +890,12 @@ if [ -d /stuff/academic-archive/org/ ]; then
 fi
 rsync -a --cvs-exclude --delete --exclude=".gitignore" --exclude=".stfolder" --exclude="org-archive" ~/org/ ~/Sync/org/
 bash -c 'cd ~/Sync/org/; git commit . -m "$(date +%F-%R) saving org stuff progress"' &> /dev/null
-
-
 # [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # lineageos stuff
-
-
 export USE_CCACHE=1
 export ANDROID_JACK_VM_ARGS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4G"
+# add Android SDK platform tools to path
+if [ -d "$HOME/android/platform-tools" ] ; then
+    PATH="$HOME/android/platform-tools:$PATH"
+fi

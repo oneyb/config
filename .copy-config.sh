@@ -5,6 +5,7 @@ dir=$HOME/documents/config
 stuff="
      $HOME/.xbindkeysrc
      $HOME/.spacemacs
+     $HOME/.saveme-spacemacs
      $HOME/.bashrc
      $HOME/.vimrc
      $HOME/bin/.setup_linux.sh

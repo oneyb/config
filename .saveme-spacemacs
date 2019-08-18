@@ -1,0 +1,173 @@
+;; -*- mode: emacs-lisp -*-
+
+(setq user-emacs-directory (expand-file-name "~/.saveme-spacemacs.d"))
+
+(require 'package)
+(setq package-list '(
+                     evil
+                     evil-leader
+                     helm
+                     key-chord
+                     which-key
+                     org
+                     ))
+
+;; (add-to-list 'package-archives
+;;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives
+           '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
+
+(setq-default kill-ring-max 666)
+(setq history-length 666)
+(setq-default history-delete-duplicates t)
+(setq-default kill-do-not-save-duplicates t)
+(setq visible-bell t)
+(setq sentence-end-double-space t)
+(add-hook 'ediff-prepare-buffer-hook #'outline-show-all)
+(add-hook 'text-mode-hook (quote (text-mode-hook-identify toggle-truncate-lines)))
+(setq-default fill-column 78)
+(setq frame-title-format '("%b | " default-directory))
+(setq recentf-auto-cleanup "1:00pm")
+(customize-set-variable 'helm-ff-lynx-style-map nil)
+(setq helm-grep-ag-command "rg --color=always --smart-case --no-heading --line-number %s %s %s")
+(setq helm-ff-DEL-up-one-level-maybe t)
+
+(defun my-capitalize-first-char (&optional string)
+  "Capitalize only the first character of the input STRING."
+  (when (and string (> (length string) 0))
+    (let ((first-char (substring string nil 1))
+          (rest-str   (substring string 1)))
+      (concat (capitalize first-char) rest-str))))
+(defun my-put-current-directory-in-clipboard ()
+  "Put the current directory name on the clipboard"
+  (interactive)
+  (let ((x-select-enable-clipboard t)
+        (res (my-capitalize-first-char default-directory)))
+    (kill-new res)
+    (message (concat "Copied: " res))
+    )
+  )
+(defun my-put-file-name+line-number-in-clipboard ()
+  "Put the current file name with lineno on the clipboard"
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (let ((x-select-enable-clipboard t)
+            (res (concat (my-capitalize-first-char filename) ":"
+                         (number-to-string (line-number-at-pos)))))
+        (kill-new res)
+        (message (concat "Copied: " res))
+        )
+      )
+    )
+  )
+(defun my-put-file-name-in-clipboard ()
+  "Put the current file name on the clipboard"
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (let ((x-select-enable-clipboard t)
+            (res (my-capitalize-first-char filename)))
+        (kill-new res)
+        (message (concat "Copied: " res)))
+      )
+    )
+  )
+
+(defalias 'ke          'kill-emacs)
+(defalias 'es          'eshell)
+(defalias 'at          'ansi-term)
+(defalias 'ss          'shell)
+(defalias 'sd          'desktop-save-in-desktop-dir)
+(defalias 'ed          'ediff-files)
+(defalias 'yes-or-no-p 'y-or-n-p)
+(defun my-escape-and-save ()
+  "My escape and save"
+  (interactive)
+  (evil-escape)
+  (save-buffer)
+  )
+(defun vim-wq ()
+  "My save and quit"
+  (interactive)
+  (evil-escape)
+  (save-buffer)
+  (kill-this-buffer)
+  )
+(defun my-escape-and-bury ()
+  "My save and quit"
+  (interactive)
+  (evil-escape)
+  (bury-buffer)
+  )
+(defun my-get-tasks ()
+  "Get org tasks"
+  (interactive)
+  (org-tags-view t "computer")
+  (delete-other-windows)
+  )
+(defun my-make ()
+  "fave make settings"
+  (interactive)
+  (helm-make '(3))
+  )
+
+(require 'which-key)
+(which-key-mode)
+(key-chord-mode 1)
+(key-chord-define-global ";l" 'kill-this-buffer)
+(key-chord-define-global "ii" 'org-capture)
+(key-chord-define-global ";'" 'my-get-tasks)
+(key-chord-define-global ";t" 'shell)
+(key-chord-define-global "wq" 'vim-wq)
+(key-chord-define-global "jk" 'my-escape-and-save)
+(key-chord-define-global "BB" 'my-escape-and-bury)
+(key-chord-define-global ";i" 'completion-at-point)
+(key-chord-define-global ";c" 'my-make)
+(add-hook 'prog-mode-hook
+          #'(lambda ()
+              (modify-syntax-entry ?_ "w")
+              (key-chord-define prog-mode-map ";i" 'completion-at-point)
+              ))
+
+(require 'evil-leader)
+(global-evil-leader-mode)
+(setq
+ ;; see: ~/.emacs.d/elpa/26.2/develop/evil-20190729.704/evil-vars.el 
+ evil-want-C-u-scroll t
+ evil-want-C-d-scroll t
+ evil-want-Y-yank-to-eol t
+ )
+(evil-leader/set-leader "<SPC>")
+(evil-leader/set-key
+  "bb" 'switch-to-buffer
+  "<SPC>" 'helm-M-x
+  ;; "SPC" 'execute-extended-command
+  "fs" 'save-buffer
+  "fr" 'helm-recentf
+  "ff" 'find-file
+  "/" 'helm-do-grep-ag
+  "hdv" 'helm-describe-variable
+  "hdk" 'helm-describe-bindings
+  "hdf" 'helm-describe-function
+  "oc" 'org-capture
+  "oa" 'org-agenda
+  "ob" 'org-iswitchb
+  "ol" 'org-store-link
+  "ot" 'org-todo-list
+  "of" 'my-put-file-name-in-clipboard
+  "on" 'my-put-file-name+line-number-in-clipboard
+  "od" 'my-put-current-directory-in-clipboard
+  )
+(require 'evil)
+(evil-mode t)
