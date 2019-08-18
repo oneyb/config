@@ -1,5 +1,9 @@
 ;; -*- mode: emacs-lisp -*-
 
+(if (string-match "26\.1" (emacs-version)) 
+    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+  )
+
 (setq user-emacs-directory (expand-file-name "~/.saveme-spacemacs.d"))
 
 (require 'package)

@@ -430,6 +430,10 @@ pull-pio-dev () {
    box=pi@hassbian.local
    rsync -vurt $box:/home/homeassistant/.homeassistant/ $HOME/gebastel/rpi-ap-ha/homeassistant/
 }
+function saveme-spacemacs ()
+{
+    emacs -Q -l $HOME/.saveme-spacemacs $* &
+}
 
 # tex to docx
 # htlatex test.tex "xhtml,ooffice" "ooffice/! -cmozhtf" "-cooxtpipes -coo"
