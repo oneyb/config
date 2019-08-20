@@ -1,135 +1,278 @@
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
-;; This file is loaded by Spacemacs at startup.
-;; It must be stored in your home directory.
+
 ;; Bug in emacs 26.1
 (if (string-match "26\.1" (emacs-version)) 
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
   )
+
 (defun home-config ()
   (interactive)
-  (progn
-    (setq
-     dotspacemacs-default-font '(
-                                 ;; "Monospace"
-                                 "Ubuntu Mono"
-                                 :size 12
-                                 :weight normal
-                                 :width normal
-                                 :powerline-scale 1.0
-                                 )
-     browse-url-firefox-program "chromium-browser"
-     x-select-enable-primary t
-     x-select-enable-clipboard nil
-     interprogram-paste-function 'x-cut-buffer-or-selection-value
-     )
-     (add-hook 'python-mode-hook
-               (lambda ()
-                 (setq
-                  python-shell-interpreter "ipython"
-                  )))
-     (add-hook 'org-mode-hook
-               (lambda ()
-                 (setq
-                  org-agenda-files (-remove
-                                    (lambda (str) (string-match  "#" str))
-                                    (file-expand-wildcards "~/org/*.org"))
-                  org-capture-templates
-                  '(
-                    ("t" "General Tasks" entry (file "~/org/0-capture.org") "* TODO %?\t\t%^G\n %i")
-                    ("l" "Linked Task" entry (file "~/org/0-capture.org") "* TODO %? %a \t\t :computer:\n %i")
-                    ("p" "Programming Task" entry (file "~/org/0-capture.org") "* TODO %? \t\t :computer:\n %i")
-                    ("s" "Specific Programming Task" entry (file "~/org/0-capture.org") "* TODO %? %a \t\t :computer:\n %i")
-                    ("a" "Set Appt." entry (file "~/org/0-capture.org") "* %?\t\t%^G\n SCHEDULED: %^T\n %i")
-                    ("i" "Collect Info" entry (file "~/org/0-capture.org") "* %? %x \t\t:note:\n %i")
-                    ("m" "Emails to write" entry (file "~/org/0-capture.org") "* TODO %?%x \t\t:computer:phone:\n %i ")
-                    ("c" "Phone calls to make" entry (file "~/org/0-capture.org") "* TODO call %?%x \t\t:phone:\n %i ")
-                    ;; ("j" "Jobs" entry (file "~/org/0-capture.org") "* TODO apply to %? %x \t :getjob:computer:")
-                    ("J" "Jokes" entry (file "~/org/0-capture.org") "* Joke: %?\n %U %i")
-                    ("b" "Braindumps" entry (file "~/org/0-capture.org") "* Braindump: %?\n %U\n %i")
-                    )
+  (setq
+   dotspacemacs-default-font '(
+                               ;; "Monospace"
+                               "Ubuntu Mono"
+                               :size 12
+                               :weight normal
+                               :width normal
+                               :powerline-scale 1.0
+                               )
+   browse-url-firefox-program "chromium-browser"
+   x-select-enable-primary t
+   x-select-enable-clipboard nil
+   interprogram-paste-function 'x-cut-buffer-or-selection-value
+   )
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (setq
+               python-shell-interpreter "ipython"
+               )))
+  (eval-after-load 'org
+    (lambda ()
+      (setq
+       org-capture-templates
+       '(
+         ("t" "General Tasks" entry (file "~/org/0-capture.org") "* TODO %?\t\t%^G\n %i")
+         ("l" "Linked Task" entry (file "~/org/0-capture.org") "* TODO %? %a \t\t :computer:\n %i")
+         ("p" "Programming Task" entry (file "~/org/0-capture.org") "* TODO %? \t\t :computer:\n %i")
+         ("s" "Specific Programming Task" entry (file "~/org/0-capture.org") "* TODO %? %a \t\t :computer:\n %i")
+         ("a" "Set Appt." entry (file "~/org/0-capture.org") "* %?\t\t%^G\n SCHEDULED: %^T\n %i")
+         ("i" "Collect Info" entry (file "~/org/0-capture.org") "* %? %x \t\t:note:\n %i")
+         ("m" "Emails to write" entry (file "~/org/0-capture.org") "* TODO %?%x \t\t:computer:phone:\n %i ")
+         ("c" "Phone calls to make" entry (file "~/org/0-capture.org") "* TODO call %?%x \t\t:phone:\n %i ")
+         ;; ("j" "Jobs" entry (file "~/org/0-capture.org") "* TODO apply to %? %x \t :getjob:computer:")
+         ("J" "Jokes" entry (file "~/org/0-capture.org") "* Joke: %?\n %U %i")
+         ("b" "Braindumps" entry (file "~/org/0-capture.org") "* Braindump: %?\n %U\n %i")
+         )
+       ;;      ))
+       ;;     )
+       ;; (add-hook 'org-mode-hook
+       ;;           (lambda ()
+       (setq
+        org-agenda-files (-remove
+                          (lambda (str) (string-match  "#" str))
+                          (file-expand-wildcards "~/org/*.org"))
+        ;;  org-tags-column -91
+        org-tag-alist '(
+                        ("ARCHIVE"  . ?a)
+                        ("out"      . ?o)
+                        ("home"     . ?h)
+                        ("phone"    . ?p)
+                        ("computer" . ?c)
+                        ("learn"    . ?l)
+                        ;; ("getjob"   . ?j)
+                        ("note"     . ?n)
+                        )
+        org-agenda-custom-commands
+        '(
+          ("o" tags-todo "out/NEXT"     ) 
+          ("h" tags-todo "home/NEXT"    ) 
+          ("p" tags-todo "phone/NEXT"   ) 
+          ("c" tags-todo "computer/NEXT") 
+          ("l" tags-todo "learn/NEXT"   )
+          ("j" tags-todo "getjob/NEXT"  ) 
+          ("d" "My next action" todo "NEXT")
+          )
+        )
+       (require 'org-contacts)
+       (setq org-contacts-files (list "~/documents/contacts/contacts.org" ))
+       (setq org-contacts-vcard-file "~/documents/contacts/org-contacts.vcf")
+       (org-link-set-parameters "tel")
 
-                  ;;  org-tags-column -91
-                  org-tag-alist '(
-                                  ("ARCHIVE"  . ?a)
-                                  ("out"      . ?o)
-                                  ("home"     . ?h)
-                                  ("phone"    . ?p)
-                                  ("computer" . ?c)
-                                  ("learn"    . ?l)
-                                  ;; ("getjob"   . ?j)
-                                  ("note"     . ?n)
-                                  )
-                  org-agenda-custom-commands
-                  '(
-                    ("o" tags-todo "out/NEXT"     ) 
-                    ("h" tags-todo "home/NEXT"    ) 
-                    ("p" tags-todo "phone/NEXT"   ) 
-                    ("c" tags-todo "computer/NEXT") 
-                    ("l" tags-todo "learn/NEXT"   )
-                    ("j" tags-todo "getjob/NEXT"  ) 
-                    ("d" "My next action" todo "NEXT")
+       (require 'ox-koma-letter)
+       ;; re-enable template expansion
+       (require 'org-tempo)
+       ;; change what is considered a word (w_o_r_d)
+       (modify-syntax-entry ?_ "w")
+       (evil-define-key 'normal evil-org-mode-map "t" 'org-todo)
+       (setq
+        org-export-with-toc nil
+        org-export-with-sub-superscripts '{}
+        org-want-todo-bindings t
+        )
+       (setq org-stuck-projects '("+LEVEL=1/-DONE" ("TODO" "NEXT") ("ref") "\\<SCHEDULED\\>|\\<DEADLINE\\>"))
+       (key-chord-define org-mode-map ";i" 'pcomplete) 
+       (delete '("\\.pdf\\'" . default) org-file-apps)
+       (add-to-list 'org-file-apps '(
+                                     ("\\.pdf\\'" . "evince %s")
+                                     ("\\.xlsx?\\'" . "xdg-open %s")
+                                     )
                     )
-                  )
-                 (require 'org-contacts)
-                 (setq org-contacts-files (list "~/documents/contacts/contacts.org" ))
-                 (setq org-contacts-vcard-file "~/documents/contacts/org-contacts.vcf")
-                 ))
-     )
+       (require 'ob-async)     
+       (add-hook 'org-capture-mode-hook 'evil-insert-state)
+       (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
+       (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+       (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+       (spacemacs/set-leader-keys-for-major-mode 'org-mode
+         "ir"  'org-ref-helm-insert-cite-link
+         "p"   'org-priority
+         "z"   'org-pomodoro
+         "xd"  'org-do-demote
+         "r"  'org-refile
+         "TAB" 'org-babel-switch-to-session
+         )
+       ;; GCal!
+       ;; https://github.com/myuhe/org-gcal.el
+       ;; (require 'org-gcal)
+       ;; (load "~/.org-gcal.el")
+       (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
+         "p"   'org-priority
+         "z"   'org-pomodoro
+         "c"   'org-capture
+         "r"  'org-refile
+         )
+       (setq org-tags-column -91)
+       (setq org-tag-alist '(
+                             ("ARCHIVE"  . ?a)
+                             ("out"      . ?o)
+                             ("home"     . ?h)
+                             ("phone"    . ?p)
+                             ("computer" . ?c)
+                             ("learn"    . ?l)
+                             ("getjob"   . ?j)
+                             ("note"     . ?n)
+                             ))
+       (setq org-agenda-custom-commands
+             '(
+               ("o" tags-todo "out/NEXT"     ) 
+               ("h" tags-todo "home/NEXT"    ) 
+               ("p" tags-todo "phone/NEXT"   ) 
+               ("c" tags-todo "computer/NEXT") 
+               ("l" tags-todo "learn/NEXT"   )
+               ("j" tags-todo "getjob/NEXT"  ) 
+               ("d" "My next action" todo "NEXT")
+               ))
+       ;; (setq org-latex-pdf-process
+       ;;       '("pdflatex -interaction nonstopmode -output-directory %o %f"
+       ;;         "bibtex %b"
+       ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"
+       ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"))
+       (add-to-list 'org-latex-classes
+                    '("a4-labels"
+                      "\\documentclass[a4paper,12pt]{article}
+                             \\usepackage[newdimens]{labels}
+                             \\LabelCols=3% Number of columns of labels per page
+                             \\LabelRows=8% Number of rows of labels per page
+                             \\LeftPageMargin=7mm% These four parameters give the
+                             \\RightPageMargin=7mm% page gutter sizes. The outer edges of
+                             \\TopPageMargin=15mm% the outer labels are the specified
+                             \\BottomPageMargin=15mm% distances from the edge of the paper.
+                             \\InterLabelColumn=2mm% Gap between columns of labels
+                             \\numberoflabels=24
+                             "
+                      ))
+       (add-to-list 'org-latex-classes
+                    '("letter-de"
+                      "\\documentclass[DIV=14,
+                                fontsize=11pt,
+                                parskip=half,
+                                backaddress=false,
+                                fromemail=true,
+                                fromphone=true,
+                              fromalign=left]{scrlttr2}
+                             \\usepackage[ngerman]{babel}"
+                      ))
+       (add-to-list 'org-latex-classes
+                    '("letter-en"
+                      "\\documentclass[DIV=14,
+                                fontsize=11pt,
+                                parskip=half,
+                                backaddress=false,
+                                fromemail=true,
+                                fromphone=true,
+                              fromalign=left]{scrlttr2}
+                              \\usepackage[english]{babel}"
+                      ))
+       (setq org-table-use-standard-references t)
+       (org-babel-do-load-languages
+        'org-babel-load-languages
+        '(
+          (emacs-lisp . t)
+          (R          . t)
+          (C          . t)
+          (shell      . t)
+          (python     . t)
+          (ditaa      . t)
+          (plantuml   . t)
+          ))
+       (setq org-confirm-babel-evaluate nil)
+       (setq org-src-preserve-indentation t)
+       (require 'ob-shell)
+       (setq org-startup-with-inline-images nil)
+       (spacemacs/toggle-auto-completion)
+       (setq org-agenda-include-diary t)
+       (setq
+        ;; org-icalendar-include-todo t
+        ;; org-icalendar-use-deadline '(event-if-not-todo todo-due)
+        org-icalendar-use-deadline '(event-if-not-todo)
+        org-icalendar-use-scheduled '(event-if-not-todo)
+        )
+       (setq org-archive-location "~/Sync/org/%s::datetree/")
+       )
+      ))
   )
 (defun work-config ()
   (interactive)
-  (progn
-    (setq dotspacemacs-default-font '(
-                                      "Source Code Pro"
-                                      :size 14
-                                      :weight normal
-                                      :width normal
-                                      :powerline-scale 1.1)
-          )
-    (global-set-key (kbd "<S-Insert>") #'clipboard-yank)
-    (add-to-list 'exec-path "C:\\Program Files\\Git\\mingw64\\bin")
-    (setenv "PATH" (mapconcat #'identity exec-path path-separator))
-    (add-hook 'projectile-mode-hook
-              (lambda ()
-                (add-to-list 'projectile-globally-ignored-files "cscope.out")
-                (add-to-list 'projectile-globally-ignored-files "cscope.files")
-                (add-to-list 'projectile-globally-ignored-files "*TAGS")
-                (add-to-list 'projectile-globally-ignored-files "*.map")
-                (add-to-list 'projectile-globally-ignored-files "*.mac")
-                ;; (add-to-list 'projectile-globally-ignored-files ".ld")
-                (add-to-list 'projectile-globally-ignored-files "*.lst")
-                (add-to-list 'projectile-globally-ignored-files "*.csv")
-                (add-to-list 'projectile-globally-ignored-files "*.html")
-                (add-to-list 'projectile-globally-ignored-files "*.xml")
-                )
+  (setq dotspacemacs-default-font '(
+                                    "Source Code Pro"
+                                    :size 14
+                                    :weight normal
+                                    :width normal
+                                    :powerline-scale 1.1)
+        )
+  (global-set-key (kbd "<S-Insert>") #'clipboard-yank)
+  (add-to-list 'exec-path "C:\\Program Files\\Git\\mingw64\\bin")
+  (setenv "PATH" (mapconcat #'identity exec-path path-separator))
+
+  (setq 
+   helm-ag-ignore-patterns '("cscope.out" "cscope.files" "*TAGS" "*.map" "*.mac" "*.lst" "*.csv" "*.html" "*.xml")
+   projectile-globally-ignored-file-suffixes 'helm-ag-ignore-patterns
+   )
+  (add-hook 'projectile-mode-hook
+            (lambda ()
+              (add-to-list 'projectile-globally-ignored-files "cscope.out")
+              (add-to-list 'projectile-globally-ignored-files "cscope.files")
+              (add-to-list 'projectile-globally-ignored-files "*TAGS")
+              (add-to-list 'projectile-globally-ignored-files "*.map")
+              (add-to-list 'projectile-globally-ignored-files "*.mac")
+              ;; (add-to-list 'projectile-globally-ignored-files ".ld")
+              (add-to-list 'projectile-globally-ignored-files "*.lst")
+              (add-to-list 'projectile-globally-ignored-files "*.csv")
+              (add-to-list 'projectile-globally-ignored-files "*.html")
+              (add-to-list 'projectile-globally-ignored-files "*.xml")
               )
-    (setq explicit-cmd.exe-args '("/K bigc"))
-    (setq explicit-cmdproxy.exe-args '("/K bigc"))
-    (setq shell-default-term-shell "C:\\Windows\\System32\\cmd.exe")
-    (add-to-list 'exec-path "C:\\Program Files\\Git\\bin")
-    (add-to-list 'exec-path "C:\\Sources\\programs\\python36")
-    ;; (add-to-list 'exec-path "C:\\MinGW\\msys\\1.0\\bin")
-    ;; (setq find-program "C:\\MinGW\\msys\\1.0\\bin\\find.exe"
-    ;;       grep-program "C:\\MinGW\\msys\\1.0\\bin\\grep.exe")
-    (setq python-shell-interpreter "python")
-    ;; (setenv "PATH" (mapconcat #'identity exec-path path-separator))
-    ;; (setq grep-find-template
-    ;;       "fd . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
-    (add-hook 'org-mode-hook
-              (lambda ()
-                (setq
-                 org-agenda-files (-remove
-                                   (lambda (str) (string-match  "#" str))
-                                   (file-expand-wildcards "~/work-exchange/org/*.org")))
-                org-capture-templates
-                '(
-                  ("t" "General Tasks" entry (file "~/work-exchange/org/work.org") "* TODO %?\n %i")
-                  ("p" "Programming Task" entry (file "~/work-exchange/org/work.org") "* TODO %? \t\t :computer:\n %i")
-                  ("s" "Specific Programming Task" entry (file "~/work-exchange/org/work.org") "* TODO %? %a \t\t :computer:\n %i")
-                  ("i" "Collect Info" entry (file "~/work-exchange/org/work.org") "* %? %x \t\t:note:\n %i")
-                  ("b" "Braindumps" entry (file "~/work-exchange/org/work.org") "* Braindump: %?\n %U\n %i")
-                  )
-                ))
+            )
+  (setq explicit-cmd.exe-args '("/K bigc"))
+  (setq explicit-cmdproxy.exe-args '("/K bigc"))
+  (setq shell-default-term-shell "C:\\Windows\\System32\\cmd.exe")
+  (add-to-list 'exec-path "C:\\Program Files\\Git\\bin")
+  (add-to-list 'exec-path "C:\\Sources\\programs\\python36")
+  ;; (add-to-list 'exec-path "C:\\MinGW\\msys\\1.0\\bin")
+  ;; (setq find-program "C:\\MinGW\\msys\\1.0\\bin\\find.exe"
+  ;;       grep-program "C:\\MinGW\\msys\\1.0\\bin\\grep.exe")
+  (setq python-shell-interpreter "python")
+  ;; (setenv "PATH" (mapconcat #'identity exec-path path-separator))
+  ;; (setq grep-find-template
+  ;;       "fd . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
+  (eval-after-load 'org
+    (lambda ()
+      (setq
+       org-capture-templates
+       '(
+         ("t" "General Tasks" entry (file "~/work-exchange/org/work.org") "* TODO %?\n %i")
+         ("p" "Programming Task" entry (file "~/work-exchange/org/work.org") "* TODO %? \t\t :computer:\n %i")
+         ("s" "Specific Programming Task" entry (file "~/work-exchange/org/work.org") "* TODO %? %a \t\t :computer:\n %i")
+         ("i" "Collect Info" entry (file "~/work-exchange/org/work.org") "* %? %x \t\t:note:\n %i")
+         ("b" "Braindumps" entry (file "~/work-exchange/org/work.org") "* Braindump: %?\n %U\n %i")
+         ;;        )
+         ;;      )))
+         ;; (eval-after-load 'org
+         ;;   ;; (add-hook 'org-mode-hook
+         ;;   (lambda ()
+         ;;     (setq
+         org-agenda-files (-remove
+                           (lambda (str) (string-match  "#" str))
+                           (file-expand-wildcards "~/work-exchange/org/*.org")))
+       ))
     )
   )
 (defun dotspacemacs/layers ()
@@ -210,10 +353,10 @@ This function should only modify configuration layer settings."
      vimscript
      ibuffer
      (markdown
-       :eval-after-load
-       ;; (auto-fill-mode 1)
-       (spacemacs/toggle-auto-completion)
-       )
+      :eval-after-load
+      ;; (auto-fill-mode 1)
+      (spacemacs/toggle-auto-completion)
+      )
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -611,8 +754,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   ;; set this before evil loads
   ;; (setq evil-toggle-key (kbd "C-h"))
- ;; (add-to-list 'package-archives
- ;;            '("melpa" . "https://melpa.org/packages/") t)
+  ;; (add-to-list 'package-archives
+  ;;            '("melpa" . "https://melpa.org/packages/") t)
   (setq ess-eval-visibly nil)
   (setq ess-ask-for-ess-directory nil)
   (setq org-todo-keywords '((sequence "TODO" "NEXT" "|" "DONE" "WAIT")))
@@ -652,9 +795,16 @@ package is loaded, you should place your code here."
   (customize-set-variable 'helm-ff-lynx-style-map nil)
   (setq helm-ff-DEL-up-one-level-maybe t)
   ;; (evil-leader/set-key "?" 'ripgrep-regexp)
-  (evil-leader/set-key "?" 'spacemacs/helm-dir-do-rg)
-  ;; (evil-leader/set-key "/" 'projectile-ripgrep)
-  (evil-leader/set-key "/" 'spacemacs/helm-project-do-rg)
+  (evil-leader/set-key
+    "?" 'spacemacs/helm-dir-do-rg
+    ;; "/" 'projectile-ripgrep
+    "/" 'spacemacs/helm-project-do-rg
+    "fm" 'toggle-frame-maximized
+    )
+  (setq
+   evil-lion-left-align-key (kbd "g a")
+   evil-lion-right-align-key (kbd "g A")
+   )
   ;; (setq term-ansi-default-program "C:\\Program Files\\Git\\git-bash.exe") 
   (add-hook 'ediff-prepare-buffer-hook #'outline-show-all)
   (global-set-key (kbd "C-h") 'spacemacs/toggle-holy-mode)
@@ -667,6 +817,10 @@ package is loaded, you should place your code here."
   (define-key evil-normal-state-map (kbd "SPC ob") 'org-iswitchb)   
   (define-key evil-normal-state-map (kbd "SPC ol") 'org-store-link)
   (define-key evil-normal-state-map (kbd "SPC ot") 'org-todo-list)
+  (define-key evil-normal-state-map (kbd "g a") 'evil-lion-left)
+  (define-key evil-normal-state-map (kbd "g A") 'evil-lion-right)
+  (define-key evil-visual-state-map (kbd "g a") 'evil-lion-left)
+  (define-key evil-visual-state-map (kbd "g A") 'evil-lion-right)
   (defun my-capitalize-first-char (&optional string)
     "Capitalize only the first character of the input STRING."
     (when (and string (> (length string) 0))
@@ -692,9 +846,9 @@ package is loaded, you should place your code here."
         (let ((x-select-enable-clipboard t)
               (res (concat (my-capitalize-first-char filename) ":"
                            (number-to-string (line-number-at-pos)))))
-           (kill-new res)
-           (message (concat "Copied: " res))
-           )
+          (kill-new res)
+          (message (concat "Copied: " res))
+          )
         )
       )
     )
@@ -724,10 +878,6 @@ package is loaded, you should place your code here."
   (setq visible-bell t)
   (defalias 'ttl         'toggle-truncate-lines)
   (defalias 'ke          'kill-emacs)
-  (defalias 'es          'eshell)
-  (defalias 'at          'ansi-term)
-  (defalias 'ss          'shell)
-  (defalias 'sd          'desktop-save-in-desktop-dir)
   (defalias 'ed          'ediff-files)
   (defalias 'yes-or-no-p 'y-or-n-p)
   (defun my-escape-and-save ()

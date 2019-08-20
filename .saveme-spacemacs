@@ -1,31 +1,195 @@
-;; -*- mode: emacs-lisp -*-
-
+;; Bug in emacs 26.1
 (if (string-match "26\.1" (emacs-version)) 
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
   )
 
 (setq user-emacs-directory (expand-file-name "~/.saveme-spacemacs.d"))
-
 (require 'package)
-(setq package-list '(
-                     evil
-                     evil-leader
-                     helm
-                     key-chord
-                     which-key
-                     org
-                     ))
-
-;; (add-to-list 'package-archives
-;;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-           '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
-(dolist (package package-list)
-  (unless (package-installed-p package)
-    (package-install package)))
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+
+(use-package evil-leader
+  :ensure t
+  :defer .3 
+  :init
+  (setq
+   ;; before any evil thing is loaded
+   evil-want-C-u-scroll t
+   evil-want-C-d-scroll t
+   evil-want-Y-yank-to-eol t
+   )
+  :config
+  (global-evil-leader-mode)
+  (evil-leader/set-leader "<SPC>")
+  (evil-leader/set-key
+    "bb"  'switch-to-buffer
+    "TAB" 'previous-buffer
+    "fs"  'save-buffer
+    ;; "ff"  'find-file
+    "ff"  'helm-find-files
+    "fm"  'toggle-frame-maximized
+    "hdv" 'describe-variable
+    "hdk" 'describe-bindings
+    "hdp" 'describe-package
+    "of"  'my-put-file-name-in-clipboard
+    "on"  'my-put-file-name+line-number-in-clipboard
+    "od"  'my-put-current-directory-in-clipboard
+    "qq"  'save-buffers-kill-emacs
+    "ww"  'other-window
+    "wm"  'delete-other-windows
+    "w-"  'split-window-vertically
+    "w/"  'split-window-horizontally
+    "fed" 'my-visit-config-file
+    "v"   'er/expand-region
+    "xaa" 'align
+    "xar" 'align-regexp
+    )
+  )
+
+(use-package evil
+  :ensure t
+  :after evil-leader
+  :config ;; see: ~/.emacs.d/elpa/26.2/develop/evil-20190729.704/evil-vars.el 
+  (evil-mode)
+  :bind (:map
+         evil-normal-state-map
+         ("g a " . evil-lion-left)
+         ("g A " . evil-lion-right)
+         :map evil-visual-state-map
+         ("g a " . evil-lion-left)
+         ("g A " . evil-lion-right))
+  )
+
+(use-package evil-lion
+  :after evil
+  :ensure t
+  :init
+  (setq indent-tabs-mode nil)
+  :config
+  ;; (setq evil-lion-squeeze-spaces nil)
+  (evil-lion-mode)
+  :bind (:map
+         evil-normal-state-map
+         ("TAB" . indent-for-tab-command)
+         :map
+         evil-visual-state-map
+         ("TAB" . indent-for-tab-command)
+         )
+  )
+(use-package evil-commentary
+  :after evil
+  :ensure t
+  :bind (:map evil-normal-state-map
+              ("gc" . evil-commentary))
+  )
+
+(use-package evil-visualstar
+  :after evil
+  :ensure t
+  :bind (:map evil-visual-state-map
+              ("*" . evil-visualstar/begin-search-forward)
+              ("#" . evil-visualstar/begin-search-backward))
+  )
+
+(use-package evil-goggles
+  :after evil
+  :ensure t
+  :config
+  (evil-goggles-use-diff-faces)
+  (evil-goggles-mode)
+  )
+
+(use-package evil-escape
+  :after evil
+  :ensure t
+  :config
+  (evil-escape-mode)
+  )
+
+(use-package evil-surround
+  :after evil
+  :ensure t
+  ;; :commands
+  ;; (evil-surround-edit
+  ;;  evil-Surround-edit
+  ;;  evil-surround-region
+  ;;  evil-Surround-region)
+  ;; :init
+  ;; (evil-define-key 'operator global-map "s" 'evil-surround-edit)
+  ;; (evil-define-key 'operator global-map "S" 'evil-Surround-edit)
+  ;; (evil-define-key 'visual global-map "S" 'evil-surround-region)
+  ;; (evil-define-key 'visual global-map "gS" 'evil-Surround-region)
+  )
+
+(use-package expand-region
+  ;; :after evil
+  :ensure t
+  :defer 1 
+  :after which-key
+  )
+
+(use-package helm
+  :after evil
+  :config
+  (setq
+   helm-grep-ag-command "rg --color=always --smart-case --no-heading --line-number %s %s %s"
+   helm-ff-DEL-up-one-level-maybe t
+   )
+  (evil-leader/set-key
+    "<SPC>" 'helm-M-x
+    "fr"    'helm-recentf
+    "/"     'helm-do-grep-ag
+    "hdf"   'helm-describe-function
+    )
+  :custom
+  (customize-set-variable 'helm-ff-lynx-style-map nil)
+  )
+
+(use-package which-key
+  :after helm
+  ;; :defer .9
+  :config
+  (which-key-mode)
+  )
+(use-package key-chord
+  :after helm
+  :config
+  (key-chord-mode 1)
+  (key-chord-define-global ";l" 'kill-this-buffer)
+  (key-chord-define-global "ii" 'org-capture)
+  (key-chord-define-global ";'" 'my-get-tasks)
+  (key-chord-define-global ";t" 'shell)
+  (key-chord-define-global "wq" 'vim-wq)
+  (key-chord-define-global "jk" 'my-escape-and-save)
+  (key-chord-define-global "BB" 'my-escape-and-bury)
+  (key-chord-define-global ";i" 'completion-at-point)
+  (key-chord-define-global ";w" 'other-window)
+  (key-chord-define-global ";c" 'my-make)
+  (add-hook 'prog-mode-hook
+            #'(lambda ()
+                (modify-syntax-entry ?_ "w")
+                (key-chord-define prog-mode-map ";i" 'completion-at-point)
+                ))
+  )
+
+(use-package org
+  :after helm
+  :defer .9
+  :config
+  (evil-leader/set-key
+    "oc"	 'org-capture
+    "oa"	 'org-agenda
+    "ob"	 'org-iswitchb
+    "ol"	 'org-store-link
+    "ot"         'org-todo-list
+    )
+  )
+
 
 (setq-default kill-ring-max 666)
 (setq history-length 666)
@@ -35,12 +199,12 @@
 (setq sentence-end-double-space t)
 (add-hook 'ediff-prepare-buffer-hook #'outline-show-all)
 (add-hook 'text-mode-hook (quote (text-mode-hook-identify toggle-truncate-lines)))
+(setq-default indent-tabs-mode nil)
+(setq indent-tabs-mode nil)
+(setq tab-width 5)
 (setq-default fill-column 78)
 (setq frame-title-format '("%b | " default-directory))
 (setq recentf-auto-cleanup "1:00pm")
-(customize-set-variable 'helm-ff-lynx-style-map nil)
-(setq helm-grep-ag-command "rg --color=always --smart-case --no-heading --line-number %s %s %s")
-(setq helm-ff-DEL-up-one-level-maybe t)
 
 (defun my-capitalize-first-char (&optional string)
   "Capitalize only the first character of the input STRING."
@@ -88,13 +252,6 @@
     )
   )
 
-(defalias 'ke          'kill-emacs)
-(defalias 'es          'eshell)
-(defalias 'at          'ansi-term)
-(defalias 'ss          'shell)
-(defalias 'sd          'desktop-save-in-desktop-dir)
-(defalias 'ed          'ediff-files)
-(defalias 'yes-or-no-p 'y-or-n-p)
 (defun my-escape-and-save ()
   "My escape and save"
   (interactive)
@@ -126,52 +283,55 @@
   (helm-make '(3))
   )
 
-(require 'which-key)
-(which-key-mode)
-(key-chord-mode 1)
-(key-chord-define-global ";l" 'kill-this-buffer)
-(key-chord-define-global "ii" 'org-capture)
-(key-chord-define-global ";'" 'my-get-tasks)
-(key-chord-define-global ";t" 'shell)
-(key-chord-define-global "wq" 'vim-wq)
-(key-chord-define-global "jk" 'my-escape-and-save)
-(key-chord-define-global "BB" 'my-escape-and-bury)
-(key-chord-define-global ";i" 'completion-at-point)
-(key-chord-define-global ";c" 'my-make)
-(add-hook 'prog-mode-hook
-          #'(lambda ()
-              (modify-syntax-entry ?_ "w")
-              (key-chord-define prog-mode-map ";i" 'completion-at-point)
-              ))
-
-(require 'evil-leader)
-(global-evil-leader-mode)
-(setq
- ;; see: ~/.emacs.d/elpa/26.2/develop/evil-20190729.704/evil-vars.el 
- evil-want-C-u-scroll t
- evil-want-C-d-scroll t
- evil-want-Y-yank-to-eol t
- )
-(evil-leader/set-leader "<SPC>")
-(evil-leader/set-key
-  "bb" 'switch-to-buffer
-  "<SPC>" 'helm-M-x
-  ;; "SPC" 'execute-extended-command
-  "fs" 'save-buffer
-  "fr" 'helm-recentf
-  "ff" 'find-file
-  "/" 'helm-do-grep-ag
-  "hdv" 'helm-describe-variable
-  "hdk" 'helm-describe-bindings
-  "hdf" 'helm-describe-function
-  "oc" 'org-capture
-  "oa" 'org-agenda
-  "ob" 'org-iswitchb
-  "ol" 'org-store-link
-  "ot" 'org-todo-list
-  "of" 'my-put-file-name-in-clipboard
-  "on" 'my-put-file-name+line-number-in-clipboard
-  "od" 'my-put-current-directory-in-clipboard
+(defun my-visit-config-file ()
+  (find-file (expand-file-name "~/.saveme-spacemacs"))
   )
-(require 'evil)
-(evil-mode t)
+
+(defun my-recompile-elpa (arg)
+  "Compile or recompile packages in elpa directory, if needed, that is
+    if the corresponding .elc file is either missing or outdated.
+
+      If ARG is non-nil, also recompile every `.el' file, regardless of date.
+
+      Useful if you switch Emacs versions."
+  (interactive "P")
+  ;; First argument must be 0 (not nil) to get missing .elc files rebuilt.
+  ;; Bonus: Optionally force recompilation with universal ARG
+  (when arg
+    (seq-do
+     (lambda (fname)
+       (when (file-exists-p fname)
+         (delete-file fname)))
+     (directory-files-recursively user-emacs-directory "\\.elc$" t)))
+  (byte-recompile-directory package-user-dir 0 arg))
+
+(defun align-regex (start end regexp &optional justify-right after)
+  "Repeat alignment with respect to the given regular expression.
+If JUSTIFY-RIGHT is non nil justify to the right instead of the
+left. If AFTER is non-nil, add whitespace to the left instead of
+the right."
+  (interactive "r\nsAlign regexp: ")
+  (let* ((ws-regexp (if (string-empty-p regexp)
+                        "\\(\\s-+\\)"
+                      "\\(\\s-*\\)"))
+         (complete-regexp (if after
+                              (concat regexp ws-regexp)
+                            (concat ws-regexp regexp)))
+         (group (if justify-right -1 1)))
+
+    (unless (use-region-p)
+      (save-excursion
+        (while (and
+                (string-match-p complete-regexp (thing-at-point 'line))
+                (= 0 (forward-line -1)))
+          (setq start (point-at-bol))))
+      (save-excursion
+        (while (and
+                (string-match-p complete-regexp (thing-at-point 'line))
+                (= 0 (forward-line 1)))
+          (setq end (point-at-eol)))))
+
+    (align-regexp start end complete-regexp group 1 t)))
+
+(defalias 'ed          'ediff-files)
+(defalias 'yes-or-no-p 'y-or-n-p)
