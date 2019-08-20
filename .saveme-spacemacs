@@ -190,6 +190,13 @@
     )
   )
 
+(use-package leuven-theme 
+  :after helm
+  :ensure t
+  :config
+  (load-theme 'leuven t)
+  )
+
 
 (setq-default kill-ring-max 666)
 (setq history-length 666)
