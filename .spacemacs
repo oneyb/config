@@ -521,8 +521,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-themes '(
                          leuven
                          default
-                         spacemacs-dark
-                         spacemacs-light
+                         dichromacy
                          )
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -787,24 +786,18 @@ package is loaded, you should place your code here."
     (message "Get to work!")
     (work-config)
     )
-  ;; (xclip-mode 1)
   ;; (fset 'evil-visual-update-x-selection 'ignore)
-  ;; (setq ycmd-server-command '("python" "C:/Sources/brian.oney/.vim/plugged/YouCompleteMe/third_party/ycmd/ycmd"))
-  ;; (setq ycmd-force-semantic-completion t)
   (setq sentence-end-double-space t)
   (customize-set-variable 'helm-ff-lynx-style-map nil)
   (setq helm-ff-DEL-up-one-level-maybe t)
-  ;; (evil-leader/set-key "?" 'ripgrep-regexp)
   (evil-leader/set-key
-    "?" 'spacemacs/helm-dir-do-rg
+    ;; "?" 'ripgrep-regexp
     ;; "/" 'projectile-ripgrep
+    "?" 'spacemacs/helm-dir-do-rg
     "/" 'spacemacs/helm-project-do-rg
     "fm" 'toggle-frame-maximized
+    "fd" 'delete-frame
     )
-  (setq
-   evil-lion-left-align-key (kbd "g a")
-   evil-lion-right-align-key (kbd "g A")
-   )
   ;; (setq term-ansi-default-program "C:\\Program Files\\Git\\git-bash.exe") 
   (add-hook 'ediff-prepare-buffer-hook #'outline-show-all)
   (global-set-key (kbd "C-h") 'spacemacs/toggle-holy-mode)
@@ -821,6 +814,8 @@ package is loaded, you should place your code here."
   (define-key evil-normal-state-map (kbd "g A") 'evil-lion-right)
   (define-key evil-visual-state-map (kbd "g a") 'evil-lion-left)
   (define-key evil-visual-state-map (kbd "g A") 'evil-lion-right)
+  (define-key evil-normal-state-map (kbd "g i") 'what-cursor-position)
+  (define-key evil-visual-state-map (kbd "g i") 'what-cursor-position)
   (defun my-capitalize-first-char (&optional string)
     "Capitalize only the first character of the input STRING."
     (when (and string (> (length string) 0))

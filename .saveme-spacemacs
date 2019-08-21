@@ -27,27 +27,28 @@
   (global-evil-leader-mode)
   (evil-leader/set-leader "<SPC>")
   (evil-leader/set-key
-    "bb"  'switch-to-buffer
-    "TAB" 'previous-buffer
-    "fs"  'save-buffer
-    ;; "ff"  'find-file
-    "ff"  'helm-find-files
-    "fm"  'toggle-frame-maximized
-    "hdv" 'describe-variable
-    "hdk" 'describe-bindings
-    "hdp" 'describe-package
-    "of"  'my-put-file-name-in-clipboard
-    "on"  'my-put-file-name+line-number-in-clipboard
-    "od"  'my-put-current-directory-in-clipboard
-    "qq"  'save-buffers-kill-emacs
-    "ww"  'other-window
-    "wm"  'delete-other-windows
-    "w-"  'split-window-vertically
-    "w/"  'split-window-horizontally
-    "fed" 'my-visit-config-file
-    "v"   'er/expand-region
-    "xaa" 'align
-    "xar" 'align-regexp
+    "bb"    'switch-to-buffer
+    "TAB"   'previous-buffer
+    "fs"    'save-buffer
+    ;; "ff" 'find-file
+    "ff"    'helm-find-files
+    "fd"    'delete-frame
+    "fm"    'toggle-frame-maximized
+    "hdv"   'describe-variable
+    "hdk"   'describe-key
+    "hdp"   'describe-package
+    "of"    'my-put-file-name-in-clipboard
+    "on"    'my-put-file-name+line-number-in-clipboard
+    "od"    'my-put-current-directory-in-clipboard
+    "qq"    'save-buffers-kill-emacs
+    "ww"    'other-window
+    "wm"    'delete-other-windows
+    "w-"    'split-window-vertically
+    "w/"    'split-window-horizontally
+    "fed"   'my-visit-config-file
+    "v"     'er/expand-region
+    "xaa"   'align
+    "xar"   'align-regexp
     )
   )
 
@@ -60,9 +61,12 @@
          evil-normal-state-map
          ("g a " . evil-lion-left)
          ("g A " . evil-lion-right)
+         ("g i " . what-cursor-position)
          :map evil-visual-state-map
          ("g a " . evil-lion-left)
-         ("g A " . evil-lion-right))
+         ("g A " . evil-lion-right)
+         ("g i " . what-cursor-position)
+         )
   )
 
 (use-package evil-lion

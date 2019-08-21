@@ -435,6 +435,17 @@ function saveme-spacemacs ()
     emacs -Q -l $HOME/.saveme-spacemacs $* &
 }
 
+function merge-dotspacemacs ()
+{
+    # cd ~/github/config; git pull; cd -
+    emacsclient -c -e '(ediff-files (expand-file-name "~/.spacemacs") (expand-file-name "~/work-exchange/config/.spacemacs"))'
+}
+function merge-dotspacemacs-saveme ()
+{
+    cd ~/github/config; git pull; cd -
+    emacsclient -c -e '(ediff-files (expand-file-name "~/.saveme-spacemacs") (expand-file-name "~/work-exchange/config/.saveme-spacemacs"))'
+}
+
 # tex to docx
 # htlatex test.tex "xhtml,ooffice" "ooffice/! -cmozhtf" "-cooxtpipes -coo"
 #   pandoc sig-alternate.tex                \
@@ -898,7 +909,7 @@ bash -c 'cd ~/Sync/org/; git commit . -m "$(date +%F-%R) saving org stuff progre
 
 # lineageos stuff
 export USE_CCACHE=1
-export ANDROID_JACK_VM_ARGS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4G"
+export ANDROID_JACK_VM_ARGS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx13G"
 # add Android SDK platform tools to path
 if [ -d "$HOME/android/platform-tools" ] ; then
     PATH="$HOME/android/platform-tools:$PATH"
