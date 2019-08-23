@@ -28,117 +28,113 @@
                )))
   (eval-after-load 'org
     (lambda ()
-        (setq
-         org-capture-templates
-         '(
-           ("t" "General Tasks" entry (file "~/org/0-capture.org") "* TODO %?\t\t%^G\n %i")
-           ("l" "Linked Task" entry (file "~/org/0-capture.org") "* TODO %? %a \t\t :computer:\n %i")
-           ("p" "Programming Task" entry (file "~/org/0-capture.org") "* TODO %? \t\t :computer:\n %i")
-           ("s" "Specific Programming Task" entry (file "~/org/0-capture.org") "* TODO %? %a \t\t :computer:\n %i")
-           ("a" "Set Appt." entry (file "~/org/0-capture.org") "* %?\t\t%^G\n SCHEDULED: %^T\n %i")
-           ("i" "Collect Info" entry (file "~/org/0-capture.org") "* %? %x \t\t:note:\n %i")
-           ("m" "Emails to write" entry (file "~/org/0-capture.org") "* TODO %?%x \t\t:computer:phone:\n %i ")
-           ("c" "Phone calls to make" entry (file "~/org/0-capture.org") "* TODO call %?%x \t\t:phone:\n %i ")
-           ;; ("j" "Jobs" entry (file "~/org/0-capture.org") "* TODO apply to %? %x \t :getjob:computer:")
-           ("J" "Jokes" entry (file "~/org/0-capture.org") "* Joke: %?\n %U %i")
-           ("b" "Braindumps" entry (file "~/org/0-capture.org") "* Braindump: %?\n %U\n %i")
-           )
-         ;;      ))
-         ;;     )
-         ;; (add-hook 'org-mode-hook
-         ;;           (lambda ()
-          org-refile-targets '((org-agenda-files :maxlevel . 2))
-          org-agenda-files (-remove
-                            (lambda (str) (string-match  "#" str))
-                            (file-expand-wildcards "~/org/*.org"))
-          ;;  org-tags-column -91
-          org-tag-alist '(
-                          ("ARCHIVE"  . ?a)
-                          ("out"      . ?o)
-                          ("home"     . ?h)
-                          ("phone"    . ?p)
-                          ("computer" . ?c)
-                          ("learn"    . ?l)
-                          ;; ("getjob"   . ?j)
-                          ("note"     . ?n)
-                          )
-          org-agenda-custom-commands
-          '(
-            ("o" tags-todo "out/NEXT"     ) 
-            ("h" tags-todo "home/NEXT"    ) 
-            ("p" tags-todo "phone/NEXT"   ) 
-            ("c" tags-todo "computer/NEXT") 
-            ("l" tags-todo "learn/NEXT"   )
-            ("j" tags-todo "getjob/NEXT"  ) 
-            ("d" "My next action" todo "NEXT")
-            )
-           org-export-with-toc nil
-           org-export-with-sub-superscripts '{}
-           org-want-todo-bindings t
-           org-stuck-projects '("+LEVEL=1/-DONE" ("TODO" "NEXT") ("ref") "\\<SCHEDULED\\>|\\<DEADLINE\\>")
-          )
-         (require 'org-contacts)
-         (setq org-contacts-files (list "~/documents/contacts/contacts.org" ))
-         (setq org-contacts-vcard-file "~/documents/contacts/org-contacts.vcf")
-         (org-link-set-parameters "tel")
+      (setq
+       org-capture-templates
+       '(
+         ("t" "General Tasks" entry (file "~/org/0-capture.org") "* TODO %?\t\t%^G\n %i")
+         ("l" "Linked Task" entry (file "~/org/0-capture.org") "* TODO %? %a \t\t :computer:\n %i")
+         ("p" "Programming Task" entry (file "~/org/0-capture.org") "* TODO %? \t\t :computer:\n %i")
+         ("s" "Specific Programming Task" entry (file "~/org/0-capture.org") "* TODO %? %a \t\t :computer:\n %i")
+         ("a" "Set Appt." entry (file "~/org/0-capture.org") "* %?\t\t%^G\n SCHEDULED: %^T\n %i")
+         ("i" "Collect Info" entry (file "~/org/0-capture.org") "* %? %x \t\t:note:\n %i")
+         ("m" "Emails to write" entry (file "~/org/0-capture.org") "* TODO %?%x \t\t:computer:phone:\n %i ")
+         ("c" "Phone calls to make" entry (file "~/org/0-capture.org") "* TODO call %?%x \t\t:phone:\n %i ")
+         ;; ("j" "Jobs" entry (file "~/org/0-capture.org") "* TODO apply to %? %x \t :getjob:computer:")
+         ("J" "Jokes" entry (file "~/org/0-capture.org") "* Joke: %?\n %U %i")
+         ("b" "Braindumps" entry (file "~/org/0-capture.org") "* Braindump: %?\n %U\n %i")
+         )
+       org-refile-targets '((org-agenda-files :maxlevel . 2))
+       org-agenda-files (-remove
+                         (lambda (str) (string-match  "#" str))
+                         (file-expand-wildcards "~/org/*.org"))
+       ;;  org-tags-column -91
+       org-tag-alist '(
+                       ("ARCHIVE"  . ?a)
+                       ("out"      . ?o)
+                       ("home"     . ?h)
+                       ("phone"    . ?p)
+                       ("computer" . ?c)
+                       ("learn"    . ?l)
+                       ;; ("getjob"   . ?j)
+                       ("note"     . ?n)
+                       )
+       org-agenda-custom-commands
+       '(
+         ("o" tags-todo "out/NEXT"     ) 
+         ("h" tags-todo "home/NEXT"    ) 
+         ("p" tags-todo "phone/NEXT"   ) 
+         ("c" tags-todo "computer/NEXT") 
+         ("l" tags-todo "learn/NEXT"   )
+         ("j" tags-todo "getjob/NEXT"  ) 
+         ("d" "My next action" todo "NEXT")
+         )
+       org-export-with-toc nil
+       org-export-with-sub-superscripts '{}
+       org-want-todo-bindings t
+       org-stuck-projects '("+LEVEL=1/-DONE" ("TODO" "NEXT") ("ref") "\\<SCHEDULED\\>|\\<DEADLINE\\>")
+       )
+      (require 'org-contacts)
+      (setq org-contacts-files (list "~/documents/contacts/contacts.org" ))
+      (setq org-contacts-vcard-file "~/documents/contacts/org-contacts.vcf")
+      (org-link-set-parameters "tel")
 
-         (require 'ox-koma-letter)
-         ;; re-enable template expansion
-         (require 'org-tempo)
-         ;; change what is considered a word (w_o_r_d)
-         (modify-syntax-entry ?_ "w")
-         (key-chord-define org-mode-map ";i" 'pcomplete) 
-         (delete '("\\.pdf\\'" . default) org-file-apps)
-         (add-to-list 'org-file-apps '(
-                                       ("\\.pdf\\'" . "evince %s")
-                                       ("\\.xlsx?\\'" . "xdg-open %s")
-                                       )
-                      )
-         (require 'ob-async)     
-         (add-hook 'org-capture-mode-hook 'evil-insert-state)
-         (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
-         (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
-         (spacemacs/set-leader-keys-for-major-mode 'org-mode
-           ;; "ir"  'org-ref-helm-insert-cite-link
-           "p"   'org-priority
-           "z"   'org-pomodoro
-           "xd"  'org-do-demote
-           "r"   'org-refile
-           "TAB" 'org-babel-switch-to-session
-           )
-         ;; GCal!
-         ;; https://github.com/myuhe/org-gcal.el
-         ;; (require 'org-gcal)
-         ;; (load "~/.org-gcal.el")
-         (setq org-tags-column -91)
-         (setq org-tag-alist '(
-                               ("ARCHIVE"  . ?a)
-                               ("out"      . ?o)
-                               ("home"     . ?h)
-                               ("phone"    . ?p)
-                               ("computer" . ?c)
-                               ("learn"    . ?l)
-                               ("getjob"   . ?j)
-                               ("note"     . ?n)
-                               ))
-         (setq org-agenda-custom-commands
-               '(
-                 ("o" tags-todo "out/NEXT"     ) 
-                 ("h" tags-todo "home/NEXT"    ) 
-                 ("p" tags-todo "phone/NEXT"   ) 
-                 ("c" tags-todo "computer/NEXT") 
-                 ("l" tags-todo "learn/NEXT"   )
-                 ("j" tags-todo "getjob/NEXT"  ) 
-                 ("d" "My next action" todo "NEXT")
-                 ))
-         ;; (setq org-latex-pdf-process
-         ;;       '("pdflatex -interaction nonstopmode -output-directory %o %f"
-         ;;         "bibtex %b"
-         ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"
-         ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"))
-         (add-to-list 'org-latex-classes
-                      '("a4-labels"
-                        "\\documentclass[a4paper,12pt]{article}
+      (require 'ox-koma-letter)
+      ;; re-enable template expansion
+      (require 'org-tempo)
+      ;; change what is considered a word (w_o_r_d)
+      (modify-syntax-entry ?_ "w")
+      (key-chord-define org-mode-map ";i" 'pcomplete) 
+      (delete '("\\.pdf\\'" . default) org-file-apps)
+      (add-to-list 'org-file-apps '(
+                                    ("\\.pdf\\'" . "evince %s")
+                                    ("\\.xlsx?\\'" . "xdg-open %s")
+                                    )
+                   )
+      (require 'ob-async)     
+      (add-hook 'org-capture-mode-hook 'evil-insert-state)
+      (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+      (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode
+        ;; "ir"  'org-ref-helm-insert-cite-link
+        "p"   'org-priority
+        "z"   'org-pomodoro
+        "xd"  'org-do-demote
+        "r"   'org-refile
+        "TAB" 'org-babel-switch-to-session
+        )
+      ;; GCal!
+      ;; https://github.com/myuhe/org-gcal.el
+      ;; (require 'org-gcal)
+      ;; (load "~/.org-gcal.el")
+      (setq org-tags-column -91)
+      (setq org-tag-alist '(
+                            ("ARCHIVE"  . ?a)
+                            ("out"      . ?o)
+                            ("home"     . ?h)
+                            ("phone"    . ?p)
+                            ("computer" . ?c)
+                            ("learn"    . ?l)
+                            ("getjob"   . ?j)
+                            ("note"     . ?n)
+                            ))
+      (setq org-agenda-custom-commands
+            '(
+              ("o" tags-todo "out/NEXT"     ) 
+              ("h" tags-todo "home/NEXT"    ) 
+              ("p" tags-todo "phone/NEXT"   ) 
+              ("c" tags-todo "computer/NEXT") 
+              ("l" tags-todo "learn/NEXT"   )
+              ("j" tags-todo "getjob/NEXT"  ) 
+              ("d" "My next action" todo "NEXT")
+              ))
+      ;; (setq org-latex-pdf-process
+      ;;       '("pdflatex -interaction nonstopmode -output-directory %o %f"
+      ;;         "bibtex %b"
+      ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"
+      ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"))
+      (add-to-list 'org-latex-classes
+                   '("a4-labels"
+                     "\\documentclass[a4paper,12pt]{article}
                              \\usepackage[newdimens]{labels}
                              \\LabelCols=3% Number of columns of labels per page
                              \\LabelRows=8% Number of rows of labels per page
@@ -149,10 +145,10 @@
                              \\InterLabelColumn=2mm% Gap between columns of labels
                              \\numberoflabels=24
                              "
-                        ))
-         (add-to-list 'org-latex-classes
-                      '("letter-de"
-                        "\\documentclass[DIV=14,
+                     ))
+      (add-to-list 'org-latex-classes
+                   '("letter-de"
+                     "\\documentclass[DIV=14,
                                 fontsize=11pt,
                                 parskip=half,
                                 backaddress=false,
@@ -160,10 +156,10 @@
                                 fromphone=true,
                               fromalign=left]{scrlttr2}
                              \\usepackage[ngerman]{babel}"
-                        ))
-         (add-to-list 'org-latex-classes
-                      '("letter-en"
-                        "\\documentclass[DIV=14,
+                     ))
+      (add-to-list 'org-latex-classes
+                   '("letter-en"
+                     "\\documentclass[DIV=14,
                                 fontsize=11pt,
                                 parskip=half,
                                 backaddress=false,
@@ -171,34 +167,34 @@
                                 fromphone=true,
                               fromalign=left]{scrlttr2}
                               \\usepackage[english]{babel}"
-                        ))
-         (setq org-table-use-standard-references t)
-         (org-babel-do-load-languages
-          'org-babel-load-languages
-          '(
-            (emacs-lisp . t)
-            (R          . t)
-            (C          . t)
-            (shell      . t)
-            (python     . t)
-            (ditaa      . t)
-            (plantuml   . t)
-            ))
-         (setq org-confirm-babel-evaluate nil)
-         (setq org-src-preserve-indentation t)
-         (require 'ob-shell)
-         (setq org-startup-with-inline-images nil)
-         (spacemacs/toggle-auto-completion)
-         (setq
-          org-agenda-include-diary t
-          ;; org-icalendar-include-todo t
-          ;; org-icalendar-use-deadline '(event-if-not-todo todo-due)
-          org-icalendar-use-deadline '(event-if-not-todo)
-          org-icalendar-use-scheduled '(event-if-not-todo)
-          )
-         (setq org-archive-location "~/Sync/org/%s::datetree/")
-         )
-        )
+                     ))
+      (setq org-table-use-standard-references t)
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '(
+         (emacs-lisp . t)
+         (R          . t)
+         (C          . t)
+         (shell      . t)
+         (python     . t)
+         (ditaa      . t)
+         (plantuml   . t)
+         ))
+      (setq org-confirm-babel-evaluate nil)
+      (setq org-src-preserve-indentation t)
+      (require 'ob-shell)
+      (setq org-startup-with-inline-images nil)
+      (spacemacs/toggle-auto-completion)
+      (setq
+       org-agenda-include-diary t
+       ;; org-icalendar-include-todo t
+       ;; org-icalendar-use-deadline '(event-if-not-todo todo-due)
+       org-icalendar-use-deadline '(event-if-not-todo)
+       org-icalendar-use-scheduled '(event-if-not-todo)
+       )
+      (setq org-archive-location "~/Sync/org/%s::datetree/")
+      )
+    )
   )
 (defun work-config ()
   (interactive)
@@ -253,16 +249,12 @@
          ("s" "Specific Programming Task" entry (file "~/work-exchange/org/work.org") "* TODO %? %a \t\t :computer:\n %i")
          ("i" "Collect Info" entry (file "~/work-exchange/org/work.org") "* %? %x \t\t:note:\n %i")
          ("b" "Braindumps" entry (file "~/work-exchange/org/work.org") "* Braindump: %?\n %U\n %i")
-         ;;        )
-         ;;      )))
-         ;; (eval-after-load 'org
-         ;;   ;; (add-hook 'org-mode-hook
-         ;;   (lambda ()
-         ;;     (setq
-         org-agenda-files (-remove
-                           (lambda (str) (string-match  "#" str))
-                           (file-expand-wildcards "~/work-exchange/org/*.org")))
-       ))
+         )
+       org-agenda-files (-remove
+                         (lambda (str) (string-match  "#" str))
+                         (file-expand-wildcards "~/work-exchange/org/*.org"))
+       )
+      )
     )
   )
 (defun dotspacemacs/layers ()
@@ -788,6 +780,15 @@ package is loaded, you should place your code here."
     "/" 'spacemacs/helm-project-do-rg
     "fm" 'toggle-frame-maximized
     "fd" 'delete-frame
+    "yf" 'my-put-file-name-in-clipboard
+    "yn" 'my-put-file-name-in-clipboard
+    "yl" 'my-put-file-name+line-number-in-clipboard
+    "yd" 'my-put-current-directory-in-clipboard
+    "oc" 'org-capture
+    "oa" 'org-agenda
+    "ob" 'org-iswitchb
+    "ol" 'org-store-link
+    "ot" 'org-todo-list
     )
   ;; (setq term-ansi-default-program "C:\\Program Files\\Git\\git-bash.exe") 
   (add-hook 'ediff-prepare-buffer-hook #'outline-show-all)
@@ -796,11 +797,6 @@ package is loaded, you should place your code here."
   ;; (require 'atomic-chrome)
   ;; (atomic-chrome-start-server)
   ;; (setq atomic-chrome-default-major-mode 'org-mode)
-  (define-key evil-normal-state-map (kbd "SPC oc") 'org-capture)
-  (define-key evil-normal-state-map (kbd "SPC oa") 'org-agenda)
-  (define-key evil-normal-state-map (kbd "SPC ob") 'org-iswitchb)   
-  (define-key evil-normal-state-map (kbd "SPC ol") 'org-store-link)
-  (define-key evil-normal-state-map (kbd "SPC ot") 'org-todo-list)
   (define-key evil-normal-state-map (kbd "g a") 'evil-lion-left)
   (define-key evil-normal-state-map (kbd "g A") 'evil-lion-right)
   (define-key evil-visual-state-map (kbd "g a") 'evil-lion-left)
@@ -852,9 +848,6 @@ package is loaded, you should place your code here."
         )
       )
     )
-  (define-key evil-normal-state-map (kbd "SPC of") 'my-put-file-name-in-clipboard)
-  (define-key evil-normal-state-map (kbd "SPC on") 'my-put-file-name+line-number-in-clipboard)
-  (define-key evil-normal-state-map (kbd "SPC od") 'my-put-current-directory-in-clipboard)
   (setq-default kill-ring-max 666)
   (setq history-length 666)
   ;; (setq gdb-many-windows t)
@@ -862,6 +855,8 @@ package is loaded, you should place your code here."
   (setq-default history-delete-duplicates t)
   (setq-default kill-do-not-save-duplicates t)
   (setq visible-bell t)
+  (set-face-attribute 'line-number nil :background "gray84" :foreground "gray42")
+  (set-face-attribute 'line-number-current-line nil :foreground "gray6")
   (defalias 'ttl         'toggle-truncate-lines)
   (defalias 'ke          'kill-emacs)
   (defalias 'ed          'ediff-files)
