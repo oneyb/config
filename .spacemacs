@@ -16,16 +16,17 @@
                                :width normal
                                :powerline-scale 1.0
                                )
+   pdf-misc-print-programm "/usr/bin/gtklpq"
    browse-url-firefox-program "chromium-browser"
    x-select-enable-primary t
    x-select-enable-clipboard nil
    interprogram-paste-function 'x-cut-buffer-or-selection-value
    )
-  (add-hook 'python-mode-hook
-            (lambda ()
-              (setq
-               python-shell-interpreter "ipython"
-               )))
+  (eval-after-load 'python
+    (lambda ()
+      (setq
+       python-shell-interpreter "ipython"
+       )))
   (eval-after-load 'org
     (lambda ()
       (setq
@@ -43,11 +44,9 @@
          ("J" "Jokes" entry (file "~/org/0-capture.org") "* Joke: %?\n %U %i")
          ("b" "Braindumps" entry (file "~/org/0-capture.org") "* Braindump: %?\n %U\n %i")
          )
-       org-refile-targets '((org-agenda-files :maxlevel . 2))
        org-agenda-files (-remove
                          (lambda (str) (string-match  "#" str))
                          (file-expand-wildcards "~/org/*.org"))
-       ;;  org-tags-column -91
        org-tag-alist '(
                        ("ARCHIVE"  . ?a)
                        ("out"      . ?o)
@@ -68,10 +67,6 @@
          ("j" tags-todo "getjob/NEXT"  ) 
          ("d" "My next action" todo "NEXT")
          )
-       org-export-with-toc nil
-       org-export-with-sub-superscripts '{}
-       org-want-todo-bindings t
-       org-stuck-projects '("+LEVEL=1/-DONE" ("TODO" "NEXT") ("ref") "\\<SCHEDULED\\>|\\<DEADLINE\\>")
        )
       (require 'org-contacts)
       (setq org-contacts-files (list "~/documents/contacts/contacts.org" ))
@@ -80,9 +75,6 @@
 
       (require 'ox-koma-letter)
       ;; re-enable template expansion
-      (require 'org-tempo)
-      ;; change what is considered a word (w_o_r_d)
-      (modify-syntax-entry ?_ "w")
       (key-chord-define org-mode-map ";i" 'pcomplete) 
       (delete '("\\.pdf\\'" . default) org-file-apps)
       (add-to-list 'org-file-apps '(
@@ -90,48 +82,6 @@
                                     ("\\.xlsx?\\'" . "xdg-open %s")
                                     )
                    )
-      (require 'ob-async)     
-      (add-hook 'org-capture-mode-hook 'evil-insert-state)
-      (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
-      (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode
-        ;; "ir"  'org-ref-helm-insert-cite-link
-        "p"   'org-priority
-        "z"   'org-pomodoro
-        "xd"  'org-do-demote
-        "r"   'org-refile
-        "TAB" 'org-babel-switch-to-session
-        )
-      ;; GCal!
-      ;; https://github.com/myuhe/org-gcal.el
-      ;; (require 'org-gcal)
-      ;; (load "~/.org-gcal.el")
-      (setq org-tags-column -91)
-      (setq org-tag-alist '(
-                            ("ARCHIVE"  . ?a)
-                            ("out"      . ?o)
-                            ("home"     . ?h)
-                            ("phone"    . ?p)
-                            ("computer" . ?c)
-                            ("learn"    . ?l)
-                            ("getjob"   . ?j)
-                            ("note"     . ?n)
-                            ))
-      (setq org-agenda-custom-commands
-            '(
-              ("o" tags-todo "out/NEXT"     ) 
-              ("h" tags-todo "home/NEXT"    ) 
-              ("p" tags-todo "phone/NEXT"   ) 
-              ("c" tags-todo "computer/NEXT") 
-              ("l" tags-todo "learn/NEXT"   )
-              ("j" tags-todo "getjob/NEXT"  ) 
-              ("d" "My next action" todo "NEXT")
-              ))
-      ;; (setq org-latex-pdf-process
-      ;;       '("pdflatex -interaction nonstopmode -output-directory %o %f"
-      ;;         "bibtex %b"
-      ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"
-      ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"))
       (add-to-list 'org-latex-classes
                    '("a4-labels"
                      "\\documentclass[a4paper,12pt]{article}
@@ -180,15 +130,14 @@
          (ditaa      . t)
          (plantuml   . t)
          ))
-      (setq org-confirm-babel-evaluate nil)
-      (setq org-src-preserve-indentation t)
+      (setq
+       org-confirm-babel-evaluate nil
+       org-src-preserve-indentation t
+       org-startup-with-inline-images nil)
       (require 'ob-shell)
-      (setq org-startup-with-inline-images nil)
       (spacemacs/toggle-auto-completion)
       (setq
        org-agenda-include-diary t
-       ;; org-icalendar-include-todo t
-       ;; org-icalendar-use-deadline '(event-if-not-todo todo-due)
        org-icalendar-use-deadline '(event-if-not-todo)
        org-icalendar-use-scheduled '(event-if-not-todo)
        )
@@ -208,25 +157,24 @@
   (global-set-key (kbd "<S-Insert>") #'clipboard-yank)
   (add-to-list 'exec-path "C:\\Program Files\\Git\\mingw64\\bin")
   (setenv "PATH" (mapconcat #'identity exec-path path-separator))
-
   (setq 
    helm-ag-ignore-patterns '("cscope.out" "cscope.files" "*TAGS" "*.map" "*.mac" "*.lst" "*.csv" "*.html" "*.xml")
    projectile-globally-ignored-file-suffixes 'helm-ag-ignore-patterns
    )
-  (add-hook 'projectile-mode-hook
-            (lambda ()
-              (add-to-list 'projectile-globally-ignored-files "cscope.out")
-              (add-to-list 'projectile-globally-ignored-files "cscope.files")
-              (add-to-list 'projectile-globally-ignored-files "*TAGS")
-              (add-to-list 'projectile-globally-ignored-files "*.map")
-              (add-to-list 'projectile-globally-ignored-files "*.mac")
-              ;; (add-to-list 'projectile-globally-ignored-files ".ld")
-              (add-to-list 'projectile-globally-ignored-files "*.lst")
-              (add-to-list 'projectile-globally-ignored-files "*.csv")
-              (add-to-list 'projectile-globally-ignored-files "*.html")
-              (add-to-list 'projectile-globally-ignored-files "*.xml")
-              )
-            )
+  (eval-after-load 'projectile
+    (lambda ()
+      (add-to-list 'projectile-globally-ignored-files "cscope.out")
+      (add-to-list 'projectile-globally-ignored-files "cscope.files")
+      (add-to-list 'projectile-globally-ignored-files "*TAGS")
+      (add-to-list 'projectile-globally-ignored-files "*.map")
+      (add-to-list 'projectile-globally-ignored-files "*.mac")
+      ;; (add-to-list 'projectile-globally-ignored-files ".ld")
+      (add-to-list 'projectile-globally-ignored-files "*.lst")
+      (add-to-list 'projectile-globally-ignored-files "*.csv")
+      (add-to-list 'projectile-globally-ignored-files "*.html")
+      (add-to-list 'projectile-globally-ignored-files "*.xml")
+      )
+    )
   (setq explicit-cmd.exe-args '("/K bigc"))
   (setq explicit-cmdproxy.exe-args '("/K bigc"))
   (setq shell-default-term-shell "C:\\Windows\\System32\\cmd.exe")
@@ -926,7 +874,6 @@ package is loaded, you should place your code here."
                 (modify-syntax-entry ?_ "w")
                 (key-chord-define prog-mode-map ";i" 'completion-at-point)
                 ))
-  (setq text-mode-hook (quote (text-mode-hook-identify toggle-truncate-lines)))
   (setq-default fill-column 78)
   ;; ;; Visual stuff
   ;; (setq frame-title-format '("%b | " mode-name))
@@ -996,11 +943,11 @@ package is loaded, you should place your code here."
 
       )
     )
-  ;; (add-hook 'c-initialization-hook 'my-c-config)
-  ;; (add-hook 'c-mode-common-hook 'my-c-config)
-  (add-hook 'c-mode-hook 'my-c-config)
-  (add-hook 'c++-mode-hook 'my-c-config)
-  (add-hook 'realgud-short-key-mode-hook
+  ;; (eval-after-load 'c-initialization 'my-c-config)
+  ;; (eval-after-load 'c-mode-common 'my-c-config)
+  (eval-after-load 'c-mode 'my-c-config)
+  (eval-after-load 'c++-mode 'my-c-config)
+  (eval-after-load 'realgud-short-key-mode-hook
             (lambda ()
               (key-chord-define-local ";k" 'realgud-short-key-mode)
               ;; (gdb-display-locals-buffer)
@@ -1008,7 +955,7 @@ package is loaded, you should place your code here."
               ;; (local-set-key "\C-c" realgud:shortkey-mode-map)
               )
             )
-  ;; (add-hook 'dart-mode-hook
+  ;; (eval-after-load 'dart-mode
   ;;           (lambda ()
   ;;             (spacemacs/set-leader-keys-for-major-mode 'dart-mode
   ;;               ;; "," 'dart-send-line-or-region-and-step
@@ -1029,7 +976,7 @@ package is loaded, you should place your code here."
   ;;             (setq dart-debug t)
   ;;             )
   ;;           )
-  (add-hook 'sh-mode-hook
+  (eval-after-load 'sh-mode
             (lambda ()
               (spacemacs/set-leader-keys-for-major-mode 'sh-mode
                 "," 'sh-send-line-or-region-and-step
@@ -1040,7 +987,7 @@ package is loaded, you should place your code here."
                 )
               )
             )
-  (add-hook 'python-mode-hook
+  (eval-after-load 'python-mode
             (lambda ()
               (spacemacs/set-leader-keys-for-major-mode 'python-mode
                 ;; "."   'python-shell-send-defun
@@ -1058,7 +1005,7 @@ package is loaded, you should place your code here."
               ;;       python-shell-interpreter-args "--simple-prompt -i")
               )
             )
-  (add-hook 'ess-mode-hook
+  (eval-after-load 'ess-mode
             (lambda ()
               (spacemacs/set-leader-keys-for-major-mode 'ess-mode
                 ;; "'"  'spacemacs/ess-start-repl
@@ -1081,7 +1028,7 @@ package is loaded, you should place your code here."
               (setq ess-eval-visibly nil)
               )
             )
-  ;; (add-hook 'yaml-mode-hook
+  ;; (eval-after-load 'yaml-mode
   ;;           (lambda ()
   ;;             (defun my-newline-and-indent ()
   ;;               "My newline and indent"
@@ -1094,31 +1041,17 @@ package is loaded, you should place your code here."
   ;;               ) 
   ;;             )
   ;;           )
-  (add-hook 'org-mode-hook
+  (eval-after-load 'org-mode
             (lambda ()
-              ;; (org-link-set-parameters "tel" :export (lambda (path desc format) (concat "tel:" desc))) 
-              (org-link-set-parameters "tel")
-              (require 'ox-koma-letter)
               ;; re-enable template expansion
               (require 'org-tempo)
               ;; change what is considered a word (w_o_r_d)
               (modify-syntax-entry ?_ "w")
-              ;; (require 'org-contacts)
-              ;; (setq org-contacts-files (list "~/documents/contacts/contacts.org" ))
-              ;; (setq org-contacts-files (list "~/documents/contacts/processed/OLD-CONTACTS.org" ))
-              ;; (setq org-contacts-vcard-file "~/documents/contacts/org-contacts.vcf")
-              ;; (setq org-agenda-entry-text-exclude-regexps '("DONE"))
-              ;; org-stuck-projects is a variable defined in ‘org-agenda.el’.
-              ;; Its value is ("+LEVEL=2/-DONE" ("TODO" "NEXT" "NEXTACTION") nil "")
               (setq
                org-export-with-toc nil
                org-export-with-sub-superscripts '{}
                org-want-todo-bindings t
                )
-              ;; (add-to-list 'org-export-options-alist '(
-              ;;           (:with-toc nil "toc" org-export-with-toc)
-              ;;           (:with-sub-superscript nil "^" "{}"org-export-with-sub-superscripts)
-              ;;           ))
               (setq org-stuck-projects '("+LEVEL=1/-DONE" ("TODO" "NEXT") ("ref") "\\<SCHEDULED\\>|\\<DEADLINE\\>"))
               (key-chord-define org-mode-map ";i" 'pcomplete) 
               (delete '("\\.pdf\\'" . default) org-file-apps)
@@ -1129,62 +1062,15 @@ package is loaded, you should place your code here."
                            )
               (require 'ob-async)     
               (add-hook 'org-capture-mode-hook 'evil-insert-state)
-              ;; (require 'org-ref)
-              ;; ;; (defun helm-bibtex-format-pandoc-citation (keys)
-              ;; ;;   (concat "[" (mapconcat (lambda (key) (concat "@" key)) keys "; ") "]"))
-              ;; ;; ;; inform helm-bibtex how to format the citation in org-mode
-              ;; ;; (setf (cdr (assoc 'org-mode helm-bibtex-format-citation-functions))
-              ;; ;;       'helm-bibtex-format-pandoc-citation)
-              ;; ;;(
-              ;; (setq helm-bibtex-format-citation-functions
-              ;;       '((org-mode . (lambda (x) (insert (concat
-              ;;                                          "\\cite{"
-              ;;                                          (mapconcat 'identity x ",")
-              ;;                                          "}")) ""))))
-              ;; ))
-              ;; (setq org-agenda-files (-remove (lambda (str) (string-match  "#" str)) (file-expand-wildcards "~/org/*.org")))
               (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
               (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
               (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
-              ;; (setq reftex-default-bibliography    "~/zotero/Insects.bib"
-              ;;       org-ref-bibliography-notes     "~/zotero/biblio-notes.org"
-              ;;       org-ref-default-bibliography   "~/zotero/Insects.bib"
-              ;;       org-ref-pdf-directory          "~/zotero/"
-              ;;       bibtex-completion-bibliography "~/zotero/Insects.bib"
-              ;;       helm-bibtex-library-path       "~/action/bugs/literature/"
-              ;;       bibtex-completion-notes-path   "~/zotero"
-              ;;       ) 
-              ;; (spacemacs/set-leader-keys-for-minor-mode 'org-mode
-              ;;   "ir"   'org-ref-helm-insert-cite-link
-              ;;   )
-              ;; (defun org-trello-sync-buffer-IN ()
-              ;;   "Sync in"
-              ;;   (interactive)
-              ;;   (org-trello-sync-buffer t)
-              ;;   )
-              ;; (defun org-trello-sync-card-IN ()
-              ;;   "Sync in"
-              ;;   (interactive)
-              ;;   (org-trello-sync-card t)
-              ;;   )
-              ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode
-              ;;   "ob"  'org-trello-sync-buffer
-              ;;   "oB"  'org-trello-sync-buffer-IN 
-              ;;   "oc"  'org-trello-sync-card
-              ;;   "oC"  'org-trello-sync-card-IN
-              ;;   "oI"  'org-trello-create-board-and-install-metadata
-              ;;   "oi"  'org-trello-install-board-metadata
-              ;;   )
               (spacemacs/set-leader-keys-for-major-mode 'org-mode
                 "ir"  'org-ref-helm-insert-cite-link
                 "p"   'org-priority
                 "z"   'org-pomodoro
                 "xd"  'org-do-demote
-                "r"  'org-refile
-                ;; "oo"  'org-gcal-sync
-                ;; "or"  'org-gcal-refresh-token
-                ;; "od"  'org-gcal-delete-at-point
-                ;; "op"  'org-gcal-post-at-point
+                "r"   'org-refile
                 "TAB" 'org-babel-switch-to-session
                 )
               ;; GCal!
@@ -1192,81 +1078,12 @@ package is loaded, you should place your code here."
               ;; (require 'org-gcal)
               ;; (load "~/.org-gcal.el")
               (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
-                "p"   'org-priority
-                "z"   'org-pomodoro
-                "c"   'org-capture
-                "r"  'org-refile
-                ;; "oo"  'org-gcal-sync
-                ;; "or"  'org-gcal-refresh-token
-                ;; "od"  'org-gcal-delete-at-point
-                ;; "op"  'org-gcal-post-at-point
+                "p" 'org-priority
+                "z" 'org-pomodoro
+                "c" 'org-capture
+                "r" 'org-refile
                 )
               (setq org-tags-column -91)
-              (setq org-tag-alist '(
-                                    ("ARCHIVE"  . ?a)
-                                    ("out"      . ?o)
-                                    ("home"     . ?h)
-                                    ("phone"    . ?p)
-                                    ("computer" . ?c)
-                                    ("learn"    . ?l)
-                                    ("getjob"   . ?j)
-                                    ("note"     . ?n)
-                                    ))
-              (setq org-agenda-custom-commands
-                    '(
-                      ("o" tags-todo "out/NEXT"     ) 
-                      ("h" tags-todo "home/NEXT"    ) 
-                      ("p" tags-todo "phone/NEXT"   ) 
-                      ("c" tags-todo "computer/NEXT") 
-                      ("l" tags-todo "learn/NEXT"   )
-                      ("j" tags-todo "getjob/NEXT"  ) 
-                      ("d" "My next action" todo "NEXT")
-                      ))
-              ;; (require 'org-ref)
-              ;; (require 'org-ref-latex)
-              ;; (require 'org-ref-pdf)
-              ;; (require 'org-ref-url-utils)
-              ;; (setq org-latex-pdf-process
-              ;;       '("pdflatex -interaction nonstopmode -output-directory %o %f"
-              ;;         "bibtex %b"
-              ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"
-              ;;         "pdflatex -interaction nonstopmode -output-directory %o %f"))
-              (add-to-list 'org-latex-classes
-                           '("a4-labels"
-                             "\\documentclass[a4paper,12pt]{article}
-                             \\usepackage[newdimens]{labels}
-                             \\LabelCols=3% Number of columns of labels per page
-                             \\LabelRows=8% Number of rows of labels per page
-                             \\LeftPageMargin=7mm% These four parameters give the
-                             \\RightPageMargin=7mm% page gutter sizes. The outer edges of
-                             \\TopPageMargin=15mm% the outer labels are the specified
-                             \\BottomPageMargin=15mm% distances from the edge of the paper.
-                             \\InterLabelColumn=2mm% Gap between columns of labels
-                             \\numberoflabels=24
-                             "
-                             ))
-              (add-to-list 'org-latex-classes
-                           '("letter-de"
-                             "\\documentclass[DIV=14,
-                                fontsize=11pt,
-                                parskip=half,
-                                backaddress=false,
-                                fromemail=true,
-                                fromphone=true,
-                              fromalign=left]{scrlttr2}
-                             \\usepackage[ngerman]{babel}"
-                             ))
-              (add-to-list 'org-latex-classes
-                           '("letter-en"
-                             "\\documentclass[DIV=14,
-                                fontsize=11pt,
-                                parskip=half,
-                                backaddress=false,
-                                fromemail=true,
-                                fromphone=true,
-                              fromalign=left]{scrlttr2}
-                              \\usepackage[english]{babel}"
-                             ))
               (setq org-table-use-standard-references t)
               (org-babel-do-load-languages
                'org-babel-load-languages
@@ -1291,16 +1108,6 @@ package is loaded, you should place your code here."
               ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
               ;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
               (setq org-startup-with-inline-images nil)
-              ;; (setq org-file-apps
-              ;;       (append '(
-              ;;                 ("\\.png\\'"   . system)
-              ;;                 ("\\.pdf\\'"   . system)
-              ;;                 ("\\.docx?\\'" . system)
-              ;;                 ("\\.html\\'"  . system)
-              ;;                 )
-              ;;               org-file-apps )
-              ;;       )
-              ;; (auto-fill-mode 1)
               (spacemacs/toggle-auto-completion)
               ;; (setq org-agenda-span 'month)
               (setq org-agenda-include-diary t)
@@ -1314,15 +1121,37 @@ package is loaded, you should place your code here."
                )
               ;; (require 'org-trello)
               ;; (setq org-trello-files (file-expand-wildcards "~/org-trello/*.org"))
-              ;; (add-hook 'markdown-mode-hook
+              ;; (eval-after-load 'markdown-mode
               ;;           '(lambda () (define-key markdown-mode-map "\c-c[" 'helm-bibtex)))
               ;; (setq bibtex-completion-bibliography '("~/zotero/insects.bib"))
               ;; (setq org-archive-location "~/org-archive/datetree.org::datetree/* Finished Tasks")
               ;; (setq org-archive-location "~/org-archive/%s::")
-              (setq org-archive-location "~/Sync/org/%s::datetree/")
               )
             )
   ;; (setq request-backend 'url-retrieve )
   (setq request-message-level 'debug)
   (setq warning-minimum-level :error)
   )
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol t)
+ '(helm-ff-lynx-style-map nil)
+ '(package-selected-packages
+   (quote
+    (zotxt yasnippet-snippets yapfify yaml-mode ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org tagedit symon symbol-overlay string-inflection spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode ripgrep restart-emacs ranger rainbow-delimiters pytest pyenv-mode py-isort pug-mode prettier-js powershell popwin platformio-mode pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox pandoc-mode ox-pandoc overseer orgit org-ref org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain open-junk-file ob-dart ob-async nodejs-repl nameless mwim move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint json-navigator json-mode js2-refactor js-doc insert-shebang indent-guide importmagic impatient-mode ibuffer-projectile hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-cscope helm-company helm-c-yasnippet helm-ag graphviz-dot-mode google-translate google-c-style golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md ggtags fuzzy forge font-lock+ flycheck-rtags flycheck-pos-tip flycheck-package flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu ess-R-data-view erc-yt erc-view-log erc-social-graph erc-image erc-hl-nicks emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline disaster diminish diff-hl devdocs define-word dart-mode dactyl-mode cython-mode csv-mode cpp-auto-include company-web company-tern company-statistics company-shell company-rtags company-lua company-c-headers company-auctex company-anaconda column-enforce-mode clean-aindent-mode clang-format centered-cursor-mode browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-compile ahk-mode aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+ '(pdf-misc-print-programm "/usr/bin/gtklp" t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)

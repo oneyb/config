@@ -1,4 +1,4 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
+#nmcli connection modify myvpnconnectionname +vpn.data username y~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
@@ -446,6 +446,7 @@ function merge-dotspacemacs-saveme ()
     emacsclient -c -e '(ediff-files (expand-file-name "~/.saveme-spacemacs") (expand-file-name "~/work-exchange/config/.saveme-spacemacs"))'
 }
 
+
 # tex to docx
 # htlatex test.tex "xhtml,ooffice" "ooffice/! -cmozhtf" "-cooxtpipes -coo"
 #   pandoc sig-alternate.tex                \
@@ -535,6 +536,29 @@ _play_completion()
     # COMPREPLY=( $(compgen -W "$(ls $HOME/music/playlists/)" -- $cur) )
 }
 complete -F _play_completion play
+
+function openvpn-add-tcp()
+{
+    nmcli connection import type openvpn file $HOME/.vpn/ovpn_tcp/$1
+    nmcli connection modify ${1%.ovpn} +vpn.data username=zenlines@gmail.com
+}
+_openvpn-add-tcp()
+{
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "$(basename -a $(find $HOME/.vpn/ovpn_tcp/ -type f -name '*ovpn'))" -- $cur) )
+}
+complete -F _openvpn-add-tcp openvpn-add-tcp 
+
+function connect-openvpn()
+{
+    nmcli connection up $1
+}
+_connect-openvpn()
+{
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "$(nmcli connection show | sed -r '/\bvpn\b/!d;s:^([^ ]+).*$:\1:')" -- $cur) )
+}
+complete -F _connect-openvpn connect-openvpn
 
 function find-song()
 {
