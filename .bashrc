@@ -434,6 +434,10 @@ function saveme-spacemacs ()
 {
     emacs -Q -l $HOME/.saveme-spacemacs $* &
 }
+function saveme-spacemacsn ()
+{
+    emacs -nw -Q -l $HOME/.saveme-spacemacs $* &
+}
 
 function merge-dotspacemacs ()
 {

@@ -15,7 +15,7 @@
 
 (use-package evil-leader
   :ensure t
-  :defer .3 
+  :defer .1 
   :init
   (setq
    ;; before any evil thing is loaded
@@ -183,7 +183,7 @@
 
 (use-package org
   :after helm
-  :defer .9
+  :defer t
   :config
   (evil-leader/set-key
     "oc"	 'org-capture
@@ -195,8 +195,6 @@
   )
 
 (use-package leuven-theme 
-  :after helm
-  :ensure t
   :config
   (load-theme 'leuven t)
   )
