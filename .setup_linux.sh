@@ -336,8 +336,8 @@ rsync -vurt --delete ~/.config/base16-xfce4-terminal/colorschemes/ ~/.local/shar
 
 
 # May change this
-echo Wanna\? sudo localectl set-x11-keymap us pc105 qwerty 'compose:102'
-echo Wanna\? sudo localectl set-x11-keymap us pc105 qwerty 'compose:prsc,caps:escape'
+echo Wanna\? sudo localectl set-x11-keymap us pc105 intl 'compose:102'
+echo Wanna\? sudo localectl set-x11-keymap us pc105 intl 'compose:prsc,caps:escape'
 
 
 # get scripts from http://www.fmwconcepts.com/imagemagick/index.php

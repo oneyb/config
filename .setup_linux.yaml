@@ -22,218 +22,229 @@
 
   # install packages
   - name: install necessary packages
-    apt: pkg={{ item }} update_cache=yes cache_valid_time=3600 
-    become: yes
     # remash with !sed -r 's/  +/ /g;s/\\ ?//g;s/(\w) (\w)/\1\n      - \2/g;s/^ +\w/      -&/'
-    with_items:
-      - htop
-      - gfortran
-      - automake
-      - aptitude
-      - build-essential
-      - git
-      - gnome-disk-utility
-      - cmake
-      - cmake-data
-      - cryptsetup
-      - cups
-      - curl
-      - dash
-      - xfce4-clipman
-      - xfce4-clipman-plugin
-      - openshot
-      - firmware-linux-free
-      - firmware-linux-nonfree
-      - ntfs-3g
-      # - ntfs-config
-      - openssh-client
-      - openssh-server
-      - p7zip-full
-      - pavucontrol
-      - pcmanfm
-      - rsync
-      - subversion
-      - suckless-tools
-      - synaptic
-      - autoconf
-      - automake
-      - g++
-      - gcc
-      - make
-      - pkg-config
-      - tor-geoipdb
-      - transmission-gtk
-      - trash-cli
-      - udevil
-      - unoconv
-      - vim-gtk
-      - wget
-      - epiphany-browser
-      - bleachbit
-      - wodim
-      - wordnet
-      - xbindkeys
-      - xclip
-      - xdg-user-dirs
-      - xdg-utils
-      - xdotool
-      - xfburn
-      - xpdf
-      - xsel
-      - libssl-dev
-      - exfat-utils
-      - libxft-dev
-      - libfreetype6-dev
-      - bash-completion
-      - dialog
-      - xkbset
-      - xinput
-      - apt-transport-https
+    become: yes
+    apt: 
+      update_cache: yes
+      cache_valid_time: 3600
+      name: "{{ pkgs }}"
+    vars:  
+      pkgs:
+        - htop
+        - gfortran
+        - automake
+        - aptitude
+        - build-essential
+        - git
+        - gnome-disk-utility
+        - cmake
+        - cmake-data
+        - cryptsetup
+        - cups
+        - curl
+        - dash
+        - xfce4-clipman
+        - xfce4-clipman-plugin
+        - openshot
+        - firmware-linux-free
+        - firmware-linux-nonfree
+        - ntfs-3g
+        # - ntfs-config
+        - openssh-client
+        - openssh-server
+        - p7zip-full
+        - pavucontrol
+        - pcmanfm
+        - rsync
+        - subversion
+        - suckless-tools
+        - synaptic
+        - autoconf
+        - automake
+        - g++
+        - gcc
+        - make
+        - pkg-config
+        - tor-geoipdb
+        - transmission-gtk
+        - trash-cli
+        - udevil
+        - unoconv
+        - vim-gtk
+        - wget
+        - epiphany-browser
+        - bleachbit
+        - wodim
+        - wordnet
+        - xbindkeys
+        - xclip
+        - xdg-user-dirs
+        - xdg-utils
+        - xdotool
+        - xfburn
+        - xpdf
+        - xsel
+        - libssl-dev
+        - exfat-utils
+        - libxft-dev
+        - libfreetype6-dev
+        - bash-completion
+        - dialog
+        - xkbset
+        - xinput
+        - apt-transport-https
 
 
   - name: install necessary packages
-    apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
     become: yes
-    with_items:
-      - android-tools-adb
-      - android-tools-fastboot
-      - aspell 
-      - aspell-bg
-      - aspell-de
-      - aspell-en
-      - aspell-es
-      - audacity 
-      - calibre
-      - evince
-      # - chromium-browser
-      # - firefox-esr 
-      - flac
-      - freecad
-      # - gdal-bin 
-      - genisoimage
-      - geoip-database
-      - gimp
-      # - gocr 
-      # - gocr-tk
-      - gparted
-      - handbrake
-      - handbrake-cli
-      - imagemagick 
-      - inkscape
-      - ispell
-      - java-common
-      - lame
-      - laptop-detect
-      - mpv
-      # - nco
-      # - ncview 
-      # - netcdf-bin
-      # - netcdf-doc 
-      - p7zip-full
-      - pdftk
-      # - proj-bin
-      # - proj-data
-      - pulseaudio 
-      - pulseaudio-utils
-      - qpdf
-      - qpdfview
-      - r-base
-      # - r-cran-xml2
-      # - r-cran-ncdf4 
-      - recordmydesktop
-      - ristretto
-      - scrot
-      - seahorse
-      - simple-scan
-      - smplayer 
-      - subversion
-      - suckless-tools
-      - synaptic
-      - tor
-      # - tor-arm 
-      - libpng-dev
-      - libpoppler-dev
-      - libpoppler-glib-dev
-      - libpoppler-private-dev 
-      - libz-dev
-      - make
-      - pkg-config
-      - tor-geoipdb
-      - transmission-gtk
-      - trash-cli 
-      - udevil
-      - unoconv
-      - vim-gtk
-      - wget
-      - epiphany-browser 
-      - bleachbit
-      - wodim
-      - wordnet
-      - xfburn
-      - xpdf
-      - xsel
-      # - xul-ext-firebug
-      # - xul-ext-itsalltext
-      # - xul-ext-monkeysphere 
-      # - xul-ext-noscript
-      - libgdal-dev
-      - libmariadb-dev 
-      - exfat-utils
-      - libxft-dev
-      - libfreetype6-dev
-      - rclone
-      - evolution 
-      - breeze-cursor-theme
-      - lshw
-      - libimage-exiftool-perl 
-      - picard
-      - hplip
-      - dialog
-      - mupdf
-      - mupdf-tools
-      - socat
-      - syncthing
-      # C++ documentation, usage: man std_basic_string
-      - libstdc++-8-doc
-      - cppreference-doc-en-html
-      # - gcc-doc
-      - avr-libc
-      - gcc-avr
-      - gdb-avr
-      - cgdb
-      - gdbserver 
-      - snapd
+    apt: 
+      update_cache: yes
+      cache_valid_time: 3600
+      name: "{{ pkgs }}"
+    vars:  
+      pkgs:
+        - android-tools-adb
+        - android-tools-fastboot
+        - aspell 
+        - aspell-bg
+        - aspell-de
+        - aspell-en
+        - aspell-es
+        - audacity 
+        - calibre
+        - evince
+        # - chromium-browser
+        # - firefox-esr 
+        - flac
+        - freecad
+        # - gdal-bin 
+        - genisoimage
+        - geoip-database
+        - gimp
+        # - gocr 
+        # - gocr-tk
+        - gparted
+        - handbrake
+        - handbrake-cli
+        - imagemagick 
+        - inkscape
+        - ispell
+        - java-common
+        - lame
+        - laptop-detect
+        - mpv
+        # - nco
+        # - ncview 
+        # - netcdf-bin
+        # - netcdf-doc 
+        - p7zip-full
+        - pdftk
+        # - proj-bin
+        # - proj-data
+        - pulseaudio 
+        - pulseaudio-utils
+        - qpdf
+        - qpdfview
+        - r-base
+        # - r-cran-xml2
+        # - r-cran-ncdf4 
+        - recordmydesktop
+        - ristretto
+        - scrot
+        - seahorse
+        - simple-scan
+        - smplayer 
+        - subversion
+        - suckless-tools
+        - synaptic
+        - tor
+        # - tor-arm 
+        - libpng-dev
+        - libpoppler-dev
+        - libpoppler-glib-dev
+        - libpoppler-private-dev 
+        - libz-dev
+        - make
+        - pkg-config
+        - tor-geoipdb
+        - transmission-gtk
+        - trash-cli 
+        - udevil
+        - unoconv
+        - vim-gtk
+        - wget
+        - epiphany-browser 
+        - bleachbit
+        - wodim
+        - wordnet
+        - xfburn
+        - xpdf
+        - xsel
+        # - xul-ext-firebug
+        # - xul-ext-itsalltext
+        # - xul-ext-monkeysphere 
+        # - xul-ext-noscript
+        - libgdal-dev
+        - libmariadb-dev 
+        - exfat-utils
+        - libxft-dev
+        - libfreetype6-dev
+        - rclone
+        - evolution 
+        - breeze-cursor-theme
+        - lshw
+        - libimage-exiftool-perl 
+        - picard
+        - hplip
+        - dialog
+        - mupdf
+        - mupdf-tools
+        - socat
+        - syncthing
+        # C++ documentation, usage: man std_basic_string
+        - libstdc++-8-doc
+        - cppreference-doc-en-html
+        # - gcc-doc
+        - avr-libc
+        - gcc-avr
+        - gdb-avr
+        - cgdb
+        - gdbserver 
 
   - name: install necessary packages
-    apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
     become: yes
-    with_items:
-      - python-xdg
-      - ipython
-      - ipython3
-      - pyflakes
-      - python
-      - python-cups 
-      - python3-cupshelpers
-      - python-flake8
-      - python-libxml2 
-      - python-numpy
-      - python-openpyxl
-      - python-openssl 
-      - python-jsonrpclib
-      - python-pyparsing
-      - python-scipy
-      - python-setuptools 
-      - python-simplejson
-      - python-unittest2
-      - python3
-      - python-gdal
-      - python-pdfminer 
-      - pdfminer-data
-      - python-pip
-      - python3-pip
-      - jupyter-notebook
-      - python3-pdfkit 
+    apt: 
+      update_cache: yes
+      cache_valid_time: 3600
+      name: "{{ pkgs }}"
+    vars:  
+      pkgs:
+        - python-xdg
+        - ipython
+        - ipython3
+        - pyflakes
+        - python
+        - python-cups 
+        - python3-cupshelpers
+        - python-flake8
+        - python-libxml2 
+        - python-numpy
+        - python-openpyxl
+        - python-openssl 
+        - python-jsonrpclib
+        - python-pyparsing
+        - python-scipy
+        - python-setuptools 
+        - python-simplejson
+        - python-unittest2
+        - python3
+        - python-gdal
+        - python-pdfminer 
+        - pdfminer-data
+        - python-pip
+        - python3-pip
+        - jupyter-notebook
+        - python3-pdfkit 
 
   - name: install pip packages
     pip: name={{ item }} extra_args="--upgrade" executable=pip
@@ -287,15 +298,16 @@
     when: archrc is defined and archrc.changed
   
   - name: Install i386 deps
+    become: yes
     apt:
-      name: "{{ item }}"
+      name: "{{ items }}"
       update_cache: true
       cache_valid_time: 3600
-    become: yes
-    with_items:
-      - libgtk2.0-0:i386
-      - libxml2:i386
-      - libstdc++6:i386
+    vars:
+      items:
+        - libgtk2.0-0:i386
+        - libxml2:i386
+        - libstdc++6:i386
     when: ansible_architecture != 'i386'
 
   - name: install adobe reader deb packages
@@ -303,7 +315,7 @@
     apt: deb="{{ ansible_env.HOME }}/bin/src/adberdr9.5.5-1_i386linux_enu.deb"
 
   - name: start syncthing
-    systemd: name=syncthing state=restarted daemon_reload=yes enabled=yes user=yes
+    systemd: name=syncthing state=restarted daemon_reload=yes enabled=yes scope=user
 
 #   - name: fill and copy wifi config files
 #     template: 

@@ -27,35 +27,35 @@
   (global-evil-leader-mode)
   (evil-leader/set-leader "<SPC>")
   (evil-leader/set-key
-    "bb"    'switch-to-buffer
-    "TAB"   'previous-buffer
-    "fs"    'save-buffer
-    ;; "ff" 'find-file
-    "ff"    'helm-find-files
-    "fd"    'delete-frame
-    "fm"    'toggle-frame-maximized
-    "hdv"   'describe-variable
-    "hdk"   'describe-key
-    "hdp"   'describe-package
-    "of"    'my-put-file-name-in-clipboard
-    "on"    'my-put-file-name+line-number-in-clipboard
-    "od"    'my-put-current-directory-in-clipboard
-    "qq"    'save-buffers-kill-emacs
-    "ww"    'other-window
-    "wm"    'delete-other-windows
-    "w-"    'split-window-vertically
-    "w/"    'split-window-horizontally
-    "fed"   'my-visit-config-file
-    "v"     'er/expand-region
-    "xaa"   'align
-    "xar"   'align-regexp
+    "bb"  'switch-to-buffer
+    "TAB" 'previous-buffer
+    "fs"  'save-buffer
+    "ff"  'helm-find-files
+    "fd"  'delete-frame
+    "fm"  'toggle-frame-maximized
+    "hdv" 'describe-variable
+    "hdk" 'describe-key
+    "hdp" 'describe-package
+    "yf"  'my-put-file-name-in-clipboard
+    "yb"  'my-put-buffer-name-in-clipboard
+    "yl"  'my-put-file-name+line-number-in-clipboard
+    "yd"  'my-put-current-directory-in-clipboard
+    "qq"  'save-buffers-kill-emacs
+    "ww"  'other-window
+    "wm"  'delete-other-windows
+    "w-"  'split-window-vertically
+    "w/"  'split-window-horizontally
+    "fed" 'my-visit-config-file
+    "v"   'er/expand-region
+    "xaa" 'align
+    "xar" 'align-regexp
     )
   )
 
 (use-package evil
   :ensure t
   :after evil-leader
-  :config ;; see: ~/.emacs.d/elpa/26.2/develop/evil-20190729.704/evil-vars.el 
+  :config 
   (evil-mode)
   :bind (:map
          evil-normal-state-map
@@ -118,16 +118,6 @@
 (use-package evil-surround
   :after evil
   :ensure t
-  ;; :commands
-  ;; (evil-surround-edit
-  ;;  evil-Surround-edit
-  ;;  evil-surround-region
-  ;;  evil-Surround-region)
-  ;; :init
-  ;; (evil-define-key 'operator global-map "s" 'evil-surround-edit)
-  ;; (evil-define-key 'operator global-map "S" 'evil-Surround-edit)
-  ;; (evil-define-key 'visual global-map "S" 'evil-surround-region)
-  ;; (evil-define-key 'visual global-map "gS" 'evil-Surround-region)
   )
 
 (use-package expand-region
@@ -139,6 +129,7 @@
 
 (use-package helm
   :after evil
+  :ensure t
   :config
   (setq
    helm-grep-ag-command "rg --color=always --smart-case --no-heading --line-number %s %s %s"
@@ -156,11 +147,14 @@
 
 (use-package which-key
   :after helm
+  :ensure t
   ;; :defer .9
   :config
   (which-key-mode)
   )
+
 (use-package key-chord
+  :ensure t
   :after helm
   :config
   (key-chord-mode 1)
@@ -181,9 +175,19 @@
                 ))
   )
 
+(use-package display-line-numbers-mode
+  :hook
+  prog-mode
+  :config
+  (set-face-attribute 'line-number nil :background "gray96" :foreground "gray42")
+  (set-face-attribute 'line-number-current-line nil :foreground "gray6")
+  ;; (global-display-line-numbers-mode)
+)
+
 (use-package org
-  :after helm
+  ;; :after helm
   :defer t
+  :ensure t
   :config
   (evil-leader/set-key
     "oc"	 'org-capture
@@ -195,6 +199,7 @@
   )
 
 (use-package leuven-theme 
+  :ensure t
   :config
   (load-theme 'leuven t)
   )
@@ -204,6 +209,8 @@
 (setq history-length 666)
 (setq-default history-delete-duplicates t)
 (setq-default kill-do-not-save-duplicates t)
+(set-face-attribute 'line-number nil :background "gray96" :foreground "gray42")
+(set-face-attribute 'line-number-current-line nil :foreground "gray6")
 (setq visible-bell t)
 (setq sentence-end-double-space t)
 (add-hook 'ediff-prepare-buffer-hook #'outline-show-all)
@@ -245,6 +252,14 @@
         )
       )
     )
+  )
+(defun my-put-buffer-name-in-clipboard ()
+  "Put the current buffer path on the clipboard"
+  (interactive)
+  (let ((x-select-enable-clipboard t)
+        (res (buffer-name)))
+    (kill-new res)
+    (message (concat "Copied: " res)))
   )
 (defun my-put-file-name-in-clipboard ()
   "Put the current file name on the clipboard"
@@ -293,19 +308,11 @@
   )
 
 (defun my-visit-config-file ()
+  (interactive)
   (find-file (expand-file-name "~/.saveme-spacemacs"))
   )
 
 (defun my-recompile-elpa (arg)
-  "Compile or recompile packages in elpa directory, if needed, that is
-    if the corresponding .elc file is either missing or outdated.
-
-      If ARG is non-nil, also recompile every `.el' file, regardless of date.
-
-      Useful if you switch Emacs versions."
-  (interactive "P")
-  ;; First argument must be 0 (not nil) to get missing .elc files rebuilt.
-  ;; Bonus: Optionally force recompilation with universal ARG
   (when arg
     (seq-do
      (lambda (fname)
@@ -315,10 +322,6 @@
   (byte-recompile-directory package-user-dir 0 arg))
 
 (defun align-regex (start end regexp &optional justify-right after)
-  "Repeat alignment with respect to the given regular expression.
-If JUSTIFY-RIGHT is non nil justify to the right instead of the
-left. If AFTER is non-nil, add whitespace to the left instead of
-the right."
   (interactive "r\nsAlign regexp: ")
   (let* ((ws-regexp (if (string-empty-p regexp)
                         "\\(\\s-+\\)"

@@ -446,7 +446,7 @@ function merge-dotspacemacs ()
 }
 function merge-dotspacemacs-saveme ()
 {
-    cd ~/github/config; git pull; cd -
+    # cd ~/github/config; git pull; cd -
     emacsclient -c -e '(ediff-files (expand-file-name "~/.saveme-spacemacs") (expand-file-name "~/work-exchange/config/.saveme-spacemacs"))'
 }
 

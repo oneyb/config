@@ -728,9 +728,9 @@ package is loaded, you should place your code here."
     "/" 'spacemacs/helm-project-do-rg
     "fm" 'toggle-frame-maximized
     "fd" 'delete-frame
-    "yf" 'my-put-file-name-in-clipboard
-    "yn" 'my-put-file-name-in-clipboard
-    "yl" 'my-put-file-name+line-number-in-clipboard
+    "yf" 'my-put-file-path-in-clipboard
+    "yb" 'my-put-buffer-name-in-clipboard
+    "yl" 'my-put-file-path+line-number-in-clipboard
     "yd" 'my-put-current-directory-in-clipboard
     "oc" 'org-capture
     "oa" 'org-agenda
@@ -766,8 +766,8 @@ package is loaded, you should place your code here."
       (message (concat "Copied: " res))
       )
     )
-  (defun my-put-file-name+line-number-in-clipboard ()
-    "Put the current file name with lineno on the clipboard"
+  (defun my-put-file-path+line-number-in-clipboard ()
+    "Put the current file path with lineno on the clipboard"
     (interactive)
     (let ((filename (if (equal major-mode 'dired-mode)
                         default-directory
@@ -782,7 +782,15 @@ package is loaded, you should place your code here."
         )
       )
     )
-  (defun my-put-file-name-in-clipboard ()
+  (defun my-put-buffer-name-in-clipboard ()
+    "Put the current buffer path on the clipboard"
+    (interactive)
+    (let ((x-select-enable-clipboard t)
+              (res (buffer-name)))
+          (kill-new res)
+          (message (concat "Copied: " res)))
+    )
+  (defun my-put-file-path-in-clipboard ()
     "Put the current file name on the clipboard"
     (interactive)
     (let ((filename (if (equal major-mode 'dired-mode)
@@ -913,48 +921,48 @@ package is loaded, you should place your code here."
   (set-face-attribute 'default nil :height 94)
   (add-hook 'LaTeX-mode-hook (lambda () (require 'org-ref)))
   (defun my-c-config ()
-    (progn
-      (setq
-       c-c++-enable-clang-support t
-       c-c++-default-mode-for-headers 'c++-mode
-       c-default-style "own"
-       realgud-safe-mode nil
-       gdb-many-windows t
-       gdb-show-main t
-       )
-      (key-chord-define-local ";k" 'realgud-short-key-mode)
-      (spacemacs/set-leader-keys-for-major-mode 'c++-mode
-        "gc" 'helm-cscope-find-calling-this-function
-        "gC" 'helm-cscope-find-called-function
-        "gt" 'helm-gtags-create-tags
-        "gI" 'cscope-index-files
-        )
-      (spacemacs/set-leader-keys-for-major-mode 'c-mode
-        "gc" 'helm-cscope-find-calling-this-function
-        "gC" 'helm-cscope-find-called-function
-        "gt" 'helm-gtags-create-tags
-        "gI" 'cscope-index-files
-        )
-      (c-add-style "own" 
-                   '("linux"
-                     (c-basic-offset . 2)
-                     ) t)
-      ;; (message "set my C-config up")
-
+    (interactive)
+    (setq
+     c-c++-enable-clang-support t
+     c-c++-default-mode-for-headers 'c++-mode
+     c-default-style "own"
+     realgud-safe-mode nil
+     gdb-many-windows t
+     gdb-show-main t
+     )
+    (define-key c-mode-map [C-down-mouse-1] 'spacemacs/jump-to-definition)
+    (define-key c++-mode-map [C-down-mouse-1] 'spacemacs/jump-to-definition)
+    (key-chord-define-local ";k" 'realgud-short-key-mode)
+    (spacemacs/set-leader-keys-for-major-mode 'c++-mode
+      "gc" 'helm-cscope-find-calling-this-function
+      "gC" 'helm-cscope-find-called-function
+      "gt" 'helm-gtags-create-tags
+      "gI" 'cscope-index-files
       )
+    (spacemacs/set-leader-keys-for-major-mode 'c-mode
+      "gc" 'helm-cscope-find-calling-this-function
+      "gC" 'helm-cscope-find-called-function
+      "gt" 'helm-gtags-create-tags
+      "gI" 'cscope-index-files
+      )
+    (c-add-style "own" 
+                 '("linux"
+                   (c-basic-offset . 2)
+                   )
+                 t)
     )
   ;; (eval-after-load 'c-initialization 'my-c-config)
   ;; (eval-after-load 'c-mode-common 'my-c-config)
   (eval-after-load 'c-mode 'my-c-config)
   (eval-after-load 'c++-mode 'my-c-config)
   (eval-after-load 'realgud-short-key-mode-hook
-            (lambda ()
-              (key-chord-define-local ";k" 'realgud-short-key-mode)
-              ;; (gdb-display-locals-buffer)
-              ;; ;; If you're having key mapping conflicts with other mode (e.g. evil-mode), you can assign a prefix to the same key shortcuts by adding the following hook:
-              ;; (local-set-key "\C-c" realgud:shortkey-mode-map)
-              )
-            )
+    (lambda ()
+      (key-chord-define-local ";k" 'realgud-short-key-mode)
+      ;; (gdb-display-locals-buffer)
+      ;; ;; If you're having key mapping conflicts with other mode (e.g. evil-mode), you can assign a prefix to the same key shortcuts by adding the following hook:
+      ;; (local-set-key "\C-c" realgud:shortkey-mode-map)
+      )
+    )
   ;; (eval-after-load 'dart-mode
   ;;           (lambda ()
   ;;             (spacemacs/set-leader-keys-for-major-mode 'dart-mode
@@ -977,57 +985,57 @@ package is loaded, you should place your code here."
   ;;             )
   ;;           )
   (eval-after-load 'sh-mode
-            (lambda ()
-              (spacemacs/set-leader-keys-for-major-mode 'sh-mode
-                "," 'sh-send-line-or-region-and-step
-                "i" 'complete-symbol
-                ;; "," 'sh-execute-region
-                ;; "." 'sh-exec
-                ;; "hh" 'sh-heredoc
-                )
-              )
-            )
+    (lambda ()
+      (spacemacs/set-leader-keys-for-major-mode 'sh-mode
+        "," 'sh-send-line-or-region-and-step
+        "i" 'complete-symbol
+        ;; "," 'sh-execute-region
+        ;; "." 'sh-exec
+        ;; "hh" 'sh-heredoc
+        )
+      )
+    )
   (eval-after-load 'python-mode
-            (lambda ()
-              (spacemacs/set-leader-keys-for-major-mode 'python-mode
-                ;; "."   'python-shell-send-defun
-                ;; "."   'python-shell-send-defun-switch
-                ","   'python-shell-send-region
-                "."   'python-shell-send-region-switch
-                ;; "r"   'python-shell-send-buffer-switch
-                "k"   'anaconda-mode-complete
-                "TAB" 'python-start-or-switch-repl
-                )
-              ;; (remove-hook 'python-mode-hook 'spacemacs//init-eldoc-python-mode)
-              ;; (setq python-shell-interpreter "/usr/bin/ipython")
-              (setq python-shell-interpreter "ipython3")
-              (setq python-enable-yapf-format-on-save t)
-              ;;       python-shell-interpreter-args "--simple-prompt -i")
-              )
-            )
+    (lambda ()
+      (spacemacs/set-leader-keys-for-major-mode 'python-mode
+        ;; "."   'python-shell-send-defun
+        ;; "."   'python-shell-send-defun-switch
+        ","   'python-shell-send-region
+        "."   'python-shell-send-region-switch
+        ;; "r"   'python-shell-send-buffer-switch
+        "k"   'anaconda-mode-complete
+        "TAB" 'python-start-or-switch-repl
+        )
+      ;; (remove-hook 'python-mode-hook 'spacemacs//init-eldoc-python-mode)
+      ;; (setq python-shell-interpreter "/usr/bin/ipython")
+      (setq python-shell-interpreter "ipython3")
+      (setq python-enable-yapf-format-on-save t)
+      ;;       python-shell-interpreter-args "--simple-prompt -i")
+      )
+    )
   (eval-after-load 'ess-mode
-            (lambda ()
-              (spacemacs/set-leader-keys-for-major-mode 'ess-mode
-                ;; "'"  'spacemacs/ess-start-repl
-                ;; "si" 'spacemacs/ess-start-repl
-                ;; ;; noweb
-                ;; "cC" 'ess-eval-chunk-and-go
-                ;; "cc" 'ess-eval-chunk
-                ;; "cd" 'ess-eval-chunk-and-step
-                ;; "cm" 'ess-noweb-mark-chunk
-                ;; "cN" 'ess-noweb-previous-chunk
-                ;; "cn" 'ess-noweb-next-chunk
-                ;; REPL
-                ","   'ess-eval-function-or-paragraph-and-step
-                "`"   'ess-show-traceback
-                "i"   'complete-symbol
-                "."   'ess-eval-region-or-line-and-step
-                "hh"  'ess-display-help-on-object
-                "TAB" 'ess-switch-to-inferior-or-script-buffer
-                )
-              (setq ess-eval-visibly nil)
-              )
-            )
+    (lambda ()
+      (spacemacs/set-leader-keys-for-major-mode 'ess-mode
+        ;; "'"  'spacemacs/ess-start-repl
+        ;; "si" 'spacemacs/ess-start-repl
+        ;; ;; noweb
+        ;; "cC" 'ess-eval-chunk-and-go
+        ;; "cc" 'ess-eval-chunk
+        ;; "cd" 'ess-eval-chunk-and-step
+        ;; "cm" 'ess-noweb-mark-chunk
+        ;; "cN" 'ess-noweb-previous-chunk
+        ;; "cn" 'ess-noweb-next-chunk
+        ;; REPL
+        ","   'ess-eval-function-or-paragraph-and-step
+        "`"   'ess-show-traceback
+        "i"   'complete-symbol
+        "."   'ess-eval-region-or-line-and-step
+        "hh"  'ess-display-help-on-object
+        "TAB" 'ess-switch-to-inferior-or-script-buffer
+        )
+      (setq ess-eval-visibly nil)
+      )
+    )
   ;; (eval-after-load 'yaml-mode
   ;;           (lambda ()
   ;;             (defun my-newline-and-indent ()
@@ -1042,96 +1050,89 @@ package is loaded, you should place your code here."
   ;;             )
   ;;           )
   (eval-after-load 'org-mode
-            (lambda ()
-              ;; re-enable template expansion
-              (require 'org-tempo)
-              ;; change what is considered a word (w_o_r_d)
-              (modify-syntax-entry ?_ "w")
-              (setq
-               org-export-with-toc nil
-               org-export-with-sub-superscripts '{}
-               org-want-todo-bindings t
-               )
-              (setq org-stuck-projects '("+LEVEL=1/-DONE" ("TODO" "NEXT") ("ref") "\\<SCHEDULED\\>|\\<DEADLINE\\>"))
-              (key-chord-define org-mode-map ";i" 'pcomplete) 
-              (delete '("\\.pdf\\'" . default) org-file-apps)
-              (add-to-list 'org-file-apps '(
-                                            ("\\.pdf\\'" . "evince %s")
-                                            ("\\.xlsx?\\'" . "xdg-open %s")
-                                            )
-                           )
-              (require 'ob-async)     
-              (add-hook 'org-capture-mode-hook 'evil-insert-state)
-              (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
-              (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
-              (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
-              (spacemacs/set-leader-keys-for-major-mode 'org-mode
-                "ir"  'org-ref-helm-insert-cite-link
-                "p"   'org-priority
-                "z"   'org-pomodoro
-                "xd"  'org-do-demote
-                "r"   'org-refile
-                "TAB" 'org-babel-switch-to-session
-                )
-              ;; GCal!
-              ;; https://github.com/myuhe/org-gcal.el
-              ;; (require 'org-gcal)
-              ;; (load "~/.org-gcal.el")
-              (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
-                "p" 'org-priority
-                "z" 'org-pomodoro
-                "c" 'org-capture
-                "r" 'org-refile
-                )
-              (setq org-tags-column -91)
-              (setq org-table-use-standard-references t)
-              (org-babel-do-load-languages
-               'org-babel-load-languages
-               '(
-                 (emacs-lisp . t)
-                 (R          . t)
-                 (C          . t)
-                 (shell      . t)
-                 (python     . t)
-                 (ditaa      . t)
-                 (plantuml   . t)
-                 ))
-              (setq org-confirm-babel-evaluate nil)
-              (setq org-src-preserve-indentation t)
-              ;; (require 'ob-shell)
-              ;; (defadvice org-babel-sh-evaluate (around set-shell activate)
-              ;;   "Add header argument :shcmd that determines the shell to be called."
-              ;;   (let* ((org-babel-sh-command (or (cdr (assoc :shcmd params)) org-babel-sh-command)))
-              ;;     ad-do-it
-              ;;     ))
-              ;; (defun my-org-confirm-babel-evaluate (lang body)
-              ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
-              ;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
-              (setq org-startup-with-inline-images nil)
-              (spacemacs/toggle-auto-completion)
-              ;; (setq org-agenda-span 'month)
-              (setq org-agenda-include-diary t)
-              ;; (setq org-time-stamp-custom-formats '("<%y-%m-%d>" . "<%y-%m-%d %H:%M>"))
-              ;; ics export
-              (setq
-               ;; org-icalendar-include-todo t
-               ;; org-icalendar-use-deadline '(event-if-not-todo todo-due)
-               org-icalendar-use-deadline '(event-if-not-todo)
-               org-icalendar-use-scheduled '(event-if-not-todo)
-               )
-              ;; (require 'org-trello)
-              ;; (setq org-trello-files (file-expand-wildcards "~/org-trello/*.org"))
-              ;; (eval-after-load 'markdown-mode
-              ;;           '(lambda () (define-key markdown-mode-map "\c-c[" 'helm-bibtex)))
-              ;; (setq bibtex-completion-bibliography '("~/zotero/insects.bib"))
-              ;; (setq org-archive-location "~/org-archive/datetree.org::datetree/* Finished Tasks")
-              ;; (setq org-archive-location "~/org-archive/%s::")
-              )
-            )
+    (lambda ()
+      ;; re-enable template expansion
+      (require 'org-tempo)
+      ;; change what is considered a word (w_o_r_d)
+      (modify-syntax-entry ?_ "w")
+      (setq
+       org-export-with-toc nil
+       org-export-with-sub-superscripts '{}
+       org-want-todo-bindings t
+       )
+      (setq org-stuck-projects '("+LEVEL=1/-DONE" ("TODO" "NEXT") ("ref") "\\<SCHEDULED\\>|\\<DEADLINE\\>"))
+      (delete '("\\.pdf\\'" . default) org-file-apps)
+      (add-to-list 'org-file-apps '(
+                                    ("\\.pdf\\'" . "evince %s")
+                                    ("\\.xlsx?\\'" . "xdg-open %s")
+                                    )
+                   )
+      (require 'ob-async)     
+      (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
+      (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+      (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+      (add-hook 'org-capture-mode-hook 'evil-insert-state)
+      (setq org-tags-column -91)
+      (setq org-table-use-standard-references t)
+      (setq org-confirm-babel-evaluate nil)
+      (setq org-src-preserve-indentation t)
+      (setq org-startup-with-inline-images nil)
+      (setq org-agenda-include-diary t)
+      ;; (setq org-time-stamp-custom-formats '("<%y-%m-%d>" . "<%y-%m-%d %H:%M>"))
+      )
+    )
+  (add-hook 'org-mode-hook
+    (lambda ()
+      (key-chord-define org-mode-map ";i" 'pcomplete) 
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode
+        "ir"  'org-ref-helm-insert-cite-link
+        "p"   'org-priority
+        "z"   'org-pomodoro
+        "xd"  'org-do-demote
+        "r"   'org-refile
+        "TAB" 'org-babel-switch-to-session
+        )
+      ;; GCal!
+      ;; https://github.com/myuhe/org-gcal.el
+      ;; (require 'org-gcal)
+      ;; (load "~/.org-gcal.el")
+      (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
+        "p" 'org-priority
+        "z" 'org-pomodoro
+        "c" 'org-capture
+        "r" 'org-refile
+        )
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '(
+         (emacs-lisp . t)
+         (R          . t)
+         (C          . t)
+         (shell      . t)
+         (python     . t)
+         (ditaa      . t)
+         (plantuml   . t)
+         ))
+      ;; (require 'ob-sh)
+      ;; see: C:/emacs/share/emacs/26.2/lisp/progmodes/sh-script.el
+      ;; (require 'ob-shell)
+      ;; (defadvice org-babel-sh-evaluate (around set-shell activate)
+      ;;   "Add header argument :shcmd that determines the shell to be called."
+      ;;   (let* ((org-babel-sh-command (or (cdr (assoc :shcmd params)) org-babel-sh-command)))
+      ;;     ad-do-it
+      ;; ))
+      ;; (defun my-org-confirm-babel-evaluate (lang body)
+      ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
+      ;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+      (spacemacs/toggle-auto-completion)
+      ;; (setq org-agenda-span 'month)
+    )
+    )
   ;; (setq request-backend 'url-retrieve )
   (setq request-message-level 'debug)
   (setq warning-minimum-level :error)
   )
+
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
