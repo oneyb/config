@@ -321,7 +321,6 @@ echo -e "if [ -d /usr/local/src/texlive/ ]; then\n\tPATH=\"/usr/local/src/texliv
 # ~/iozone3_434/src/current/iozone -e -I -a -s 100M -r 4k -i 0 -i 1 -i 2 -f test.txt
 
 sudo apt-get update
-sudo apt-get install apt-transport-https
 sudo sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
 sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list'
 
@@ -336,8 +335,9 @@ rsync -vurt --delete ~/.config/base16-xfce4-terminal/colorschemes/ ~/.local/shar
 
 
 # May change this
-echo Wanna\? sudo localectl set-x11-keymap us pc105 intl 'compose:102'
-echo Wanna\? sudo localectl set-x11-keymap us pc105 intl 'compose:prsc,caps:escape'
+# echo Permanently: localectl set-x11-keymap us pc104 '' 'compose:102'
+echo Permanently: localectl set-x11-keymap us pc104 '' 'compose:prsc,caps:escape'
+echo Temporarily: setxkbmap -model pc104 -layout us -option -option 'compose:prsc,caps:escape'
 
 
 # get scripts from http://www.fmwconcepts.com/imagemagick/index.php

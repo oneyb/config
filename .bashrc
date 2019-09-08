@@ -530,13 +530,13 @@ function play-song()
 
 function play()
 {
-    mpv --shuffle --audio-display=no -playlist $HOME/music/playlists/$1
+    mpv ${@:1:$(($#-1))} --audio-display=no -playlist $HOME/music/playlists/${@:$#} 
+    [ $? -ne 0 ] && echo -e "\n\t usage example:\t play --shuffle albums/tool/lateralus.m3u "
 }
-
 _play_completion()
 {
     local cur=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( $(compgen -W "$(find $HOME/music/playlists/ -type f -name '*m3u' | sed -r 's:$HOME/music/playlists/::')" -- $cur) )
+    COMPREPLY=( $(compgen -W "$(find $HOME/music/playlists/ -type f -name '*m3u' | sed -r 's:'"$HOME"'/music/playlists/::')" -- $cur) )
     # COMPREPLY=( $(compgen -W "$(ls $HOME/music/playlists/)" -- $cur) )
 }
 complete -F _play_completion play
