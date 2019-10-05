@@ -144,7 +144,7 @@
                                     :size 14
                                     :weight normal
                                     :width normal
-                                    :powerline-scale 1.1)
+                                    :powerline-scale 1.0)
         )
   (global-set-key (kbd "<S-Insert>") #'clipboard-yank)
   (add-to-list 'exec-path "C:\\Program Files\\Git\\mingw64\\bin")
@@ -251,13 +251,6 @@ This function should only modify configuration layer settings."
      emacs-lisp
      lua
      pandoc
-     ;; org
-     (org :variables
-          ;; org-enable-github-support t
-          org-enable-bootstrap-support nil
-          org-list-allow-alphabetical t
-          org-want-todo-bindings t
-          )
      spacemacs-evil
      shell-scripts
      ;; (spell-checking
@@ -281,6 +274,12 @@ This function should only modify configuration layer settings."
       :eval-after-load
       ;; (auto-fill-mode 1)
       (spacemacs/toggle-auto-completion))
+     (org :variables
+          ;; org-enable-github-support t
+          org-enable-bootstrap-support nil
+          org-list-allow-alphabetical t
+          org-want-todo-bindings t
+          )
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -918,12 +917,13 @@ package is loaded, you should place your code here."
   (setq tex-process-asynchronous t)
   (set-face-attribute 'default nil :height 94)
   (add-hook 'LaTeX-mode-hook (lambda () (require 'org-ref)))
-  (defun my-c-config ()
-    (interactive)
+  ;; (defun my-c-config ()
+  ;;   (interactive)
+  ;;   )
+  (with-eval-after-load "cc-mode"
     (setq
      c-c++-enable-clang-support t
      c-c++-default-mode-for-headers 'c++-mode
-     c-default-style "own"
      realgud-safe-mode nil
      gdb-many-windows t
      gdb-show-main t
@@ -943,14 +943,20 @@ package is loaded, you should place your code here."
       "gt" 'helm-gtags-create-tags
       "gI" 'cscope-index-files
       )
+    )
+
+  (defun my-c-config ()
+    (interactive)
     (c-add-style "own" 
                  '("linux"
                    (c-basic-offset . 2)
                    )
                  t)
+    (setq c-default-style "own")
     )
-  (with-eval-after-load 'cc-mode 'my-c-config)
-  ;; (add-hook 'c++-mode-hook 'my-c-config)
+  (add-hook 'c++-mode-hook 'my-c-config)
+  (add-hook 'c-mode-hook   'my-c-config)
+
   (add-hook 'realgud-short-key-mode-hook
             (lambda ()
               (key-chord-define-local ";k" 'realgud-short-key-mode)
@@ -1051,6 +1057,9 @@ package is loaded, you should place your code here."
      org-export-with-toc nil
      org-export-with-sub-superscripts '{}
      org-want-todo-bindings t
+     org-export-with-date nil
+     org-export-with-creator nil
+     org-export-time-stamp-file nil
      )
     (setq org-stuck-projects '("+LEVEL=1/-DONE" ("TODO" "NEXT") ("ref") "\\<SCHEDULED\\>|\\<DEADLINE\\>"))
     (delete '("\\.pdf\\'" . default) org-file-apps)
