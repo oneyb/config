@@ -31,17 +31,18 @@
     (setq
      org-capture-templates
      '(
-       ("t" "General Tasks" entry (file "~/org/0-capture.org") "* TODO %?\t\t%^G\n %i")
-       ("l" "Linked Task" entry (file "~/org/0-capture.org") "* TODO %? %a \t\t :computer:\n %i")
-       ("p" "Programming Task" entry (file "~/org/0-capture.org") "* TODO %? \t\t :computer:\n %i")
-       ("s" "Specific Programming Task" entry (file "~/org/0-capture.org") "* TODO %? %a \t\t :computer:\n %i")
-       ("a" "Set Appt." entry (file "~/org/0-capture.org") "* %?\t\t%^G\n SCHEDULED: %^T\n %i")
-       ("i" "Collect Info" entry (file "~/org/0-capture.org") "* %? %x \t\t:note:\n %i")
-       ("m" "Emails to write" entry (file "~/org/0-capture.org") "* TODO %?%x \t\t:computer:phone:\n %i ")
-       ("c" "Phone calls to make" entry (file "~/org/0-capture.org") "* TODO call %?%x \t\t:phone:\n %i ")
-       ;; ("j" "Jobs" entry (file "~/org/0-capture.org") "* TODO apply to %? %x \t :getjob:computer:")
-       ("J" "Jokes" entry (file "~/org/0-capture.org") "* Joke: %?\n %U %i")
-       ("b" "Braindumps" entry (file "~/org/0-capture.org") "* Braindump: %?\n %U\n %i")
+       ("t" "General Tasks" entry             (file "~/org/0-capture.org")            "* TODO %?\t\t%^G\n %i")
+       ("l" "Linked Task" entry               (file "~/org/0-capture.org")            "* TODO %? %a \t\t :computer:\n %i")
+       ("p" "Programming Task" entry          (file "~/org/0-capture.org")            "* TODO %? \t\t :computer:\n %i")
+       ("s" "Specific Programming Task" entry (file "~/org/0-capture.org")            "* TODO %? %a \t\t :computer:\n %i")
+       ("a" "Set Appt." entry                 (file "~/org/0-capture.org")            "* %?\t\t%^G\n SCHEDULED: %^T\n %i")
+       ("w" "Prepare apt. template" entry     (file "~/org/personal-development.org") "* TODO apt: %?; %x;\n %i")
+       ("i" "Collect Info" entry              (file "~/org/0-capture.org")            "* %? %x \t\t:note:\n %i")
+       ("m" "Emails to write" entry           (file "~/org/0-capture.org")            "* TODO %?%x \t\t:computer:phone:\n %i ")
+       ("c" "Phone calls to make" entry       (file "~/org/0-capture.org")            "* TODO call %?%x \t\t:phone:\n %i     ")
+       ;; ("j" "Jobs" entry                      (file "~/org/0-capture.org")            "* TODO apply to %? %x \t :getjob:computer:")
+       ("J" "Jokes" entry                     (file "~/org/0-capture.org")            "* Joke: %?\n %U %i")
+       ("b" "Braindumps" entry                (file "~/org/0-capture.org")            "* Braindump: %?\n %U\n %i")
        )
      org-agenda-files (-remove
                        (lambda (str) (string-match  "#" str))
@@ -243,7 +244,7 @@ This function should only modify configuration layer settings."
      cscope
      gtags
      spacemacs-misc
-     version-control
+     ;; version-control
      ;; ycmd ;; above 
      ;; semantic
      spacemacs-defaults
@@ -339,7 +340,6 @@ This function should only modify configuration layer settings."
                                              'csharp
                                              'multiple-cursors
                                              'treemacs
-                                             'version-control
                                              'cmake
                                              dotspacemacs-configuration-layers))
     )
