@@ -333,6 +333,7 @@ git clone https://github.com/afg984/base16-xfce4-terminal.git ~/.config/base16-x
 rsync -vurt --delete ~/.config/base16-xfce4-terminal/colorschemes/ ~/.local/share/xfce4/terminal/colorschemes/
 # Choose 'Nord'
 
+sudo add-apt-repository ppa:yubico/stable && sudo apt-get update
 
 # May change this
 # echo Permanently: localectl set-x11-keymap us pc104 '' 'compose:102'

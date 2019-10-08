@@ -986,6 +986,15 @@ package is loaded, you should place your code here."
   ;;             (setq dart-debug t)
   ;;             )
   ;;           )
+  (with-eval-after-load "make-mode"
+    (spacemacs/set-leader-keys-for-major-mode 'make-mode
+      "," 'my-make
+      "i" 'completion-at-point
+      )
+    (define-key evil-insert-state-map (kbd "TAB") 'completion-at-point           )
+    ;; (define-key evil-normal-state-map (kbd "j"  ) 'makefile-browser-next-line    )
+    ;; (define-key evil-insert-state-map (kbd "k"  ) 'makefile-browser-previous-line)
+    )
   (with-eval-after-load "sh-script"
     (spacemacs/set-leader-keys-for-major-mode 'sh-mode
       "," 'sh-send-line-or-region-and-step
@@ -1071,7 +1080,8 @@ package is loaded, you should place your code here."
     (require 'ob-async)     
     (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
     (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
-    (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+    (setq org-refile-use-outline-path 'file)
+    ;; (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
     (add-hook 'org-capture-mode-hook 'evil-insert-state)
     (setq org-tags-column -91)
     (setq org-table-use-standard-references t)
