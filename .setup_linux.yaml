@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  # run this: ansible-playbook -i tinkbox.local, -u oney ~/bin/.setup_linux.yaml --ask-become-pass
+  # run this: ansible-playbook -i fbox.local, -u oney ~/bin/.setup_linux.yaml --ask-become-pass
   # vars:
     # template_dir: "{{ ansible_env.HOME }}/bin/config"
   tasks:
@@ -43,11 +43,11 @@
         - cups
         - curl
         - dash
-        - xfce4-clipman
-        - xfce4-clipman-plugin
+        # - xfce4-clipman
+        # - xfce4-clipman-plugin
         - openshot
-        - firmware-linux-free
-        - firmware-linux-nonfree
+        # - firmware-linux-free
+        # - firmware-linux-nonfree
         - ntfs-3g
         # - ntfs-config
         - openssh-client
@@ -86,8 +86,8 @@
         - xsel
         - libssl-dev
         - exfat-utils
-        - libxft-dev
-        - libfreetype6-dev
+        # - libxft-dev
+        # - libfreetype6-dev
         - bash-completion
         - dialog
         - xkbset
@@ -138,7 +138,7 @@
         # - netcdf-bin
         # - netcdf-doc 
         - p7zip-full
-        - pdftk
+        # - pdftk
         # - proj-bin
         # - proj-data
         - pulseaudio 
@@ -185,10 +185,8 @@
         # - xul-ext-monkeysphere 
         # - xul-ext-noscript
         - libgdal-dev
-        - libmariadb-dev 
+        # - libmariadb-dev 
         - exfat-utils
-        - libxft-dev
-        - libfreetype6-dev
         - rclone
         - evolution 
         - breeze-cursor-theme
@@ -271,48 +269,12 @@
       - jinja2
       - cppman
 
-  - name: Install libreoffice
-    snap:
-      - libreoffice
-      - signal-desktop
+  # - name: Install libreoffice
+  #   snap:
+  #     - libreoffice
+  #     - signal-desktop
   #       # - bar
 
-  - name: get adobe reader
-    get_url:
-      url: ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
-      dest: "{{ ansible_env.HOME }}/bin/src/adberdr9.5.5-1_i386linux_enu.deb"
-      checksum: md5:88036c68998d565c4365e2ad89b04d51
-
-  - name: Install/add i386 Architecture
-    command: dpkg --add-architecture i386
-    args:
-      creates: /var/lib/dpkg/arch
-    when: ansible_architecture != 'i386'
-    become: yes
-    register: archrc
-  
-  - name: Install / Update APT Cache for i386
-    apt:
-      update_cache: true
-    become: yes
-    when: archrc is defined and archrc.changed
-  
-  - name: Install i386 deps
-    become: yes
-    apt:
-      name: "{{ items }}"
-      update_cache: true
-      cache_valid_time: 3600
-    vars:
-      items:
-        - libgtk2.0-0:i386
-        - libxml2:i386
-        - libstdc++6:i386
-    when: ansible_architecture != 'i386'
-
-  - name: install adobe reader deb packages
-    become: yes
-    apt: deb="{{ ansible_env.HOME }}/bin/src/adberdr9.5.5-1_i386linux_enu.deb"
 
   - name: start syncthing
     systemd: name=syncthing state=restarted daemon_reload=yes enabled=yes scope=user

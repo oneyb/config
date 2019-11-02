@@ -87,28 +87,22 @@ curl -s https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
 echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" | sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
 sudo apt update && sudo apt install signal-desktop
 
-# Messenger services with Rambox
-function install-rambox ()
+# Messenger services with Hamsket
+function install-hamsket ()
 {
     cd $HOME/bin/src/
-    rm Rambox-latest-x64.tar.gz
-    # download=https://github.com/TheGoddessInari/rambox/releases/download/nightly/Rambox_0.5.18_amd64.deb
-    download=https://github.com/TheGoddessInari/hamsket/releases/download/nightly/Rambox_0.5.18_amd64.deb
-    [[ ! -f Rambox-latest-x64.deb ]] && wget $download -O Rambox-latest-x64.deb
-    dpkg -i Rambox-latest-x64.deb
-    [[ ! -f /usr/share/icons/rambox.png ]] && sudo wget https://rambox.pro/images/logo.png -O /usr/share/icons/rambox.png
-    sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Rambox\nComment=Free, Open Source and Cross Platform messaging and emailing app that combines common web applications into one.\nExec=rambox -- %u\nStartupWMClass=Rambox rambox\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/rambox.desktop"
-    sudo desktop-file-install /usr/share/applications/rambox.desktop
+    rm Hamsket-latest-x64.tar.gz
+    # download=https://github.com/TheGoddessInari/hamsket/releases/download/nightly/Rambox_0.5.18_amd64.deb
+    download=https://github.com/TheGoddessInari/hamsket/releases/download/nightly/hamsket_0.6.0_amd64.deb
+    [[ ! -f Hamsket-latest-x64.deb ]] && wget $download -O Hamsket-latest-x64.deb
+    sudo dpkg -i Hamsket-latest-x64.deb
+    [[ ! -f /usr/share/icons/hamsket.png ]] && sudo wget https://github.com/TheGoddessInari/hamsket/raw/master/resources/Icon.png -O /usr/share/icons/hamsket.png
+    sudo bash -c "echo -e \"[Desktop Entry]\nEncoding=UTF-8\nName=Hamsket\nComment=Free, Open Source and Cross Platform messaging and emailing app that combines common web applications into one.\nExec=hamsket -- %u\nStartupWMClass=Hamsket hamsket\nTerminal=false\nType=Application\nCategories=Network;\" > /usr/share/applications/hamsket.desktop"
+    sudo desktop-file-install /usr/share/applications/hamsket.desktop
     cd -
 }
-install-rambox
+install-hamsket
 
-# wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
-# sudo dpkg --add-architecture i386
-# sudo apt-get update
-# sudo apt-get install libgtk2.0-0:i386 libxml2:i386 libstdc++6:i386
-# sudo dpkg -i AdbeRdr9*.deb
-# mv AdbeRdr9*.deb ~/bin/src/
 
 # archwiki
 wget https://www.archlinux.org/packages/community/any/arch-wiki-docs/download/ -O arch-wiki-docs.tar.xz
@@ -164,7 +158,7 @@ add_desktop_launcher pcmanfm                    $HOME/.config/icons/file-manager
 add_desktop_launcher epiphany-browser           $HOME/.config/icons/web-browser.png
 # add_desktop_launcher chromium                   $HOME/.config/icons/chromium.png
 add_desktop_launcher chromium-browser           $HOME/.config/icons/chromium.png
-add_desktop_launcher $HOME/bin/rambox.sh        /usr/share/icons/rambox.png 
+add_desktop_launcher $HOME/bin/hamsket.sh        /usr/share/icons/hamsket.png 
 add_desktop_launcher $HOME/bin/sync_org.sh      $HOME/.config/icons/orgzly.png
 # add_desktop_launcher "emacsclient -c --eval '(org-capture)'" $HOME/.config/icons/emacs22.png
 # add_desktop_launcher "emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")'" $HOME/.config/icons/emacs22.png
