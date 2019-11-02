@@ -310,6 +310,16 @@ function video-shrink () {
     for i in $*; do ffmpeg -i $i -vf scale=iw/2:-1 shrunk_${i}; done
 }
 
+function explore-mate-settings ()
+{
+    for i in $(gsettings list-keys $1); do echo $i; gsettings get $1 $i;done 
+}
+_ems_completion()
+{
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "$(gsettings list-schemas)" -- $cur) )
+}
+complete -F _ems_completion explore-mate-settings
 
 function cbc()
 {

@@ -321,11 +321,11 @@ sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debi
 sudo apt-get update
 sudo apt-get install dart
 
-# Terminal pimping https://github.com/afg984/base16-xfce4-terminal.git
-git clone https://github.com/afg984/base16-xfce4-terminal.git ~/.config/base16-xfce4-terminal
-[[ ! -d  ~/.local/share/xfce4/terminal/colorschemes/ ]] && mkdir -p ~/.local/share/xfce4/terminal/colorschemes/ 
-rsync -vurt --delete ~/.config/base16-xfce4-terminal/colorschemes/ ~/.local/share/xfce4/terminal/colorschemes/
-# Choose 'Nord'
+# # Terminal pimping https://github.com/afg984/base16-xfce4-terminal.git
+# git clone https://github.com/afg984/base16-xfce4-terminal.git ~/.config/base16-xfce4-terminal
+# [[ ! -d  ~/.local/share/xfce4/terminal/colorschemes/ ]] && mkdir -p ~/.local/share/xfce4/terminal/colorschemes/ 
+# rsync -vurt --delete ~/.config/base16-xfce4-terminal/colorschemes/ ~/.local/share/xfce4/terminal/colorschemes/
+# # Choose 'Nord'
 
 sudo add-apt-repository ppa:yubico/stable && sudo apt-get update
 
@@ -337,3 +337,8 @@ echo Temporarily: setxkbmap -model pc104 -layout us -option -option 'compose:prs
 
 # get scripts from http://www.fmwconcepts.com/imagemagick/index.php
 echo "want picture processing scripts? try: \n\tbash ~/bin/download_fmwconcepts.py"
+
+gsettings set org.mate.mate-menu hot-key ''
+gsettings set com.solus-project.brisk-menu hot-key ''
+gsettings set org.mate.Marco.window-keybindings activate-window-menu ''
+gsettings set org.mate.background show-desktop-icons false
