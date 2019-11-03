@@ -338,7 +338,52 @@ echo Temporarily: setxkbmap -model pc104 -layout us -option -option 'compose:prs
 # get scripts from http://www.fmwconcepts.com/imagemagick/index.php
 echo "want picture processing scripts? try: \n\tbash ~/bin/download_fmwconcepts.py"
 
-gsettings set org.mate.mate-menu hot-key ''
-gsettings set com.solus-project.brisk-menu hot-key ''
-gsettings set org.mate.Marco.window-keybindings activate-window-menu ''
+gsettings reset-recursively org.mate.Marco.global-keybindings
+gsettings reset-recursively org.mate.Marco.window-keybindings
+gsettings reset-recursively org.mate.mate-menu
+gsettings reset-recursively com.solus-project.brisk-menu
+gsettings reset-recursively org.gnome.settings-daemon.plugins.media-keys
+
+gsettings set org.mate.mate-menu hot-key 'disabled'
+gsettings set com.solus-project.brisk-menu hot-key 'disabled'
 gsettings set org.mate.background show-desktop-icons false
+gsettings set org.mate.Marco.window-keybindings activate-window-menu 'disabled'
+gsettings set org.mate.Marco.window-keybindings move-to-side-e '<Mod4>w'
+gsettings set org.mate.Marco.window-keybindings move-to-side-w '<Mod4>e'
+gsettings set org.mate.Marco.window-keybindings minimize '<Mod4>s'
+gsettings set org.mate.Marco.window-keybindings maximize '<Mod4>b'
+# gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot '<Mod4>Print'
+# gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot '<Alt>Print'
+
+
+
+gget-custom-keybinding-number () {
+    cmds=$(gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings)
+    if [ $cmds == "@as []" ]; then return 0; fi
+    cmdsnbr=$(echo $cmds | sed -r 's/^.*custom([0-9]+).*$/\1/g')
+    if [ -n "$(echo $cmdsnbr | grep -E '^[0-9]+$')" ]; then
+        cmdsnbrplus1=$(($cmdsnbr+1))
+    else
+        cmdsnbrplus1=0
+    fi
+    # if not a number, reset things
+    return $cmdsnbrplus1
+}
+
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1','/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
+
+gset-custom-keybinding () {
+    [ $# -ne 3 ] && type gset-custom-keybinding && echo "usage: gset-custom-keybinding name command binding" && return 1
+    # Wayland woes
+    # gget-custom-keybinding-number
+    nbr=$(($nbr + 1))
+    echo setting custom command custom$nbr
+    # gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom$nbr/']"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom$nbr/ name "$1"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom$nbr/ command "$2"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom$nbr/ binding "$3"
+}
+nbr=0
+gset-custom-keybinding 'PCMANFM Browser' '/usr/bin/pcmanfm' '<Mod4>f'
+gset-custom-keybinding 'clipboard manager' "$HOME/bin/anamnesis --browse" '<Mod4>c'
+gset-custom-keybinding 'Emacs getter' "/usr/bin/emacsclient -c" '<Ctrl><Alt>e'

@@ -43,8 +43,8 @@
         - cups
         - curl
         - dash
-        # - xfce4-clipman
-        # - xfce4-clipman-plugin
+        - xfce4-clipman
+        - xfce4-clipman-plugin
         - openshot
         # - firmware-linux-free
         # - firmware-linux-nonfree

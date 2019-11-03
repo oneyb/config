@@ -5,9 +5,9 @@ Mod4 + i
 # "emacsclient -c --eval '(org-tags-view t "computer")' --eval '(delete-other-windows)'"
 # "emacsclient -c --eval '(org-search-view t "+NEXT -TODO")' --eval '(delete-other-windows)'"
 "emacsclient -c --eval '(org-tags-view t "computer+TODO=\"NEXT\"")' --eval '(delete-other-windows)' -a gvim"
+Mod1 + Control + e
 # Mod4 + e
 # "emacsclient -c --eval '(org-tags-view t "computer+TODO=\"NEXT\"")' --eval '(delete-other-windows)' -a gvim"
-Mod1 + Control + e
 "xset dpms force off"
  Mod4 + d
 "~/bin/tb"
@@ -50,8 +50,8 @@ Mod4 + t
 Mod4 + y
 # "scrot"
 # Print
-# "xfce4-appfinder"
-"mate-panel --run-dialog"
+# "mate-panel --run-dialog"
+"xfce4-appfinder"
 Mod1 + space
 '$HOME/bin/sync_org.sh'
 Mod4 + u

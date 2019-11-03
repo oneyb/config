@@ -11,16 +11,16 @@
    dotspacemacs-default-font '(
                                ;; "Monospace"
                                "Ubuntu Mono"
-                               :size 18
+                               :size 12
                                :weight normal
                                :width normal
                                :powerline-scale 1.0
                                )
    pdf-misc-print-programm "/usr/bin/gtklpq"
    browse-url-firefox-program "chromium-browser"
-   x-select-enable-primary t
-   x-select-enable-clipboard nil
-   interprogram-paste-function 'x-cut-buffer-or-selection-value
+   select-enable-primary t
+   select-enable-clipboard nil
+   interprogram-paste-function 'cut-buffer-or-selection-value
    )
   (with-eval-after-load "python"
     (setq
@@ -146,6 +146,7 @@
                                     :weight normal
                                     :width normal
                                     :powerline-scale 1.0)
+        mouse-drag-copy-region t
         )
   (global-set-key (kbd "<S-Insert>") #'clipboard-yank)
   (add-to-list 'exec-path "C:\\Program Files\\Git\\mingw64\\bin")
@@ -192,6 +193,7 @@
      org-agenda-files (-remove
                        (lambda (str) (string-match  "#" str))
                        (file-expand-wildcards "~/work-exchange/org/*.org"))
+     org-archive-location "~/work-exchange/org/zenith.org::datetree/"
      )
     )
   )
@@ -1016,8 +1018,6 @@ package is loaded, you should place your code here."
       )
     ;; (remove-hook 'python-mode-hook 'spacemacs//init-eldoc-python-mode)
     ;; (setq python-shell-interpreter "/usr/bin/ipython")
-    (setq python-shell-interpreter "ipython3")
-    (setq python-enable-yapf-format-on-save t)
     ;;       python-shell-interpreter-args "--simple-prompt -i")
     )
   (with-eval-after-load "ess-mode"
@@ -1062,15 +1062,25 @@ package is loaded, you should place your code here."
     ;; change what is considered a word (w_o_r_d)
     ;; (message "Org config loaded")
     (modify-syntax-entry ?_ "w")
-    (setq
-     org-export-with-toc nil
-     org-export-with-sub-superscripts '{}
-     org-want-todo-bindings t
-     org-export-with-date nil
-     org-export-with-creator nil
-     org-export-time-stamp-file nil
-     )
-    (setq org-stuck-projects '("+LEVEL=1/-DONE" ("TODO" "NEXT") ("ref") "\\<SCHEDULED\\>|\\<DEADLINE\\>"))
+    (add-hook 'org-capture-mode-hook 'evil-insert-state)
+    (setq org-agenda-include-diary t
+          org-confirm-babel-evaluate nil
+          org-export-time-stamp-file nil
+          org-export-with-creator nil
+          org-export-with-date nil
+          org-export-with-sub-superscripts '{}
+          org-outline-path-complete-in-steps nil ; Refile in a single go
+          org-refile-targets '((org-agenda-files :maxlevel . 2))
+          org-refile-use-outline-path 'file
+          org-startup-with-inline-images nil
+          org-table-use-standard-references t
+          org-tags-column -91
+          org-want-todo-bindings t
+          org-export-with-toc nil
+          ;; org-refile-use-outline-path t       ; Show full paths for refiling
+          ;; org-src-preserve-indentation t
+          org-stuck-projects '("+LEVEL=1/-DONE" ("TODO" "NEXT") ("ref") "\\<SCHEDULED\\>|\\<DEADLINE\\>")
+          )
     (delete '("\\.pdf\\'" . default) org-file-apps)
     (add-to-list 'org-file-apps '(
                                   ("\\.pdf\\'" . "evince %s")
@@ -1078,17 +1088,6 @@ package is loaded, you should place your code here."
                                   )
                  )
     (require 'ob-async)     
-    (setq org-refile-targets '((org-agenda-files :maxlevel . 2)))	
-    (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
-    (setq org-refile-use-outline-path 'file)
-    ;; (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
-    (add-hook 'org-capture-mode-hook 'evil-insert-state)
-    (setq org-tags-column -91)
-    (setq org-table-use-standard-references t)
-    (setq org-confirm-babel-evaluate nil)
-    (setq org-src-preserve-indentation t)
-    (setq org-startup-with-inline-images nil)
-    (setq org-agenda-include-diary t)
     ;; (setq org-time-stamp-custom-formats '("<%y-%m-%d>" . "<%y-%m-%d %H:%M>"))
     (require 'org-tempo)
     (key-chord-define org-mode-map ";i" 'pcomplete) 
@@ -1128,7 +1127,7 @@ package is loaded, you should place your code here."
     ;; (defun my-org-confirm-babel-evaluate (lang body)
     ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
     ;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
-    (spacemacs/toggle-auto-completion)
+    ;; (spacemacs/toggle-auto-completion)
     )
   ;; (add-hook 'org-mode-hook
   ;;   (lambda ()
@@ -1139,25 +1138,3 @@ package is loaded, you should place your code here."
   (setq warning-minimum-level :error)
   )
 
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
-This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-want-Y-yank-to-eol t)
- '(helm-ff-lynx-style-map nil)
- '(org-agenda-files
-   (quote
-    ("~/org/0-capture.org" "~/org/baerfutt.org" "~/org/gtd.org" "~/org/personal-development.org"))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)

@@ -196,6 +196,7 @@ function begin-working-on-py3module()
         git status
     fi
 }
+
 function begin-working-on-pymodule()
 {
     venv=$1
@@ -310,16 +311,16 @@ function video-shrink () {
     for i in $*; do ffmpeg -i $i -vf scale=iw/2:-1 shrunk_${i}; done
 }
 
-function explore-mate-settings ()
+function explore-gsettings ()
 {
-    for i in $(gsettings list-keys $1); do echo $i; gsettings get $1 $i;done 
+    gsettings list-schemas | grep "$1" | while read f; do gsettings list-recursively $f | grep "$2"; done
 }
 _ems_completion()
 {
     local cur=${COMP_WORDS[COMP_CWORD]}
     COMPREPLY=( $(compgen -W "$(gsettings list-schemas)" -- $cur) )
 }
-complete -F _ems_completion explore-mate-settings
+complete -F _ems_completion explore-gsettings
 
 function cbc()
 {
