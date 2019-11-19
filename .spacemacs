@@ -20,7 +20,7 @@
    browse-url-firefox-program "chromium-browser"
    select-enable-primary t
    select-enable-clipboard nil
-   interprogram-paste-function 'cut-buffer-or-selection-value
+   interprogram-paste-function 'x-cut-buffer-or-selection-value
    )
   (with-eval-after-load "python"
     (setq
@@ -147,7 +147,7 @@
                                     :width normal
                                     :powerline-scale 1.0)
         mouse-drag-copy-region t
-        )
+      )
   (global-set-key (kbd "<S-Insert>") #'clipboard-yank)
   (add-to-list 'exec-path "C:\\Program Files\\Git\\mingw64\\bin")
   (setenv "PATH" (mapconcat #'identity exec-path path-separator))
@@ -869,6 +869,8 @@ package is loaded, you should place your code here."
   ;; (key-chord-define evil-insert-state-map "df" 'evil-escape)
   (setq recentf-auto-cleanup "1:00pm")
   (key-chord-define-global ";l" 'kill-this-buffer)
+  ;; (key-chord-define-global "=p" 'org-pomodoro)
+  (key-chord-define-global "=p" 'org-pomodoro)
   (key-chord-define-global "ii" 'org-capture)
   (key-chord-define-global ";'" 'my-get-tasks)
   (key-chord-define-global ";t" 'shell)
@@ -877,11 +879,19 @@ package is loaded, you should place your code here."
   (key-chord-define-global "BB" 'my-escape-and-bury)
   (key-chord-define-global ";i" 'completion-at-point)
   (key-chord-define-global ";c" 'my-make)
+  ;; (with-eval-after-load "shell"
+  (add-hook 'shell-mode-hook
+            (lambda ()
+              (interactive)
+              (modify-syntax-entry ?_ "w")
+              (key-chord-define prog-mode-map ";i" 'completion-at-point)
+            ))
   (add-hook 'prog-mode-hook
-            #'(lambda ()
-                (modify-syntax-entry ?_ "w")
-                (key-chord-define prog-mode-map ";i" 'completion-at-point)
-                ))
+            (lambda ()
+              (interactive)
+              (modify-syntax-entry ?_ "w")
+              (key-chord-define prog-mode-map ";i" 'completion-at-point)
+            ))
   (setq-default fill-column 78)
   ;; ;; Visual stuff
   ;; (setq frame-title-format '("%b | " mode-name))
@@ -910,7 +920,7 @@ package is loaded, you should place your code here."
   ;; Rmarkdown
   (add-to-list 'ispell-skip-region-alist '("^```" . "^```"))
   ;; skip org chunks
-  (add-to-list 'ispell-skip-region-alist '("^#\\+.*" . "^#\\+.*"))
+  (add-to-list 'ispell-skip-region-alist '("^#\\+begin_src.*" . "^#\\+end_src.*"))
   ;; LaTeX crap
   (add-to-list 'ispell-skip-region-alist '("\\\\cite.*{" . "}"))
   (add-to-list 'ispell-skip-region-alist '("\\\\chem{" . "}"))
@@ -1138,3 +1148,25 @@ package is loaded, you should place your code here."
   (setq warning-minimum-level :error)
   )
 
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol t)
+ '(helm-ff-lynx-style-map nil)
+ '(org-agenda-files
+   (quote
+    ("~/org/0-capture.org" "~/org/baerfutt.org" "~/org/gtd.org" "~/org/personal-development.org"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)

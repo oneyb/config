@@ -5,7 +5,9 @@
 
 (setq user-emacs-directory (expand-file-name "~/.saveme-spacemacs.d"))
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -198,13 +200,27 @@
     )
   )
 
+(use-package evil-org
+  :after org
+  :defer t
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+            (lambda ()
+              (evil-org-set-key-theme)))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys)
+  )
+
 (use-package leuven-theme 
   :ensure t
   :config
   (load-theme 'leuven t)
   )
 
-
+(setq mouse-drag-copy-region t)
+(savehist-mode 1)
 (setq-default kill-ring-max 666)
 (setq history-length 666)
 (setq-default history-delete-duplicates t)
