@@ -157,7 +157,7 @@ add_desktop_launcher signal-desktop             $HOME/.config/icons/signal.png
 add_desktop_launcher pcmanfm                    $HOME/.config/icons/file-manager.png
 add_desktop_launcher epiphany-browser           $HOME/.config/icons/web-browser.png
 # add_desktop_launcher chromium                   $HOME/.config/icons/chromium.png
-add_desktop_launcher chromium-browser           $HOME/.config/icons/chromium.png
+add_desktop_launcher "chromium-browser --incognito"           $HOME/.config/icons/chromium.png
 add_desktop_launcher $HOME/bin/hamsket.sh        /usr/share/icons/hamsket.png 
 add_desktop_launcher $HOME/bin/sync_org.sh      $HOME/.config/icons/orgzly.png
 # add_desktop_launcher "emacsclient -c --eval '(org-capture)'" $HOME/.config/icons/emacs22.png

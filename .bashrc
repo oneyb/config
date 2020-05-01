@@ -295,9 +295,8 @@ function clean-lit()
     rename -v 's/[-_]?\(.*\)[-_]?//' *
     # rename -v 's/\[[a-zA-Z-_]+\][-_]?//' *
     # rename -v 's/[\[\]]//g' *
-    tmp=$(tempfile)
     ls *pdf | while read p; do 
-        pdf-shrink ${p} ${p}
+        pdf-shrink ${p} ${p}.pdf
     done
     ls *epub | while read e; do 
         ebook-convert $e ${e/%.epub/.EPUB}
@@ -307,8 +306,9 @@ function clean-lit()
     done
 }
 
-function video-shrink () {
-    for i in $*; do ffmpeg -i $i -vf scale=iw/2:-1 shrunk_${i}; done
+function video-shrink ()
+{
+    for i in $*; do ffmpeg -i $i -vf scale=iw/3:-1 shrunk_${i}; done
 }
 
 function explore-gsettings ()
@@ -552,6 +552,18 @@ _play_completion()
 }
 complete -F _play_completion play
 
+function openvpn-add-udp()
+{
+    nmcli connection import type openvpn file $HOME/.vpn/ovpn_udp/$1
+    nmcli connection modify ${1%.ovpn} +vpn.data username=zenlines@gmail.com
+}
+_openvpn-add-udp()
+{
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "$(basename -a $(find $HOME/.vpn/ovpn_udp/ -type f -name '*ovpn'))" -- $cur) )
+}
+complete -F _openvpn-add-udp openvpn-add-udp 
+
 function openvpn-add-tcp()
 {
     nmcli connection import type openvpn file $HOME/.vpn/ovpn_tcp/$1
@@ -689,13 +701,20 @@ function pdf-shrink ()
         opdf=$2
     fi
     tpdf=$(tempfile)
+    tpdf2=$(tempfile)
     pdftk "$1" cat output "$tpdf"
     # mutool clean "$1" "$tpdf"
     if [ $? -eq 0 ]; then
         gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default \
            -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages \
-           -dCompressFonts=true -r150 -sOutputFile="$opdf" "$tpdf"
-        \rm $tpdf
+           -dCompressFonts=true -r150 -sOutputFile="$tpdf2" "$tpdf"
+        if [ $? -eq 0 ]; then
+            mv "$tpdf2" "$opdf" && echo great success
+            \rm $tpdf 
+        else
+            mv "$tpdf" "$opdf" && echo less great success
+            \rm $tpdf2
+        fi
     fi
 }
 

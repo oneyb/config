@@ -1087,6 +1087,7 @@ package is loaded, you should place your code here."
           org-tags-column -91
           org-want-todo-bindings t
           org-export-with-toc nil
+          org-src-preserve-indentation t
           ;; org-refile-use-outline-path t       ; Show full paths for refiling
           ;; org-src-preserve-indentation t
           org-stuck-projects '("+LEVEL=1/-DONE" ("TODO" "NEXT") ("ref") "\\<SCHEDULED\\>|\\<DEADLINE\\>")
