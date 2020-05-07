@@ -10,7 +10,7 @@ $? == 0 && cppman -c
 
 # sudo loginctl enable-linger $USER
 
-echo "c.InteractiveShellApp.extensions = ['grasp']" >> ~/.ipython/profile_default/ipython_config.py 
+# echo "c.InteractiveShellApp.extensions = ['grasp']" >> ~/.ipython/profile_default/ipython_config.py 
 
 # Remove stuff
 sudo apt-get remove thunderbird
@@ -101,7 +101,7 @@ function install-hamsket ()
     sudo desktop-file-install /usr/share/applications/hamsket.desktop
     cd -
 }
-install-hamsket
+# install-hamsket
 
 
 # archwiki
@@ -125,9 +125,9 @@ sudo rm /.BUILDINFO /.MTREE /.PKGINFO
 # fi
 
 # spacemacs!!!
-if [ -d ~/.emacs.d ]; then \rm -rf ~/.emacs.d/; fi
-git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
-bash -c "emacs" &
+# if [ -d ~/.emacs.d ]; then \rm -rf ~/.emacs.d/; fi
+# git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+# bash -c "emacs" &
 
 # # i3-py and quickswitch
 # sudo pip3 install i3-py
@@ -202,11 +202,9 @@ OnBootSec=26s
 
 # [Install]
 # WantedBy=default.target" > ~/.config/systemd/user/emacs.timer
-systemctl --user enable emacs.timer
-systemctl --user start emacs.timer
+# systemctl --user enable emacs.timer
+# systemctl --user start emacs.timer
 
-
-# set up atom-chrome https://github.com/alpha22jp/atomic-chrome
 
 # # Set up automatic phone sync
 # echo -e  '
@@ -286,9 +284,9 @@ systemctl --user start emacs.timer
 systemctl --user enable syncthing.service
 
 # For LaTeX
-if [ -d /media/oney/stuff/texlive/ ];
+if [ -d /media/oney/cryptek/texlive/ ];
 then
-    sudo cp -r --preserve=timestamps,mode /media/oney/stuff/texlive/ /usr/local/src/
+    sudo cp -r --preserve=timestamps,mode /media/oney/cryptek/texlive/ /usr/local/src/
 	  # sudo find /usr/local/src/texlive/ -type f -print0 | xargs -0 chmod 655
 	  # sudo find /usr/local/src/texlive/ -type d -print0 | xargs -0 chmod 755
 
@@ -326,7 +324,7 @@ sudo apt-get install dart
 # rsync -vurt --delete ~/.config/base16-xfce4-terminal/colorschemes/ ~/.local/share/xfce4/terminal/colorschemes/
 # # Choose 'Nord'
 
-sudo add-apt-repository ppa:yubico/stable && sudo apt-get update
+# sudo add-apt-repository ppa:yubico/stable && sudo apt-get update
 
 # May change this
 # echo Permanently: localectl set-x11-keymap us pc104 '' 'compose:102'
@@ -337,52 +335,52 @@ echo Temporarily: setxkbmap -model pc104 -layout us -option -option 'compose:prs
 # get scripts from http://www.fmwconcepts.com/imagemagick/index.php
 echo "want picture processing scripts? try: \n\tbash ~/bin/download_fmwconcepts.py"
 
-gsettings reset-recursively org.mate.Marco.global-keybindings
-gsettings reset-recursively org.mate.Marco.window-keybindings
-gsettings reset-recursively org.mate.mate-menu
-gsettings reset-recursively com.solus-project.brisk-menu
-gsettings reset-recursively org.gnome.settings-daemon.plugins.media-keys
+# gsettings reset-recursively org.mate.Marco.global-keybindings
+# gsettings reset-recursively org.mate.Marco.window-keybindings
+# gsettings reset-recursively org.mate.mate-menu
+# gsettings reset-recursively com.solus-project.brisk-menu
+# gsettings reset-recursively org.gnome.settings-daemon.plugins.media-keys
 
-gsettings set org.mate.mate-menu hot-key 'disabled'
-gsettings set com.solus-project.brisk-menu hot-key 'disabled'
-gsettings set org.mate.background show-desktop-icons false
-gsettings set org.mate.Marco.window-keybindings activate-window-menu 'disabled'
-gsettings set org.mate.Marco.window-keybindings move-to-side-e '<Mod4>w'
-gsettings set org.mate.Marco.window-keybindings move-to-side-w '<Mod4>e'
-gsettings set org.mate.Marco.window-keybindings minimize '<Mod4>s'
-gsettings set org.mate.Marco.window-keybindings maximize '<Mod4>b'
-# gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot '<Mod4>Print'
-# gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot '<Alt>Print'
+# gsettings set org.mate.mate-menu hot-key 'disabled'
+# gsettings set com.solus-project.brisk-menu hot-key 'disabled'
+# gsettings set org.mate.background show-desktop-icons false
+# gsettings set org.mate.Marco.window-keybindings activate-window-menu 'disabled'
+# gsettings set org.mate.Marco.window-keybindings move-to-side-e '<Mod4>w'
+# gsettings set org.mate.Marco.window-keybindings move-to-side-w '<Mod4>e'
+# gsettings set org.mate.Marco.window-keybindings minimize '<Mod4>s'
+# gsettings set org.mate.Marco.window-keybindings maximize '<Mod4>b'
+# # gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot '<Mod4>Print'
+# # gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot '<Alt>Print'
 
 
 
-gget-custom-keybinding-number () {
-    cmds=$(gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings)
-    if [ $cmds == "@as []" ]; then return 0; fi
-    cmdsnbr=$(echo $cmds | sed -r 's/^.*custom([0-9]+).*$/\1/g')
-    if [ -n "$(echo $cmdsnbr | grep -E '^[0-9]+$')" ]; then
-        cmdsnbrplus1=$(($cmdsnbr+1))
-    else
-        cmdsnbrplus1=0
-    fi
-    # if not a number, reset things
-    return $cmdsnbrplus1
-}
+# gget-custom-keybinding-number () {
+#     cmds=$(gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings)
+#     if [ $cmds == "@as []" ]; then return 0; fi
+#     cmdsnbr=$(echo $cmds | sed -r 's/^.*custom([0-9]+).*$/\1/g')
+#     if [ -n "$(echo $cmdsnbr | grep -E '^[0-9]+$')" ]; then
+#         cmdsnbrplus1=$(($cmdsnbr+1))
+#     else
+#         cmdsnbrplus1=0
+#     fi
+#     # if not a number, reset things
+#     return $cmdsnbrplus1
+# }
 
-gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1','/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
+# gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1','/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
 
-gset-custom-keybinding () {
-    [ $# -ne 3 ] && type gset-custom-keybinding && echo "usage: gset-custom-keybinding name command binding" && return 1
-    # Wayland woes
-    # gget-custom-keybinding-number
-    nbr=$(($nbr + 1))
-    echo setting custom command custom$nbr
-    # gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom$nbr/']"
-    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom$nbr/ name "$1"
-    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom$nbr/ command "$2"
-    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom$nbr/ binding "$3"
-}
-nbr=0
-gset-custom-keybinding 'PCMANFM Browser' '/usr/bin/pcmanfm' '<Mod4>f'
-gset-custom-keybinding 'clipboard manager' "$HOME/bin/anamnesis --browse" '<Mod4>c'
-gset-custom-keybinding 'Emacs getter' "/usr/bin/emacsclient -c" '<Ctrl><Alt>e'
+# gset-custom-keybinding () {
+#     [ $# -ne 3 ] && type gset-custom-keybinding && echo "usage: gset-custom-keybinding name command binding" && return 1
+#     # Wayland woes
+#     # gget-custom-keybinding-number
+#     nbr=$(($nbr + 1))
+#     echo setting custom command custom$nbr
+#     # gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom$nbr/']"
+#     gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom$nbr/ name "$1"
+#     gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom$nbr/ command "$2"
+#     gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom$nbr/ binding "$3"
+# }
+# nbr=0
+# gset-custom-keybinding 'PCMANFM Browser' '/usr/bin/pcmanfm' '<Mod4>f'
+# gset-custom-keybinding 'clipboard manager' "$HOME/bin/anamnesis --browse" '<Mod4>c'
+# gset-custom-keybinding 'Emacs getter' "/usr/bin/emacsclient -c" '<Ctrl><Alt>e'
