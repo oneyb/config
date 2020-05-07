@@ -93,6 +93,7 @@
         - xkbset
         - xinput
         - apt-transport-https
+        - testdisk
 
 
   - name: install necessary packages
