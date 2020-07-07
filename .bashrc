@@ -175,7 +175,29 @@ function o()
     fi
 }
 
-function begin-working-on-py3module()
+function begin-working-on-py2module()
+{
+    venv=$1
+    if [ ! -d ~/venvs/$venv ]; then
+        virtualenv -p python2 ~/venvs/$venv
+        source ~/venvs/$venv/bin/activate
+        pip2 install -r ~/github/$venv/requirements.txt
+        # pip3 install Ipython
+        if [ $? -eq 0 ]; then
+            cd ~/github/$venv/
+            git status
+        else
+            \rm -rf ~/venvs/$venv
+            echo 'Fix something please'
+        fi
+    else 
+        source ~/venvs/$venv/bin/activate
+        cd ~/github/$venv/
+        git status
+    fi
+}
+
+function begin-working-on-py3module-gh()
 {
     venv=$1
     if [ ! -d ~/venvs/$venv ]; then
@@ -196,17 +218,16 @@ function begin-working-on-py3module()
         git status
     fi
 }
-
-function begin-working-on-pymodule()
+function begin-working-on-py3module-gl()
 {
     venv=$1
     if [ ! -d ~/venvs/$venv ]; then
-        virtualenv ~/venvs/$venv
+        virtualenv -p python3 ~/venvs/$venv
         source ~/venvs/$venv/bin/activate
-        pip install -r ~/github/$venv/requirements.txt
-        pip install Ipython
+        pip3 install -r ~/gitlab/$venv/requirements.txt
+        pip3 install Ipython
         if [ $? -eq 0 ]; then
-            cd ~/github/$venv/
+            cd ~/gitlab/$venv/
             git status
         else
             \rm -rf ~/venvs/$venv
@@ -214,7 +235,7 @@ function begin-working-on-pymodule()
         fi
     else 
         source ~/venvs/$venv/bin/activate
-        cd ~/github/$venv/
+        cd ~/gitlab/$venv/
         git status
     fi
 }
@@ -289,6 +310,13 @@ function check-setpath()
     fi
 }
 
+function sortgmail ()
+{
+    source ~/venvs/sortgmail/bin/activate
+    python ~/gitlab/sortgmail/sortgmail.py
+    deactivate
+}
+
 function clean-lit()
 {
     rmspace
@@ -308,7 +336,7 @@ function clean-lit()
 
 function video-shrink ()
 {
-    for i in $*; do ffmpeg -i $i -vf scale=iw/3:-1 shrunk_${i}; done
+    for i in $*; do ffmpeg -i $i -vf scale=iw/3:-1 -r 30 shrunk_${i}; done
 }
 
 function explore-gsettings ()

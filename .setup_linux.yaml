@@ -30,6 +30,7 @@
       name: "{{ pkgs }}"
     vars:  
       pkgs:
+        - emacs
         - htop
         - gfortran
         - automake
@@ -82,7 +83,6 @@
         - xdg-utils
         - xdotool
         - xfburn
-        - xpdf
         - xsel
         - libssl-dev
         - exfat-utils
@@ -179,7 +179,6 @@
         - wodim
         - wordnet
         - xfburn
-        - xpdf
         - xsel
         # - xul-ext-firebug
         # - xul-ext-itsalltext
@@ -208,9 +207,11 @@
         - gcc-avr
         - gdb-avr
         - cgdb
-        - gdbserver 
+        - gdbserver
+        - tesseract-ocr
+        - tesseract-ocr-deu
 
-  - name: install necessary packages
+  - name: install python packages
     become: yes
     apt: 
       update_cache: yes
@@ -218,44 +219,37 @@
       name: "{{ pkgs }}"
     vars:  
       pkgs:
-        - python-xdg
-        - ipython
+        - python3-xdg
         - ipython3
         - pyflakes
-        - python
-        - python-cups 
+        - python3-cups 
         - python3-cupshelpers
-        - python-flake8
-        - python-libxml2 
-        - python-numpy
-        - python-openpyxl
-        - python-openssl 
-        - python-jsonrpclib
-        - python-pyparsing
-        - python-scipy
-        - python-setuptools 
-        - python-simplejson
-        - python-unittest2
+        - python3-flake8
+        - python3-libxml2 
+        - python3-numpy
+        - python3-openpyxl
+        - python3-openssl 
+        - python3-jsonrpclib-pelix
+        - python3-pyparsing
+        - python3-scipy
+        - python3-setuptools 
+        - python3-simplejson
+        - python3-unittest2
         - python3
-        - python-gdal
-        - python-pdfminer 
+        - python3-gdal
+        - python3-pdfminer 
         - pdfminer-data
-        - python-pip
         - python3-pip
         - jupyter-notebook
         - python3-pdfkit 
 
-  - name: install pip packages
-    pip: name={{ item }} extra_args="--upgrade" executable=pip
-    become: yes
-    with_items:
-      - gcalcli
-      - jinja2
 
   - name: install pip3 packages
     pip: name={{ item }} extra_args="--upgrade" executable=pip3
     become: yes
     with_items:
+      - gcalcli
+      - jinja2
       - grasp
       - pandas
       # - xlwt

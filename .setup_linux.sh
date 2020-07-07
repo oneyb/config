@@ -44,6 +44,14 @@ sudo update-alternatives --config editor
 # wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 # sudo apt-get update
 # sudo apt-get install virtualbox-5.2
+curl -s https://syncthing.net/release-key.txt | sudo apt-key add -
+
+# Add the "stable" channel to your APT sources:
+echo "deb https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
+
+# Update and install syncthing:
+sudo apt-get update
+sudo apt-get install syncthing
 
 mkdir -p documents
 git clone git@github.com:oneyb/config.git
@@ -384,3 +392,9 @@ echo "want picture processing scripts? try: \n\tbash ~/bin/download_fmwconcepts.
 # gset-custom-keybinding 'PCMANFM Browser' '/usr/bin/pcmanfm' '<Mod4>f'
 # gset-custom-keybinding 'clipboard manager' "$HOME/bin/anamnesis --browse" '<Mod4>c'
 # gset-custom-keybinding 'Emacs getter' "/usr/bin/emacsclient -c" '<Ctrl><Alt>e'
+
+pkg=labelnation-1.218
+[ ! -f $pkg.tar.gz ] && curl https://www.red-bean.com/labelnation/$pkg.tar.gz -o $pkg.tar.gz
+[ ! -d $pkg ] && tar xzf $pkg.tar.gz
+ln -sf $(pwd)/$pkg/{csv_to_ln,labelnation} ~/bin/.
+

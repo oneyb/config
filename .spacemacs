@@ -24,7 +24,7 @@
    )
   (with-eval-after-load "python"
     (setq
-     python-shell-interpreter "ipython"
+     python-shell-interpreter "python3"
      )
     )
   (with-eval-after-load "org"
