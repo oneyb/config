@@ -1000,3 +1000,12 @@ export ANDROID_JACK_VM_ARGS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx13
 if [ -d "$HOME/android/platform-tools" ] ; then
     PATH="$HOME/android/platform-tools:$PATH"
 fi
+function update-nordvpn-server-config ()
+{
+    cd ~/.vpn
+    [ -f nord-ovpn.zip ] && mv nord-ovpn.zip nord-ovpn-old-$(date +%F).zip
+    [ -d ovpn_tcp ] && mv "ovpn_tcp" "ovpn_tcp_old-$(date +%F)"
+    [ -d ovpn_udp ] && mv "ovpn_udp" "ovpn_udp_old-$(date +%F)"
+    curl -o nord-ovpn.zip https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip
+    unzip nord-ovpn.zip
+}
