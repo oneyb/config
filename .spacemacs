@@ -11,7 +11,7 @@
    dotspacemacs-default-font '(
                                ;; "Monospace"
                                "Ubuntu Mono"
-                               :size 11
+                               :size 12
                                :weight normal
                                :width normal
                                :powerline-scale 1.0

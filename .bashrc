@@ -339,6 +339,17 @@ function video-shrink ()
     for i in $*; do ffmpeg -i $i -vf scale=iw/3:-1 -r 30 shrunk_${i}; done
 }
 
+function describe-funs ()
+{
+    type $*
+}
+_describe-funs_completion()
+{
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "$(sed -r '/[a-zA-Z_i]+ ? \( ?\)/!d;s/^f?u?n?c?t?i?o?n ?([a-zA-Z_-]+) ? \(?\).*$/\1/' ~/.bashrc)" -- $cur) )
+}
+complete -F _describe-funs_completion funs
+
 function explore-gsettings ()
 {
     gsettings list-schemas | grep "$1" | while read f; do gsettings list-recursively $f | grep "$2"; done
@@ -759,8 +770,24 @@ function pdf-shrink-rasterize () {
     convert $tmp*jpg $opdf
 }
 
+function pix-org()
+{
+    cd ~/pictures/$(date +%Y)/tmp
+    rmspace
+    mkdir -p raw && mv *jpg raw/ 
+    if [[ $? -eq 0 ]]; then 
+        cd raw/
+        ls *jpg | while read pic; do
+	          convert -quality $q $pic ../$pic;
+        done
+        if [[ $? -eq 0 ]]; then cd .. && rm -rf raw/; fi
+    fi
+    cd ~/pictures/$(date +%Y)/tmp
+    exiftool -r -d ../%Y%m%d_/%Y%m%d_%H%M%S%%-c '-FileName<${datetimeoriginal}_${model;}.%e' .
+    exiftool -r -d ../%Y%m%d_/%Y%m%d_%H%M%S%%-c '-FileName<${createdate}_${model;}.%e' -ext mp4 .
+}
 
-function reduce-pix()
+function pix-reduce()
 {
     _DIR=$PWD
     if [[ $# -eq 0 ]]; then
