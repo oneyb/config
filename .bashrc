@@ -778,13 +778,15 @@ function pix-org()
     if [[ $? -eq 0 ]]; then 
         cd raw/
         ls *jpg | while read pic; do
-	          convert -quality $q $pic ../$pic;
+	          convert -quality 96 $pic ../$pic;
         done
         if [[ $? -eq 0 ]]; then cd .. && rm -rf raw/; fi
     fi
     cd ~/pictures/$(date +%Y)/tmp
-    exiftool -r -d ../%Y%m%d_/%Y%m%d_%H%M%S%%-c '-FileName<${datetimeoriginal}_${model;}.%e' .
-    exiftool -r -d ../%Y%m%d_/%Y%m%d_%H%M%S%%-c '-FileName<${createdate}_${model;}.%e' -ext mp4 .
+    exiftool -r -d %Y%m%d_/%Y%m%d_%H%M%S%%-c '-FileName<${datetimeoriginal}_${model;}.%e' .
+    exiftool -r -d %Y%m%d_/%Y%m%d_%H%M%S%%-c '-FileName<${createdate}.%e' -ext mp4 .
+    rmspace
+    mv *_/ ..
 }
 
 function pix-reduce()
@@ -806,30 +808,6 @@ function pix-reduce()
         if [[ $? -eq 0 ]]; then cd .. && rm -rf tmp/; fi
     fi
     cd $_DIR
-}
-
-function reduce-pixx()
-{
-    if [[ $# -eq 0 ]]; then
-        type reduce-pixx
-    fi
-    __DIR=$PWD
-    for d in $*; do
-        if [[ -d $d ]]; then 
-            cd $d
-            reduce-pix
-            cd $__DIR
-        else
-            type reduce-pixx
-        fi
-    done
-}
-
-
-function organize-photos (){
-    reduce-pix
-    exiftool '-FileName<CreateDate' -d %Y%m%d_%H%M%S%%-c.%%e *jpg
-    # ls | sed -r 's/^([0-9]+)_.*$/\1/' | uniq | while read d; do mkdir -p $(date -d $d +%F); mv $d* $(date -d $d +%F); done
 }
 
 
