@@ -436,9 +436,20 @@ function wait-on-process-then ()
 # wait-on-process-then firefox echo craap
 
 function concatenate-media ()
-
 {
-    ffmpeg -f concat -safe 0 -i <(for f in $*; do echo "file '$PWD/$f'"; done) -c copy concatenated-${1}
+    ffmpeg -f concat -safe 0 -i <(for f in ${@:2}; do echo "file '$PWD/$f'"; done) -c copy ${1}
+}
+
+
+function concatenate-media-elegant ()
+{
+    dir=dvd-copy-work
+    mv *mp4 $dir
+    cd $dir
+    rmspace
+    rename -v 's/-/-0/' *-{1..9}.*
+    concatenate-media $1 *
+    [ $? == 0 ] && mv $1 ../copied/ && trash-put * && cd ..
 }
 
 # cool function name
@@ -575,12 +586,12 @@ function play-song()
 {
     grep -iE "${1}[^/]*$" ~/music/playlists/all_music.m3u > /tmp/currentplaylist.m3u
     # find $HOME/music/$2 -type f -iname "*$1*" > /tmp/currentplaylist.m3u
-    mpv --shuffle --audio-display=no -playlist /tmp/currentplaylist.m3u
+    mpv --shuffle --audio-display=no --playlist=/tmp/currentplaylist.m3u
 }
 
 function play()
 {
-    mpv ${@:1:$(($#-1))} --audio-display=no -playlist $HOME/music/playlists/${@:$#} 
+    mpv ${@:1:$(($#-1))} --audio-display=no --playlist=$HOME/music/playlists/${@:$#} 
     [ $? -ne 0 ] && echo -e "\n\t usage example:\t play --shuffle albums/tool/lateralus.m3u "
 }
 _play_completion()
@@ -770,6 +781,17 @@ function pdf-shrink-rasterize () {
     convert $tmp*jpg $opdf
 }
 
+function gear-list-sync ()
+{
+    cp Sync/backpacking/gear-list.xlsx                        Sync/backpacking/gear-list_bu.xlsx
+    cp -u work-exchange/cdt/gear-list.xlsx                   Sync/backpacking/gear-list.xlsx
+    cp -u Sync/backpacking/gear-list.xlsx                   work-exchange/cdt/gear-list.xlsx 
+    cp Sync/backpacking/ski-traverse-planning.xlsx         Sync/backpacking/ski-traverse-planning_bu.xlsx
+    cp -u Sync/backpacking/ski-traverse-planning.xlsx         work-exchange/cdt/ski-traverse-planning.xlsx 
+    cp -u work-exchange/cdt/ski-traverse-planning.xlsx         Sync/backpacking/ski-traverse-planning.xlsx
+}
+
+
 function pix-org()
 {
     cd ~/pictures/$(date +%Y)/tmp
@@ -953,6 +975,28 @@ ex ()
             *.zip)       unzip $1     ;;
             *.Z)         uncompress $1;;
             *.7z)        7z x $1      ;;
+            *)           echo "'$1' cannot be extracted via ex()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+compress ()
+{
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar cjf $*   ;;
+            *.tar.xz)    tar cJf $*   ;;
+            *.tar.gz)    tar xzf $*   ;;
+            *.bz2)       bunzip2 $*   ;;
+            *.rar)       unrar x $*   ;;
+            *.gz)        gunzip $*    ;;
+            *.tar)       tar xf $*    ;;
+            *.tbz2)      tar xjf $*   ;;
+            *.tgz)       tar xzf $*   ;;
+            *.zip)       unzip $*     ;;
+            *.Z)         uncompress $*;;
+            *.7z)        7z c $*      ;;
             *)           echo "'$1' cannot be extracted via ex()" ;;
         esac
     else

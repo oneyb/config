@@ -161,11 +161,11 @@ StartupNotify=false" > ~/.config/xfce4/desktop/$(basename $1).desktop
 
 add_desktop_launcher brave-browser              /usr/share/icons/hicolor/32x32/apps/brave-browser.png
 add_desktop_launcher $HOME/bin/tb               $HOME/.config/icons/evolution-mail.png
-add_desktop_launcher signal-desktop             $HOME/.config/icons/signal.png
+add_desktop_launcher '/opt/Signal/signal-desktop --no-sandbox %U'             $HOME/.config/icons/signal.png
 add_desktop_launcher pcmanfm                    $HOME/.config/icons/file-manager.png
 add_desktop_launcher epiphany-browser           $HOME/.config/icons/web-browser.png
 add_desktop_launcher firefox                    /usr/share/icons/hicolor/32x32/apps/firefox.png
-add_desktop_launcher "chromium-browser --incognito"           $HOME/.config/icons/chromium.png
+add_desktop_launcher chromium-browser           $HOME/.config/icons/chromium.png
 add_desktop_launcher $HOME/bin/sync_org.sh      $HOME/.config/icons/orgzly.png
 # add_desktop_launcher "emacsclient -c --eval '(org-capture)'" $HOME/.config/icons/emacs22.png
 # add_desktop_launcher "emacsclient -c --eval '(switch-to-buffer \"*spacemacs*\")'" $HOME/.config/icons/emacs22.png

@@ -14,7 +14,7 @@ Mod1 + Control + e
 Mod4 + m
 "x-www-browser"
 Control + Mod1 + W
-"firefox"
+"chromium-browser --incognito"
 Mod4 + n
 "pcmanfm"
 Mod4 + f
