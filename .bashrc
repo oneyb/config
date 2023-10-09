@@ -1058,3 +1058,7 @@ function update-nordvpn-server-config ()
     curl -o nord-ovpn.zip https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip
     unzip nord-ovpn.zip
 }
+
+source ~/.private
+
+eval "$(starship init bash)"

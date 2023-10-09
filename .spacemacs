@@ -1,10 +1,5 @@
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
 
-;; Bug in emacs 26.1
-(if (string-match "26\.1" (emacs-version)) 
-    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-  )
-
 (defun home-config ()
   (interactive)
   (setq
@@ -226,7 +221,8 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(systemd
+   '(rust
+     systemd
      php
      autohotkey
      windows-scripts
@@ -272,6 +268,7 @@ This function should only modify configuration layer settings."
      javascript
      html
      ansible
+     ;; openai
      vimscript
      (plantuml :variables
                org-plantuml-jar-path (expand-file-name "~/bin/plantuml.jar")
@@ -308,7 +305,7 @@ This function should only modify configuration layer settings."
                                       mmm-mode
                                       ob-async
                                       ;; ob-dart
-                                      dart-mode
+                                      ;; dart-mode
                                       ;; vdiff
                                       ripgrep
                                       )
@@ -738,7 +735,7 @@ package is loaded, you should place your code here."
     )
   ;; (setq term-ansi-default-program "C:\\Program Files\\Git\\git-bash.exe") 
   (add-hook 'ediff-prepare-buffer-hook #'outline-show-all)
-  (add-hook 'plantuml-mode-hook '(lambda ()
+  (add-hook 'plantuml-mode-hook #'(lambda ()
                                    (setq plantuml-default-exec-mode 'jar)
                                    (spacemacs/set-leader-keys-for-major-mode 'plantuml-mode
                                      "," 'plantuml-preview
@@ -810,6 +807,8 @@ package is loaded, you should place your code here."
     )
   (setq-default kill-ring-max 666)
   (setq history-length 666)
+  ;; (setq openai-key (getenv "OPENAI_API_KEY"))
+  ;; (setq openai-user (getenv "OPENAI_USER"))
   ;; (setq gdb-many-windows t)
   ;; (setq gdb-show-main t)
   (setq-default history-delete-duplicates t)
