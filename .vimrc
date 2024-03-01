@@ -1,1 +1,0 @@
-/home/oney/.space-vim/init.vim
