@@ -1,4 +1,4 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
@@ -111,13 +111,17 @@
 ;; they are implemented.
 ;; fd as Esc key binding
 ;; https://discourse.doomemacs.org/t/typing-jk-deletes-j-and-returns-to-normal-mode/59/7
-(after! evil-escape
-  (setq evil-escape-key-sequence "fd"))
+;; (after! evil-escape
+;;   (setq evil-escape-key-sequence "fd"))
 
 ;; https://discourse.doomemacs.org/t/what-are-leader-and-localleader-keys/153
 ;; Doom Defaults: `SPC' leader key, `SPC m' local leader
 ;; Set local leader to `,'
 (setq doom-localleader-key ",")
+
+;; To use unmap! you'd have to target the doom-leader-map keymap:
+;; (unmap! doom-leader-map "C-c t t" "C-c t T")
+
 ;; ------------------------------------------------
 
 
@@ -130,48 +134,61 @@
 
 (map! :leader
        (:prefix ("w". "Window")
-         :desc "split" "/"     #'evil-window-split))
+         :desc "split" "/"     #'evil-window-vsplit))
+
+(map! :leader
+        "v" nil
+         :desc "expand" "v"     #'er/expand-region)
+
+(map! :after evil
+      :map evil-visual-state-map
+        "V" nil
+         :desc "contract" "V"     #'er/contract-region)
 
 ;; Layout keys - disable `SPC TAB' workspace prefix
-(map! :leader
-       (:prefix-map ("TAB" . nil))
-       (:prefix ("l". "Layouts")
-         :desc "Last Layout" "<tab>" #'+workspace/other
-         :desc "Display Tabs" "d"    #'+workspace/display
-         :desc "Delete layout" "D"   #'+workspace/delete
-         :desc "Layout list" "l"     #'+workspace/switch-to
-         :desc "Load Layout" "L"     #'+workspace/load
-         :desc "New Layout" "n"      #'+workspace/new
-         :desc "Rename Layout" "r"   #'+workspace/rename
-         :desc "Restore session" "R" #'+workspace/restore-last-session
-         :desc "Save Layout" "s"     #'+workspace/save
-         :desc "Kill Session" "x"    #'+workspace/kill-session
-         :desc "Switch to 0" "0"     #'+workspace/switch-to-0
-         :desc "Switch to 1" "1"     #'+workspace/switch-to-1
-         :desc "Switch to 2" "2"     #'+workspace/switch-to-2
-         :desc "Switch to 3" "3"     #'+workspace/switch-to-3
-         :desc "Switch to 4" "4"     #'+workspace/switch-to-4
-         :desc "Switch to 5" "5"     #'+workspace/switch-to-5
-         :desc "Switch to 6" "6"     #'+workspace/switch-to-6
-         :desc "Switch to 7" "7"     #'+workspace/switch-to-7
-         :desc "Switch to 8" "8"     #'+workspace/switch-to-8
-         :desc "Switch to 9" "9"     #'+workspace/switch-to-9))
+; (map! :leader
+;        (:prefix-map ("TAB" . nil))
+;        (:prefix ("l". "Layouts")
+;          :desc "Last Layout" "TAB"   #'+workspace/other
+;          :desc "Display Tabs" "d"    #'+workspace/display
+;          :desc "Delete layout" "D"   #'+workspace/delete
+;          :desc "Layout list" "l"     #'+workspace/switch-to
+;          :desc "Load Layout" "L"     #'+workspace/load
+;          :desc "New Layout" "n"      #'+workspace/new
+;          :desc "Rename Layout" "r"   #'+workspace/rename
+;          :desc "Restore session" "R" #'+workspace/restore-last-session
+;          :desc "Save Layout" "s"     #'+workspace/save
+;          :desc "Kill Session" "x"    #'+workspace/kill-session
+;          :desc "Switch to 0" "0"     #'+workspace/switch-to-0
+;          :desc "Switch to 1" "1"     #'+workspace/switch-to-1
+;          :desc "Switch to 2" "2"     #'+workspace/switch-to-2
+;          :desc "Switch to 3" "3"     #'+workspace/switch-to-3
+;          :desc "Switch to 4" "4"     #'+workspace/switch-to-4
+;          :desc "Switch to 5" "5"     #'+workspace/switch-to-5
+;          :desc "Switch to 6" "6"     #'+workspace/switch-to-6
+;          :desc "Switch to 7" "7"     #'+workspace/switch-to-7
+;          :desc "Switch to 8" "8"     #'+workspace/switch-to-8
+;          :desc "Switch to 9" "9"     #'+workspace/switch-to-9))
 
 ;; Buffer customisations
 (map! :leader
          "TAB" nil
          :desc "Last Buffer" "TAB" #'evil-switch-to-windows-last-buffer)
 
-;; Replace Doom `/' highlight with buffer-search
+;; Replace Doom `/' highlight with buffer-search and enable n/N navigation
 (map! :after evil
       :map evil-normal-state-map
-      "/" #'+default/search-buffer)
+      "/" #'+default/search-buffer
+      "n" #'evil-ex-search-next
+      "N" #'evil-ex-search-previous)
 
 (map! :leader
        (:prefix "b"
          :desc "Dashboard" "h" #'+doom-dashboard/open
          :desc "Toggle Last" "TAB" #'evil-switch-to-windows-last-buffer))
 
+(map! :map general-override-mode-map :nv "s" #'evil-substitute)
+;; (map! :map general-override-mode-map :nv "f" #'evil-snipe-s)
 
 ;; Treemacs
 ;; Toggle treemacs project browser from project menu
@@ -207,6 +224,8 @@
          :desc "whitespace" "w" #'delete-trailing-whitespace))
 
 
+;; (remove-hook 'org-load-hook #'+org-init-keybinds-h)
+
 ;; ------------------------------------------------
 ;; Experiments
 ;; Use `,,` to close a commit message and `,k' to cancel
@@ -217,23 +236,28 @@
       "," #'with-editor-finish
       "k" #'with-editor-cancel)
 
-(after! key-chord
+(use-package! key-chord
+  :config
   (key-chord-mode 1)
   ;; (setq key-chord-one-key-delay 0.20
   ;;       key-chord-two-keys-delay 0.05)
   (key-chord-define-global ";l" 'kill-this-buffer)
-  (key-chord-define-global "ii" 'org-capture)
   (key-chord-define-global ";'" 'my-get-tasks)
   (key-chord-define-global ";t" 'shell)
-  (key-chord-define-global ";s" 'magit-status)
+  ;; (key-chord-define-global "ii" 'org-capture)
   (key-chord-define-global "wq" 'vim-wq)
-  (key-chord-define-global "jk" 'my-escape-and-save)
+  (key-chord-define-global "kj" 'my-escape-and-save)
   (key-chord-define-global "BB" 'my-escape-and-bury)
-  (key-chord-define-global ";i" 'completion-at-point)
-  (key-chord-define-global ";c" 'my-make)
   )
 
-(after! org
+(use-package! org
+  :defer t
+  :config
+  (map! :map org-mode-map
+        :localleader
+        "," #'org-ctrl-c-ctrl-c
+        )
+
   (setq
    org-capture-templates
    '(
@@ -253,7 +277,7 @@
    org-agenda-files (-remove
                      (lambda (str) (string-match  "#" str))
                      (append
-                      (list "~/cdt-sia/cdt.org")
+                      (list "~/cdt-sia/graechen-solar/*.org")
                       (file-expand-wildcards "~/org/*.org")))
    org-tag-alist '(
                    ("ARCHIVE"  . ?a)
@@ -277,7 +301,29 @@
      )
    )
 
-  (require 'ox-koma-letter)
+  (setq org-table-use-standard-references t)
+
+  (setq
+   org-confirm-babel-evaluate nil
+   org-src-preserve-indentation t
+   org-startup-with-inline-images nil)
+  (setq
+   org-agenda-include-diary t
+   org-icalendar-use-deadline '(event-if-not-todo)
+   org-icalendar-use-scheduled '(event-if-not-todo)
+   )
+  (setq org-archive-location "~/Sync/org/%s::datetree/")
+  )
+
+(use-package! ox
+  :defer t
+  :config
+  (setq
+   org-export-in-background nil
+   )
+  )
+
+(after! ox-latex
   (add-to-list 'org-latex-classes
                '("a4-labels"
                  "\\documentclass[a4paper,12pt]{article}
@@ -302,6 +348,73 @@
                                 fromphone=true,
                               fromalign=left]{scrlttr2}
                              \\usepackage[ngerman]{babel}"
+
+                 ))
+  (add-to-list 'org-latex-classes
+               '("beamer"
+                 "\\documentclass{beamer}
+                 \\usepackage[english]{babel}
+                 \\usetheme{Madrid}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ))
+  (add-to-list 'org-latex-classes
+               '("cdtmemoir-letter"
+                 "\\documentclass{memoir}
+\\setstocksize{11in}{8.5in}          % Set the paper size (Letter)
+\\settrimmedsize{11in}{8.5in}{*}     % Set the trimmed (final) size
+\\setbinding{.1in}                  % Set the binding offset
+\\setlrmarginsandblock{1in}{1in}{*}       % Left/right margins (inner, outer)
+\\setulmarginsandblock{1in}{1in}{*}          % Upper/lower margins (top, bottom)
+\\checkandfixthelayout               % Apply and finalize the layout
+% --- Header and Footer ---
+\\pagestyle{ruled}                   % Use simple headers with rules
+%\\setheadfoot{12pt}{24pt}            % Set header/footer height
+%\\setheaderspaces{*}{0.5in}{*}       % Set spacing above header
+% --- Chapter Style ---
+\\chapterstyle{bianchi}              % Elegant chapter title style
+%\\chapterstyle{default}             % Uncomment for a simpler style
+%\\chapterstyle{veelo}               % Explore other styles as needed
+% --- Font and Typography ---
+\\usepackage{lmodern}                % Load Latin Modern font
+\\usepackage{microtype}              % Improve spacing and justification
+\\linespread{1.15}                   % Slightly increase line spacing
+\\setlength{\\parindent}{0.5in}       % Paragraph indentation
+\\setlength{\\parskip}{0pt}           % Paragraph spacing
+                 \\usepackage[english]{babel}"
+                 ("\\chapter{%s}" . "\\chapter*{%s}")
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ))
+  (add-to-list 'org-latex-classes
+               '("cdtmemoir-a4"
+                 "\\documentclass{memoir}
+\\setstocksize{297mm}{210mm}          % Set the paper size (A4)
+\\settrimmedsize{297mm}{210mm}{*}     % Set the trimmed (final) size
+\\setbinding{10mm}                    % Set the binding offset
+\\settypeblocksize{240mm}{140mm}{*}   % Set text area (height, width)
+\\setlrmargins{25mm}{20mm}{*}         % Left/right margins (inner, outer)
+\\setulmargins{20mm}{20mm}{*}         % Upper/lower margins (top, bottom)
+\\checkandfixthelayout                % Apply and finalize the layout
+\\pagestyle{ruled}                    % Use simple headers with rules
+\\setheadfoot{12pt}{24pt}             % Set header/footer height
+\\setheaderspaces{*}{12mm}{*}         % Set spacing above header
+% --- Chapter Style ---
+\\chapterstyle{bianchi}               % Elegant chapter title style
+%\\chapterstyle{default}              % Uncomment for a simpler style
+%\\chapterstyle{veelo}                % Explore other styles as needed
+% --- Font and Typography ---
+\\usepackage{lmodern}                 % Load Latin Modern font
+\\usepackage{microtype}               % Improve spacing and justification
+\\linespread{1.15}                    % Slightly increase line spacing
+\\setlength{\\parindent}{10mm}
+\\setlength{\\parskip}{0pt}  "
+                 ("\\chapter{%s}" . "\\chapter*{%s}")
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ))
   (add-to-list 'org-latex-classes
                '("letter-en"
@@ -314,15 +427,28 @@
                               fromalign=left]{scrlttr2}
                               \\usepackage[english]{babel}"
                  ))
-  (setq org-table-use-standard-references t)
-  (setq
-   org-confirm-babel-evaluate nil
-   org-src-preserve-indentation t
-   org-startup-with-inline-images nil)
-  (setq
-   org-agenda-include-diary t
-   org-icalendar-use-deadline '(event-if-not-todo)
-   org-icalendar-use-scheduled '(event-if-not-todo)
-   )
-  (setq org-archive-location "~/Sync/org/%s::datetree/")
+  (require 'ox-koma-letter)
   )
+
+(after! ox-pandoc
+  (setq org-pandoc-options-for-docx '((standalone . t)))
+  (setq org-pandoc-options-for-html '((standalone . t)))
+  (setq org-pandoc-options-for-latex '((standalone . t)))
+  (setq org-pandoc-options-for-markdown '((standalone . t)))
+  )
+
+(use-package! ox-reveal
+  :after ox
+  :config
+  (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
+  (setq org-reveal-mathjax t)
+  (setq org-reveal-ignore-speaker-notes nil)
+  (setq org-reveal-note-key-char nil)
+  )
+
+
+(setq
+ ;; langtool-language-tool-server-jar "/opt/LanguageTool/languagetool-server.jar"
+      langtool-language-tool-jar "/opt/LanguageTool/languagetool-commandline.jar"
+      ;; langtool-java-classpath "/opt/LanguageTool/*"
+      )

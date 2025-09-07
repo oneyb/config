@@ -52,3 +52,4 @@
 (package! key-chord)
 
 (package! org)
+(package! ox-reveal)
