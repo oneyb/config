@@ -53,3 +53,4 @@
 
 (package! org)
 (package! ox-reveal)
+(package! ox-epub)

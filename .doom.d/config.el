@@ -34,6 +34,7 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'leuven)
+;; (setq doom-theme 'doom-solarized-light)
 
 (defalias 'ed          'ediff-files)
 
@@ -175,7 +176,15 @@
          "TAB" nil
          :desc "Last Buffer" "TAB" #'evil-switch-to-windows-last-buffer)
 
-;; Replace Doom `/' highlight with buffer-search and enable n/N navigation
+;; Use Doom's search with evil integration
+(after! evil
+  (advice-add '+default/search-buffer :after
+              (lambda (&rest _)
+                (when (and (bound-and-true-p isearch-string)
+                          (not (string-empty-p isearch-string)))
+                  (setq evil-ex-search-pattern (list isearch-string t t))
+                  (setq evil-ex-search-direction 'forward)))))
+
 (map! :after evil
       :map evil-normal-state-map
       "/" #'+default/search-buffer
@@ -243,7 +252,7 @@
   ;;       key-chord-two-keys-delay 0.05)
   (key-chord-define-global ";l" 'kill-this-buffer)
   (key-chord-define-global ";'" 'my-get-tasks)
-  (key-chord-define-global ";t" 'shell)
+  (key-chord-define-global ";t" 'eshell)
   ;; (key-chord-define-global "ii" 'org-capture)
   (key-chord-define-global "wq" 'vim-wq)
   (key-chord-define-global "kj" 'my-escape-and-save)
@@ -255,7 +264,17 @@
   :config
   (map! :map org-mode-map
         :localleader
-        "," #'org-ctrl-c-ctrl-c
+        "," #'+org/dwim-at-point     ; smarter C-c C-c
+        "'" #'org-edit-special       ; edit code blocks
+        "a" #'org-agenda
+        "c" #'org-capture
+        "e" #'org-export-dispatch
+        "i" #'org-toggle-item
+        "t" #'org-todo
+        "T" #'org-todo-list
+        "s" #'org-schedule
+        "d" #'org-deadline
+        "r" #'org-refile
         )
 
   (setq
@@ -350,11 +369,72 @@
                              \\usepackage[ngerman]{babel}"
 
                  ))
-  (add-to-list 'org-latex-classes
-               '("beamer"
-                 "\\documentclass{beamer}
-                 \\usepackage[english]{babel}
-                 \\usetheme{Madrid}"
+(add-to-list 'org-latex-classes
+        '("beamer"
+                "\\documentclass{beamer}
+                \\usepackage[english]{babel}
+                \\usetheme{Madrid}"
+                ("\\section{%s}" . "\\section*{%s}")
+                ("\\subsection{%s}" . "\\subsection*{%s}")
+                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                ))
+(add-to-list 'org-latex-classes
+               '("cdtmemoir-a4-lulu"
+                 "\\documentclass{memoir}
+\\setstocksize{297mm}{210mm}          % Set the paper size (A4)
+\\settrimmedsize{297mm}{210mm}{*}     % Set the trimmed (final) size
+\\setbinding{10mm}                    % Set the binding offset
+\\settypeblocksize{240mm}{140mm}{*}   % Set text area (height, width)
+\\setlrmargins{20mm}{16mm}{*}         % Left/right margins (inner, outer)
+\\setulmargins{20mm}{20mm}{*}         % Upper/lower margins (top, bottom)
+\\checkandfixthelayout                % Apply and finalize the layout
+% --- Header and Footer ---
+\\pagestyle{ruled}                   % Use simple headers with rules
+%\\setheadfoot{12pt}{24pt}            % Set header/footer height
+%\\setheaderspaces{*}{0.5in}{*}       % Set spacing above header
+% --- Chapter Style ---
+\\chapterstyle{bianchi}              % Elegant chapter title style
+%\\chapterstyle{default}             % Uncomment for a simpler style
+%\\chapterstyle{veelo}               % Explore other styles as needed
+% --- Font and Typography ---
+\\usepackage{lmodern}                % Load Latin Modern font
+\\usepackage{microtype}              % Improve spacing and justification
+\\linespread{1.15}                   % Slightly increase line spacing
+\\setlength{\\parindent}{0in}       % Paragraph indentation
+\\setlength{\\parskip}{3pt}           % Paragraph spacing
+\\usepackage[english]{babel}"
+                 ("\\chapter{%s}" . "\\chapter*{%s}")
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ))
+(add-to-list 'org-latex-classes
+               '("cdtmemoir-letter-lulu"
+                 "\\documentclass{memoir}
+\\setstocksize{11.25in}{8.75in}          % Set the paper size (Letter)
+\\settrimmedsize{11in}{8.5in}{*}     % Set the trimmed (final) size
+\\settrims{0.125in}{0.125in}
+\\setlrmarginsandblock{0.86in}{0.52in}{*}
+\\setulmarginsandblock{0.730in}{0.565in}{*}
+\\checkandfixthelayout               % Apply and finalize the layout
+% --- Header and Footer ---
+\\pagestyle{ruled}                   % Use simple headers with rules
+%\\setheadfoot{12pt}{24pt}            % Set header/footer height
+%\\setheaderspaces{*}{0.5in}{*}       % Set spacing above header
+% --- Chapter Style ---
+\\chapterstyle{bianchi}              % Elegant chapter title style
+%\\chapterstyle{default}             % Uncomment for a simpler style
+%\\chapterstyle{veelo}               % Explore other styles as needed
+% --- Font and Typography ---
+\\usepackage{lmodern}                % Load Latin Modern font
+\\usepackage{microtype}              % Improve spacing and justification
+\\linespread{1.1}                   % Slightly increase line spacing
+\\setlength{\\parindent}{0in}       % Paragraph indentation
+\\setlength{\\parskip}{3pt}           % Paragraph spacing
+\\setlength{\\footskip}{16pt}
+\\setlength{\\headsep}{5mm}
+\\usepackage[english]{babel}"
+                 ("\\chapter{%s}" . "\\chapter*{%s}")
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
@@ -393,23 +473,23 @@
                  "\\documentclass{memoir}
 \\setstocksize{297mm}{210mm}          % Set the paper size (A4)
 \\settrimmedsize{297mm}{210mm}{*}     % Set the trimmed (final) size
-\\setbinding{10mm}                    % Set the binding offset
-\\settypeblocksize{240mm}{140mm}{*}   % Set text area (height, width)
-\\setlrmargins{25mm}{20mm}{*}         % Left/right margins (inner, outer)
-\\setulmargins{20mm}{20mm}{*}         % Upper/lower margins (top, bottom)
+\\setbinding{8mm}                    % Set the binding offset
+\\settypeblocksize{256mm}{166mm}{*}   % Set text area (height, width)
+\\setlrmargins{16mm}{*}{*}         % Left/right margins (inner, outer)
+\\setulmargins{16mm}{*}{*}         % Upper/lower margins (top, bottom)
 \\checkandfixthelayout                % Apply and finalize the layout
 \\pagestyle{ruled}                    % Use simple headers with rules
 \\setheadfoot{12pt}{24pt}             % Set header/footer height
-\\setheaderspaces{*}{12mm}{*}         % Set spacing above header
+\\setheaderspaces{*}{10mm}{*}         % Set spacing above header
 % --- Chapter Style ---
 \\chapterstyle{bianchi}               % Elegant chapter title style
 %\\chapterstyle{default}              % Uncomment for a simpler style
 %\\chapterstyle{veelo}                % Explore other styles as needed
 % --- Font and Typography ---
-\\usepackage{lmodern}                 % Load Latin Modern font
-\\usepackage{microtype}               % Improve spacing and justification
+%\\usepackage{lmodern}                 % Load Latin Modern font
+\\usepackage[final]{microtype}               % Improve spacing and justification
 \\linespread{1.15}                    % Slightly increase line spacing
-\\setlength{\\parindent}{10mm}
+\\setlength{\\parindent}{0mm}
 \\setlength{\\parskip}{0pt}  "
                  ("\\chapter{%s}" . "\\chapter*{%s}")
                  ("\\section{%s}" . "\\section*{%s}")
@@ -437,6 +517,10 @@
   (setq org-pandoc-options-for-markdown '((standalone . t)))
   )
 
+(use-package! ox-epub
+  :after ox
+  )
+
 (use-package! ox-reveal
   :after ox
   :config
@@ -452,3 +536,74 @@
       langtool-language-tool-jar "/opt/LanguageTool/languagetool-commandline.jar"
       ;; langtool-java-classpath "/opt/LanguageTool/*"
       )
+
+(setq-hook! '(markdown-mode-hook org-mode-hook)
+  ws-butler-mode -1)
+
+;;; Add this to your ~/.doom.d/config.el
+
+;; Org sentence-per-line formatting for easier diffs
+(defun unfill-and-split-sentences ()
+  "Unfill the current paragraph and place each sentence on its own line.
+Useful for normalizing org-mode files for easier diffing with ediff."
+  (interactive)
+  (let ((bounds (bounds-of-thing-at-point 'paragraph)))
+    (when bounds
+      (save-excursion
+        (let ((start (car bounds))
+              (end (cdr bounds)))
+          ;; Move start forward past any leading whitespace/newlines
+          (goto-char start)
+          (skip-chars-forward " \t\n")
+          (setq start (point))
+
+          ;; Move end backward past any trailing whitespace/newlines
+          (goto-char end)
+          (skip-chars-backward " \t\n")
+          (setq end (point))
+
+          (save-restriction
+            (narrow-to-region start end)
+
+            ;; Unfill: join all lines
+            (goto-char (point-min))
+            (while (re-search-forward "\n" nil t)
+              (replace-match " ")
+              (just-one-space))
+
+            ;; Split by sentences
+            (goto-char (point-min))
+            (while (re-search-forward "\\([.!?]\"?\\) +" nil t)
+              (replace-match "\\1\n"))
+
+            ;; Clean up trailing whitespace
+            (goto-char (point-min))
+            (while (not (eobp))
+              (end-of-line)
+              (delete-horizontal-space)
+              (forward-line 1))))))))
+
+(defun unfill-and-split-sentences-region (start end)
+  "Apply unfill-and-split-sentences to each paragraph in the region."
+  (interactive "r")
+  (save-excursion
+    (goto-char start)
+    (while (< (point) end)
+      (unfill-and-split-sentences)
+      (forward-paragraph)
+      (setq end (max end (point))))))
+
+;; Doom-style keybindings
+(map! :after org
+      :map org-mode-map
+      :localleader
+      :desc "Unfill & split sentences" "S" #'unfill-and-split-sentences
+      :desc "Unfill & split region" "R" #'unfill-and-split-sentences-region)
+
+;; Optional: Add to the buffer menu for discoverability
+(after! org
+  (map! :map org-mode-map
+        :localleader
+        (:prefix ("f" . "format")
+         :desc "Sentence per line (paragraph)" "s" #'unfill-and-split-sentences
+         :desc "Sentence per line (region)" "r" #'unfill-and-split-sentences-region)))
