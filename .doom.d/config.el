@@ -517,9 +517,6 @@
   (setq org-pandoc-options-for-markdown '((standalone . t)))
   )
 
-(use-package! ox-epub
-  :after ox
-  )
 
 (use-package! ox-reveal
   :after ox
@@ -531,10 +528,8 @@
   )
 
 
-(setq
- ;; langtool-language-tool-server-jar "/opt/LanguageTool/languagetool-server.jar"
+(setq ;; https://gnulinux.ch/languagetool-selber-hosten
       langtool-language-tool-jar "/opt/LanguageTool/languagetool-commandline.jar"
-      ;; langtool-java-classpath "/opt/LanguageTool/*"
       )
 
 (setq-hook! '(markdown-mode-hook org-mode-hook)
@@ -593,17 +588,15 @@ Useful for normalizing org-mode files for easier diffing with ediff."
       (forward-paragraph)
       (setq end (max end (point))))))
 
-;; Doom-style keybindings
-(map! :after org
-      :map org-mode-map
+;; Doom-style keybindings - available in all text modes
+(map! :map text-mode-map
       :localleader
       :desc "Unfill & split sentences" "S" #'unfill-and-split-sentences
       :desc "Unfill & split region" "R" #'unfill-and-split-sentences-region)
 
 ;; Optional: Add to the buffer menu for discoverability
-(after! org
-  (map! :map org-mode-map
-        :localleader
-        (:prefix ("f" . "format")
-         :desc "Sentence per line (paragraph)" "s" #'unfill-and-split-sentences
-         :desc "Sentence per line (region)" "r" #'unfill-and-split-sentences-region)))
+(map! :map text-mode-map
+      :localleader
+      (:prefix ("f" . "format")
+       :desc "Sentence per line (paragraph)" "s" #'unfill-and-split-sentences
+       :desc "Sentence per line (region)" "r" #'unfill-and-split-sentences-region))
